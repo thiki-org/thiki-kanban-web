@@ -1,0 +1,19 @@
+<div>
+    <form>
+        <div class="input-group">
+            <input type="text" class="form-control" data-ng-model="title"/>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" ng-click="createEntry()">
+                创建 </span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="entries">
+    <div class="entry"  ng-repeat="entry in entries">
+        <a>{{entry.title}}</a>
+    </div>
+
+</div>

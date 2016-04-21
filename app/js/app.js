@@ -1,0 +1,25 @@
+'use strict';
+
+/* App Module */
+
+var kanbanApp = angular.module('kanbanApp', [
+    'ngRoute',
+    'kanbanAnimations',
+    'tasksControllers',
+    'kanbanFilters',
+    'tasksServices',
+    'ui.sortable',
+    'entriesControllers',
+    'entriesServices'
+]);
+
+kanbanApp.config(['$routeProvider',
+    function ($routeProvider) {
+        $routeProvider.when('/entries', {
+            templateUrl: 'partials/entries.html',
+            controller: 'EntriesCtrl'
+        }).when('/tasks', {
+            templateUrl: 'partials/tasks.html',
+            controller: 'TasksCtrl'
+        });
+    }]);

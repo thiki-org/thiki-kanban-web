@@ -1,0 +1,25 @@
+/* app css stylesheet */
+
+body {
+    padding-top: 20px;
+}
+
+.entries {
+    float: left;
+    min-height: 20px;
+    border:1px solid #00A000;
+}
+
+.entry {
+    float: left;
+    border: 1px solid darkgray;
+    width: 240px;
+    margin: 5px;
+}
+
+.task {
+    width: 90%;
+    border: 1px solid gray;
+    margin: 10px;
+    height: 62px;
+}
