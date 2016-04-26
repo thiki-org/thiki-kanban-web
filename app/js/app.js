@@ -21,5 +21,8 @@ kanbanApp.config(['$routeProvider',
         }).when('/tasks', {
             templateUrl: 'partials/tasks.html',
             controller: 'TasksCtrl'
+        }).otherwise({
+            templateUrl: 'partials/entries.html',
+            controller: 'EntriesCtrl'
         });
     }]);

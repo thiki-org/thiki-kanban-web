@@ -11,9 +11,14 @@
     </form>
 </div>
 
-<div class="entries">
-    <div class="entry"  ng-repeat="entry in entries">
+<div class="entries" ng-repeat="entry in entries">
+    <div class="entry" ng-init="loaded(entry.id)">
         <a>{{entry.title}}</a>
-    </div>
 
+        <div  class="tasks" ui-sortable="sortableOptions">
+            <div class="task" ng-repeat="task in entry.tasks">
+                <a href="#/phones/{{task.id}}">{{task.title}}</a>
+            </div>
+        </div>
+    </div>
 </div>

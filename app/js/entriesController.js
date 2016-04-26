@@ -17,11 +17,14 @@ entriesControllers.controller('EntriesCtrl', ['$scope', 'Entries',
         $scope.createEntry = function () {
             var title = $scope.title;
             var entry = {id: 3333, title: title, status: 0};
-            $scope.entries.push(entry)
+            $scope.entries.push(entry);
         }
 
         $scope.sortableOptions = {
-            placeholder: "entry",
-            connectWith: ".entries"
+            placeholder: "task",
+            connectWith: ".tasks"
         };
+
+        $scope.loaded = function (taskId) {
+        }
     }]);
