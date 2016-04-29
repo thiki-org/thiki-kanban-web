@@ -22,7 +22,20 @@ entriesControllers.controller('EntriesCtrl', ['$scope', 'Entries',
 
         $scope.sortableOptions = {
             placeholder: "task",
-            connectWith: ".tasks"
+            connectWith: ".tasks",
+            opacity:0.5,
+            start: function (e, ui) {
+                ui.item.attr("opacity","0.5");
+                //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+            },
+            update: function (e, ui) {
+                ui.item.attr("opacity","0.5");
+                //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+            },
+            stop: function (e, ui) {
+                ui.item.attr("opacity","1.0");
+                //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+            }
         };
 
         $scope.loaded = function (taskId) {

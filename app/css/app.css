@@ -4,27 +4,71 @@ body {
     padding-top: 20px;
 }
 
+.view-frame {
+    background-color: #373C44;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+}
 .entries {
     float: left;
     min-height: 20px;
-    border: 1px solid #00A000;
+    border: 1px solid #fff;
+    /* background-color: #F1F1F1; */
+    margin: 5px;
+    border-radius: 3px;
 }
 
 .entry {
     float: left;
-    border: 1px solid darkgray;
+    /* border: 1px solid darkgray; */
     width: 240px;
     margin: 5px;
     min-height: 20px;
+    /* background: #F1F1F1; */
+}
+
+.entry-title{
+    color: white;
 }
 
 .task {
     width: 90%;
-    border: 1px solid gray;
+    border: 1px solid #EAEAEA;
     margin: 10px;
     height: 62px;
+    background-color: white;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+.task-title{
+    color: black;
+    margin: 5px;
+    position: absolute;
 }
 
 .tasks {
     min-height: 20px;
+    background-color: #F1F1F1;
+    border-radius: 3px;
+    padding: 5px;
+}
+button.btn.btn-primary {
+    background: none;
+    border: 1px solid white;
+}
+
+.create-entry-from{
+    margin: 10PX;
+    float: left;
+    width: 100%;
+}
+
+.input-group {
+    float: left;
+    border: 1px solid none;
+}
+
+.btn-group {
+    margin-left: 10px;
 }

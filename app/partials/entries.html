@@ -1,5 +1,7 @@
+
+
 <div>
-    <form>
+    <form class="create-entry-from">
         <div class="input-group">
             <input type="text" class="form-control" data-ng-model="title"/>
         </div>
@@ -12,12 +14,12 @@
 </div>
 
 <div class="entries" ng-repeat="entry in entries">
-    <div class="entry" ng-init="loaded(entry.id)">
-        <a>{{entry.title}}</a>
+    <div class="entry">
+        <a class="entry-title">{{entry.title}}</a>
 
-        <div  class="tasks" ui-sortable="sortableOptions">
-            <div class="task" ng-repeat="task in entry.tasks">
-                <a href="#/phones/{{task.id}}">{{task.title}}</a>
+        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
+            <div model="{{task}}" class="task" entry="{{entry.id}}"  ng-repeat="task in entry.tasks">
+                <span class="task-title">{{task.title}}</span>
             </div>
         </div>
     </div>
