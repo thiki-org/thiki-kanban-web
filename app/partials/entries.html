@@ -1,7 +1,18 @@
+<div class="entries" ng-repeat="entry in entries" repeat-finish>
+    <div class="entry" >
+        <a class="entry-title entryTitle" data-type="text"  data-ng-model="entry.title" data-mode="inline">{{entry.title}}</a>
 
-
+        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
+            <div model="{{task}}" class="task" entry="{{entry.id}}" ng-repeat="task in entry.tasks">
+                <span class="task-title">{{task.title}}</span>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <form class="create-entry-from">
+        <a href="#" id="username" data-type="text" data-pk="1" data-url="/post"
+           data-title="Enter username">superuser</a>
         <div class="input-group">
             <input type="text" class="form-control" data-ng-model="title"/>
         </div>
@@ -11,16 +22,4 @@
             </button>
         </div>
     </form>
-</div>
-
-<div class="entries" ng-repeat="entry in entries">
-    <div class="entry">
-        <a class="entry-title">{{entry.title}}</a>
-
-        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
-            <div model="{{task}}" class="task" entry="{{entry.id}}"  ng-repeat="task in entry.tasks">
-                <span class="task-title">{{task.title}}</span>
-            </div>
-        </div>
-    </div>
 </div>

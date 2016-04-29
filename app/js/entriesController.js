@@ -10,9 +10,10 @@ entriesControllers.controller('EntriesCtrl', ['$scope', 'Entries',
         $scope.entries = Entries.load();
         console.log(Entries.load());
         console.log("EntriesCtrl....");
+        console.log($('.entryTitle'));
 
+        $('#username').editable();
         $scope.statusFilter = {status: 1};
-
 
         $scope.createEntry = function () {
             var title = $scope.title;
@@ -37,7 +38,4 @@ entriesControllers.controller('EntriesCtrl', ['$scope', 'Entries',
                 //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
             }
         };
-
-        $scope.loaded = function (taskId) {
-        }
     }]);
