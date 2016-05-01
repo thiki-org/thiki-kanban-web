@@ -1,15 +1,20 @@
 /* app css stylesheet */
 
 body {
-    padding-top: 20px;
+}
+
+div#kanban-top {
+    width: 100%;
+    height: 50px;
+    background: rgba(0, 188, 91, 1);
 }
 
 .view-frame {
-    background-color: #373C44;
     height: 100%;
     position: fixed;
     width: 100%;
 }
+
 .entries {
     float: left;
     min-height: 20px;
@@ -28,8 +33,9 @@ body {
     /* background: #F1F1F1; */
 }
 
-.entry-title{
-    color: white;
+.entry-title {
+    color: #333;
+    border-bottom: none;
 }
 
 .task {
@@ -41,7 +47,8 @@ body {
     border-radius: 3px;
     margin-top: 10px;
 }
-.task-title{
+
+.task-title {
     color: black;
     margin: 5px;
     position: absolute;
@@ -49,16 +56,17 @@ body {
 
 .tasks {
     min-height: 20px;
-    background-color: #F1F1F1;
+    background-color: rgba(249, 249, 249, 1);
     border-radius: 3px;
     padding: 5px;
 }
+
 button.btn.btn-primary {
     background: none;
     border: 1px solid white;
 }
 
-.create-entry-from{
+.create-entry-from {
     margin: 10PX;
     float: left;
     width: 100%;
@@ -71,4 +79,44 @@ button.btn.btn-primary {
 
 .btn-group {
     margin-left: 10px;
+}
+
+div#create-button-entry {
+    margin-top: 40px;
+    border: 1px solid rgba(0, 188, 91, 1);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+}
+
+div#create-button-entry :hover {
+    background-color: rgba(0, 188, 91, 1);
+    color: white;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+div#search {
+    width: 15%;
+    float: right;
+    margin: 10px;
+}
+
+#search .form-control {
+    width: 100%;
+    height: 28px;
+    padding: 6px 12px;
+    background-color: rgba(227, 245, 236, 1);
+    border: 1px solid rgba(227, 245, 236, 1);
+    border-radius: 20px;
 }

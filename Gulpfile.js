@@ -59,7 +59,7 @@ gulp.task('minify', function () {
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['app/js/*.js', 'Gulpfile.js'], ['jshint', 'minify']);
+    gulp.watch(['app/js/*.js','app/style/*.css', 'Gulpfile.js'], ['jshint', 'minify','minify-css']);
 });
 
 // 注册缺省任务
