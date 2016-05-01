@@ -4,12 +4,9 @@
 
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
-    'kanbanAnimations',
-    'tasksControllers',
-    'tasksServices',
-    'ui.sortable',
     'entriesControllers',
-    'entriesServices'
+    'entriesServices',
+    'ui.sortable'
 ]);
 
 kanbanApp.config(['$routeProvider',
