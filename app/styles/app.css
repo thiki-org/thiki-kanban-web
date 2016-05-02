@@ -19,33 +19,31 @@ div#kanban-top {
     float: left;
     min-height: 20px;
     border: 1px solid #fff;
-    /* background-color: #F1F1F1; */
+    background: rgba(249,249,249,1);
     margin: 5px;
     border-radius: 3px;
 }
 
 .entry {
     float: left;
-    /* border: 1px solid darkgray; */
     width: 240px;
     margin: 5px;
     min-height: 20px;
-    /* background: #F1F1F1; */
 }
 
 .entry-title {
     color: #333;
     border-bottom: none;
+    margin: 2% 2% 10px;
 }
 
 .task {
-    width: 90%;
+    width: 96%;
     border: 1px solid #EAEAEA;
-    margin: 10px;
+    margin: 2%;
     height: 62px;
-    background-color: white;
+    background-color: #fff;
     border-radius: 3px;
-    margin-top: 10px;
 }
 
 .task-title {
@@ -56,9 +54,7 @@ div#kanban-top {
 
 .tasks {
     min-height: 20px;
-    background-color: rgba(249, 249, 249, 1);
     border-radius: 3px;
-    padding: 5px;
 }
 
 button.btn.btn-primary {

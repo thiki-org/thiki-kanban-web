@@ -67,7 +67,7 @@ entriesServices.factory('Entries', [
   '$resource',
   function ($resource) {
     console.log('\u6211\u662fServer');
-    return $resource('entries/entries.json', {}, {
+    return $resource('mock/entries/entries.json', {}, {
       load: {
         method: 'GET',
         isArray: true
