@@ -19,7 +19,7 @@ div#kanban-top {
     float: left;
     min-height: 20px;
     border: 1px solid #fff;
-    background: rgba(249,249,249,1);
+    background: rgba(249, 249, 249, 1);
     margin: 5px;
     border-radius: 3px;
 }
@@ -32,6 +32,12 @@ div#kanban-top {
 }
 
 .entry-title {
+    color: #333;
+    border-bottom: none;
+    margin: 2% 2% 10px;
+}
+
+.entry-item {
     color: #333;
     border-bottom: none;
     margin: 2% 2% 10px;
@@ -70,7 +76,6 @@ button.btn.btn-primary {
 
 .input-group {
     float: left;
-    border: 1px solid none;
 }
 
 .btn-group {
@@ -115,4 +120,58 @@ div#search {
     background-color: rgba(227, 245, 236, 1);
     border: 1px solid rgba(227, 245, 236, 1);
     border-radius: 20px;
+}
+
+div.task-create-button {
+    border: rgb(208, 208, 208);
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 12px;
+    background-color: rgb(208, 208, 208);
+    color: #fff;
+    font-weight: bolder;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+form.create-task-from {
+    display: none;
+}
+
+button.btn.btn-primary {
+    background: #00BC5B;
+}
+
+.create-task-title {
+    margin-left: 0px;
+    border-radius: 3px;
+}
+
+.task-create-task-div {
+    width: 100%;
+}
+
+.create-entry-from-button {
+    width: 120px;
+    margin-top: 5px;
+    float: left;
+}
+
+.create-entry-from-cancel-button {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    width: 50px;
+    text-align: center;
+    margin-top: 7px;
+}
+
+.create-entry-from-buttons {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    margin-top: 5px;
 }

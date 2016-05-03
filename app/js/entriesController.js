@@ -21,20 +21,25 @@ entriesControllers.controller('EntriesCtrl', ['$scope', 'Entries',
             $scope.entries.push(entry);
         }
 
+        $scope.showCreateTaskForm = function (entryId) {
+            $("#task-create-button-" + entryId).hide();
+            $("#task-create-form-" + entryId).show();
+        };
+
         $scope.sortableOptions = {
             placeholder: "task",
             connectWith: ".tasks",
-            opacity:0.5,
+            opacity: 0.5,
             start: function (e, ui) {
-                ui.item.attr("opacity","0.5");
+                ui.item.attr("opacity", "0.5");
                 //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
             },
             update: function (e, ui) {
-                ui.item.attr("opacity","0.5");
+                ui.item.attr("opacity", "0.5");
                 //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
             },
             stop: function (e, ui) {
-                ui.item.attr("opacity","1.0");
+                ui.item.attr("opacity", "1.0");
                 //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
             }
         };

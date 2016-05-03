@@ -1,17 +1,36 @@
 <div class="entries" ng-repeat="entry in entries" repeat-finish>
-    <div class="entry" >
-
-        <div class="entry-title entryTitle" data-type="text"  data-ng-model="entry.title" data-mode="inline">{{entry.title}}</div>
-
+    <div class="entry">
+        <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
+            {{entry.title}}
+        </div>
         <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
             <div model="{{task}}" class="task" entry="{{entry.id}}" ng-repeat="task in entry.tasks">
                 <span class="task-title">{{task.title}}</span>
             </div>
         </div>
+        <div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
+            <div id="task-create-button-{{entry.id}}" class="task-create-button"
+                 ng-click="showCreateTaskForm(entry.id)">
+                +
+            </div>
+            <form id="task-create-form-{{entry.id}}" class="create-task-from">
+                <div class="input-group task-create-task-div">
+                    <textarea rows="3" class="form-control task create-task-title" data-ng-model="title"/>
+                </div>
+                <div class="create-entry-from-buttons">
+                    <button type="button" class="create-entry-from-button btn btn-primary" ng-click="createTask()">
+                        创建 </span>
+                    </button>
+                    <div class="create-entry-from-cancel-button">取消</div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <div>
-    <div id="create-button-entry" class="entry"><div class="create-button">+</div></div>
+    <div id="create-button-entry" class="entry">
+        <div class="create-button">+</div>
+    </div>
     <form class="create-entry-from">
 
         <div class="input-group">

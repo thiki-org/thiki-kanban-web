@@ -44,6 +44,10 @@ entriesControllers.controller('EntriesCtrl', [
         };
       $scope.entries.push(entry);
     };
+    $scope.showCreateTaskForm = function (entryId) {
+      $('#task-create-button-' + entryId).hide();
+      $('#task-create-form-' + entryId).show();
+    };
     $scope.sortableOptions = {
       placeholder: 'task',
       connectWith: '.tasks',
