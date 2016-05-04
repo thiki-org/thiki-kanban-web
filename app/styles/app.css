@@ -167,6 +167,7 @@ button.btn.btn-primary {
     width: 50px;
     text-align: center;
     margin-top: 7px;
+    cursor: pointer;
 }
 
 .create-entry-from-buttons {

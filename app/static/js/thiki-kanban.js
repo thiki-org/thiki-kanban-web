@@ -48,6 +48,10 @@ entriesControllers.controller('EntriesCtrl', [
       $('#task-create-button-' + entryId).hide();
       $('#task-create-form-' + entryId).show();
     };
+    $scope.cancelCreateTask = function (entryId) {
+      $('#task-create-form-' + entryId).hide();
+      $('#task-create-button-' + entryId).show();
+    };
     $scope.sortableOptions = {
       placeholder: 'task',
       connectWith: '.tasks',
