@@ -6,7 +6,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
     'entriesControllers',
     'entriesServices',
-    'ui.sortable'
+    'ui.sortable',
+    'tasksServices'
 ]);
 
 kanbanApp.config(['$routeProvider',

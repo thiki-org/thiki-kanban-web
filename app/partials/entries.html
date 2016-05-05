@@ -4,7 +4,7 @@
             {{entry.title}}
         </div>
         <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
-            <div model="{{task}}" class="task" entry="{{entry.id}}" ng-repeat="task in entry.tasks">
+            <div model="{{task}}" class="task" entry="{{entry.id}}" ng-repeat="task in tasks">
                 <span class="task-title">{{task.title}}</span>
             </div>
         </div>

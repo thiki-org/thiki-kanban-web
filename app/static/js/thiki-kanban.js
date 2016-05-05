@@ -4,7 +4,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
     'entriesControllers',
     'entriesServices',
-    'ui.sortable'
+    'ui.sortable',
+    'tasksServices'
   ]);
 kanbanApp.config([
   '$routeProvider',
@@ -27,14 +28,24 @@ kanbanApp.config([
 var entriesControllers = angular.module('entriesControllers', []);
 entriesControllers.controller('EntriesCtrl', [
   '$scope',
+  '$q',
   'Entries',
-  function ($scope, Entries) {
-    $scope.entries = Entries.load();
-    console.log(Entries.load());
-    console.log('EntriesCtrl....');
-    console.log($('.entryTitle'));
-    $('#username').editable();
-    $scope.statusFilter = { status: 1 };
+  'Tasks',
+  function ($scope, $q, Entries, Tasks) {
+    var tasks = [];
+    var entriesPromise = Entries.load();
+    // 同步调用，获得承诺接口var entryTasksPromise
+    var entryTasksPromise;
+    entriesPromise.then(function (data) {
+      // 调用承诺API获取数据 .resolve
+      $scope.entries = data;
+      angular.forEach($scope.entries, function (entry) {
+        var _tasks = Tasks.loadTasksByEntryId(entry.id);
+        tasks = tasks.concat(_tasks);
+      });
+    });
+    entriesPromise.finally(function () {
+    });
     $scope.createEntry = function () {
       var title = $scope.title;
       var entry = {
@@ -72,15 +83,25 @@ entriesControllers.controller('EntriesCtrl', [
 /* Services */
 var entriesServices = angular.module('entriesServices', ['ngResource']);
 entriesServices.factory('Entries', [
-  '$resource',
-  function ($resource) {
-    console.log('\u6211\u662fServer');
-    return $resource('mock/entries/entries.json', {}, {
-      load: {
-        method: 'GET',
-        isArray: true
-      }
-    });
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      load: function () {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        $http({
+          method: 'GET',
+          url: 'mock/entries/entries.json'
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }  // end query
+    };
   }
 ]);
 /**
@@ -93,14 +114,40 @@ kanbanApp.directive('repeatFinish', [
     return {
       restrict: 'A',
       link: function (scope, element, attr) {
-        console.log(scope.$index);
         if (scope.$last == true) {
-          console.log('ng-repeat\u6267\u884c\u5b8c\u6bd5');
           $timeout(function () {
             $('.entryTitle').editable();
             scope.$emit('ngRepeatFinished');
           });
         }
+      }
+    };
+  }
+]);
+'use strict';
+/* Services */
+var tasksServices = angular.module('tasksServices', ['ngResource']);
+tasksServices.factory('Tasks', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      loadTasksByEntryId: function (entryId) {
+        // return a Promise object so that the caller can handle success/failure
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        var tasks = [];
+        $http({
+          method: 'GET',
+          url: 'mock/tasks/tasks-' + entryId + '.json'
+        }).success(function (data, status, headers, config) {
+          tasks = data;
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return tasks;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
     };
   }
