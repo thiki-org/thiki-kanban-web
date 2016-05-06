@@ -1,10 +1,11 @@
-<div class="entries" ng-repeat="entry in entries" repeat-finish>
+<div class="entry" ng-repeat="entry in entries" repeat-finish>
     <div class="entry">
         <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
             {{entry.title}}
         </div>
-        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks">
-            <div model="{{task}}" class="task" entry="{{entry.id}}" ng-repeat="task in tasks">
+        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks">
+            <div model="{{task}}" class="task" entry="{{entry.id}}"
+                 ng-repeat="task in tasks | filter:{entryId:entry.id}">
                 <span class="task-title">{{task.title}}</span>
             </div>
         </div>

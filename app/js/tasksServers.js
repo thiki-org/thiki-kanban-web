@@ -21,7 +21,7 @@ tasksServices.factory('Tasks', ['$http', '$q', function ($http, $q) {
             }).error(function (data, status, headers, config) {
                 deferred.reject(data);   // 声明执行失败，即服务器返回错误
             });
-            return tasks;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+            return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
         }
     }
 }]);

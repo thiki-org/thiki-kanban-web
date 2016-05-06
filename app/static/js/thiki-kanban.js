@@ -35,16 +35,38 @@ entriesControllers.controller('EntriesCtrl', [
     var tasks = [];
     var entriesPromise = Entries.load();
     // 同步调用，获得承诺接口var entryTasksPromise
-    var entryTasksPromise;
+    var entryTasksPromise = [];
     entriesPromise.then(function (data) {
       // 调用承诺API获取数据 .resolve
       $scope.entries = data;
       angular.forEach($scope.entries, function (entry) {
-        var _tasks = Tasks.loadTasksByEntryId(entry.id);
-        tasks = tasks.concat(_tasks);
+        var _tasksPromise = Tasks.loadTasksByEntryId(entry.id);
+        entryTasksPromise.push(_tasksPromise);
       });
-    });
-    entriesPromise.finally(function () {
+      $q.all(entryTasksPromise).then(function (data) {
+        for (var index in data) {
+          tasks = tasks.concat(data[index]);
+        }
+        console.log(tasks);
+        $scope.tasks = tasks;
+        $scope.sortableOptions = {
+          placeholder: 'task',
+          connectWith: '.tasks',
+          opacity: 0.5,
+          start: function (e, ui) {
+          },
+          update: function (e, ui) {
+            ui.item.attr('opacity', '0.5');
+            console.log(ui);
+          },
+          stop: function (e, ui) {
+            ui.item.sortable.model.entryId = 1;
+            console.log(ui);
+            alert(JSON.stringify(ui.placeholder[0]));
+            alert(ui.item.sortable.model.entryId);
+          }
+        };
+      });
     });
     $scope.createEntry = function () {
       var title = $scope.title;
@@ -62,20 +84,6 @@ entriesControllers.controller('EntriesCtrl', [
     $scope.cancelCreateTask = function (entryId) {
       $('#task-create-form-' + entryId).hide();
       $('#task-create-button-' + entryId).show();
-    };
-    $scope.sortableOptions = {
-      placeholder: 'task',
-      connectWith: '.tasks',
-      opacity: 0.5,
-      start: function (e, ui) {
-        ui.item.attr('opacity', '0.5');  //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
-      },
-      update: function (e, ui) {
-        ui.item.attr('opacity', '0.5');  //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
-      },
-      stop: function (e, ui) {
-        ui.item.attr('opacity', '1.0');  //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
-      }
     };
   }
 ]);
@@ -147,7 +155,7 @@ tasksServices.factory('Tasks', [
         }).error(function (data, status, headers, config) {
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
         });
-        return tasks;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
     };
   }
