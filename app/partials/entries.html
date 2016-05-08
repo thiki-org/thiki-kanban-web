@@ -3,8 +3,8 @@
         <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
             {{entry.title}}
         </div>
-        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks">
-            <div model="{{task}}" class="task" entry="{{entry.id}}"
+        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks" entry="{{entry}}">
+            <div model="{{task}}" class="task" entry="{{entry}}"
                  ng-repeat="task in tasks | filter:{entryId:entry.id}">
                 <span class="task-title">{{task.title}}</span>
             </div>

@@ -20,34 +20,30 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks'
 
             });
             $q.all(entryTasksPromise).then(function (data) {
-
                 for (var index in data) {
                     tasks = tasks.concat(data[index]);
                 }
                 console.log(tasks);
                 $scope.tasks = tasks;
                 $scope.sortableOptions = {
-                    placeholder: "task",
                     connectWith: ".tasks",
                     opacity: 0.5,
                     start: function (e, ui) {
+                        // console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                         //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
                     },
                     update: function (e, ui) {
-                        ui.item.attr("opacity", "0.5");
-                        console.log(ui);
+                        console.log("===========" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                     },
                     stop: function (e, ui) {
-                        ui.item.sortable.model.entryId = 1;
-                        console.log(ui);
-                        alert(JSON.stringify(ui.placeholder[0]))
-                        alert(ui.item.sortable.model.entryId);
+                        console.log(ui.item.scope());
+                        var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr("entry")).id;
+                        ui.item.sortable.model.entryId = targetEntryId;
+                        console.log(ui.item.sortable.model);
                     }
                 };
-
             });
         });
-
 
         $scope.createEntry = function () {
             var title = $scope.title;
@@ -64,6 +60,4 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks'
             $("#task-create-form-" + entryId).hide();
             $("#task-create-button-" + entryId).show();
         };
-
-
     }]);

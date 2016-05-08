@@ -50,20 +50,18 @@ entriesControllers.controller('EntriesCtrl', [
         console.log(tasks);
         $scope.tasks = tasks;
         $scope.sortableOptions = {
-          placeholder: 'task',
           connectWith: '.tasks',
           opacity: 0.5,
           start: function (e, ui) {
           },
           update: function (e, ui) {
-            ui.item.attr('opacity', '0.5');
-            console.log(ui);
+            console.log('===========' + $(ui.item.sortable.droptarget[0]).attr('entry'));
           },
           stop: function (e, ui) {
-            ui.item.sortable.model.entryId = 1;
-            console.log(ui);
-            alert(JSON.stringify(ui.placeholder[0]));
-            alert(ui.item.sortable.model.entryId);
+            console.log(ui.item.scope());
+            var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
+            ui.item.sortable.model.entryId = targetEntryId;
+            console.log(ui.item.sortable.model);
           }
         };
       });
