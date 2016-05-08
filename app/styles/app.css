@@ -29,6 +29,8 @@ div#kanban-top {
     width: 240px;
     margin: 5px;
     min-height: 20px;
+    background: #EEECE8;
+    border-radius: 3px;
 }
 
 .entry-title {
@@ -142,6 +144,7 @@ form.create-task-from {
 
 button.btn.btn-primary {
     background: #00BC5B;
+    border: 1px solid #EEECE8;
 }
 
 .create-task-title {

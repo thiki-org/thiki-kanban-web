@@ -1,31 +1,29 @@
 <div class="entry" ng-repeat="entry in entries" repeat-finish>
-    <div class="entry">
-        <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
-            {{entry.title}}
+    <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
+        {{entry.title}}
+    </div>
+    <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks" entry="{{entry}}">
+        <div model="{{task}}" class="task" entry="{{entry}}"
+             ng-repeat="task in tasks | filter:{entryId:entry.id}">
+            <span class="task-title">{{task.title}}</span>
         </div>
-        <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks" entry="{{entry}}">
-            <div model="{{task}}" class="task" entry="{{entry}}"
-                 ng-repeat="task in tasks | filter:{entryId:entry.id}">
-                <span class="task-title">{{task.title}}</span>
+    </div>
+    <div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
+        <div id="task-create-button-{{entry.id}}" class="task-create-button"
+             ng-click="showCreateTaskForm(entry.id)">
+            +
+        </div>
+        <form id="task-create-form-{{entry.id}}" class="create-task-from">
+            <div class="input-group task-create-task-div">
+                <textarea rows="3" class="form-control task create-task-title" data-ng-model="title"/>
             </div>
-        </div>
-        <div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
-            <div id="task-create-button-{{entry.id}}" class="task-create-button"
-                 ng-click="showCreateTaskForm(entry.id)">
-                +
+            <div class="create-entry-from-buttons">
+                <button type="button" class="create-entry-from-button btn btn-primary" ng-click="createTask()">
+                    创建 </span>
+                </button>
+                <div class="create-entry-from-cancel-button" ng-click="cancelCreateTask(entry.id)">取消</div>
             </div>
-            <form id="task-create-form-{{entry.id}}" class="create-task-from">
-                <div class="input-group task-create-task-div">
-                    <textarea rows="3" class="form-control task create-task-title" data-ng-model="title"/>
-                </div>
-                <div class="create-entry-from-buttons">
-                    <button type="button" class="create-entry-from-button btn btn-primary" ng-click="createTask()">
-                        创建 </span>
-                    </button>
-                    <div class="create-entry-from-cancel-button" ng-click="cancelCreateTask(entry.id)">取消</div>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 <div>
