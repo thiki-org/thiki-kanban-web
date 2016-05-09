@@ -84,8 +84,7 @@ button.btn.btn-primary {
     margin-left: 10px;
 }
 
-div#create-button-entry {
-    margin-top: 40px;
+#create-new-entry-button {
     border: 1px solid rgba(0, 188, 91, 1);
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -96,17 +95,18 @@ div#create-button-entry {
     font-size: 18px;
 }
 
-div#create-button-entry :hover {
+#create-new-entry-button:hover {
     background-color: rgba(0, 188, 91, 1);
     color: white;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 35px;
-    font-size: 18px;
     cursor: pointer;
+}
+
+div#create-new-entry {
+    float: left;
+    width: 240px;
+    margin: 5px;
+    min-height: 20px;
+    border-radius: 3px;
 }
 
 div#search {
@@ -178,4 +178,8 @@ button.btn.btn-primary {
     height: 100%;
     display: inline-block;
     margin-top: 5px;
+}
+
+#create-new-entry-form {
+    display: none;
 }
