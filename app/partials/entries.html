@@ -13,12 +13,12 @@
              ng-click="showCreateTaskForm(entry.id)">
             +
         </div>
-        <form id="task-create-form-{{entry.id}}" class="create-task-form">
+        <form id="task-create-form-{{entry.id}}" name="createNewTaskForm{{entry.id}}" class="create-task-form">
             <div class="input-group task-create-task-div">
-                <textarea rows="3" class="form-control task create-task-title" data-ng-model="title"/>
+                <textarea name="title" rows="3" class="form-control task create-task-title" data-ng-model="title"  required/>
             </div>
             <div class="create-task-form-buttons">
-                <button type="button" class="create-task-form-button btn btn-primary" ng-click="createTask()">
+                <button type="button" class="create-task-form-button btn btn-primary" ng-click="createTask()" ng-disabled="createNewTaskForm{{entry.id}}.title.$invalid">
                     创建 </span>
                 </button>
                 <div class="create-task-form-cancel-button" ng-click="cancelCreateTask(entry.id)">取消</div>
@@ -29,12 +29,12 @@
 <div>
     <div id="create-new-entry">
         <div id="create-new-entry-button" ng-click="showCreateEntryForm()">+</div>
-        <form id="create-new-entry-form" class="create-entry-form">
+        <form id="create-new-entry-form" name="createNewEntryForm" class="create-entry-form">
             <div class="input-group">
-                <input type="text" class="form-control" data-ng-model="title"/>
+                <input name="title" type="text" class="form-control" data-ng-model="entry.title"  required/>
             </div>
             <div class="create-entry-form-buttons">
-                <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()">
+                <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()" ng-disabled="createNewEntryForm.title.$invalid">
                     创建 </span>
                 </button>
                 <div class="create-entry-form-cancel-button" ng-click="cancelCreateEntry()">取消</div>
