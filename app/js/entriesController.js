@@ -60,6 +60,10 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks'
             $("#task-create-form-" + entryId).hide();
             $("#task-create-button-" + entryId).show();
         };
+        $scope.cancelCreateEntry=function () {
+            $("#create-new-entry-form").hide();
+            $("#create-new-entry-button").show();
+        }
         $scope.showCreateEntryForm = function () {
             $("#create-new-entry-button").hide();
             $("#create-new-entry-form").show();
