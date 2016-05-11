@@ -38,7 +38,7 @@ gulp.task('minify-bower-components', function () {
 
 // 合并CSS
 gulp.task('minify-css', function () {
-    return gulp.src('app/styles/*.css')
+    return gulp.src('app/styles/**/*.css')
         .pipe(concat('thiki-kanban.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('app/static/css'));
@@ -59,7 +59,7 @@ gulp.task('minify', function () {
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['app/js/*.js','app/style/*.css', 'Gulpfile.js'], ['jshint', 'minify','minify-css']);
+    gulp.watch(['app/js/*.js', 'app/style/*.css', 'Gulpfile.js'], ['jshint', 'minify', 'minify-css']);
 });
 
 // 注册缺省任务
