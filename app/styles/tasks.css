@@ -1,0 +1,70 @@
+.task {
+    width: 96%;
+    border: 1px solid #EAEAEA;
+    margin: 2%;
+    height: 62px;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.task-title {
+    color: black;
+    margin: 5px;
+    position: absolute;
+}
+
+.tasks {
+    min-height: 20px;
+    border-radius: 3px;
+}
+.create-task-title {
+    margin-left: 0px;
+    border-radius: 3px;
+}
+
+.task-create-task-div {
+    width: 100%;
+}
+
+.create-task-form-button {
+    width: 120px;
+    margin-top: 5px;
+    float: left;
+}
+
+.create-task-form-cancel-button {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
+    width: 50px;
+    text-align: center;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.create-task-form-buttons {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+
+div.task-create-button {
+    border: rgb(208, 208, 208);
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 12px;
+    background-color: rgb(208, 208, 208);
+    color: #fff;
+    font-weight: bolder;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+form.create-task-form {
+    display: none;
+}
