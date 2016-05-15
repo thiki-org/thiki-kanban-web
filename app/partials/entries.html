@@ -9,19 +9,27 @@
         </div>
     </div>
     <div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
-        <div id="task-create-button-{{entry.id}}" class="task-create-button"
-             ng-click="showCreateTaskForm(entry.id)">
+        <div id="task-create-button-{{encode(entry._links.self.href)}}" class="task-create-button"
+             ng-click="showCreateTaskForm(encode(entry._links.self.href))">
             +
         </div>
-        <form id="task-create-form-{{entry.id}}" name="createNewTaskForm{{entry.id}}" class="create-task-form">
+        <form id="task-create-form-{{encode(entry._links.self.href)}}"
+              name="createNewTaskForm{{encode(entry._links.self.href)}}"
+              class="create-task-form">
             <div class="input-group task-create-task-div">
-                <textarea name="title" rows="3" class="form-control task create-task-title" data-ng-model="title"  required/>
+                <textarea id="{{encode(entry._links.self.href)}}-title" name="title" rows="3"
+                          class="form-control task create-task-title" data-ng-model="title"
+                          required/>
             </div>
             <div class="create-task-form-buttons">
-                <button type="button" class="create-task-form-button btn btn-primary" ng-click="createTask()" ng-disabled="createNewTaskForm{{entry.id}}.title.$invalid">
+                <button type="button" class="create-task-form-button btn btn-primary"
+                        ng-click="createTask(entry._links.self.href,entry._links.tasks.href)"
+                        ng-disabled="createNewTaskForm{{encode(entry._links.self.href)}}.title.$invalid">
                     创建 </span>
                 </button>
-                <div class="create-task-form-cancel-button" ng-click="cancelCreateTask(entry.id)">取消</div>
+                <div class="create-task-form-cancel-button"
+                     ng-click="cancelCreateTask(encode(entry._links.self.href))">取消
+                </div>
             </div>
         </form>
     </div>
@@ -31,10 +39,11 @@
         <div id="create-new-entry-button" ng-click="showCreateEntryForm()">+</div>
         <form id="create-new-entry-form" name="createNewEntryForm" class="create-entry-form">
             <div class="input-group">
-                <input name="title" type="text" class="form-control" data-ng-model="entry.title"  required/>
+                <input name="title" type="text" class="form-control" data-ng-model="entry.title" required/>
             </div>
             <div class="create-entry-form-buttons">
-                <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()" ng-disabled="createNewEntryForm.title.$invalid">
+                <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()"
+                        ng-disabled="createNewEntryForm.title.$invalid">
                     创建 </span>
                 </button>
                 <div class="create-entry-form-cancel-button" ng-click="cancelCreateEntry()">取消</div>
