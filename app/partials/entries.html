@@ -1,11 +1,11 @@
-<div class="entry" ng-repeat="entry in entries" repeat-finish>
+<div class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" repeat-finish>
     <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
         {{entry.title}}
     </div>
-    <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks" entry="{{entry}}">
+    <div class="tasks" ui-sortable="sortableOptions" data-ng-model="entry.tasks" entry="{{entry}}">
         <div model="{{task}}" class="task" entry="{{entry}}"
-             ng-repeat="task in tasks | filter:{entryId:entry.id}">
-            <span class="task-title">{{task.title}}</span>
+             ng-repeat="task in entry.tasks | filter:{entryId:entry.id}" entryId="{{entry.id}">
+            <span class="task-title">{{task.summary}}</span>
         </div>
     </div>
     <div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
@@ -47,7 +47,6 @@
                     创建 </span>
                 </button>
                 <div class="create-entry-form-cancel-button" ng-click="cancelCreateEntry()">取消</div>
-
             </div>
         </form>
     </div>

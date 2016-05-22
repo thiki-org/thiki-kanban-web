@@ -127,35 +127,39 @@ entriesControllers.controller('EntriesCtrl', [
   'Tasks',
   function ($scope, $q, Entries, Tasks) {
     function loadData() {
+      var entries = [];
       var tasks = [];
       var entriesPromise = Entries.load();
       // 同步调用，获得承诺接口var entryTasksPromise
       var entryTasksPromise = [];
       entriesPromise.then(function (data) {
         // 调用承诺API获取数据 .resolve
-        $scope.entries = data.entries;
-        angular.forEach($scope.entries, function (entry) {
-          var _tasksPromise = Tasks.loadTasksByEntryId(entry.id);
+        angular.forEach(data.entries, function (entry) {
+          var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+          _tasksPromise.then(function (data) {
+            entry.tasks = data.tasks;
+            entries.push(entry);
+          });
           entryTasksPromise.push(_tasksPromise);
         });
         $q.all(entryTasksPromise).then(function (data) {
-          for (var index in data) {
-            tasks = tasks.concat(data[index]);
-          }
-          $scope.tasks = tasks;
+          $scope.entries = entries;
           $scope.sortableOptions = {
             connectWith: '.tasks',
             opacity: 0.5,
             start: function (e, ui) {
             },
             update: function (e, ui) {
-              console.log('===========' + $(ui.item.sortable.droptarget[0]).attr('entry'));
             },
             stop: function (e, ui) {
               console.log(ui.item.scope());
               var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
               ui.item.sortable.model.entryId = targetEntryId;
               console.log(ui.item.sortable.model);
+              var _tasksPromise = Tasks.update(ui.item.sortable.model);
+              _tasksPromise.then(function (data) {
+                loadData();
+              });
             }
           };
         });
@@ -199,6 +203,7 @@ entriesControllers.controller('EntriesCtrl', [
       var task = { summary: summary };
       var taskPromise = Tasks.create(task, _entryTasksUrl);
       taskPromise.then(function (data) {
+        loadData();
       });
     };
   }
@@ -276,14 +281,14 @@ tasksServices.factory('Tasks', [
   '$q',
   function ($http, $q) {
     return {
-      loadTasksByEntryId: function (entryId) {
+      loadTasksByEntryId: function (tasksUrl) {
         var deferred = $q.defer();
         // 声明延后执行，表示要去监控后面的执行
         // return a Promise object so that the caller can handle success/failure
         var tasks = [];
         $http({
           method: 'GET',
-          url: 'mock/tasks/tasks-' + entryId + '.json'
+          url: tasksUrl
         }).success(function (data, status, headers, config) {
           tasks = data;
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
@@ -301,6 +306,23 @@ tasksServices.factory('Tasks', [
           data: JSON.stringify(_task),
           headers: { 'userId': '112' },
           url: _entryTasksUrl
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      update: function (_task) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify(_task),
+          headers: { 'userId': '112' },
+          url: _task._links.self.href
         }).success(function (data, status, headers, config) {
           console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了

@@ -8,37 +8,44 @@ var entriesControllers = angular.module('entriesControllers', []);
 entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks',
     function ($scope, $q, Entries, Tasks) {
         function loadData() {
+            var entries = [];
             var tasks = [];
 
             var entriesPromise = Entries.load(); // 同步调用，获得承诺接口var entryTasksPromise
             var entryTasksPromise = [];
             entriesPromise.then(function (data) {  // 调用承诺API获取数据 .resolve
-                $scope.entries = data.entries;
+                angular.forEach(data.entries, function (entry) {
+                    var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
 
-                angular.forEach($scope.entries, function (entry) {
-                    var _tasksPromise = Tasks.loadTasksByEntryId(entry.id);
+                    _tasksPromise.then(function (data) {
+                        entry.tasks = data.tasks;
+                        entries.push(entry);
+                    });
                     entryTasksPromise.push(_tasksPromise);
                 });
                 $q.all(entryTasksPromise).then(function (data) {
-                    for (var index in data) {
-                        tasks = tasks.concat(data[index]);
-                    }
-                    $scope.tasks = tasks;
+                    $scope.entries = entries;
+
                     $scope.sortableOptions = {
                         connectWith: ".tasks",
                         opacity: 0.5,
                         start: function (e, ui) {
-                            // console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
+                            //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                             //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
                         },
                         update: function (e, ui) {
-                            console.log("===========" + $(ui.item.sortable.droptarget[0]).attr("entry"));
+                            //  console.log("===========" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                         },
                         stop: function (e, ui) {
                             console.log(ui.item.scope());
                             var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr("entry")).id;
                             ui.item.sortable.model.entryId = targetEntryId;
                             console.log(ui.item.sortable.model);
+
+                            var _tasksPromise = Tasks.update(ui.item.sortable.model);
+                            _tasksPromise.then(function (data) {
+                                loadData();
+                            });
                         }
                     };
                 });
@@ -86,6 +93,7 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks'
             var task = {summary: summary}
             var taskPromise = Tasks.create(task, _entryTasksUrl);
             taskPromise.then(function (data) {
+                loadData();
             });
         };
     }]);
