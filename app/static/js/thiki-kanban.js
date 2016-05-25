@@ -150,16 +150,17 @@ entriesControllers.controller('EntriesCtrl', [
             start: function (e, ui) {
             },
             update: function (e, ui) {
-            },
-            stop: function (e, ui) {
               console.log(ui.item.scope());
               var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
               ui.item.sortable.model.entryId = targetEntryId;
+              ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
               console.log(ui.item.sortable.model);
               var _tasksPromise = Tasks.update(ui.item.sortable.model);
               _tasksPromise.then(function (data) {
                 loadData();
               });
+            },
+            stop: function (e, ui) {
             }
           };
         });
