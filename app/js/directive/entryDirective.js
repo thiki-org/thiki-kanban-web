@@ -3,13 +3,13 @@
  */
 
 //自定义指令repeatFinish
-kanbanApp.directive('repeatFinish',function($timeout){
+kanbanApp.directive('repeatFinish', function ($timeout) {
     return {
-        restrict:'A',
+        restrict: 'A',
 
-        link: function(scope,element,attr){
-            if(scope.$last == true){
-                $timeout(function() {
+        link: function (scope, element, attr) {
+            if (scope.$last == true) {
+                $timeout(function () {
                     $('.entryTitle').editable();
                     scope.$emit('ngRepeatFinished');
                 });

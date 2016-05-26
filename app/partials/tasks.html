@@ -1,0 +1,7 @@
+<div class="tasks" ui-sortable="sortableOptions" ng-model="entry.tasks" entry="{{entry}}">
+    <div class="task" entry="{{entry}}"
+         ng-repeat="task in entry.tasks | filter:{entryId:entry.id}"
+         entryId="{{entry.id}">
+        <span class="task-title">{{task.summary}}</span>
+    </div>
+</div>

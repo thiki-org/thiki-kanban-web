@@ -97,4 +97,8 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$q', 'Entries', 'Tasks'
                 loadData();
             });
         };
+
+        $scope.updateUser = function (data) {
+            alert(1);
+        }
     }]);

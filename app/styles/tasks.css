@@ -17,6 +17,7 @@
     min-height: 20px;
     border-radius: 3px;
 }
+
 .create-task-title {
     margin-left: 0px;
     border-radius: 3px;
@@ -49,7 +50,6 @@
     display: inline-block;
     margin-top: 5px;
 }
-
 
 div.task-create-button {
     border: rgb(208, 208, 208);

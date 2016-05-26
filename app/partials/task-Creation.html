@@ -1,0 +1,25 @@
+<div class="task-create entry-item" data-type="text" data-ng-model="entry.title" data-mode="inline">
+    <div id="task-create-button-{{encode(entry._links.self.href)}}" class="task-create-button"
+         ng-click="showCreateTaskForm(encode(entry._links.self.href))">
+        +
+    </div>
+    <form id="task-create-form-{{encode(entry._links.self.href)}}"
+          name="createNewTaskForm{{encode(entry._links.self.href)}}"
+          class="create-task-form">
+        <div class="input-group task-create-task-div">
+                <textarea id="{{encode(entry._links.self.href)}}-title" name="title" rows="3"
+                          class="form-control task create-task-title" data-ng-model="title"
+                          required/>
+        </div>
+        <div class="create-task-form-buttons">
+            <button type="button" class="create-task-form-button btn btn-primary"
+                    ng-click="createTask(entry._links.self.href,entry._links.tasks.href)"
+                    ng-disabled="createNewTaskForm{{encode(entry._links.self.href)}}.title.$invalid">
+                创建 </span>
+            </button>
+            <div class="create-task-form-cancel-button"
+                 ng-click="cancelCreateTask(encode(entry._links.self.href))">取消
+            </div>
+        </div>
+    </form>
+</div>

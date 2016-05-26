@@ -24,7 +24,7 @@ var cleanCSS = require('gulp-clean-css');
 
 // 语法检查
 gulp.task('jshint', function () {
-    return gulp.src('app/js/*.js')
+    return gulp.src('app/js/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
@@ -46,7 +46,7 @@ gulp.task('minify-css', function () {
 // 合并文件之后压缩代码
 gulp.task('minify', function () {
     return gulp.src([
-            'app/js/*.js'])
+        'app/js/*.js', 'app/js/**/*.js'])
         .pipe(ngAnnotate())
         .pipe(ngmin({dynamic: false}))
         .pipe(concat('thiki-kanban.js'))
@@ -59,7 +59,7 @@ gulp.task('minify', function () {
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['app/js/*.js', 'app/style/*.css', 'Gulpfile.js'], ['jshint', 'minify', 'minify-css']);
+    gulp.watch(['app/js/*.js', 'app/js/**/*.js', 'app/style/*.css', 'Gulpfile.js'], ['jshint', 'minify', 'minify-css']);
 });
 
 // 注册缺省任务
