@@ -30,8 +30,9 @@ kanbanApp.directive('taskCreation', function ($timeout) {
             $scope.showCreateTaskForm = function () {
                 $scope.displayCreationButton = false;
                 $scope.displayForm = true;
+                $scope.summary = "";
             };
-            $scope.cancelCreateTask = function (entryId) {
+            $scope.cancelCreateTask = function () {
                 $scope.displayCreationButton = true;
                 $scope.displayForm = false;
             };
@@ -43,6 +44,8 @@ kanbanApp.directive('taskCreation', function ($timeout) {
 
                     _tasksPromise.then(function (data) {
                         $scope.tasks = data;
+                        $scope.displayCreationButton = true;
+                        $scope.displayForm = false;
                     });
                 });
             };

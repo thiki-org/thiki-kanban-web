@@ -1,4 +1,4 @@
-<div class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" repeat-finish>
+<div entryId="{{entry.id}}" class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" repeat-finish>
     <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" data-mode="inline">
         {{entry.title}}
     </div>

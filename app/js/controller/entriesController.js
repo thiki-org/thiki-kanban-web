@@ -25,7 +25,7 @@ entriesControllers.controller('EntriesCtrl', ['$scope', '$routeParams', '$q', 'E
                         },
                         update: function (e, ui) {
                             console.log(ui.item.scope());
-                            var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr("entry")).id;
+                            var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
                             ui.item.sortable.model.entryId = targetEntryId;
                             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
                             console.log(ui.item.sortable.model);

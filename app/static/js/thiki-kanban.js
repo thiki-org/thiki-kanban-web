@@ -71,7 +71,7 @@ entriesControllers.controller('EntriesCtrl', [
           },
           update: function (e, ui) {
             console.log(ui.item.scope());
-            var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
+            var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
             ui.item.sortable.model.entryId = targetEntryId;
             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
             console.log(ui.item.sortable.model);
@@ -89,6 +89,27 @@ entriesControllers.controller('EntriesCtrl', [
   }
 ]);
 ;
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('board', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/board-banner.html',
+    replace: true,
+    controller: [
+      '$scope',
+      'Tasks',
+      function ($scope, Tasks) {
+        var entry = $scope.entry;
+        var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+        _tasksPromise.then(function (data) {
+          $scope.tasks = data;
+        });
+      }
+    ]
+  };
+});
 /**
  * Created by xubt on 4/29/16.
  */
@@ -213,8 +234,9 @@ kanbanApp.directive('taskCreation', [
           $scope.showCreateTaskForm = function () {
             $scope.displayCreationButton = false;
             $scope.displayForm = true;
+            $scope.summary = '';
           };
-          $scope.cancelCreateTask = function (entryId) {
+          $scope.cancelCreateTask = function () {
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
           };
@@ -228,6 +250,8 @@ kanbanApp.directive('taskCreation', [
               var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
               _tasksPromise.then(function (data) {
                 $scope.tasks = data;
+                $scope.displayCreationButton = true;
+                $scope.displayForm = false;
               });
             });
           };
