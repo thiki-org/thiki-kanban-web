@@ -1,0 +1,22 @@
+.boards {
+    border-radius: 3px;
+    width: 100%;
+    float: left;
+}
+
+.board-item {
+    border: 1px solid #e8e8ea;
+    background: #fff;
+    width: 200px;
+    height: 80px;
+    margin: 10px;
+    text-align: center;
+    line-height: 80px;
+    border-radius: 3px;
+    float: left;
+    cursor: pointer;
+}
+
+div.boards :hover {
+    background-color: #eeece8;
+}

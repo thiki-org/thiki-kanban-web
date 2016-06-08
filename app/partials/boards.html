@@ -1,0 +1,7 @@
+<div class="boards">
+    <div id="board-{{board.id}}" ng-repeat="board in boards | orderBy:'creationTime'" repeat-finish class="board-item"
+         data-ng-model="board.name"
+         data-mode="inline">
+        <span ng-click=toTasks(board.id,board._links.entries.href)> {{board.name}}</span>
+    </div>
+</div>

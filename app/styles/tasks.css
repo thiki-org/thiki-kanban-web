@@ -64,7 +64,3 @@ div.task-create-button {
     margin-top: 10px;
     cursor: pointer;
 }
-
-form.create-task-form {
-    display: none;
-}

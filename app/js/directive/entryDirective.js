@@ -17,3 +17,58 @@ kanbanApp.directive('repeatFinish', function ($timeout) {
         }
     }
 })
+
+
+kanbanApp.directive('entryCreation', function ($timeout) {
+    return {
+        restrict: 'E',
+        templateUrl: 'partials/entry-creation.html',
+        replace: true,
+        controller: ['$scope', 'Entries', function ($scope, Entries) {
+            $scope.createEntry = function () {
+                var title = $scope.entry.title;
+                var entry = {title: title}
+                var entriesPromise = Entries.create(entry);
+                entriesPromise.then(function (data) {
+                    if ($scope.entries == null) {
+                        $scope.entries = [];
+                    }
+                    $scope.entries.push(data);
+                    $scope.entry.title = "";
+                });
+            };
+
+            $scope.cancelCreateEntry = function () {
+                $("#create-new-entry-form").hide();
+                $("#create-new-entry-button").show();
+            }
+            $scope.showCreateEntryForm = function () {
+                $("#create-new-entry-button").hide();
+                $("#create-new-entry-form").show();
+            }
+        }]
+    };
+})
+
+
+kanbanApp.directive('entry', function ($timeout) {
+    return {
+        restrict: 'E',
+        templateUrl: 'partials/entry.html',
+        replace: true,
+        controller: ['$scope', 'Entries', function ($scope, Entries) {
+            $scope.createEntry = function () {
+                var title = $scope.entry.title;
+                var entry = {title: title}
+                var entriesPromise = Entries.create(entry);
+                entriesPromise.then(function (data) {
+                    if ($scope.entries == null) {
+                        $scope.entries = [];
+                    }
+                    $scope.entries.push(data);
+                    $scope.entry.title = "";
+                });
+            };
+        }]
+    };
+})

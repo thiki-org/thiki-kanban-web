@@ -7,14 +7,16 @@ var entriesServices = angular.module('entriesServices', ['ngResource']);
 entriesServices.factory('Entries', ['$http', '$q',
     function ($http, $q) {
         return {
+            entriesLink: '',
             load: function () {
+                console.log("========="+this.entriesLink)
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
 
                 // return a Promise object so that the caller can handle success/failure
                 $http({
                     method: 'GET',
                     dataType: 'application/json',
-                    url: config.localhost + '/entries'
+                    url: this.entriesLink
                 }).success(function (data, status, headers, config) {
                     console.log(data);
                     deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
@@ -35,7 +37,7 @@ entriesServices.factory('Entries', ['$http', '$q',
                     headers: {
                         'userId': '112'
                     },
-                    url: config.localhost + '/entries'
+                    url: this.entriesLink
                 }).success(function (data, status, headers, config) {
                     console.log(data);
                     deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了

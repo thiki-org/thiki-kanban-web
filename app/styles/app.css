@@ -1,6 +1,9 @@
 /* app css stylesheet */
 
 body {
+
+    width: 100%;
+    height: 100%;
 }
 
 div#kanban-top {
@@ -13,6 +16,7 @@ div#kanban-top {
     height: 100%;
     position: fixed;
     width: 100%;
+    background: #f8f6f2;
 }
 
 button.btn.btn-primary {

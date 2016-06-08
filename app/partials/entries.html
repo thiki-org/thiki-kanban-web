@@ -1,9 +1,2 @@
-<div class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" repeat-finish>
-    <div id="entry-{{entry.id}}" class="entry-item entryTitle" data-type="text" data-ng-model="entry.title"
-         data-mode="inline" onaftersave="updateUser($data)">
-        {{entry.title}}
-    </div>
-    <tasks/>
-    <task-creation/>
-</div>
+<entry data-ng-model="entries" ng-controller="EntriesCtrl"></entry>
 <entry-creation/>

@@ -3,24 +3,46 @@
 var config = { localhost: 'http://localhost:8080' };
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
+    'boardController',
     'entriesControllers',
     'entriesServices',
     'ui.sortable',
-    'tasksServices'
+    'tasksServices',
+    'boardService'
   ]);
 kanbanApp.config([
   '$routeProvider',
   function ($routeProvider) {
     $routeProvider.when('/entries', {
-      templateUrl: 'partials/entries.html',
+      templateUrl: 'partials/boards.html',
       controller: 'EntriesCtrl'
-    }).when('/tasks', {
-      templateUrl: 'partials/tasks.html',
+    }).when('/boards/:boardId/entries', { templateUrl: 'partials/entries.html' }).when('/boards', {
+      templateUrl: 'partials/boards.html',
       controller: 'TasksCtrl'
     }).otherwise({
-      templateUrl: 'partials/entries.html',
-      controller: 'EntriesCtrl'
+      templateUrl: 'partials/boards.html',
+      controller: 'BoardsCtrl'
     });
+  }
+]);
+/**
+ * Created by xubt on 4/20/16.
+ */
+var boardController = angular.module('boardController', []);
+var boardsLink = 'http://localhost:8080/boards';
+boardController.controller('BoardsCtrl', [
+  '$scope',
+  '$location',
+  '$q',
+  'BoardService',
+  function ($scope, $location, $q, BoardService) {
+    var boardPromise = BoardService.load(boardsLink);
+    boardPromise.then(function (data) {
+      $scope.boards = data;
+    });
+    $scope.toTasks = function (_boardId, _entriesLink) {
+      $location.path('/boards/' + _boardId + '/entries').search({ entriesLink: _entriesLink });
+    };
   }
 ]);
 /**
@@ -29,93 +51,213 @@ kanbanApp.config([
 var entriesControllers = angular.module('entriesControllers', []);
 entriesControllers.controller('EntriesCtrl', [
   '$scope',
+  '$routeParams',
   '$q',
   'Entries',
   'Tasks',
-  function ($scope, $q, Entries, Tasks) {
+  function ($scope, $routeParams, $q, Entries, Tasks) {
     function loadData() {
       var entries = [];
       var tasks = [];
-      var entriesPromise = Entries.load();
-      // 同步调用，获得承诺接口var entryTasksPromise
-      var entryTasksPromise = [];
+      var entriesLink = $routeParams.entriesLink;
+      Entries.entriesLink = entriesLink;
+      var entriesPromise = Entries.load(entriesLink);
       entriesPromise.then(function (data) {
-        // 调用承诺API获取数据 .resolve
-        angular.forEach(data.entries, function (entry) {
-          var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
-          _tasksPromise.then(function (data) {
-            entry.tasks = data.tasks;
-            entries.push(entry);
-          });
-          entryTasksPromise.push(_tasksPromise);
-        });
-        $q.all(entryTasksPromise).then(function (data) {
-          $scope.entries = entries;
-          $scope.sortableOptions = {
-            connectWith: '.tasks',
-            opacity: 0.5,
-            start: function (e, ui) {
-            },
-            update: function (e, ui) {
-              console.log(ui.item.scope());
-              var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
-              ui.item.sortable.model.entryId = targetEntryId;
-              ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-              console.log(ui.item.sortable.model);
-              var _tasksPromise = Tasks.update(ui.item.sortable.model);
-              _tasksPromise.then(function (data) {
-                loadData();
-              });
-            },
-            stop: function (e, ui) {
-            }
-          };
-        });
+        $scope.entries = data;
+        $scope.sortableOptions = {
+          connectWith: '.tasks',
+          opacity: 0.5,
+          start: function (e, ui) {
+          },
+          update: function (e, ui) {
+            console.log(ui.item.scope());
+            var targetEntryId = JSON.parse($(ui.item.sortable.droptarget[0]).attr('entry')).id;
+            ui.item.sortable.model.entryId = targetEntryId;
+            ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+            console.log(ui.item.sortable.model);
+            var _tasksPromise = Tasks.update(ui.item.sortable.model);
+            _tasksPromise.then(function (data) {
+              loadData();
+            });
+          },
+          stop: function (e, ui) {
+          }
+        };
       });
     }
     loadData();
-    $scope.createEntry = function () {
-      var title = $scope.entry.title;
-      var entry = { title: title };
-      var entriesPromise = Entries.create(entry);
-      entriesPromise.then(function (data) {
-        if ($scope.entries == null) {
-          $scope.entries = [];
+  }
+]);
+;
+/**
+ * Created by xubt on 4/29/16.
+ */
+//自定义指令repeatFinish
+kanbanApp.directive('repeatFinish', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        if (scope.$last == true) {
+          $timeout(function () {
+            $('.entryTitle').editable();
+            scope.$emit('ngRepeatFinished');
+          });
         }
-        $scope.entries.push(data);
-        $scope.entry.title = '';
-      });
+      }
     };
-    $scope.showCreateTaskForm = function (entryId) {
-      $('#task-create-button-' + entryId).hide();
-      $('#task-create-form-' + entryId).show();
+  }
+]);
+kanbanApp.directive('entryCreation', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/entry-creation.html',
+      replace: true,
+      controller: [
+        '$scope',
+        'Entries',
+        function ($scope, Entries) {
+          $scope.createEntry = function () {
+            var title = $scope.entry.title;
+            var entry = { title: title };
+            var entriesPromise = Entries.create(entry);
+            entriesPromise.then(function (data) {
+              if ($scope.entries == null) {
+                $scope.entries = [];
+              }
+              $scope.entries.push(data);
+              $scope.entry.title = '';
+            });
+          };
+          $scope.cancelCreateEntry = function () {
+            $('#create-new-entry-form').hide();
+            $('#create-new-entry-button').show();
+          };
+          $scope.showCreateEntryForm = function () {
+            $('#create-new-entry-button').hide();
+            $('#create-new-entry-form').show();
+          };
+        }
+      ]
     };
-    $scope.cancelCreateTask = function (entryId) {
-      $('#task-create-form-' + entryId).hide();
-      $('#task-create-button-' + entryId).show();
+  }
+]);
+kanbanApp.directive('entry', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/entry.html',
+      replace: true,
+      controller: [
+        '$scope',
+        'Entries',
+        function ($scope, Entries) {
+          $scope.createEntry = function () {
+            var title = $scope.entry.title;
+            var entry = { title: title };
+            var entriesPromise = Entries.create(entry);
+            entriesPromise.then(function (data) {
+              if ($scope.entries == null) {
+                $scope.entries = [];
+              }
+              $scope.entries.push(data);
+              $scope.entry.title = '';
+            });
+          };
+        }
+      ]
     };
-    $scope.cancelCreateEntry = function () {
-      $('#create-new-entry-form').hide();
-      $('#create-new-entry-button').show();
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('tasks', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/tasks.html',
+      replace: true,
+      controller: [
+        '$scope',
+        'Tasks',
+        function ($scope, Tasks) {
+          var entry = $scope.entry;
+          var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+          _tasksPromise.then(function (data) {
+            $scope.tasks = data;
+          });
+        }
+      ]
     };
-    $scope.showCreateEntryForm = function () {
-      $('#create-new-entry-button').hide();
-      $('#create-new-entry-form').show();
+  }
+]);
+kanbanApp.directive('taskCreation', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/task-creation.html',
+      controller: [
+        '$scope',
+        'Tasks',
+        function ($scope, Tasks) {
+          var entry = $scope.entry;
+          $scope.displayCreationButton = true;
+          $scope.displayForm = false;
+          $scope.showCreateTaskForm = function () {
+            $scope.displayCreationButton = false;
+            $scope.displayForm = true;
+          };
+          $scope.cancelCreateTask = function (entryId) {
+            $scope.displayCreationButton = true;
+            $scope.displayForm = false;
+          };
+          $scope.createTask = function () {
+            var task = {
+                summary: $scope.summary,
+                entryId: entry.id
+              };
+            var taskPromise = Tasks.create(task, entry._links.tasks.href);
+            taskPromise.then(function (data) {
+              var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+              _tasksPromise.then(function (data) {
+                $scope.tasks = data;
+              });
+            });
+          };
+        }
+      ]
     };
-    $scope.encode = function (str) {
-      return Base64.encode(str);
-    };
-    $scope.createTask = function (_entryUrl, _entryTasksUrl) {
-      var currentEntry = Base64.encode(_entryUrl) + '-title';
-      var summary = $('#' + currentEntry).val();
-      var task = { summary: summary };
-      var taskPromise = Tasks.create(task, _entryTasksUrl);
-      taskPromise.then(function (data) {
-        loadData();
-      });
-    };
-    $scope.updateUser = function (data) {
-      alert(1);
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+var boardService = angular.module('boardService', ['ngResource']);
+boardService.factory('BoardService', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      load: function (boardsLink) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'GET',
+          url: boardsLink
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }
     };
   }
 ]);
@@ -127,14 +269,16 @@ entriesServices.factory('Entries', [
   '$q',
   function ($http, $q) {
     return {
+      entriesLink: '',
       load: function () {
+        console.log('=========' + this.entriesLink);
         var deferred = $q.defer();
         // 声明延后执行，表示要去监控后面的执行
         // return a Promise object so that the caller can handle success/failure
         $http({
           method: 'GET',
           dataType: 'application/json',
-          url: config.localhost + '/entries'
+          url: this.entriesLink
         }).success(function (data, status, headers, config) {
           console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
@@ -152,7 +296,7 @@ entriesServices.factory('Entries', [
           contentType: 'application/json',
           data: JSON.stringify(_entry),
           headers: { 'userId': '112' },
-          url: config.localhost + '/entries'
+          url: this.entriesLink
         }).success(function (data, status, headers, config) {
           console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
@@ -222,58 +366,6 @@ tasksServices.factory('Tasks', [
         });
         return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
-    };
-  }
-]);
-/**
- * Created by xubt on 4/29/16.
- */
-//自定义指令repeatFinish
-kanbanApp.directive('repeatFinish', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'A',
-      link: function (scope, element, attr) {
-        if (scope.$last == true) {
-          $timeout(function () {
-            $('.entryTitle').editable();
-            scope.$emit('ngRepeatFinished');
-          });
-        }
-      }
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('tasks', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/tasks.html',
-      replace: true
-    };
-  }
-]);
-kanbanApp.directive('taskCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/task-creation.html'
-    };
-  }
-]);
-kanbanApp.directive('entryCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/entry-creation.html',
-      replace: true
     };
   }
 ]);
@@ -368,5 +460,147 @@ var Base64 = {
         }
       }
       return t;
+    }
+  };
+/**
+ * Created by xubitao on 1/2/16.
+ */
+var HttpType = {
+    POST: 'POST',
+    PUT: 'PUT',
+    DELETE: 'DELETE',
+    GET: 'GET'
+  };
+var Racoon = {
+    currentRequest: null,
+    restful: function (_options) {
+      var ok = function (_data) {
+        _options.success(_data);
+      };
+      var created = function (_data) {
+        _options.success(_data);
+      };
+      var error = function (_XHR, _TS) {
+        $('#errorMessage').html(_XHR.responseJSON.message);
+        $('#errorModel').modal();
+      };
+      var notFound = function (_XHR, _TS) {
+        $('#errorMessage').html(_XHR.responseJSON.message);
+        $('#errorModel').modal();
+      };
+      Racoon.currentRequest = $.ajax({
+        type: _options.type || HttpType.GET,
+        url: _options.url,
+        dataType: _options.dataType || 'json',
+        async: _options.async || true,
+        data: _options.data,
+        contentType: 'application/json',
+        beforeSend: function () {
+          if (_options.beforeSend != undefined) {
+            _options.beforeSend();
+          } else {
+            $('#processing').show();
+          }
+        },
+        statusCode: {
+          200: ok,
+          201: created,
+          400: error,
+          404: notFound,
+          500: error
+        },
+        complete: function () {
+          $('#processing').hide();
+        }
+      });
+    },
+    getLink: function (_links, _rel) {
+      return _links[_rel].href;
+    },
+    isFirefoxBrowser: function () {
+      var Sys = {};
+      var ua = navigator.userAgent.toLowerCase();
+      var re = /(msie|firefox|chrome|opera|version).*?([\d.]+)/;
+      var m = ua.match(re);
+      Sys.browser = m[1].replace(/version/, '\'safari');
+      Sys.ver = m[2];
+      if (Sys.browser != 'firefox') {
+        window.location.href = 'html/pleaseSwitchYourBrowser.html';
+      }
+    },
+    JSONLength: function (obj) {
+      var size = 0, key;
+      for (key in obj) {
+        if (obj.hasOwnProperty(key))
+          size++;
+      }
+      return size;
+    },
+    formatJson: function (json, options) {
+      var reg = null, formatted = '', pad = 0, PADDING = '    ';
+      // one can also use '\t' or a different number of spaces
+      // optional settings
+      options = options || {};
+      // remove newline where '{' or '[' follows ':'
+      options.newlineAfterColonIfBeforeBraceOrBracket = options.newlineAfterColonIfBeforeBraceOrBracket === true ? true : false;
+      // use a space after a colon
+      options.spaceAfterColon = options.spaceAfterColon === false ? false : true;
+      try {
+        // begin formatting...
+        if (typeof json !== 'string') {
+          // make sure we start with the JSON as a string
+          json = JSON.stringify(json);
+        } else {
+          // is already a string, so parse and re-stringify in order to remove extra whitespace
+          json = JSON.parse(json);
+          json = JSON.stringify(json);
+        }
+      } catch (e) {
+        return json;
+      }
+      // add newline before and after curly braces
+      reg = /([\{\}])/g;
+      json = json.replace(reg, '\r\n$1\r\n');
+      // add newline before and after square brackets
+      reg = /([\[\]])/g;
+      json = json.replace(reg, '\r\n$1\r\n');
+      // add newline after comma
+      reg = /(\,)/g;
+      json = json.replace(reg, '$1\r\n');
+      // remove multiple newlines
+      reg = /(\r\n\r\n)/g;
+      json = json.replace(reg, '\r\n');
+      // remove newlines before commas
+      reg = /\r\n\,/g;
+      json = json.replace(reg, ',');
+      // optional formatting...
+      if (!options.newlineAfterColonIfBeforeBraceOrBracket) {
+        reg = /\:\r\n\{/g;
+        json = json.replace(reg, ':{');
+        reg = /\:\r\n\[/g;
+        json = json.replace(reg, ':[');
+      }
+      if (options.spaceAfterColon) {
+        reg = /\:/g;
+        json = json.replace(reg, ': ');
+      }
+      $.each(json.split('\r\n'), function (index, node) {
+        var i = 0, indent = 0, padding = '';
+        if (node.match(/\{$/) || node.match(/\[$/)) {
+          indent = 1;
+        } else if (node.match(/\}/) || node.match(/\]/)) {
+          if (pad !== 0) {
+            pad -= 1;
+          }
+        } else {
+          indent = 0;
+        }
+        for (i = 0; i < pad; i++) {
+          padding += PADDING;
+        }
+        formatted += padding + node + '\r\n';
+        pad += indent;
+      });
+      return formatted;
     }
   };

@@ -7,22 +7,26 @@ var config = {
 
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
+    'boardController',
     'entriesControllers',
     'entriesServices',
     'ui.sortable',
-    'tasksServices'
+    'tasksServices',
+    'boardService'
 ]);
 
 kanbanApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.when('/entries', {
-            templateUrl: 'partials/entries.html',
+            templateUrl: 'partials/boards.html',
             controller: 'EntriesCtrl'
-        }).when('/tasks', {
-            templateUrl: 'partials/tasks.html',
+        }).when('/boards/:boardId/entries', {
+            templateUrl: 'partials/entries.html'
+        }).when('/boards', {
+            templateUrl: 'partials/boards.html',
             controller: 'TasksCtrl'
         }).otherwise({
-            templateUrl: 'partials/entries.html',
-            controller: 'EntriesCtrl'
+            templateUrl: 'partials/boards.html',
+            controller: 'BoardsCtrl'
         });
     }]);
