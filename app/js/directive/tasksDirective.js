@@ -7,22 +7,22 @@ kanbanApp.directive('tasks', function ($timeout) {
         restrict: 'E',
         templateUrl: 'partials/tasks.html',
         replace: true,
-        controller: ['$scope', 'Tasks', function ($scope, Tasks) {
+        controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
             var entry = $scope.entry;
-            var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
 
             _tasksPromise.then(function (data) {
                 $scope.tasks = data;
             });
         }]
     };
-})
+});
 
 kanbanApp.directive('taskCreation', function ($timeout) {
     return {
         restrict: 'E',
         templateUrl: 'partials/task-creation.html',
-        controller: ['$scope', 'Tasks', function ($scope, Tasks) {
+        controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
 
             var entry = $scope.entry;
             $scope.displayCreationButton = true;
@@ -38,9 +38,9 @@ kanbanApp.directive('taskCreation', function ($timeout) {
             };
             $scope.createTask = function () {
                 var task = {summary: $scope.summary, entryId: entry.id};
-                var taskPromise = Tasks.create(task, entry._links.tasks.href);
+                var taskPromise = tasksServices.create(task, entry._links.tasks.href);
                 taskPromise.then(function (data) {
-                    var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+                    var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
 
                     _tasksPromise.then(function (data) {
                         $scope.tasks = data;
@@ -51,6 +51,6 @@ kanbanApp.directive('taskCreation', function ($timeout) {
             };
         }]
     };
-})
+});
 
 

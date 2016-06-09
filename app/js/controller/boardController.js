@@ -6,14 +6,14 @@ var boardController = angular.module('boardController', []);
 
 var boardsLink = "http://localhost:8080/boards";
 
-boardController.controller('BoardsCtrl', ['$scope', '$location', '$q', 'BoardService',
-    function ($scope, $location, $q, BoardService) {
-        var boardPromise = BoardService.load(boardsLink);
+boardController.controller('boardController', ['$scope', '$location', '$q', 'boardsService',
+    function ($scope, $location, $q, boardsService) {
+        var boardPromise = boardsService.load(boardsLink);
         boardPromise.then(function (data) {
             $scope.boards = data;
         })
 
-        $scope.toTasks = function (_boardId, _entriesLink) {
-            $location.path('/boards/' + _boardId + '/entries').search({entriesLink: _entriesLink});
+        $scope.toEntries = function (_boardId, _boardLink) {
+            $location.path('/boards/' + _boardId + '/entries').search({boardLink: _boardLink});
         }
     }]);

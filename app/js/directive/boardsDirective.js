@@ -2,18 +2,21 @@
  * Created by xubt on 5/26/16.
  */
 
-kanbanApp.directive('board', function () {
+kanbanApp.directive('boardBanner', function ($timeout) {
     return {
         restrict: 'E',
         templateUrl: 'partials/board-banner.html',
-        replace: true,
-        controller: ['$scope', 'Tasks', function ($scope, Tasks) {
-            var entry = $scope.entry;
-            var _tasksPromise = Tasks.loadTasksByEntryId(entry._links.tasks.href);
+        replace: false,
+        controller: ['$scope', '$routeParams', '$location', 'boardsService', function ($scope, $routeParams, $location, boardsService) {
+            var boardLink = $routeParams.boardLink;
 
-            _tasksPromise.then(function (data) {
-                $scope.tasks = data;
+            var boardPromise = boardsService.loadBoardByLink(boardLink);
+            boardPromise.then(function (_board) {
+                $scope.board = _board;
             });
+            $scope.toBoards = function () {
+                $location.path('/boards');
+            }
         }]
     };
 })

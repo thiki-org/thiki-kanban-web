@@ -20,3 +20,11 @@
 div.boards :hover {
     background-color: #eeece8;
 }
+
+.board-banner {
+    background: #F8F6F2;
+}
+
+#toBoards {
+    cursor: pointer;
+}
