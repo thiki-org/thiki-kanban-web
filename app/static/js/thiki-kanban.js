@@ -25,6 +25,221 @@ kanbanApp.config([
   }
 ]);
 /**
+ * Created by xubt on 4/20/16.
+ */
+var boardController = angular.module('boardController', []);
+var boardsLink = 'http://localhost:8080/boards';
+boardController.controller('boardController', [
+  '$scope',
+  '$location',
+  '$q',
+  'boardsService',
+  function ($scope, $location, $q, boardsService) {
+    var boardPromise = boardsService.load(boardsLink);
+    boardsService.boardsLink = boardsLink;
+    boardPromise.then(function (data) {
+      $scope.boards = data;
+    });
+    $scope.toEntries = function (_boardId, _boardLink) {
+      $location.path('/boards/' + _boardId + '/entries').search({ boardLink: _boardLink });
+    };
+    $scope.displayBoardCreationForm = true;
+    $scope.displayBoardCreationForm = true;
+    $scope.displayForm = false;
+    $scope.createBoard = function () {
+      var name = $scope.board.name;
+      var board = { name: name };
+      var entriesPromise = boardsService.create(board);
+      entriesPromise.then(function (data) {
+        if ($scope.boards == null) {
+          $scope.boards = [];
+        }
+        $scope.boards.push(data);
+        $scope.board.name = '';
+      });
+    };
+    $scope.keyPress = function ($event) {
+      if ($event.keyCode == 13) {
+        $scope.createBoard();
+      }
+      if ($event.keyCode == 27) {
+        $scope.cancelCreateTask();
+      }
+    };
+    $scope.showBoardCreationForm = function () {
+      $scope.displayBoardCreationForm = false;
+      $scope.displayForm = true;
+    };
+    $scope.cancelCreateTask = function () {
+      $scope.displayBoardCreationForm = true;
+      $scope.displayForm = false;
+    };
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+var boardsService = angular.module('boardsService', ['ngResource']);
+boardsService.factory('boardsService', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      boardsLink: '',
+      load: function (_boardsLink) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'GET',
+          url: _boardsLink
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      loadBoardByLink: function (_boardLink) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'GET',
+          url: _boardLink
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      create: function (_board) {
+        var deferred = $q.defer();
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_board),
+          headers: { 'userId': '112' },
+          url: this.boardsLink
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);
+        });
+        return deferred.promise;
+      }
+    };
+  }
+]);
+'use strict';
+/* Services */
+var entriesServices = angular.module('entriesServices', ['ngResource']);
+entriesServices.factory('entriesServices', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      entriesLink: '',
+      load: function () {
+        console.log('=========' + this.entriesLink);
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        $http({
+          method: 'GET',
+          dataType: 'application/json',
+          url: this.entriesLink
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      create: function (_entry) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_entry),
+          headers: { 'userId': '112' },
+          url: this.entriesLink
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }
+    };
+  }
+]);
+'use strict';
+/* Services */
+var tasksServices = angular.module('tasksServices', ['ngResource']);
+tasksServices.factory('tasksServices', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      loadTasksByEntryId: function (tasksUrl) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        var tasks = [];
+        $http({
+          method: 'GET',
+          url: tasksUrl
+        }).success(function (data, status, headers, config) {
+          tasks = data;
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      create: function (_task, _entryTasksUrl) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_task),
+          headers: { 'userId': '112' },
+          url: _entryTasksUrl
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      update: function (_task) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify(_task),
+          headers: { 'userId': '112' },
+          url: _task._links.self.href
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }
+    };
+  }
+]);
+/**
  * Created by xubt on 5/26/16.
  */
 kanbanApp.directive('boardBanner', [
@@ -243,172 +458,6 @@ kanbanApp.directive('taskCreation', [
           };
         }
       ]
-    };
-  }
-]);
-/**
- * Created by xubt on 4/20/16.
- */
-var boardController = angular.module('boardController', []);
-var boardsLink = 'http://localhost:8080/boards';
-boardController.controller('boardController', [
-  '$scope',
-  '$location',
-  '$q',
-  'boardsService',
-  function ($scope, $location, $q, boardsService) {
-    var boardPromise = boardsService.load(boardsLink);
-    boardPromise.then(function (data) {
-      $scope.boards = data;
-    });
-    $scope.toEntries = function (_boardId, _boardLink) {
-      $location.path('/boards/' + _boardId + '/entries').search({ boardLink: _boardLink });
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-var boardsService = angular.module('boardsService', ['ngResource']);
-boardsService.factory('boardsService', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      load: function (_boardsLink) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'GET',
-          url: _boardsLink
-        }).success(function (data, status, headers, config) {
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      loadBoardByLink: function (_boardLink) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'GET',
-          url: _boardLink
-        }).success(function (data, status, headers, config) {
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      }
-    };
-  }
-]);
-'use strict';
-/* Services */
-var entriesServices = angular.module('entriesServices', ['ngResource']);
-entriesServices.factory('entriesServices', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      entriesLink: '',
-      load: function () {
-        console.log('=========' + this.entriesLink);
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        // return a Promise object so that the caller can handle success/failure
-        $http({
-          method: 'GET',
-          dataType: 'application/json',
-          url: this.entriesLink
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      create: function (_entry) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        // return a Promise object so that the caller can handle success/failure
-        $http({
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(_entry),
-          headers: { 'userId': '112' },
-          url: this.entriesLink
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      }
-    };
-  }
-]);
-'use strict';
-/* Services */
-var tasksServices = angular.module('tasksServices', ['ngResource']);
-tasksServices.factory('tasksServices', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      loadTasksByEntryId: function (tasksUrl) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        // return a Promise object so that the caller can handle success/failure
-        var tasks = [];
-        $http({
-          method: 'GET',
-          url: tasksUrl
-        }).success(function (data, status, headers, config) {
-          tasks = data;
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      create: function (_task, _entryTasksUrl) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(_task),
-          headers: { 'userId': '112' },
-          url: _entryTasksUrl
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      update: function (_task) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'PUT',
-          contentType: 'application/json',
-          data: JSON.stringify(_task),
-          headers: { 'userId': '112' },
-          url: _task._links.self.href
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      }
     };
   }
 ]);

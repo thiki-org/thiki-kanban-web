@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 
-div.boards :hover {
+div.board-item :hover {
     background-color: #eeece8;
 }
 
@@ -27,4 +27,22 @@ div.boards :hover {
 
 #toBoards {
     cursor: pointer;
+}
+
+.board-creation {
+    border: 1px dashed #e8e8ea;
+    color: darkgray;
+}
+
+.board-creation :hover {
+    color: black;
+}
+
+.creation-box {
+    background: #fff;
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 3px;
+    float: left;
 }

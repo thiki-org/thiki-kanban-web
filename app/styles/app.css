@@ -101,3 +101,15 @@ ul.thiki-menu li {
     color: white;
 }
 
+button.thiki-submit-button {
+    margin: 0 auto 0 10px;
+    float: left;
+}
+
+.thiki-cancel-button {
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    margin: 2px auto auto 30px;
+    cursor: pointer;
+}

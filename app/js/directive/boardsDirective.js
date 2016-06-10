@@ -16,7 +16,7 @@ kanbanApp.directive('boardBanner', function ($timeout) {
             });
             $scope.toBoards = function () {
                 $location.path('/boards');
-            }
+            };
         }]
     };
 })
