@@ -49,6 +49,14 @@ kanbanApp.directive('taskCreation', function ($timeout) {
                     });
                 });
             };
+            $scope.keyPress = function ($event) {
+                if ($event.keyCode == 13) {
+                    $scope.createTask();
+                }
+                if ($event.keyCode == 27) {
+                    $scope.cancelCreateTask();
+                }
+            }
         }]
     };
 });

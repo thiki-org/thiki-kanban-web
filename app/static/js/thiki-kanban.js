@@ -25,6 +25,228 @@ kanbanApp.config([
   }
 ]);
 /**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('boardBanner', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/board-banner.html',
+      replace: false,
+      controller: [
+        '$scope',
+        '$routeParams',
+        '$location',
+        'boardsService',
+        function ($scope, $routeParams, $location, boardsService) {
+          var boardLink = $routeParams.boardLink;
+          var boardPromise = boardsService.loadBoardByLink(boardLink);
+          boardPromise.then(function (_board) {
+            $scope.board = _board;
+          });
+          $scope.toBoards = function () {
+            $location.path('/boards');
+          };
+        }
+      ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 4/29/16.
+ */
+//自定义指令repeatFinish
+kanbanApp.directive('repeatFinish', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+        if (scope.$last == true) {
+          $timeout(function () {
+            $('.entryTitle').editable();
+            scope.$emit('ngRepeatFinished');
+          });
+        }
+      }
+    };
+  }
+]);
+kanbanApp.directive('entryCreation', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/entry-creation.html',
+      replace: true,
+      controller: [
+        '$scope',
+        'entriesServices',
+        function ($scope, entriesServices) {
+          $scope.createEntry = function () {
+            var title = $scope.entry.title;
+            var entry = {
+                title: title,
+                boardId: $scope.board.id
+              };
+            var entriesPromise = entriesServices.create(entry);
+            entriesPromise.then(function (data) {
+              if ($scope.entries == null) {
+                $scope.entries = [];
+              }
+              $scope.entries.push(data);
+              $scope.entry.title = '';
+            });
+          };
+          $scope.cancelCreateEntry = function () {
+            $('#create-new-entry-form').hide();
+            $('#create-new-entry-button').show();
+          };
+          $scope.showCreateEntryForm = function () {
+            $('#create-new-entry-button').hide();
+            $('#create-new-entry-form').show();
+          };
+          $scope.keyPress = function ($event) {
+            if ($event.keyCode == 13) {
+              $scope.createEntry();
+            }
+            if ($event.keyCode == 27) {
+              $scope.cancelCreateEntry();
+            }
+          };
+        }
+      ]
+    };
+  }
+]);
+kanbanApp.directive('entries', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/entry.html',
+      replace: true,
+      controller: [
+        '$scope',
+        '$routeParams',
+        'boardsService',
+        'entriesServices',
+        'tasksServices',
+        function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+          function loadEntries() {
+            var tasks = [];
+            var boardLink = $routeParams.boardLink;
+            var boardPromise = boardsService.loadBoardByLink(boardLink);
+            boardPromise.then(function (_board) {
+              $scope.board = _board;
+              entriesServices.entriesLink = _board._links.entries.href;
+              var entriesPromise = entriesServices.load(_board._links.entries.href);
+              entriesPromise.then(function (data) {
+                $scope.entries = data;
+                $scope.sortableOptions = {
+                  connectWith: '.tasks',
+                  opacity: 0.5,
+                  start: function (e, ui) {
+                  },
+                  update: function (e, ui) {
+                    console.log(ui.item.scope());
+                    var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
+                    ui.item.sortable.model.entryId = targetEntryId;
+                    ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+                    console.log(ui.item.sortable.model);
+                    var _tasksPromise = tasksServices.update(ui.item.sortable.model);
+                    _tasksPromise.then(function (data) {
+                      loadEntries();
+                    });
+                  },
+                  stop: function (e, ui) {
+                  }
+                };
+              });
+            });
+          }
+          loadEntries();
+        }
+      ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('tasks', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/tasks.html',
+      replace: true,
+      controller: [
+        '$scope',
+        'tasksServices',
+        function ($scope, tasksServices) {
+          var entry = $scope.entry;
+          var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+          _tasksPromise.then(function (data) {
+            $scope.tasks = data;
+          });
+        }
+      ]
+    };
+  }
+]);
+kanbanApp.directive('taskCreation', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'partials/task-creation.html',
+      controller: [
+        '$scope',
+        'tasksServices',
+        function ($scope, tasksServices) {
+          var entry = $scope.entry;
+          $scope.displayCreationButton = true;
+          $scope.displayForm = false;
+          $scope.showCreateTaskForm = function () {
+            $scope.displayCreationButton = false;
+            $scope.displayForm = true;
+            $scope.summary = '';
+          };
+          $scope.cancelCreateTask = function () {
+            $scope.displayCreationButton = true;
+            $scope.displayForm = false;
+          };
+          $scope.createTask = function () {
+            var task = {
+                summary: $scope.summary,
+                entryId: entry.id
+              };
+            var taskPromise = tasksServices.create(task, entry._links.tasks.href);
+            taskPromise.then(function (data) {
+              var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+              _tasksPromise.then(function (data) {
+                $scope.tasks = data;
+                $scope.displayCreationButton = true;
+                $scope.displayForm = false;
+              });
+            });
+          };
+          $scope.keyPress = function ($event) {
+            if ($event.keyCode == 13) {
+              $scope.createTask();
+            }
+            if ($event.keyCode == 27) {
+              $scope.cancelCreateTask();
+            }
+          };
+        }
+      ]
+    };
+  }
+]);
+/**
  * Created by xubt on 4/20/16.
  */
 var boardController = angular.module('boardController', []);
@@ -187,225 +409,6 @@ tasksServices.factory('tasksServices', [
         });
         return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('boardBanner', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/board-banner.html',
-      replace: false,
-      controller: [
-        '$scope',
-        '$routeParams',
-        '$location',
-        'boardsService',
-        function ($scope, $routeParams, $location, boardsService) {
-          var boardLink = $routeParams.boardLink;
-          var boardPromise = boardsService.loadBoardByLink(boardLink);
-          boardPromise.then(function (_board) {
-            $scope.board = _board;
-          });
-          $scope.toBoards = function () {
-            $location.path('/boards');
-          };
-        }
-      ]
-    };
-  }
-]);
-/**
- * Created by xubt on 4/29/16.
- */
-//自定义指令repeatFinish
-kanbanApp.directive('repeatFinish', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'A',
-      link: function (scope, element, attr) {
-        if (scope.$last == true) {
-          $timeout(function () {
-            $('.entryTitle').editable();
-            scope.$emit('ngRepeatFinished');
-          });
-        }
-      }
-    };
-  }
-]);
-kanbanApp.directive('entryCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/entry-creation.html',
-      replace: true,
-      controller: [
-        '$scope',
-        'entriesServices',
-        function ($scope, entriesServices) {
-          $scope.createEntry = function () {
-            var title = $scope.entry.title;
-            var entry = { title: title };
-            var entriesPromise = entriesServices.create(entry);
-            entriesPromise.then(function (data) {
-              if ($scope.entries == null) {
-                $scope.entries = [];
-              }
-              $scope.entries.push(data);
-              $scope.entry.title = '';
-            });
-          };
-          $scope.cancelCreateEntry = function () {
-            $('#create-new-entry-form').hide();
-            $('#create-new-entry-button').show();
-          };
-          $scope.showCreateEntryForm = function () {
-            $('#create-new-entry-button').hide();
-            $('#create-new-entry-form').show();
-          };
-        }
-      ]
-    };
-  }
-]);
-kanbanApp.directive('entries', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/entry.html',
-      replace: true,
-      controller: [
-        '$scope',
-        '$routeParams',
-        'boardsService',
-        'entriesServices',
-        'tasksServices',
-        function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
-          var boardLink = $routeParams.boardLink;
-          var boardPromise = boardsService.loadBoardByLink(boardLink);
-          boardPromise.then(function (_board) {
-            function loadData() {
-              var tasks = [];
-              var boardLink = $routeParams.boardLink;
-              var boardPromise = boardsService.loadBoardByLink(boardLink);
-              boardPromise.then(function (_board) {
-                $scope.board = _board;
-                entriesServices.entriesLink = _board._links.entries.href;
-                var entriesPromise = entriesServices.load(_board._links.entries.href);
-                entriesPromise.then(function (data) {
-                  $scope.entries = data;
-                  $scope.sortableOptions = {
-                    connectWith: '.tasks',
-                    opacity: 0.5,
-                    start: function (e, ui) {
-                    },
-                    update: function (e, ui) {
-                      console.log(ui.item.scope());
-                      var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
-                      ui.item.sortable.model.entryId = targetEntryId;
-                      ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                      console.log(ui.item.sortable.model);
-                      var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                      _tasksPromise.then(function (data) {
-                        loadData();
-                      });
-                    },
-                    stop: function (e, ui) {
-                    }
-                  };
-                });
-              });
-            }
-            loadData();
-          });
-          $scope.createEntry = function () {
-            var title = $scope.entry.title;
-            var entry = { title: title };
-            var entriesPromise = Entries.create(entry);
-            entriesPromise.then(function (data) {
-              if ($scope.entries == null) {
-                $scope.entries = [];
-              }
-              $scope.entries.push(data);
-              $scope.entry.title = '';
-            });
-          };
-        }
-      ]
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('tasks', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/tasks.html',
-      replace: true,
-      controller: [
-        '$scope',
-        'tasksServices',
-        function ($scope, tasksServices) {
-          var entry = $scope.entry;
-          var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-          _tasksPromise.then(function (data) {
-            $scope.tasks = data;
-          });
-        }
-      ]
-    };
-  }
-]);
-kanbanApp.directive('taskCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'partials/task-creation.html',
-      controller: [
-        '$scope',
-        'tasksServices',
-        function ($scope, tasksServices) {
-          var entry = $scope.entry;
-          $scope.displayCreationButton = true;
-          $scope.displayForm = false;
-          $scope.showCreateTaskForm = function () {
-            $scope.displayCreationButton = false;
-            $scope.displayForm = true;
-            $scope.summary = '';
-          };
-          $scope.cancelCreateTask = function () {
-            $scope.displayCreationButton = true;
-            $scope.displayForm = false;
-          };
-          $scope.createTask = function () {
-            var task = {
-                summary: $scope.summary,
-                entryId: entry.id
-              };
-            var taskPromise = tasksServices.create(task, entry._links.tasks.href);
-            taskPromise.then(function (data) {
-              var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-              _tasksPromise.then(function (data) {
-                $scope.tasks = data;
-                $scope.displayCreationButton = true;
-                $scope.displayForm = false;
-              });
-            });
-          };
-        }
-      ]
     };
   }
 ]);

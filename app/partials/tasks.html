@@ -1,5 +1,16 @@
 <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks">
     <div class="task" ng-repeat="task in tasks">
         <span class="task-title">{{task.summary}}</span>
+        <div class="dropdown task-menu">
+            <button class="dropdown-toggle " type="button" id="dropdownMenu1"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                <span>...</span>
+            </button>
+            <ul class="thiki-menu dropdown-menu task-menu-icon" aria-labelledby="dropdownMenu1">
+                <li><a href="#">删除</a></li>
+            </ul>
+        </div>
+
     </div>
 </div>

@@ -3,7 +3,7 @@
         <div id="create-new-entry-button" ng-click="showCreateEntryForm()">+</div>
         <form id="create-new-entry-form" name="createNewEntryForm" class="create-entry-form">
             <div class="input-group">
-                <input name="title" type="text" class="form-control" data-ng-model="entry.title" required/>
+                <input name="title" type="text" class="form-control" data-ng-model="entry.title" ng-keydown="keyPress($event)" required/>
             </div>
             <div class="create-entry-form-buttons">
                 <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()"

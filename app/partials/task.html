@@ -1,5 +1,8 @@
-<div class="tasks" ui-sortable="sortableOptions"  entry="{{entry}}">
+<div class="tasks" ui-sortable="sortableOptions" entry="{{entry}}">
     <div class="task" ng-repeat="task in tasks">
         <span class="task-title">{{task.summary}}</span>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+        </button>
     </div>
 </div>

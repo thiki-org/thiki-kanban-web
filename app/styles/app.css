@@ -1,9 +1,15 @@
 /* app css stylesheet */
 
+@font-face {
+    font-family: 'thiki';
+    src: url('sourcehansanscn-light.ttf');
+}
+
 body {
 
     width: 100%;
     height: 100%;
+    font-family: thiki !important;
 }
 
 div#kanban-top {
@@ -73,3 +79,25 @@ button.btn.btn-primary {
     background: #00BC5B;
     border: 1px solid #EEECE8;
 }
+
+ul.thiki-menu {
+    border-radius: 0 !important;
+    -webkit-box-shadow: 0 0 0 0 !important;
+    border-shadow: 0px !important;
+    border: none;
+    background-color: #F8F6F2;
+}
+
+ul.thiki-menu li {
+    margin: auto 10px auto 10px;
+}
+
+.thiki-menu li :hover {
+    background: rgba(0, 188, 91, 1) !important;
+    color: white;
+}
+
+.thiki-menu li > a :hover {
+    color: white;
+}
+
