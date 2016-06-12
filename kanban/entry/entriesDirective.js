@@ -20,7 +20,7 @@ kanbanApp.directive('repeatFinish', function ($timeout) {
 kanbanApp.directive('entryCreation', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'partials/entry-creation.html',
+        templateUrl: 'entry/partials/entry-creation.html',
         replace: true,
         controller: ['$scope', 'entriesServices', function ($scope, entriesServices) {
             $scope.createEntry = function () {
@@ -59,7 +59,7 @@ kanbanApp.directive('entryCreation', function ($timeout) {
 kanbanApp.directive('entries', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'partials/entry.html',
+        templateUrl: 'entry/partials/entry.html',
         replace: true,
         controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
             function loadEntries() {

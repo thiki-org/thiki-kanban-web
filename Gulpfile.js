@@ -24,7 +24,7 @@ var cleanCSS = require('gulp-clean-css');
 
 // 语法检查
 gulp.task('jshint', function () {
-    return gulp.src('app/js/**/*.js')
+    return gulp.src('kanban/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
@@ -33,33 +33,33 @@ gulp.task('jshint', function () {
 gulp.task('minify-bower-components', function () {
     gulp.src(lib.ext('js').files)
         .pipe(concat('lib.min.js'))
-        .pipe(gulp.dest('app/static/js/'));
+        .pipe(gulp.dest('kanban/static/js/'));
 });
 
 // 合并CSS
 gulp.task('minify-css', function () {
-    return gulp.src('app/styles/**/*.css')
+    return gulp.src(['kanban/**/*.css', '!kanban/static/**/*.css'])
         .pipe(concat('thiki-kanban.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe(gulp.dest('app/static/css'));
+        .pipe(gulp.dest('kanban/static/css'));
 });
 // 合并文件之后压缩代码
 gulp.task('minify', function () {
     return gulp.src([
-        'app/js/*.js', 'app/js/**/*.js'])
+        'kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js'])
         .pipe(ngAnnotate())
         .pipe(ngmin({dynamic: false}))
         .pipe(concat('thiki-kanban.js'))
-        .pipe(gulp.dest('app/static/js'))
+        .pipe(gulp.dest('kanban/static/js'))
         .pipe(uglify())
         .pipe(rename('thiki-kanban.min.js'))
-        .pipe(gulp.dest('app/static/js'));
+        .pipe(gulp.dest('kanban/static/js'));
 });
 
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['app/js/*.js', 'app/js/**/*.js', 'app/styles/*.css', 'Gulpfile.js'], ['jshint', 'minify', 'minify-css']);
+    gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'Gulpfile.js'], ['jshint', 'minify', 'minify-css']);
 });
 
 // 注册缺省任务

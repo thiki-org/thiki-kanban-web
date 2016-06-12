@@ -5,7 +5,7 @@
 kanbanApp.directive('tasks', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'partials/tasks.html',
+        templateUrl: 'task/partials/tasks.html',
         replace: true,
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
             var entry = $scope.entry;
@@ -21,7 +21,7 @@ kanbanApp.directive('tasks', function ($timeout) {
 kanbanApp.directive('taskCreation', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'partials/task-creation.html',
+        templateUrl: 'task/partials/task-creation.html',
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
 
             var entry = $scope.entry;
