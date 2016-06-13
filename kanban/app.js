@@ -6,7 +6,7 @@ var config = {
 }
 
 var kanbanApp = angular.module('kanbanApp', [
-    'ngRoute',
+    'ngRoute', 'ngAnimate', 'ui.bootstrap',
     'boardController',
     'entriesServices',
     'ui.sortable',

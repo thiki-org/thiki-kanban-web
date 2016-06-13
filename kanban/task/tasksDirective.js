@@ -1,23 +1,57 @@
 /**
  * Created by xubt on 5/26/16.
  */
-
-kanbanApp.directive('tasks', function ($timeout) {
+kanbanApp.directive('tasks', function ($uibModal) {
     return {
         restrict: 'E',
         templateUrl: 'task/partials/tasks.html',
         replace: true,
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
-            var entry = $scope.entry;
-            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+            loadTasks();
+            function loadTasks() {
+                var entry = $scope.entry;
+                var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
 
-            _tasksPromise.then(function (data) {
-                $scope.tasks = data;
-            });
+                _tasksPromise.then(function (data) {
+                    $scope.tasks = data;
+                });
+                $scope.open = function (_message, _link) {
+                    $uibModal.open({
+                        animation: false,
+                        templateUrl: 'myModalContent.html',
+                        controller: function ($scope, $uibModalInstance) {
+                            $scope.title = '提示';
+                            $scope.message = "确定要删除" + _message + "吗?";
+                            $scope.ok = function () {
+                                var _taskDeletePromise = tasksServices.deleteByLink(_link);
+                                _taskDeletePromise.then(function () {
+                                    loadTasks();
+                                });
+                                $uibModalInstance.close();
+                            };
+                            $scope.cancel = function () {
+                                $uibModalInstance.dismiss('cancel');
+                            };
+                        },
+                        size: 'sm'
+                    });
+                };
+            }
         }]
     };
 });
 
+
+angular.module('kanbanApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
 kanbanApp.directive('taskCreation', function ($timeout) {
     return {
         restrict: 'E',

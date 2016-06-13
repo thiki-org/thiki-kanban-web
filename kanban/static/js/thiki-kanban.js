@@ -3,6 +3,8 @@
 var config = { localhost: 'http://localhost:8080' };
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute',
+    'ngAnimate',
+    'ui.bootstrap',
     'boardController',
     'entriesServices',
     'ui.sortable',
@@ -43,7 +45,6 @@ boardController.controller('boardController', [
     $scope.toEntries = function (_boardId, _boardLink) {
       $location.path('/boards/' + _boardId + '/entries').search({ boardLink: _boardLink });
     };
-    $scope.displayBoardCreationForm = true;
     $scope.displayBoardCreationForm = true;
     $scope.displayForm = false;
     $scope.createBoard = function () {
@@ -157,6 +158,25 @@ boardsService.factory('boardsService', [
         });
         return deferred.promise;
       }
+    };
+  }
+]);
+kanbanApp.directive('confirmDialog', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      templateUrl: 'common_components/partials/entry-creation.html',
+      replace: true,
+      scope: { id: '' },
+      controller: [
+        '$scope',
+        function ($scope) {
+          $scope.show = function () {
+            $('#dd').modal();
+          };
+        }
+      ]
     };
   }
 ]);
@@ -289,7 +309,6 @@ entriesServices.factory('entriesServices', [
     return {
       entriesLink: '',
       load: function () {
-        console.log('=========' + this.entriesLink);
         var deferred = $q.defer();
         // 声明延后执行，表示要去监控后面的执行
         // return a Promise object so that the caller can handle success/failure
@@ -298,7 +317,6 @@ entriesServices.factory('entriesServices', [
           dataType: 'application/json',
           url: this.entriesLink
         }).success(function (data, status, headers, config) {
-          console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
         }).error(function (data, status, headers, config) {
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
@@ -330,8 +348,8 @@ entriesServices.factory('entriesServices', [
  * Created by xubt on 5/26/16.
  */
 kanbanApp.directive('tasks', [
-  '$timeout',
-  function ($timeout) {
+  '$uibModal',
+  function ($uibModal) {
     return {
       restrict: 'E',
       templateUrl: 'task/partials/tasks.html',
@@ -340,13 +358,53 @@ kanbanApp.directive('tasks', [
         '$scope',
         'tasksServices',
         function ($scope, tasksServices) {
-          var entry = $scope.entry;
-          var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-          _tasksPromise.then(function (data) {
-            $scope.tasks = data;
-          });
+          loadTasks();
+          function loadTasks() {
+            var entry = $scope.entry;
+            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+            _tasksPromise.then(function (data) {
+              $scope.tasks = data;
+            });
+            $scope.open = function (_message, _link) {
+              $uibModal.open({
+                animation: false,
+                templateUrl: 'myModalContent.html',
+                controller: [
+                  '$scope',
+                  '$uibModalInstance',
+                  function ($scope, $uibModalInstance) {
+                    $scope.title = '\u63d0\u793a';
+                    $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
+                    $scope.ok = function () {
+                      var _taskDeletePromise = tasksServices.deleteByLink(_link);
+                      _taskDeletePromise.then(function () {
+                        loadTasks();
+                      });
+                      $uibModalInstance.close();
+                    };
+                    $scope.cancel = function () {
+                      $uibModalInstance.dismiss('cancel');
+                    };
+                  }
+                ],
+                size: 'sm'
+              });
+            };
+          }
         }
       ]
+    };
+  }
+]);
+angular.module('kanbanApp').controller('ModalInstanceCtrl', [
+  '$scope',
+  '$uibModalInstance',
+  function ($scope, $uibModalInstance) {
+    $scope.ok = function () {
+      $uibModalInstance.close();
+    };
+    $scope.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
     };
   }
 ]);
@@ -457,7 +515,26 @@ tasksServices.factory('tasksServices', [
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
         });
         return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      deleteByLink: function (_link) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'DELETE',
+          contentType: 'application/json',
+          headers: { 'userId': '112' },
+          url: _link
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
     };
   }
 ]);
+/**
+ * Created by xubt on 6/12/16.
+ */

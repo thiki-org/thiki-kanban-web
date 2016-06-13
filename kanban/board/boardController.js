@@ -18,7 +18,6 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
             $location.path('/boards/' + _boardId + '/entries').search({boardLink: _boardLink});
         }
         $scope.displayBoardCreationForm = true;
-        $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;
         $scope.createBoard = function () {
             var name = $scope.board.name;
