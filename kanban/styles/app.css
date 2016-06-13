@@ -6,12 +6,10 @@
 }
 
 :root {
-    --base-font-size: 16px;
     --theme-color: #6495ed;
 }
 
 body {
-
     width: 100%;
     height: 100%;
     font-family: thiki !important;
@@ -33,7 +31,6 @@ button.btn.btn-primary {
     background: none;
     border: 1px solid white;
 }
-
 
 .input-group {
     float: left;
@@ -71,17 +68,11 @@ ul.thiki-menu {
     background-color: #F8F6F2;
 }
 
-ul.thiki-menu li {
+.thiki-menu-item {
     margin: auto 10px auto 10px;
-}
-
-.thiki-menu li :hover {
-    background: var(--theme-color);
-    color: white;
-}
-
-.thiki-menu li > a :hover {
-    color: white;
+    cursor: pointer;
+    text-align: center;
+    padding: 4px;
 }
 
 button.thiki-submit-button {
