@@ -22,7 +22,7 @@ body > a {
 div#kanban-top {
     width: 100%;
     height: 50px;
-    background: var(--theme-color);
+    background: var(--theme-color) !important;
 }
 
 .view-frame {
