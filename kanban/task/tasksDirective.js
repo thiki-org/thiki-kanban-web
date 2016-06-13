@@ -18,9 +18,9 @@ kanbanApp.directive('tasks', function ($uibModal) {
                 $scope.open = function (_message, _link) {
                     $uibModal.open({
                         animation: false,
-                        templateUrl: 'myModalContent.html',
+                        templateUrl: 'foundation/modal/partials/confirm-dialog.html',
                         controller: function ($scope, $uibModalInstance) {
-                            $scope.title = '提示';
+                            $scope.title = '警告';
                             $scope.message = "确定要删除" + _message + "吗?";
                             $scope.ok = function () {
                                 var _taskDeletePromise = tasksServices.deleteByLink(_link);

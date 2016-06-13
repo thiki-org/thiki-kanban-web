@@ -64,3 +64,28 @@ div#create-new-entry {
     min-height: 20px;
     border-radius: 3px;
 }
+
+
+#create-new-entry-button {
+    border: 1px solid var(--theme-color);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px;
+}
+
+#create-new-entry-button:hover {
+    background-color: var(--theme-color);
+    color: white;
+    cursor: pointer;
+}
+
+
+.create-entry-form {
+    margin: 10PX;
+    float: left;
+    width: 100%;
+}

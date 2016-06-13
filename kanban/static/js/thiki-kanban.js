@@ -64,14 +64,14 @@ boardController.controller('boardController', [
         $scope.createBoard();
       }
       if ($event.keyCode == 27) {
-        $scope.cancelCreateTask();
+        $scope.cancelCreateBoard();
       }
     };
     $scope.showBoardCreationForm = function () {
       $scope.displayBoardCreationForm = false;
       $scope.displayForm = true;
     };
-    $scope.cancelCreateTask = function () {
+    $scope.cancelCreateBoard = function () {
       $scope.displayBoardCreationForm = true;
       $scope.displayForm = false;
     };
@@ -158,25 +158,6 @@ boardsService.factory('boardsService', [
         });
         return deferred.promise;
       }
-    };
-  }
-]);
-kanbanApp.directive('confirmDialog', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'common_components/partials/entry-creation.html',
-      replace: true,
-      scope: { id: '' },
-      controller: [
-        '$scope',
-        function ($scope) {
-          $scope.show = function () {
-            $('#dd').modal();
-          };
-        }
-      ]
     };
   }
 ]);
@@ -368,12 +349,12 @@ kanbanApp.directive('tasks', [
             $scope.open = function (_message, _link) {
               $uibModal.open({
                 animation: false,
-                templateUrl: 'myModalContent.html',
+                templateUrl: 'foundation/modal/partials/confirm-dialog.html',
                 controller: [
                   '$scope',
                   '$uibModalInstance',
                   function ($scope, $uibModalInstance) {
-                    $scope.title = '\u63d0\u793a';
+                    $scope.title = '\u8b66\u544a';
                     $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
                     $scope.ok = function () {
                       var _taskDeletePromise = tasksServices.deleteByLink(_link);
@@ -535,6 +516,3 @@ tasksServices.factory('tasksServices', [
     };
   }
 ]);
-/**
- * Created by xubt on 6/12/16.
- */

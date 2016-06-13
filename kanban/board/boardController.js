@@ -36,14 +36,14 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
                 $scope.createBoard();
             }
             if ($event.keyCode == 27) {
-                $scope.cancelCreateTask();
+                $scope.cancelCreateBoard();
             }
         };
         $scope.showBoardCreationForm = function () {
             $scope.displayBoardCreationForm = false;
             $scope.displayForm = true;
         };
-        $scope.cancelCreateTask = function () {
+        $scope.cancelCreateBoard = function () {
             $scope.displayBoardCreationForm = true;
             $scope.displayForm = false;
         };
