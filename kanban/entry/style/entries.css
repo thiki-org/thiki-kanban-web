@@ -1,11 +1,11 @@
-
 .entries {
     float: left;
     min-height: 20px;
     border: 1px solid #fff;
     background: rgba(249, 249, 249, 1);
-    margin: 5px;
+    margin: 15px 5px auto 5px;
     border-radius: 3px;
+    width: 99%;
 }
 
 .entry {
@@ -13,7 +13,7 @@
     width: 240px;
     margin: 5px;
     min-height: 20px;
-    background: #EEECE8;
+    background: #F8F6F2;
     border-radius: 3px;
 }
 
@@ -65,7 +65,6 @@ div#create-new-entry {
     border-radius: 3px;
 }
 
-
 #create-new-entry-button {
     border: 1px solid var(--theme-color);
     border-radius: 50%;
@@ -82,7 +81,6 @@ div#create-new-entry {
     color: white;
     cursor: pointer;
 }
-
 
 .create-entry-form {
     margin: 10PX;

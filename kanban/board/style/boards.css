@@ -22,7 +22,11 @@ div.board-item :hover {
 }
 
 .board-banner {
-    background: #F8F6F2;
+    background: #EEECE8;
+    height: 33px;
+    line-height: 33px;
+    text-indent: 5px;
+    font-size: 15px;
 }
 
 #toBoards {

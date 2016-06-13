@@ -65,17 +65,6 @@ div.task-create-button {
     cursor: pointer;
 }
 
-.task-menu {
-    float: right;
-    bottom: -33px;
-    right: 4px;
-    border: none;
-}
-.task-menu-icon :hover{
-    background-color: #f8f6f2;
-    border-radius: 3px;
-}
-
 button, input, select, textarea {
     font-family: inherit;
     font-size: inherit;

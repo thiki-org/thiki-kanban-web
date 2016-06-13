@@ -228,7 +228,7 @@ kanbanApp.directive('entryCreation', [
     };
   }
 ]);
-kanbanApp.directive('entries', [
+kanbanApp.directive('entry', [
   '$timeout',
   function ($timeout) {
     return {
@@ -513,6 +513,22 @@ tasksServices.factory('tasksServices', [
         });
         return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
+    };
+  }
+]);
+/**
+ * Created by xubt on 6/13/16.
+ */
+kanbanApp.directive('focus', [
+  '$timeout',
+  '$parse',
+  function ($timeout, $parse) {
+    return function (scope, element, attrs) {
+      scope.$watch(attrs.focus, function (newValue) {
+        $timeout(function () {
+          newValue && element[0].focus();
+        });
+      }, true);
     };
   }
 ]);

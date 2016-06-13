@@ -56,7 +56,7 @@ kanbanApp.directive('entryCreation', function ($timeout) {
     };
 });
 
-kanbanApp.directive('entries', function ($timeout) {
+kanbanApp.directive('entry', function ($timeout) {
     return {
         restrict: 'E',
         templateUrl: 'entry/partials/entry.html',

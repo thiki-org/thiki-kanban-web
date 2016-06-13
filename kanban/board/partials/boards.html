@@ -11,7 +11,7 @@
             <form name="createBoardForm" class="create-board-form">
                 <div class="input-group  creation-box">
                     <input name="name" type="text" class="form-control" data-ng-model="board.name"
-                           ng-keydown="keyPress($event)" required/>
+                           ng-keydown="keyPress($event)" focus="displayForm" required/>
                 </div>
                 <div class="thiki-form-buttons">
                     <button type="button" class="thiki-submit-button btn btn-primary"
