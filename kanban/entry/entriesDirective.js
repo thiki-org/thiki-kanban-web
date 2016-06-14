@@ -35,14 +35,15 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                     $scope.entry.title = "";
                 });
             };
-
+            $scope.displayCreationButton=true;
+            $scope.displayForm=false;
             $scope.cancelCreateEntry = function () {
-                $("#create-new-entry-form").hide();
-                $("#create-new-entry-button").show();
+                $scope.displayCreationButton=true;
+                $scope.displayForm=false;
             };
             $scope.showCreateEntryForm = function () {
-                $("#create-new-entry-button").hide();
-                $("#create-new-entry-form").show();
+                $scope.displayCreationButton=false;
+                $scope.displayForm=true;
             };
             $scope.keyPress = function ($event) {
                 if ($event.keyCode == 13) {

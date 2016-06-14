@@ -53,10 +53,6 @@
     margin-top: 5px;
 }
 
-#create-new-entry-form {
-    display: none;
-}
-
 div#create-new-entry {
     float: left;
     width: 240px;
