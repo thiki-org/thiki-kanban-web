@@ -37,8 +37,8 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                     $scope.cancelCreateEntry();
                 }
             }
-            $scope.updateUser=function (data) {
-                alert(data);
+            $scope.updateEntry = function (_data, _entry) {
+                alert(JSON.stringify(_entry));
             }
         }]
     };
@@ -51,7 +51,6 @@ kanbanApp.directive('entry', function ($timeout) {
         replace: true,
         controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
             function loadEntries() {
-                var tasks = [];
                 var boardLink = $routeParams.boardLink;
 
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
@@ -70,19 +69,22 @@ kanbanApp.directive('entry', function ($timeout) {
                                     //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
                                 },
                                 update: function (e, ui) {
-                                    console.log(ui.item.scope());
+
+                                },
+                                stop: function (e, ui) {
                                     var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
                                     ui.item.sortable.model.entryId = targetEntryId;
                                     ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                                    console.log(ui.item.sortable.model);
-
                                     var _tasksPromise = tasksServices.update(ui.item.sortable.model);
                                     _tasksPromise.then(function (data) {
-                                        loadEntries();
-                                    });
-                                },
-                                stop: function (e, ui) {
+                                        // loadEntries();
+                                        var boardLink = $routeParams.boardLink;
 
+                                        var boardPromise = boardsService.loadBoardByLink(boardLink);
+                                        boardPromise.then(function (_board) {
+                                            $scope.board = _board;
+                                        });
+                                    });
                                 }
                             };
                         }

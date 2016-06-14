@@ -1,5 +1,6 @@
-<div entryId="{{entry.id}}" class="entry" ng-repeat="entry in entries | orderBy:'creationTime'">
-    <div class="entry-item entryTitle" data-type="text" data-ng-model="entry.title" editable-text="entry.title" onbeforesave="updateUser($data)" data-mode="inline">
+<div entryId="{{entry.id}}" class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" data-ng-model="entry">
+    <div class="entry-item entryTitle" data-type="text" editable-text="entry.title"
+         onbeforesave="updateEntry($data,entry)" data-mode="inline">
         {{entry.title}}
     </div>
     <tasks/>

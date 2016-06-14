@@ -129,3 +129,45 @@ button.thiki-submit-button {
 .thiki-delete-button {
     background-color: #d43f3a !important;
 }
+
+.editable-text .editable-buttons {
+    float: none !important;
+    margin-top: 0px !important;
+}
+
+span.editable-buttons {
+    float: left !important;
+    margin-top: 10px !important;
+    margin-left: 0px !important;
+}
+
+.editable-click, a.editable-click {
+    text-decoration: none;
+    color: black !important;
+    border-bottom: none !important;
+}
+
+form.form-inline.editable-wrap.editable-textarea.ng-pristine.ng-valid.ng-scope {
+    width: 100%;
+}
+
+.editable-controls.form-group {
+    width: inherit;
+
+}
+
+textarea.editable-input.form-control.ng-pristine.ng-valid.ng-touched {
+    width: 100%;
+}
+
+textarea.editable-input.form-control {
+    width: 100%;
+}
+
+.editable-click:hover {
+    color: black !important;
+}
+
+.editable-cancel-button {
+    border: none;
+}
