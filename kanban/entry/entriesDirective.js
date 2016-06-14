@@ -37,8 +37,12 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                     $scope.cancelCreateEntry();
                 }
             }
-            $scope.updateEntry = function (_data, _entry) {
-                alert(JSON.stringify(_entry));
+            $scope.updateEntry = function (_title, _entry) {
+                var entry = _entry;
+                entry.title = _title;
+                var entryPromise = entriesServices.update(entry);
+                entryPromise.then(function () {
+                });
             }
         }]
     };
