@@ -63,7 +63,6 @@ div.task-create-button {
     background-color: rgb(208, 208, 208);
     color: #fff;
     font-weight: bolder;
-    margin-top: 10px;
     cursor: pointer;
 }
 
@@ -84,4 +83,7 @@ button, input, select, textarea {
 .task-menu {
     float: right;
     margin: 5px;
+}
+.task-create {
+    float: left;
 }
