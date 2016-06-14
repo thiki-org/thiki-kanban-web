@@ -12,11 +12,11 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
         boardsService.boardsLink = boardsLink;
         boardPromise.then(function (data) {
             $scope.boards = data;
-        })
+        });
 
         $scope.toEntries = function (_boardId, _boardLink) {
             $location.path('/boards/' + _boardId + '/entries').search({boardLink: _boardLink});
-        }
+        };
         $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;
         $scope.createBoard = function () {

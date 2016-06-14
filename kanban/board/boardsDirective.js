@@ -2,7 +2,7 @@
  * Created by xubt on 5/26/16.
  */
 
-kanbanApp.directive('boardBanner', function ($timeout) {
+kanbanApp.directive('boardBanner', function () {
     return {
         restrict: 'E',
         templateUrl: 'board/partials/board-banner.html',
@@ -19,4 +19,4 @@ kanbanApp.directive('boardBanner', function ($timeout) {
             };
         }]
     };
-})
+});
