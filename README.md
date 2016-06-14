@@ -1,15 +1,15 @@
 思奇看板Web端解决方案。技术:nodejs+angularJS+gulp.
 
-## 启动方法
+## 如何启动
 
-* npm install
+1、启动前,请下载最新源码并确认你的机器已经安装了[nodeJS](https://nodejs.org/en/);
 
-* npm start
+2、在项目根目录执行`npm install`安装项目的依赖包;
 
+3、在项目根目录执行`gulp`.如果正在开发该项目,请不要退出`gulp`,它将监视文件动态并实时合并出最新的css和js文件;
 
-注意:没有安装node.js的先安装nodejs
-例如Mac下 利用homebrew安装nodejs
-* brew install node
+4、执行`npm start`启动项目.
+
 
 访问示例:
 
