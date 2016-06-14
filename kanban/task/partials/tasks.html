@@ -1,6 +1,6 @@
 <div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks">
     <div class="task" ng-repeat="task in tasks |orderBy:'orderNumber' ">
-        <div class="task-summary" editable-textarea="task.summary">{{task.summary}}</div>
+        <div class="task-summary" editable-textarea="task.summary" onbeforesave="updateTask($data,task)">{{task.summary}}</div>
         <div class="task-operations">
             <div class="dropdown task-menu">
                 <button class="dropdown-toggle " type="button" id="dropdownMenu1"

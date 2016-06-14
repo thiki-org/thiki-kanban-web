@@ -37,6 +37,14 @@ kanbanApp.directive('tasks', function ($uibModal) {
                     });
                 };
             }
+
+            $scope.updateTask = function (_summary, _task) {
+                var task = _task;
+                task.summary = _summary;
+                var taskPromise = tasksServices.update(task);
+                taskPromise.then(function () {
+                });
+            }
         }]
     };
 });
