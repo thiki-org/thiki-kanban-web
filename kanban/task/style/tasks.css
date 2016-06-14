@@ -1,16 +1,18 @@
 .task {
-    width: 96%;
     border: 1px solid #EAEAEA;
-    margin: 2%;
-    height: 62px;
+    margin: 5px;
     background-color: #fff;
     border-radius: 3px;
+    position: relative;
+    float: left;
+    width: 95%;
 }
 
-.task-title {
-    color: black;
+.task-summary {
+    color: #000;
     margin: 5px;
-    position: absolute;
+    float: left;
+    min-height: 36px;
 }
 
 .tasks {
@@ -71,4 +73,15 @@ button, input, select, textarea {
     line-height: inherit;
     background: none;
     border: none;
+}
+.task-operations {
+    float: left;
+    width: 100%;
+    bottom: 0px;
+    padding-right: 5px;
+}
+
+.task-menu {
+    float: right;
+    margin: 5px;
 }

@@ -65,10 +65,8 @@ button.btn.btn-primary {
 }
 
 .thiki-menu {
-    float: right;
-    bottom: -33px;
-    right: 4px;
-    border: none;
+    border: 1px solid red;
+    margin: 5px;
 }
 
 .thiki-menu-items {
