@@ -9,7 +9,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'entriesServices',
     'ui.sortable',
     'tasksServices',
-    'boardsService'
+    'boardsService',
+    'xeditable'
   ]);
 kanbanApp.config([
   '$routeProvider',
@@ -24,6 +25,12 @@ kanbanApp.config([
       templateUrl: 'board/partials/boards.html',
       controller: 'boardController'
     });
+  }
+]);
+kanbanApp.run([
+  'editableOptions',
+  function (editableOptions) {
+    editableOptions.theme = 'bs3';
   }
 ]);
 /**
@@ -164,23 +171,6 @@ boardsService.factory('boardsService', [
 /**
  * Created by xubt on 4/29/16.
  */
-//自定义指令repeatFinish
-kanbanApp.directive('repeatFinish', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'A',
-      link: function (scope, element, attr) {
-        if (scope.$last == true) {
-          $timeout(function () {
-            $('.entryTitle').editable();
-            scope.$emit('ngRepeatFinished');
-          });
-        }
-      }
-    };
-  }
-]);
 kanbanApp.directive('entryCreation', [
   '$timeout',
   function ($timeout) {
@@ -224,6 +214,9 @@ kanbanApp.directive('entryCreation', [
             if ($event.keyCode == 27) {
               $scope.cancelCreateEntry();
             }
+          };
+          $scope.updateUser = function (data) {
+            alert(data);
           };
         }
       ]

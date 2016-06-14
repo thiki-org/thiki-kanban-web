@@ -11,7 +11,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'entriesServices',
     'ui.sortable',
     'tasksServices',
-    'boardsService'
+    'boardsService',
+    'xeditable'
 ]);
 
 kanbanApp.config(['$routeProvider',
@@ -29,3 +30,7 @@ kanbanApp.config(['$routeProvider',
             controller: 'boardController'
         });
     }]);
+
+kanbanApp.run(function (editableOptions) {
+    editableOptions.theme = 'bs3';
+});

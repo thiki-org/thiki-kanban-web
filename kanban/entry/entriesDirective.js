@@ -1,22 +1,6 @@
 /**
  * Created by xubt on 4/29/16.
  */
-
-//自定义指令repeatFinish
-kanbanApp.directive('repeatFinish', function ($timeout) {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attr) {
-            if (scope.$last == true) {
-                $timeout(function () {
-                    $('.entryTitle').editable();
-                    scope.$emit('ngRepeatFinished');
-                });
-            }
-        }
-    }
-});
-
 kanbanApp.directive('entryCreation', function ($timeout) {
     return {
         restrict: 'E',
@@ -35,15 +19,15 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                     $scope.entry.title = "";
                 });
             };
-            $scope.displayCreationButton=true;
-            $scope.displayForm=false;
+            $scope.displayCreationButton = true;
+            $scope.displayForm = false;
             $scope.cancelCreateEntry = function () {
-                $scope.displayCreationButton=true;
-                $scope.displayForm=false;
+                $scope.displayCreationButton = true;
+                $scope.displayForm = false;
             };
             $scope.showCreateEntryForm = function () {
-                $scope.displayCreationButton=false;
-                $scope.displayForm=true;
+                $scope.displayCreationButton = false;
+                $scope.displayForm = true;
             };
             $scope.keyPress = function ($event) {
                 if ($event.keyCode == 13) {
@@ -52,6 +36,9 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                 if ($event.keyCode == 27) {
                     $scope.cancelCreateEntry();
                 }
+            }
+            $scope.updateUser=function (data) {
+                alert(data);
             }
         }]
     };
