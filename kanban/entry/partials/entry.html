@@ -1,8 +1,10 @@
-<div entryId="{{entry.id}}" class="entry" ng-repeat="entry in entries | orderBy:'creationTime'" data-ng-model="entry">
-    <div class="entry-item entryTitle" data-type="text" editable-text="entry.title"
+<div entryId="{{entry.id}}" class="entry-item" ng-mouseover="onEntryMenuMouseOver($event)"
+     ng-mouseleave="onEntryMenuMouseLeave($event)">
+    <div class="entry-title" data-type="text" editable-text="entry.title"
          onbeforesave="updateEntry($data,entry)" data-mode="inline">
         {{entry.title}}
     </div>
+    <div class="entry-menu" ng-show="displayEntryMenu" data-mode="inline">▼</div>
     <tasks/>
     <task-creation/>
 </div>

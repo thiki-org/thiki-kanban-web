@@ -18,7 +18,7 @@ kanbanApp.config([
     $routeProvider.when('/entries', {
       templateUrl: 'board/partials/boards.html',
       controller: 'EntriesCtrl'
-    }).when('/boards/:boardId/entries', { templateUrl: 'entry/partials/entries.html' }).when('/boards', {
+    }).when('/boards/:boardId/entries', { templateUrl: 'entry/partials/entry-partial.html' }).when('/boards', {
       templateUrl: 'board/partials/boards.html',
       controller: 'boardController'
     }).otherwise({
@@ -175,6 +175,7 @@ kanbanApp.directive('entryCreation', [
       restrict: 'E',
       templateUrl: 'entry/partials/entry-creation.html',
       replace: true,
+      scope: true,
       controller: [
         '$scope',
         'entriesServices',
@@ -224,60 +225,84 @@ kanbanApp.directive('entryCreation', [
     };
   }
 ]);
-kanbanApp.directive('entry', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'entry/partials/entry.html',
-      replace: true,
-      controller: [
-        '$scope',
-        '$routeParams',
-        'boardsService',
-        'entriesServices',
-        'tasksServices',
-        function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
-          function loadEntries() {
-            var boardLink = $routeParams.boardLink;
-            var boardPromise = boardsService.loadBoardByLink(boardLink);
-            boardPromise.then(function (_board) {
-              $scope.board = _board;
-              entriesServices.entriesLink = _board._links.entries.href;
-              var entriesPromise = entriesServices.load(_board._links.entries.href);
-              entriesPromise.then(function (data) {
-                $scope.entries = data;
-                $scope.sortableOptions = {
-                  connectWith: '.tasks',
-                  opacity: 0.5,
-                  start: function (e, ui) {
-                  },
-                  update: function (e, ui) {
-                  },
-                  stop: function (e, ui) {
-                    var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
-                    ui.item.sortable.model.entryId = targetEntryId;
-                    ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                    var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                    _tasksPromise.then(function (data) {
-                      // loadEntries();
-                      var boardLink = $routeParams.boardLink;
-                      var boardPromise = boardsService.loadBoardByLink(boardLink);
-                      boardPromise.then(function (_board) {
-                        $scope.board = _board;
-                      });
+kanbanApp.directive('entries', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'entry/partials/entries.html',
+    replace: true,
+    scope: true,
+    controller: [
+      '$scope',
+      '$routeParams',
+      'boardsService',
+      'entriesServices',
+      'tasksServices',
+      function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+        function loadEntries() {
+          var boardLink = $routeParams.boardLink;
+          var boardPromise = boardsService.loadBoardByLink(boardLink);
+          boardPromise.then(function (_board) {
+            $scope.board = _board;
+            entriesServices.entriesLink = _board._links.entries.href;
+            var entriesPromise = entriesServices.load(_board._links.entries.href);
+            entriesPromise.then(function (data) {
+              $scope.entries = data;
+              $scope.sortableOptions = {
+                connectWith: '.tasks',
+                opacity: 0.5,
+                start: function (e, ui) {
+                },
+                update: function (e, ui) {
+                },
+                stop: function (e, ui) {
+                  var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
+                  ui.item.sortable.model.entryId = targetEntryId;
+                  ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+                  var _tasksPromise = tasksServices.update(ui.item.sortable.model);
+                  _tasksPromise.then(function (data) {
+                    // loadEntries();
+                    var boardLink = $routeParams.boardLink;
+                    var boardPromise = boardsService.loadBoardByLink(boardLink);
+                    boardPromise.then(function (_board) {
+                      $scope.board = _board;
                     });
-                  }
-                };
-              });
+                  });
+                }
+              };
             });
-          }
-          loadEntries();
+          });
         }
-      ]
-    };
-  }
-]);
+        loadEntries();
+      }
+    ]
+  };
+});
+kanbanApp.directive('entry', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'entry/partials/entry.html',
+    replace: true,
+    transclude: true,
+    scope: { entry: '=' },
+    controller: [
+      '$scope',
+      '$routeParams',
+      'boardsService',
+      'entriesServices',
+      'tasksServices',
+      function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+        $scope.displayEntryMenu = false;
+        $scope.onEntryMenuMouseOver = function () {
+          console.log($scope);
+          $scope.displayEntryMenu = true;
+        };
+        $scope.onEntryMenuMouseLeave = function () {
+          $scope.displayEntryMenu = false;
+        };
+      }
+    ]
+  };
+});
 'use strict';
 /* Services */
 var entriesServices = angular.module('entriesServices', ['ngResource']);

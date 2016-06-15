@@ -85,6 +85,7 @@ button, input, select, textarea {
     float: right;
     margin: 5px;
 }
-.task-create {
+.task-creation {
     float: left;
+    margin: 5px;
 }

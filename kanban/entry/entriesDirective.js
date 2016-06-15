@@ -6,6 +6,7 @@ kanbanApp.directive('entryCreation', function ($timeout) {
         restrict: 'E',
         templateUrl: 'entry/partials/entry-creation.html',
         replace: true,
+        scope: true,
         controller: ['$scope', 'entriesServices', function ($scope, entriesServices) {
             $scope.createEntry = function () {
                 var title = $scope.entry.title;
@@ -19,6 +20,7 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                     $scope.entry.title = "";
                 });
             };
+
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
             $scope.cancelCreateEntry = function () {
@@ -36,23 +38,25 @@ kanbanApp.directive('entryCreation', function ($timeout) {
                 if ($event.keyCode == 27) {
                     $scope.cancelCreateEntry();
                 }
-            }
+            };
             $scope.updateEntry = function (_title, _entry) {
                 var entry = _entry;
                 entry.title = _title;
                 var entryPromise = entriesServices.update(entry);
                 entryPromise.then(function () {
                 });
-            }
+            };
+
         }]
     };
 });
 
-kanbanApp.directive('entry', function ($timeout) {
+kanbanApp.directive('entries', function () {
     return {
         restrict: 'E',
-        templateUrl: 'entry/partials/entry.html',
+        templateUrl: 'entry/partials/entries.html',
         replace: true,
+        scope: true,
         controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
             function loadEntries() {
                 var boardLink = $routeParams.boardLink;
@@ -97,6 +101,28 @@ kanbanApp.directive('entry', function ($timeout) {
             }
 
             loadEntries();
+        }]
+    };
+});
+
+kanbanApp.directive('entry', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'entry/partials/entry.html',
+        replace: true,
+        transclude: true,
+        scope: {
+            entry: '='
+        },
+        controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+            $scope.displayEntryMenu = false;
+            $scope.onEntryMenuMouseOver = function () {
+                console.log($scope);
+                $scope.displayEntryMenu = true;
+            };
+            $scope.onEntryMenuMouseLeave = function () {
+                $scope.displayEntryMenu = false;
+            }
         }]
     };
 });

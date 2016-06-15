@@ -21,7 +21,7 @@ kanbanApp.config(['$routeProvider',
             templateUrl: 'board/partials/boards.html',
             controller: 'EntriesCtrl'
         }).when('/boards/:boardId/entries', {
-            templateUrl: 'entry/partials/entries.html'
+            templateUrl: 'entry/partials/entry-partial.html'
         }).when('/boards', {
             templateUrl: 'board/partials/boards.html',
             controller: 'boardController'

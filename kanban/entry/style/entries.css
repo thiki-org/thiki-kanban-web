@@ -2,7 +2,6 @@
     float: left;
     min-height: 20px;
     border: 1px solid #fff;
-    background: rgba(249, 249, 249, 1);
     margin: 15px 5px auto 5px;
     border-radius: 3px;
     width: 99%;
@@ -21,12 +20,18 @@
     color: #333;
     border-bottom: none;
     margin: 2% 2% 10px;
+    float: left;
+    width: 80%;
 }
 
 .entry-item {
     color: #333;
     border-bottom: none;
-    margin: 2% 2% 10px;
+    margin: 5px 5px 10px;
+    float: left;
+    background: #F9F9F9;
+    border-radius: 3px;
+    width: 251px;
 }
 
 .create-entry-form-button {
@@ -82,4 +87,20 @@ div#create-new-entry {
     margin: 10PX;
     float: left;
     width: 100%;
+}
+
+.entry-menu {
+    float: right;
+    margin: 4% 3% 10px;
+    border: #d0d0d0;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    background-color: #d0d0d0;
+    color: #fff;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 8px;
 }
