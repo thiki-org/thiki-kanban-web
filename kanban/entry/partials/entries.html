@@ -1,4 +1,6 @@
-<div class="entries" >
-    <entry ng-repeat="entry in entries | orderBy:'creationTime'" entry="entry"></entry>
+<div class="entries">
+    <div class="entry">
+        <entry ng-repeat="entry in entries | orderBy:'creationTime'" entry="entry"></entry>
+    </div>
     <entry-creation/>
 </div>

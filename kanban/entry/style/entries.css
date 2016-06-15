@@ -9,11 +9,6 @@
 
 .entry {
     float: left;
-    width: 240px;
-    margin: 5px;
-    min-height: 20px;
-    background: #F8F6F2;
-    border-radius: 3px;
 }
 
 .entry-title {
@@ -31,7 +26,7 @@
     float: left;
     background: #F9F9F9;
     border-radius: 3px;
-    width: 251px;
+    width: 230px;
 }
 
 .create-entry-form-button {
@@ -60,7 +55,7 @@
 
 div#create-new-entry {
     float: left;
-    width: 240px;
+    width: 20%;
     margin: 5px;
     min-height: 20px;
     border-radius: 3px;
