@@ -4,7 +4,15 @@
          onbeforesave="updateEntry($data,entry)" data-mode="inline">
         {{entry.title}}
     </div>
-    <div class="entry-menu" ng-show="displayEntryMenu" data-mode="inline">▼</div>
+    <div class="dropdown entry-menu" ng-show="displayEntryMenu">
+        <span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">▼</span>
+        <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="thiki-menu-item"><a ng-click="open(task.summary,task._links.self.href)">设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="thiki-menu-item thiki-delete-item"><a ng-click="open(task.summary,task._links.self.href)">删除</a>
+            </li>
+        </ul>
+    </div>
     <tasks/>
     <task-creation/>
 </div>

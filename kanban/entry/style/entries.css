@@ -59,10 +59,11 @@ div#create-new-entry {
     margin: 5px;
     min-height: 20px;
     border-radius: 3px;
+    color: darkgray;
 }
 
 #create-new-entry-button {
-    border: 1px solid var(--theme-color);
+    border: 1px dashed #e8e8ea;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     width: 40px;
@@ -73,8 +74,8 @@ div#create-new-entry {
 }
 
 #create-new-entry-button:hover {
-    background-color: var(--theme-color);
-    color: white;
+    background-color: #eeece8;
+    color: darkgray;
     cursor: pointer;
 }
 
