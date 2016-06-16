@@ -17,11 +17,8 @@ var kanbanApp = angular.module('kanbanApp', [
 
 kanbanApp.config(['$routeProvider',
     function ($routeProvider) {
-        $routeProvider.when('/entries', {
-            templateUrl: 'component/board/partials/boards.html',
-            controller: 'EntriesCtrl'
-        }).when('/boards/:boardId/entries', {
-            templateUrl: 'component/entry/partials/entries.html'
+        $routeProvider.when('/boards/:boardId/entries', {
+            templateUrl: 'component/entry/partials/entry-partial.html'
         }).when('/boards', {
             templateUrl: 'component/board/partials/boards.html',
             controller: 'boardController'

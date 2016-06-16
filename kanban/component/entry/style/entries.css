@@ -2,7 +2,6 @@
     float: left;
     min-height: 20px;
     border: 1px solid #fff;
-    background: rgba(249, 249, 249, 1);
     margin: 15px 5px auto 5px;
     border-radius: 3px;
     width: 99%;
@@ -10,23 +9,24 @@
 
 .entry {
     float: left;
-    width: 240px;
-    margin: 5px;
-    min-height: 20px;
-    background: #F8F6F2;
-    border-radius: 3px;
 }
 
 .entry-title {
     color: #333;
     border-bottom: none;
     margin: 2% 2% 10px;
+    float: left;
+    width: 80%;
 }
 
 .entry-item {
     color: #333;
     border-bottom: none;
-    margin: 2% 2% 10px;
+    margin: 5px 5px 10px;
+    float: left;
+    background: #F9F9F9;
+    border-radius: 3px;
+    width: 230px;
 }
 
 .create-entry-form-button {
@@ -55,26 +55,27 @@
 
 div#create-new-entry {
     float: left;
-    width: 240px;
+    width: 20%;
     margin: 5px;
     min-height: 20px;
     border-radius: 3px;
+    color: darkgray;
 }
 
 #create-new-entry-button {
-    border: 1px solid var(--theme-color);
+    border: 1px dashed #e8e8ea;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     width: 40px;
     height: 40px;
     text-align: center;
-    line-height: 35px;
+    line-height: 40px;
     font-size: 18px;
 }
 
 #create-new-entry-button:hover {
-    background-color: var(--theme-color);
-    color: white;
+    background-color: #eeece8;
+    color: darkgray;
     cursor: pointer;
 }
 
@@ -82,4 +83,20 @@ div#create-new-entry {
     margin: 10PX;
     float: left;
     width: 100%;
+}
+
+.entry-menu {
+    float: right;
+    margin: 4% 3% 10px;
+    border: #d0d0d0;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    background-color: #d0d0d0;
+    color: #fff;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 8px;
 }

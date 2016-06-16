@@ -1,6 +1,6 @@
-<board-banner></board-banner>
-
 <div class="entries">
-    <entry></entry>
+    <div class="entry">
+        <entry ng-repeat="entry in entries | orderBy:'creationTime'" entry="entry"></entry>
+    </div>
     <entry-creation/>
 </div>

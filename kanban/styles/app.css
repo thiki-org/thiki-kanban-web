@@ -130,6 +130,10 @@ button.thiki-submit-button {
     background-color: #d43f3a !important;
 }
 
+.thiki-delete-item :hover {
+    background-color: #d43f3a !important;
+}
+
 .editable-text .editable-buttons {
     float: none !important;
     margin-top: 0px !important;
@@ -170,4 +174,12 @@ textarea.editable-input.form-control {
 
 .editable-cancel-button {
     border: none;
+}
+
+.form-control {
+    border-radius: 2px !important;
+}
+
+.btn {
+    border-radius: 2px !important;
 }

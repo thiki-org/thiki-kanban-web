@@ -55,13 +55,13 @@
 }
 
 div.task-create-button {
-    border: rgb(208, 208, 208);
+    border: #d0d0d0;
     height: 15px;
     width: 15px;
     border-radius: 50%;
     text-align: center;
-    line-height: 12px;
-    background-color: rgb(208, 208, 208);
+    line-height: 15px;
+    background-color: #d0d0d0;
     color: #fff;
     font-weight: bolder;
     cursor: pointer;
@@ -85,6 +85,7 @@ button, input, select, textarea {
     float: right;
     margin: 5px;
 }
-.task-create {
+.task-creation {
     float: left;
+    margin: 5px;
 }
