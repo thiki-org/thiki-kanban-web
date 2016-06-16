@@ -277,7 +277,7 @@ kanbanApp.directive('entries', function () {
 kanbanApp.directive('entry', function () {
   return {
     restrict: 'E',
-    templateUrl: 'entry/partials/entry.html',
+    templateUrl: 'component/entry/partials/entry.html',
     replace: true,
     transclude: true,
     scope: { entry: '=' },
