@@ -5,7 +5,7 @@
 kanbanApp.directive('boardBanner', function () {
     return {
         restrict: 'E',
-        templateUrl: 'board/partials/board-banner.html',
+        templateUrl: 'component/board/partials/board-banner.html',
         replace: false,
         controller: ['$scope', '$routeParams', '$location', 'boardsService', function ($scope, $routeParams, $location, boardsService) {
             var boardLink = $routeParams.boardLink;

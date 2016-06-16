@@ -14,5 +14,54 @@
 访问示例:
 
 ```
-http://localhost:8008/kanban/boards
+http://localhost:8008/kanban/#/boards
 ```
+
+# 工具简介(TODO)
+
+工具链大致是这样的(从底层往上看,括号里是相关配置和文件):
+
+* js v8 engine
+* node.js
+* npm  (~/.npm,  ~/.npmrc, ${project}/package.json)
+* bower.js (${project}/bower.json,  ${project}/bower_components)
+* gulp (${project}/Gulpfile.js)
+
+## npm
+
+nodejs下的组件管理系统
+每一个项目下都要执行
+
+``$ npm install``
+
+
+## bower
+
+类似的有
+
+``$ bower install``
+
+不过npm install会调用bower install
+
+## gulp 入门
+
+* 简介(TODO)
+
+用自动化构建工具增强你的工作流程！
+
+暂时先见[官网](http://www.gulpjs.com.cn/)
+
+* 全局安装gulp
+
+`` npm install --global gulp ``
+
+* 运行gulp task
+
+```
+$ cd ${where_thiki-kanban-web_is}
+$ gulp
+//or specify a task in Gulpfile.js
+$ gulp watch
+```
+
+

@@ -4,7 +4,7 @@
 kanbanApp.directive('tasks', function ($uibModal) {
     return {
         restrict: 'E',
-        templateUrl: 'task/partials/tasks.html',
+        templateUrl: 'component/task/partials/tasks.html',
         replace: true,
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
             loadTasks();
@@ -18,7 +18,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
                 $scope.open = function (_message, _link) {
                     $uibModal.open({
                         animation: false,
-                        templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                        templateUrl: 'component/foundation/modal/partials/confirm-dialog.html',
                         controller: function ($scope, $uibModalInstance) {
                             $scope.title = '警告';
                             $scope.message = "确定要删除" + _message + "吗?";
@@ -63,7 +63,7 @@ angular.module('kanbanApp').controller('ModalInstanceCtrl', function ($scope, $u
 kanbanApp.directive('taskCreation', function ($timeout) {
     return {
         restrict: 'E',
-        templateUrl: 'task/partials/task-creation.html',
+        templateUrl: 'component/task/partials/task-creation.html',
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
 
             var entry = $scope.entry;

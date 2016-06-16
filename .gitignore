@@ -1,0 +1,4 @@
+bower_components
+node_modules
+kanban/static/js
+kanban/static/css/*.css
