@@ -235,7 +235,7 @@ kanbanApp.directive('entries', function () {
       'entriesServices',
       'tasksServices',
       function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
-        function loadEntries() {
+        $scope.loadEntries = function () {
           var boardLink = $routeParams.boardLink;
           var boardPromise = boardsService.loadBoardByLink(boardLink);
           boardPromise.then(function (_board) {
@@ -268,38 +268,65 @@ kanbanApp.directive('entries', function () {
               };
             });
           });
-        }
-        loadEntries();
+        };
+        $scope.loadEntries();
       }
     ]
   };
 });
-kanbanApp.directive('entry', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'component/entry/partials/entry.html',
-    replace: true,
-    transclude: true,
-    scope: { entry: '=' },
-    controller: [
-      '$scope',
-      '$routeParams',
-      'boardsService',
-      'entriesServices',
-      'tasksServices',
-      function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
-        $scope.displayEntryMenu = false;
-        $scope.onEntryMenuMouseOver = function () {
-          console.log($scope);
-          $scope.displayEntryMenu = true;
-        };
-        $scope.onEntryMenuMouseLeave = function () {
+kanbanApp.directive('entry', [
+  '$uibModal',
+  function ($uibModal) {
+    return {
+      restrict: 'E',
+      templateUrl: 'component/entry/partials/entry.html',
+      replace: true,
+      transclude: true,
+      scope: { entry: '=' },
+      controller: [
+        '$scope',
+        '$routeParams',
+        'boardsService',
+        'entriesServices',
+        function ($scope, $routeParams, boardsService, entriesServices) {
           $scope.displayEntryMenu = false;
-        };
-      }
-    ]
-  };
-});
+          $scope.onEntryMenuMouseOver = function () {
+            $scope.displayEntryMenu = true;
+          };
+          $scope.onEntryMenuMouseLeave = function () {
+            $scope.displayEntryMenu = false;
+          };
+          var currentScope = $scope;
+          $scope.openModal = function (_message, _link) {
+            $uibModal.open({
+              animation: false,
+              templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+              controller: [
+                '$scope',
+                '$uibModalInstance',
+                function ($scope, $uibModalInstance) {
+                  $scope.title = '\u8b66\u544a';
+                  $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
+                  $scope.ok = function () {
+                    var _entryDeletePromise = entriesServices.deleteByLink(_link);
+                    _entryDeletePromise.then(function () {
+                      currentScope.$parent.loadEntries();
+                    });
+                    $uibModalInstance.close();
+                  };
+                  $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                }
+              ],
+              size: 'sm'
+            });
+          };
+        }
+      ]
+    };
+  }
+]);
 'use strict';
 /* Services */
 var entriesServices = angular.module('entriesServices', ['ngResource']);
@@ -335,7 +362,6 @@ entriesServices.factory('entriesServices', [
           headers: { 'userId': '112' },
           url: this.entriesLink
         }).success(function (data, status, headers, config) {
-          console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
         }).error(function (data, status, headers, config) {
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
@@ -353,7 +379,21 @@ entriesServices.factory('entriesServices', [
           headers: { 'userId': '112' },
           url: _entry._links.self.href
         }).success(function (data, status, headers, config) {
-          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      deleteByLink: function (_link) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'DELETE',
+          contentType: 'application/json',
+          headers: { 'userId': '112' },
+          url: _link
+        }).success(function (data, status, headers, config) {
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
         }).error(function (data, status, headers, config) {
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
@@ -387,7 +427,7 @@ kanbanApp.directive('tasks', [
             $scope.open = function (_message, _link) {
               $uibModal.open({
                 animation: false,
-                templateUrl: 'component/foundation/modal/partials/confirm-dialog.html',
+                templateUrl: 'foundation/modal/partials/confirm-dialog.html',
                 controller: [
                   '$scope',
                   '$uibModalInstance',

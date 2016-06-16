@@ -58,7 +58,7 @@ kanbanApp.directive('entries', function () {
         replace: true,
         scope: true,
         controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
-            function loadEntries() {
+            $scope.loadEntries = function () {
                 var boardLink = $routeParams.boardLink;
 
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
@@ -98,14 +98,14 @@ kanbanApp.directive('entries', function () {
                         }
                     );
                 });
-            }
+            };
 
-            loadEntries();
+            $scope.loadEntries();
         }]
     };
 });
 
-kanbanApp.directive('entry', function () {
+kanbanApp.directive('entry', function ($uibModal) {
     return {
         restrict: 'E',
         templateUrl: 'component/entry/partials/entry.html',
@@ -114,15 +114,37 @@ kanbanApp.directive('entry', function () {
         scope: {
             entry: '='
         },
-        controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+        controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', function ($scope, $routeParams, boardsService, entriesServices) {
             $scope.displayEntryMenu = false;
             $scope.onEntryMenuMouseOver = function () {
-                console.log($scope);
                 $scope.displayEntryMenu = true;
             };
             $scope.onEntryMenuMouseLeave = function () {
                 $scope.displayEntryMenu = false;
-            }
+            };
+
+            var currentScope = $scope;
+            $scope.openModal = function (_message, _link) {
+                $uibModal.open({
+                    animation: false,
+                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                    controller: function ($scope, $uibModalInstance) {
+                        $scope.title = '警告';
+                        $scope.message = "确定要删除" + _message + "吗?";
+                        $scope.ok = function () {
+                            var _entryDeletePromise = entriesServices.deleteByLink(_link);
+                            _entryDeletePromise.then(function () {
+                                currentScope.$parent.loadEntries();
+                            });
+                            $uibModalInstance.close();
+                        };
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: 'sm'
+                });
+            };
         }]
     };
 });
