@@ -18,7 +18,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
                 $scope.open = function (_message, _link) {
                     $uibModal.open({
                         animation: false,
-                        templateUrl: 'component/foundation/modal/partials/confirm-dialog.html',
+                        templateUrl: 'foundation/modal/partials/confirm-dialog.html',
                         controller: function ($scope, $uibModalInstance) {
                             $scope.title = '警告';
                             $scope.message = "确定要删除" + _message + "吗?";
