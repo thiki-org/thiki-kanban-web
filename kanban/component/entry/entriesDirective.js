@@ -9,7 +9,7 @@ kanbanApp.directive('entryCreation', function () {
         scope: true,
         controller: ['$scope', 'entriesServices', function ($scope, entriesServices) {
             $scope.createEntry = function () {
-                var title = $scope.entry.title;
+                var title = $scope.title;
                 var entry = {title: title, boardId: $scope.board.id};
                 var entriesPromise = entriesServices.create(entry);
                 entriesPromise.then(function (data) {
@@ -17,7 +17,8 @@ kanbanApp.directive('entryCreation', function () {
                         $scope.entries = [];
                     }
                     $scope.entries.push(data);
-                    $scope.entry.title = "";
+                    $scope.title = "";
+                    $scope.cancelCreateEntry();
                 });
             };
 
@@ -36,6 +37,11 @@ kanbanApp.directive('entryCreation', function () {
                     $scope.createEntry();
                 }
                 if ($event.keyCode == 27) {
+                    $scope.cancelCreateEntry();
+                }
+            };
+            $scope.blur = function () {
+                if ($scope.title === "" || $scope.title == undefined) {
                     $scope.cancelCreateEntry();
                 }
             };
@@ -60,7 +66,6 @@ kanbanApp.directive('entries', function () {
         controller: ['$scope', 'boardsService', 'entriesServices', 'localStorageService', function ($scope, boardsService, entriesServices, localStorageService) {
             $scope.loadEntries = function () {
                 var boardLink = localStorageService.get("boardLink");
-                console.log("board" + boardLink);
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
@@ -68,13 +73,10 @@ kanbanApp.directive('entries', function () {
                     var entriesPromise = entriesServices.load(_board._links.entries.href);
                     entriesPromise.then(function (data) {
                             $scope.entries = data;
-
-
                         }
                     );
                 });
             };
-
             $scope.loadEntries();
         }]
     };

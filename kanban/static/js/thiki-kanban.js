@@ -67,6 +67,33 @@ kanbanApp.factory('myHttpResponseInterceptor', [
     };
   }
 ]);
+'use strict';
+/* assignmentServices */
+kanbanApp.factory('assignmentServices', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      assign: function (_assignment, _link) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_assignment),
+          headers: { 'userId': '112' },
+          url: _link
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }
+    };
+  }
+]);
 /**
  * Created by xubt on 4/20/16.
  */
@@ -215,7 +242,7 @@ kanbanApp.directive('entryCreation', function () {
       'entriesServices',
       function ($scope, entriesServices) {
         $scope.createEntry = function () {
-          var title = $scope.entry.title;
+          var title = $scope.title;
           var entry = {
               title: title,
               boardId: $scope.board.id
@@ -226,7 +253,8 @@ kanbanApp.directive('entryCreation', function () {
               $scope.entries = [];
             }
             $scope.entries.push(data);
-            $scope.entry.title = '';
+            $scope.title = '';
+            $scope.cancelCreateEntry();
           });
         };
         $scope.displayCreationButton = true;
@@ -244,6 +272,11 @@ kanbanApp.directive('entryCreation', function () {
             $scope.createEntry();
           }
           if ($event.keyCode == 27) {
+            $scope.cancelCreateEntry();
+          }
+        };
+        $scope.blur = function () {
+          if ($scope.title === '' || $scope.title == undefined) {
             $scope.cancelCreateEntry();
           }
         };
@@ -272,7 +305,6 @@ kanbanApp.directive('entries', function () {
       function ($scope, boardsService, entriesServices, localStorageService) {
         $scope.loadEntries = function () {
           var boardLink = localStorageService.get('boardLink');
-          console.log('board' + boardLink);
           var boardPromise = boardsService.loadBoardByLink(boardLink);
           boardPromise.then(function (_board) {
             $scope.board = _board;
@@ -419,91 +451,6 @@ entriesServices.factory('entriesServices', [
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('tasks', [
-  '$uibModal',
-  function ($uibModal) {
-    return {
-      restrict: 'E',
-      templateUrl: 'component/task/partials/tasks.html',
-      replace: true,
-      controller: [
-        '$scope',
-        '$routeParams',
-        'tasksServices',
-        function ($scope, $routeParams, tasksServices) {
-          loadTasks();
-          function loadTasks() {
-            var entry = $scope.entry;
-            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-            _tasksPromise.then(function (data) {
-              $scope.tasks = data;
-              $scope.sortableOptions = {
-                connectWith: '.tasks',
-                opacity: 0.5,
-                placeholder: 'task-drag-placeholder',
-                start: function (e, ui) {
-                  //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
-                  //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
-                  console.log('staring sort.');
-                },
-                update: function (e, ui) {
-                  console.log('updating sort.');
-                },
-                stop: function (e, ui) {
-                  console.log('stopping sort.');
-                  if (ui.item.sortable.droptarget == undefined) {
-                    return;
-                  }
-                  var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
-                  if (targetEntryId == ui.item.sortable.model.entryId) {
-                    return;
-                  }
-                  ui.item.sortable.model.entryId = targetEntryId;
-                  ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                  var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                  _tasksPromise.then(function (data) {
-                  });
-                }
-              };
-            });
-            $scope.open = function (_message, _link) {
-              $uibModal.open({
-                animation: false,
-                templateUrl: 'foundation/modal/partials/confirm-dialog.html',
-                controller: [
-                  '$scope',
-                  '$uibModalInstance',
-                  function ($scope, $uibModalInstance) {
-                    $scope.title = '\u8b66\u544a';
-                    $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
-                    $scope.ok = function () {
-                      var _taskDeletePromise = tasksServices.deleteByLink(_link);
-                      _taskDeletePromise.then(function () {
-                        loadTasks();
-                      });
-                      $uibModalInstance.close();
-                    };
-                    $scope.cancel = function () {
-                      $uibModalInstance.dismiss('cancel');
-                    };
-                  }
-                ],
-                size: 'sm'
-              });
-            };
-          }
-          $scope.updateTask = function (_summary, _task) {
-            var task = _task;
-            task.summary = _summary;
-            var taskPromise = tasksServices.update(task);
-            taskPromise.then(function () {
-            });
-          };
-        }
-      ]
-    };
-  }
-]);
 angular.module('kanbanApp').controller('ModalInstanceCtrl', [
   '$scope',
   '$uibModalInstance',
@@ -521,6 +468,7 @@ kanbanApp.directive('taskCreation', [
   function ($timeout) {
     return {
       restrict: 'E',
+      replace: true,
       templateUrl: 'component/task/partials/task-creation.html',
       controller: [
         '$scope',
@@ -561,8 +509,166 @@ kanbanApp.directive('taskCreation', [
               $scope.cancelCreateTask();
             }
           };
+          $scope.blur = function () {
+            if ($scope.summary == '') {
+              $scope.displayCreationButton = true;
+              $scope.displayForm = false;
+            }
+          };
         }
       ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 6/17/16.
+ */
+kanbanApp.directive('task', [
+  '$uibModal',
+  function ($uibModal) {
+    return {
+      restrict: 'E',
+      templateUrl: 'component/task/partials/task.html',
+      replace: true,
+      transclude: true,
+      scope: { task: '=' },
+      controller: [
+        '$scope',
+        'localStorageService',
+        'assignmentServices',
+        'tasksServices',
+        function ($scope, localStorageService, assignmentServices, tasksServices) {
+          $scope.assign = function (_task) {
+            localStorageService.set('userId', '341182');
+            $uibModal.open({
+              animation: false,
+              templateUrl: 'component/task/partials/assignment-confirm.html',
+              controller: [
+                '$scope',
+                '$uibModalInstance',
+                function ($scope, $uibModalInstance) {
+                  $scope.title = '\u786e\u8ba4\u4fe1\u606f';
+                  $scope.message = '\u4f60\u786e\u5b9a\u8981\u8ba4\u9886\u8be5\u4efb\u52a1\u5417?';
+                  $scope.ok = function () {
+                    var assignment = {
+                        taskId: _task.id,
+                        assignee: localStorageService.get('userId'),
+                        assigner: localStorageService.get('userId')
+                      };
+                    var assignmentPromise = assignmentServices.assign(assignment, _task._links.assignments.href);
+                    $uibModalInstance.close();
+                  };
+                  $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                }
+              ],
+              size: 'sm'
+            });
+          };
+          $scope.updateTask = function (_summary, _task) {
+            var task = _task;
+            task.summary = _summary;
+            var taskPromise = tasksServices.update(task);
+            taskPromise.then(function () {
+            });
+          };
+          $scope.openDeleteModal = function (_message, _link) {
+            var currentScope = $scope;
+            $uibModal.open({
+              animation: false,
+              templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+              controller: [
+                '$scope',
+                '$uibModalInstance',
+                function ($scope, $uibModalInstance) {
+                  $scope.title = '\u8b66\u544a';
+                  $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
+                  $scope.ok = function () {
+                    var _taskDeletePromise = tasksServices.deleteByLink(_link);
+                    _taskDeletePromise.then(function () {
+                      currentScope.$parent.loadTasks();
+                    });
+                    $uibModalInstance.close();
+                  };
+                  $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                }
+              ],
+              size: 'sm'
+            });
+          };
+        }
+      ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('tasks', [
+  '$uibModal',
+  function ($uibModal) {
+    return {
+      restrict: 'E',
+      templateUrl: 'component/task/partials/tasks.html',
+      replace: true,
+      controller: [
+        '$scope',
+        '$routeParams',
+        'tasksServices',
+        'localStorageService',
+        'assignmentServices',
+        function ($scope, $routeParams, tasksServices, localStorageService, assignmentServices) {
+          $scope.loadTasks = function () {
+            var entry = $scope.entry;
+            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+            _tasksPromise.then(function (data) {
+              $scope.tasks = data;
+              $scope.sortableOptions = {
+                connectWith: '.tasks',
+                opacity: 0.5,
+                placeholder: 'task-drag-placeholder',
+                start: function (e, ui) {
+                  console.log('staring sort.');
+                },
+                update: function (e, ui) {
+                  console.log('updating sort.');
+                },
+                stop: function (e, ui) {
+                  console.log('stopping sort.');
+                  if (ui.item.sortable.droptarget == undefined) {
+                    return;
+                  }
+                  var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
+                  if (targetEntryId == ui.item.sortable.model.entryId) {
+                    return;
+                  }
+                  ui.item.sortable.model.entryId = targetEntryId;
+                  ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+                  var _tasksPromise = tasksServices.update(ui.item.sortable.model);
+                  _tasksPromise.then(function (data) {
+                  });
+                }
+              };
+            });
+          };
+          $scope.loadTasks();
+        }
+      ]
+    };
+  }
+]);
+angular.module('kanbanApp').controller('ModalInstanceCtrl', [
+  '$scope',
+  '$uibModalInstance',
+  function ($scope, $uibModalInstance) {
+    $scope.ok = function () {
+      $uibModalInstance.close();
+    };
+    $scope.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
     };
   }
 ]);

@@ -24,7 +24,7 @@ var cleanCSS = require('gulp-clean-css');
 
 // 语法检查
 gulp.task('jshint', function () {
-    return gulp.src('kanban/**/*.js')
+    return gulp.src(['kanban/**/*.js', '!kanban/static/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
