@@ -20,7 +20,8 @@
     min-height: 20px;
     border-radius: 3px;
     clear: both;
-    overflow: auto;
+    float: inherit;
+    width: inherit;
 }
 
 .create-task-title {
