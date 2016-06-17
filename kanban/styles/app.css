@@ -134,6 +134,10 @@ button.thiki-submit-button {
     background-color: #d43f3a !important;
 }
 
+.thiki-form-buttons {
+    float: left;
+}
+
 .editable-text .editable-buttons {
     float: none !important;
     margin-top: 0px !important;
