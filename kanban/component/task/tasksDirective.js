@@ -6,7 +6,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
         restrict: 'E',
         templateUrl: 'component/task/partials/tasks.html',
         replace: true,
-        controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
+        controller: ['$scope', '$routeParams', 'tasksServices', function ($scope, $routeParams, tasksServices) {
             loadTasks();
             function loadTasks() {
                 var entry = $scope.entry;
@@ -14,6 +14,26 @@ kanbanApp.directive('tasks', function ($uibModal) {
 
                 _tasksPromise.then(function (data) {
                     $scope.tasks = data;
+                    $scope.sortableOptions = {
+                        connectWith: ".tasks",
+                        opacity: 0.5,
+                        start: function (e, ui) {
+                            //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
+                            //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+                        },
+                        update: function (e, ui) {
+
+                        },
+                        stop: function (e, ui) {
+                            var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
+                            ui.item.sortable.model.entryId = targetEntryId;
+                            ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+                            var _tasksPromise = tasksServices.update(ui.item.sortable.model);
+                            _tasksPromise.then(function (data) {
+
+                            });
+                        }
+                    };
                 });
                 $scope.open = function (_message, _link) {
                     $uibModal.open({

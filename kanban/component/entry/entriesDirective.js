@@ -69,32 +69,7 @@ kanbanApp.directive('entries', function () {
                     entriesPromise.then(function (data) {
                             $scope.entries = data;
 
-                            $scope.sortableOptions = {
-                                connectWith: ".tasks",
-                                opacity: 0.5,
-                                start: function (e, ui) {
-                                    //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
-                                    //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
-                                },
-                                update: function (e, ui) {
-
-                                },
-                                stop: function (e, ui) {
-                                    var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
-                                    ui.item.sortable.model.entryId = targetEntryId;
-                                    ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                                    var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                                    _tasksPromise.then(function (data) {
-                                        // loadEntries();
-                                        var boardLink = $routeParams.boardLink;
-
-                                        var boardPromise = boardsService.loadBoardByLink(boardLink);
-                                        boardPromise.then(function (_board) {
-                                            $scope.board = _board;
-                                        });
-                                    });
-                                }
-                            };
+                         
                         }
                     );
                 });

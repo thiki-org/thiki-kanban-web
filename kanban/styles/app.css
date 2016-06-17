@@ -183,3 +183,7 @@ textarea.editable-input.form-control {
 .btn {
     border-radius: 2px !important;
 }
+
+.dropdown-menu {
+    min-width: 120px !important;
+}
