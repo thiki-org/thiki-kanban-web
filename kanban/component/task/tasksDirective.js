@@ -20,11 +20,19 @@ kanbanApp.directive('tasks', function ($uibModal) {
                         start: function (e, ui) {
                             //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                             //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+
+                            console.log("staring sort.");
                         },
                         update: function (e, ui) {
+                            console.log("updating sort.");
 
                         },
                         stop: function (e, ui) {
+                            console.log("stopping sort.");
+
+                            if (ui.item.sortable.droptarget == undefined) {
+                                return;
+                            }
                             var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
                             ui.item.sortable.model.entryId = targetEntryId;
                             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
