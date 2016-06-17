@@ -51,11 +51,11 @@ kanbanApp.directive('taskCreation', function ($timeout) {
                 }
             };
             $scope.blur = function () {
-                if ($scope.summary == "") {
+                if ($scope.summary === "") {
                     $scope.displayCreationButton = true;
                     $scope.displayForm = false;
                 }
-            }
+            };
         }]
     };
 });

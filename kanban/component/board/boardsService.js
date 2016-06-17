@@ -49,5 +49,5 @@ boardsService.factory('boardsService', ['$http', '$q',
                 });
                 return deferred.promise;
             }
-        }
+        };
     }]);

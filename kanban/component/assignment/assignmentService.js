@@ -1,5 +1,3 @@
-'use strict';
-
 /* assignmentServices */
 
 kanbanApp.factory('assignmentServices', ['$http', '$q', function ($http, $q) {
@@ -23,5 +21,5 @@ kanbanApp.factory('assignmentServices', ['$http', '$q', function ($http, $q) {
             });
             return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
         }
-    }
+    };
 }]);

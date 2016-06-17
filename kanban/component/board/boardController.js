@@ -25,7 +25,7 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
             var board = {name: name};
             var entriesPromise = boardsService.create(board);
             entriesPromise.then(function (data) {
-                if ($scope.boards == null) {
+                if ($scope.boards === null) {
                     $scope.boards = [];
                 }
                 $scope.boards.push(data);

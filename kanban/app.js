@@ -1,9 +1,7 @@
-'use strict';
-
 /* App Module */
 var config = {
     localhost: 'http://localhost:8080'
-}
+};
 
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute', 'ngAnimate', 'ui.bootstrap',
@@ -46,7 +44,7 @@ kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q,
         'requestError': function (rejection) {
             // do something on error
             if (canRecover(rejection)) {
-                return responseOrNewPromise
+                return responseOrNewPromise;
             }
             return $q.reject(rejection);
         },
@@ -64,7 +62,7 @@ kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q,
             alert("请求出错");
             // do something on error
             if (canRecover(rejection)) {
-                return responseOrNewPromise
+                return responseOrNewPromise;
             }
             return $q.reject(rejection);
         }

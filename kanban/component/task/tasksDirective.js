@@ -27,7 +27,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
                         stop: function (e, ui) {
                             console.log("stopping sort.");
 
-                            if (ui.item.sortable.droptarget == undefined) {
+                            if (ui.item.sortable.droptarget === undefined) {
                                 return;
                             }
                             var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");

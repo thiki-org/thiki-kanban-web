@@ -13,7 +13,7 @@ kanbanApp.directive('entryCreation', function () {
                 var entry = {title: title, boardId: $scope.board.id};
                 var entriesPromise = entriesServices.create(entry);
                 entriesPromise.then(function (data) {
-                    if ($scope.entries == null) {
+                    if ($scope.entries === null) {
                         $scope.entries = [];
                     }
                     $scope.entries.push(data);
@@ -41,7 +41,7 @@ kanbanApp.directive('entryCreation', function () {
                 }
             };
             $scope.blur = function () {
-                if ($scope.title === "" || $scope.title == undefined) {
+                if ($scope.title === "" || $scope.title === undefined) {
                     $scope.cancelCreateEntry();
                 }
             };
