@@ -19,6 +19,8 @@
 .tasks {
     min-height: 20px;
     border-radius: 3px;
+    clear: both;
+    overflow: auto;
 }
 
 .create-task-title {
