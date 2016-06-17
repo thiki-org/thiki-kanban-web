@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 4/29/16.
  */
-kanbanApp.directive('entryCreation', function ($timeout) {
+kanbanApp.directive('entryCreation', function () {
     return {
         restrict: 'E',
         templateUrl: 'component/entry/partials/entry-creation.html',
@@ -57,10 +57,10 @@ kanbanApp.directive('entries', function () {
         templateUrl: 'component/entry/partials/entries.html',
         replace: true,
         scope: true,
-        controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', 'tasksServices', function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+        controller: ['$scope', 'boardsService', 'entriesServices', 'localStorageService', function ($scope, boardsService, entriesServices, localStorageService) {
             $scope.loadEntries = function () {
-                var boardLink = $routeParams.boardLink;
-
+                var boardLink = localStorageService.get("boardLink");
+                console.log("board" + boardLink);
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
@@ -69,7 +69,7 @@ kanbanApp.directive('entries', function () {
                     entriesPromise.then(function (data) {
                             $scope.entries = data;
 
-                         
+
                         }
                     );
                 });
@@ -89,7 +89,7 @@ kanbanApp.directive('entry', function ($uibModal) {
         scope: {
             entry: '='
         },
-        controller: ['$scope', '$routeParams', 'boardsService', 'entriesServices', function ($scope, $routeParams, boardsService, entriesServices) {
+        controller: ['$scope', 'boardsService', 'entriesServices', function ($scope, boardsService, entriesServices) {
             $scope.displayEntryMenu = false;
             $scope.onEntryMenuMouseOver = function () {
                 $scope.displayEntryMenu = true;

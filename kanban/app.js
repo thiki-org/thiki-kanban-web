@@ -12,11 +12,13 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.sortable',
     'tasksServices',
     'boardsService',
-    'xeditable'
+    'xeditable',
+    'LocalStorageModule'
 ]);
 
-kanbanApp.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
+    function ($routeProvider, $httpProvider, localStorageServiceProvider) {
+        localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
         $httpProvider.interceptors.push('myHttpResponseInterceptor');
         $routeProvider.when('/boards/:boardId/entries', {
             templateUrl: 'component/entry/partials/entry-partial.html'

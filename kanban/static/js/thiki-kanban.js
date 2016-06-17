@@ -10,12 +10,15 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.sortable',
     'tasksServices',
     'boardsService',
-    'xeditable'
+    'xeditable',
+    'LocalStorageModule'
   ]);
 kanbanApp.config([
   '$routeProvider',
   '$httpProvider',
-  function ($routeProvider, $httpProvider) {
+  'localStorageServiceProvider',
+  function ($routeProvider, $httpProvider, localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
     $httpProvider.interceptors.push('myHttpResponseInterceptor');
     $routeProvider.when('/boards/:boardId/entries', { templateUrl: 'component/entry/partials/entry-partial.html' }).when('/boards', {
       templateUrl: 'component/board/partials/boards.html',
@@ -65,65 +68,196 @@ kanbanApp.factory('myHttpResponseInterceptor', [
   }
 ]);
 /**
- * Created by xubt on 4/29/16.
+ * Created by xubt on 4/20/16.
  */
-kanbanApp.directive('entryCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      templateUrl: 'component/entry/partials/entry-creation.html',
-      replace: true,
-      scope: true,
-      controller: [
-        '$scope',
-        'entriesServices',
-        function ($scope, entriesServices) {
-          $scope.createEntry = function () {
-            var title = $scope.entry.title;
-            var entry = {
-                title: title,
-                boardId: $scope.board.id
-              };
-            var entriesPromise = entriesServices.create(entry);
-            entriesPromise.then(function (data) {
-              if ($scope.entries == null) {
-                $scope.entries = [];
-              }
-              $scope.entries.push(data);
-              $scope.entry.title = '';
-            });
-          };
-          $scope.displayCreationButton = true;
-          $scope.displayForm = false;
-          $scope.cancelCreateEntry = function () {
-            $scope.displayCreationButton = true;
-            $scope.displayForm = false;
-          };
-          $scope.showCreateEntryForm = function () {
-            $scope.displayCreationButton = false;
-            $scope.displayForm = true;
-          };
-          $scope.keyPress = function ($event) {
-            if ($event.keyCode == 13) {
-              $scope.createEntry();
-            }
-            if ($event.keyCode == 27) {
-              $scope.cancelCreateEntry();
-            }
-          };
-          $scope.updateEntry = function (_title, _entry) {
-            var entry = _entry;
-            entry.title = _title;
-            var entryPromise = entriesServices.update(entry);
-            entryPromise.then(function () {
-            });
-          };
+var boardController = angular.module('boardController', []);
+var boardsLink = 'http://localhost:8080/boards';
+boardController.controller('boardController', [
+  '$scope',
+  '$location',
+  '$q',
+  'boardsService',
+  'localStorageService',
+  function ($scope, $location, $q, boardsService, localStorageService) {
+    var boardPromise = boardsService.load(boardsLink);
+    boardsService.boardsLink = boardsLink;
+    boardPromise.then(function (data) {
+      $scope.boards = data;
+    });
+    $scope.toEntries = function (_boardId, _boardLink) {
+      localStorageService.set('boardLink', _boardLink);
+      $location.path('/boards/' + _boardId + '/entries');
+    };
+    $scope.displayBoardCreationForm = true;
+    $scope.displayForm = false;
+    $scope.createBoard = function () {
+      var name = $scope.board.name;
+      var board = { name: name };
+      var entriesPromise = boardsService.create(board);
+      entriesPromise.then(function (data) {
+        if ($scope.boards == null) {
+          $scope.boards = [];
         }
-      ]
+        $scope.boards.push(data);
+        $scope.board.name = '';
+      });
+    };
+    $scope.keyPress = function ($event) {
+      if ($event.keyCode == 13) {
+        $scope.createBoard();
+      }
+      if ($event.keyCode == 27) {
+        $scope.cancelCreateBoard();
+      }
+    };
+    $scope.showBoardCreationForm = function () {
+      $scope.displayBoardCreationForm = false;
+      $scope.displayForm = true;
+    };
+    $scope.cancelCreateBoard = function () {
+      $scope.displayBoardCreationForm = true;
+      $scope.displayForm = false;
     };
   }
 ]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('boardBanner', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'component/board/partials/board-banner.html',
+    replace: false,
+    controller: [
+      '$scope',
+      '$location',
+      'boardsService',
+      'localStorageService',
+      function ($scope, $location, boardsService, localStorageService) {
+        var boardLink = localStorageService.get('boardLink');
+        var boardPromise = boardsService.loadBoardByLink(boardLink);
+        boardPromise.then(function (_board) {
+          $scope.board = _board;
+        });
+        $scope.toBoards = function () {
+          $location.path('/boards');
+        };
+      }
+    ]
+  };
+});
+/**
+ * Created by xubt on 5/26/16.
+ */
+var boardsService = angular.module('boardsService', ['ngResource']);
+boardsService.factory('boardsService', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      boardsLink: '',
+      load: function (_boardsLink) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'GET',
+          url: _boardsLink
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      loadBoardByLink: function (_boardLink) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'GET',
+          url: _boardLink
+        }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      create: function (_board) {
+        var deferred = $q.defer();
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_board),
+          headers: { 'userId': '112' },
+          url: this.boardsLink
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);
+        });
+        return deferred.promise;
+      }
+    };
+  }
+]);
+/**
+ * Created by xubt on 4/29/16.
+ */
+kanbanApp.directive('entryCreation', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'component/entry/partials/entry-creation.html',
+    replace: true,
+    scope: true,
+    controller: [
+      '$scope',
+      'entriesServices',
+      function ($scope, entriesServices) {
+        $scope.createEntry = function () {
+          var title = $scope.entry.title;
+          var entry = {
+              title: title,
+              boardId: $scope.board.id
+            };
+          var entriesPromise = entriesServices.create(entry);
+          entriesPromise.then(function (data) {
+            if ($scope.entries == null) {
+              $scope.entries = [];
+            }
+            $scope.entries.push(data);
+            $scope.entry.title = '';
+          });
+        };
+        $scope.displayCreationButton = true;
+        $scope.displayForm = false;
+        $scope.cancelCreateEntry = function () {
+          $scope.displayCreationButton = true;
+          $scope.displayForm = false;
+        };
+        $scope.showCreateEntryForm = function () {
+          $scope.displayCreationButton = false;
+          $scope.displayForm = true;
+        };
+        $scope.keyPress = function ($event) {
+          if ($event.keyCode == 13) {
+            $scope.createEntry();
+          }
+          if ($event.keyCode == 27) {
+            $scope.cancelCreateEntry();
+          }
+        };
+        $scope.updateEntry = function (_title, _entry) {
+          var entry = _entry;
+          entry.title = _title;
+          var entryPromise = entriesServices.update(entry);
+          entryPromise.then(function () {
+          });
+        };
+      }
+    ]
+  };
+});
 kanbanApp.directive('entries', function () {
   return {
     restrict: 'E',
@@ -132,13 +266,13 @@ kanbanApp.directive('entries', function () {
     scope: true,
     controller: [
       '$scope',
-      '$routeParams',
       'boardsService',
       'entriesServices',
-      'tasksServices',
-      function ($scope, $routeParams, boardsService, entriesServices, tasksServices) {
+      'localStorageService',
+      function ($scope, boardsService, entriesServices, localStorageService) {
         $scope.loadEntries = function () {
-          var boardLink = $routeParams.boardLink;
+          var boardLink = localStorageService.get('boardLink');
+          console.log('board' + boardLink);
           var boardPromise = boardsService.loadBoardByLink(boardLink);
           boardPromise.then(function (_board) {
             $scope.board = _board;
@@ -165,10 +299,9 @@ kanbanApp.directive('entry', [
       scope: { entry: '=' },
       controller: [
         '$scope',
-        '$routeParams',
         'boardsService',
         'entriesServices',
-        function ($scope, $routeParams, boardsService, entriesServices) {
+        function ($scope, boardsService, entriesServices) {
           $scope.displayEntryMenu = false;
           $scope.onEntryMenuMouseOver = function () {
             $scope.displayEntryMenu = true;
@@ -307,12 +440,24 @@ kanbanApp.directive('tasks', [
               $scope.sortableOptions = {
                 connectWith: '.tasks',
                 opacity: 0.5,
+                placeholder: 'task-drag-placeholder',
                 start: function (e, ui) {
+                  //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
+                  //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
+                  console.log('staring sort.');
                 },
                 update: function (e, ui) {
+                  console.log('updating sort.');
                 },
                 stop: function (e, ui) {
+                  console.log('stopping sort.');
+                  if (ui.item.sortable.droptarget == undefined) {
+                    return;
+                  }
                   var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
+                  if (targetEntryId == ui.item.sortable.model.entryId) {
+                    return;
+                  }
                   ui.item.sortable.model.entryId = targetEntryId;
                   ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
                   var _tasksPromise = tasksServices.update(ui.item.sortable.model);
@@ -494,138 +639,6 @@ tasksServices.factory('tasksServices', [
           deferred.reject(data);  // 声明执行失败，即服务器返回错误
         });
         return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      }
-    };
-  }
-]);
-/**
- * Created by xubt on 4/20/16.
- */
-var boardController = angular.module('boardController', []);
-var boardsLink = 'http://localhost:8080/boards';
-boardController.controller('boardController', [
-  '$scope',
-  '$location',
-  '$q',
-  'boardsService',
-  function ($scope, $location, $q, boardsService) {
-    var boardPromise = boardsService.load(boardsLink);
-    boardsService.boardsLink = boardsLink;
-    boardPromise.then(function (data) {
-      $scope.boards = data;
-    });
-    $scope.toEntries = function (_boardId, _boardLink) {
-      $location.path('/boards/' + _boardId + '/entries').search({ boardLink: _boardLink });
-    };
-    $scope.displayBoardCreationForm = true;
-    $scope.displayForm = false;
-    $scope.createBoard = function () {
-      var name = $scope.board.name;
-      var board = { name: name };
-      var entriesPromise = boardsService.create(board);
-      entriesPromise.then(function (data) {
-        if ($scope.boards == null) {
-          $scope.boards = [];
-        }
-        $scope.boards.push(data);
-        $scope.board.name = '';
-      });
-    };
-    $scope.keyPress = function ($event) {
-      if ($event.keyCode == 13) {
-        $scope.createBoard();
-      }
-      if ($event.keyCode == 27) {
-        $scope.cancelCreateBoard();
-      }
-    };
-    $scope.showBoardCreationForm = function () {
-      $scope.displayBoardCreationForm = false;
-      $scope.displayForm = true;
-    };
-    $scope.cancelCreateBoard = function () {
-      $scope.displayBoardCreationForm = true;
-      $scope.displayForm = false;
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('boardBanner', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'component/board/partials/board-banner.html',
-    replace: false,
-    controller: [
-      '$scope',
-      '$routeParams',
-      '$location',
-      'boardsService',
-      function ($scope, $routeParams, $location, boardsService) {
-        var boardLink = $routeParams.boardLink;
-        var boardPromise = boardsService.loadBoardByLink(boardLink);
-        boardPromise.then(function (_board) {
-          $scope.board = _board;
-        });
-        $scope.toBoards = function () {
-          $location.path('/boards');
-        };
-      }
-    ]
-  };
-});
-/**
- * Created by xubt on 5/26/16.
- */
-var boardsService = angular.module('boardsService', ['ngResource']);
-boardsService.factory('boardsService', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      boardsLink: '',
-      load: function (_boardsLink) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'GET',
-          url: _boardsLink
-        }).success(function (data, status, headers, config) {
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      loadBoardByLink: function (_boardLink) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'GET',
-          url: _boardLink
-        }).success(function (data, status, headers, config) {
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      create: function (_board) {
-        var deferred = $q.defer();
-        $http({
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(_board),
-          headers: { 'userId': '112' },
-          url: this.boardsLink
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);
-        });
-        return deferred.promise;
       }
     };
   }
