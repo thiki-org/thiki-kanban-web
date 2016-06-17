@@ -76,6 +76,7 @@ button, input, select, textarea {
     background: none;
     border: none;
 }
+
 .task-operations {
     float: left;
     width: 100%;
@@ -87,7 +88,19 @@ button, input, select, textarea {
     float: right;
     margin: 5px;
 }
+
 .task-creation {
     float: left;
     margin: 5px;
+}
+
+.task-drag-placeholder {
+    border: 1px solid #EAEAEA;
+    margin: 5px;
+    background-color: #F9F8F6;
+    border-radius: 3px;
+    position: relative;
+    float: left;
+    width: 95%;
+    min-height: 65px;
 }

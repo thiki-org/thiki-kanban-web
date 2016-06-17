@@ -17,6 +17,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
                     $scope.sortableOptions = {
                         connectWith: ".tasks",
                         opacity: 0.5,
+                        placeholder: "task-drag-placeholder",
                         start: function (e, ui) {
                             //   console.log("-----------" + $(ui.item.sortable.droptarget[0]).attr("entry"));
                             //alert(ui.item.sortable.model.id + ui.item.sortable.model.title);
@@ -34,6 +35,9 @@ kanbanApp.directive('tasks', function ($uibModal) {
                                 return;
                             }
                             var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
+                            if (targetEntryId == ui.item.sortable.model.entryId) {
+                                return;
+                            }
                             ui.item.sortable.model.entryId = targetEntryId;
                             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
                             var _tasksPromise = tasksServices.update(ui.item.sortable.model);
