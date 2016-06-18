@@ -12,7 +12,6 @@ kanbanApp.directive('task', function ($uibModal) {
         },
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'tasksServices', function ($scope, localStorageService, assignmentServices, tasksServices) {
             $scope.assign = function (_task) {
-                localStorageService.set("userId", "341182");
                 var thisScope = $scope;
                 $uibModal.open({
                     animation: false,
