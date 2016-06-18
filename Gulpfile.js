@@ -59,7 +59,7 @@ gulp.task('minify', function () {
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'kanban/**/*.css', 'Gulpfile.js', '!kanban/static/**/*.js', '!kanban/static/**/*.css'], ['jshint', 'minify', 'minify-css']);
+    gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'kanban/**/*.css', 'gulpfile.js', '!kanban/static/**/*.js', '!kanban/static/**/*.css'], ['jshint', 'minify', 'minify-css']);
 });
 
 // 注册缺省任务
