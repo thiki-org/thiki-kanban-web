@@ -1,5 +1,4 @@
 .assignments {
-    border: 1px solid #d0d0d0;
     float: left;
     margin: 5px;
     border-radius: 50%;
@@ -9,3 +8,8 @@
     line-height: 22px;
     cursor: pointer;
 }
+
+.assignment {
+    background: #f9f9f9;
+}
+

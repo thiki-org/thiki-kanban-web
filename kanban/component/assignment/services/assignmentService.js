@@ -30,6 +30,23 @@ kanbanApp.factory('assignmentServices', ['$http', '$q', function ($http, $q) {
                 deferred.reject(data);
             });
             return deferred.promise;
+        },
+        giveUp: function (_link) {
+            var deferred = $q.defer();
+            $http({
+                method: 'DELETE',
+                contentType: 'application/json',
+                headers: {
+                    'userId': '112'
+                },
+                url: _link
+            }).success(function (data, status, headers, config) {
+                console.log(data);
+                deferred.resolve(data);
+            }).error(function (data, status, headers, config) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
         }
     };
 }]);

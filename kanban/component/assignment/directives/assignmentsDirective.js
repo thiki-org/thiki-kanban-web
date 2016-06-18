@@ -8,9 +8,11 @@ kanbanApp.directive('assignments', function () {
         replace: true,
         controller: ['$scope', 'assignmentServices', function ($scope, assignmentServices) {
             $scope.loadAssignments = function () {
+                var thisScope = $scope;
                 var assignmentsPromise = assignmentServices.loadAssignments($scope.task._links.assignments.href);
                 assignmentsPromise.then(function (_data) {
                     $scope.assignments = _data;
+                    thisScope.isAssigned();
                 });
             };
 

@@ -10,7 +10,7 @@
                 <span>...</span>
             </button>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item"><a ng-click="assign(task)">认领</a></li>
+                <li class="thiki-menu-item"><a ng-click="assign(task)">{{assignTip}}</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="thiki-menu-item thiki-delete-item"><a
                         ng-click="openDeleteModal(task.summary,task._links.self.href)">删除</a></li>
@@ -18,3 +18,4 @@
         </div>
     </div>
 </div>
+``

@@ -194,9 +194,11 @@ kanbanApp.directive('assignments', function () {
       'assignmentServices',
       function ($scope, assignmentServices) {
         $scope.loadAssignments = function () {
+          var thisScope = $scope;
           var assignmentsPromise = assignmentServices.loadAssignments($scope.task._links.assignments.href);
           assignmentsPromise.then(function (_data) {
             $scope.assignments = _data;
+            thisScope.isAssigned();
           });
         };
         $scope.loadAssignments();
@@ -242,6 +244,21 @@ kanbanApp.factory('assignmentServices', [
           method: 'GET',
           url: _assignmentLink
         }).success(function (data, status, headers, config) {
+          deferred.resolve(data);
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);
+        });
+        return deferred.promise;
+      },
+      giveUp: function (_link) {
+        var deferred = $q.defer();
+        $http({
+          method: 'DELETE',
+          contentType: 'application/json',
+          headers: {'userId': '112'},
+          url: _link
+        }).success(function (data, status, headers, config) {
+          console.log(data);
           deferred.resolve(data);
         }).error(function (data, status, headers, config) {
           deferred.reject(data);
@@ -381,282 +398,6 @@ boardsService.factory('boardsService', [
           deferred.reject(data);
         });
         return deferred.promise;
-      }
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('taskCreation', [
-  '$timeout',
-  function ($timeout) {
-    return {
-      restrict: 'E',
-      replace: true,
-      templateUrl: 'component/task/partials/task-creation.html',
-      controller: [
-        '$scope',
-        'tasksServices',
-        function ($scope, tasksServices) {
-          var entry = $scope.entry;
-          $scope.displayCreationButton = true;
-          $scope.displayForm = false;
-          $scope.showCreateTaskForm = function () {
-            $scope.displayCreationButton = false;
-            $scope.displayForm = true;
-            $scope.summary = '';
-          };
-          $scope.cancelCreateTask = function () {
-            $scope.displayCreationButton = true;
-            $scope.displayForm = false;
-          };
-          $scope.createTask = function () {
-            var task = {
-                summary: $scope.summary,
-                entryId: entry.id
-              };
-            var taskPromise = tasksServices.create(task, entry._links.tasks.href);
-            taskPromise.then(function (data) {
-              var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-              _tasksPromise.then(function (data) {
-                $scope.tasks = data;
-                $scope.displayCreationButton = true;
-                $scope.displayForm = false;
-              });
-            });
-          };
-          $scope.keyPress = function ($event) {
-            if ($event.keyCode == 13) {
-              $scope.createTask();
-            }
-            if ($event.keyCode == 27) {
-              $scope.cancelCreateTask();
-            }
-          };
-          $scope.blur = function () {
-            if ($scope.summary === '') {
-              $scope.displayCreationButton = true;
-              $scope.displayForm = false;
-            }
-          };
-        }
-      ]
-    };
-  }
-]);
-/**
- * Created by xubt on 6/17/16.
- */
-kanbanApp.directive('task', [
-  '$uibModal',
-  function ($uibModal) {
-    return {
-      restrict: 'E',
-      templateUrl: 'component/task/partials/task.html',
-      replace: true,
-      transclude: true,
-      scope: { task: '=' },
-      controller: [
-        '$scope',
-        'localStorageService',
-        'assignmentServices',
-        'tasksServices',
-        function ($scope, localStorageService, assignmentServices, tasksServices) {
-          $scope.assign = function (_task) {
-            localStorageService.set('userId', '341182');
-            $uibModal.open({
-              animation: false,
-              templateUrl: 'component/task/partials/assignment-confirm.html',
-              controller: [
-                '$scope',
-                '$uibModalInstance',
-                function ($scope, $uibModalInstance) {
-                  $scope.title = '\u786e\u8ba4\u4fe1\u606f';
-                  $scope.message = '\u4f60\u786e\u5b9a\u8981\u8ba4\u9886\u8be5\u4efb\u52a1\u5417?';
-                  $scope.ok = function () {
-                    var assignment = {
-                        taskId: _task.id,
-                        assignee: localStorageService.get('userId'),
-                        assigner: localStorageService.get('userId')
-                      };
-                    var assignmentPromise = assignmentServices.assign(assignment, _task._links.assignments.href);
-                    $uibModalInstance.close();
-                  };
-                  $scope.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                  };
-                }
-              ],
-              size: 'sm'
-            });
-          };
-          $scope.updateTask = function (_summary, _task) {
-            var task = _task;
-            task.summary = _summary;
-            var taskPromise = tasksServices.update(task);
-            taskPromise.then(function () {
-            });
-          };
-          $scope.openDeleteModal = function (_message, _link) {
-            var currentScope = $scope;
-            $uibModal.open({
-              animation: false,
-              templateUrl: 'foundation/modal/partials/confirm-dialog.html',
-              controller: [
-                '$scope',
-                '$uibModalInstance',
-                function ($scope, $uibModalInstance) {
-                  $scope.title = '\u8b66\u544a';
-                  $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
-                  $scope.ok = function () {
-                    var _taskDeletePromise = tasksServices.deleteByLink(_link);
-                    _taskDeletePromise.then(function () {
-                      currentScope.$parent.loadTasks();
-                    });
-                    $uibModalInstance.close();
-                  };
-                  $scope.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                  };
-                }
-              ],
-              size: 'sm'
-            });
-          };
-        }
-      ]
-    };
-  }
-]);
-/**
- * Created by xubt on 5/26/16.
- */
-kanbanApp.directive('tasks', [
-  '$uibModal',
-  function ($uibModal) {
-    return {
-      restrict: 'E',
-      templateUrl: 'component/task/partials/tasks.html',
-      replace: true,
-      controller: [
-        '$scope',
-        '$routeParams',
-        'tasksServices',
-        'localStorageService',
-        'assignmentServices',
-        function ($scope, $routeParams, tasksServices, localStorageService, assignmentServices) {
-          $scope.loadTasks = function () {
-            var entry = $scope.entry;
-            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
-            _tasksPromise.then(function (data) {
-              $scope.tasks = data;
-              $scope.sortableOptions = {
-                connectWith: '.tasks',
-                opacity: 0.5,
-                placeholder: 'task-drag-placeholder',
-                start: function (e, ui) {
-                  console.log('staring sort.');
-                },
-                update: function (e, ui) {
-                  console.log('updating sort.');
-                },
-                stop: function (e, ui) {
-                  console.log('stopping sort.');
-                  if (ui.item.sortable.droptarget === undefined) {
-                    return;
-                  }
-                  var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
-                  if (targetEntryId == ui.item.sortable.model.entryId) {
-                    return;
-                  }
-                  ui.item.sortable.model.entryId = targetEntryId;
-                  ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                  var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                  _tasksPromise.then(function (data) {
-                  });
-                }
-              };
-            });
-          };
-          $scope.loadTasks();
-        }
-      ]
-    };
-  }
-]);
-/* Services */
-var tasksServices = angular.module('tasksServices', ['ngResource']);
-tasksServices.factory('tasksServices', [
-  '$http',
-  '$q',
-  function ($http, $q) {
-    return {
-      loadTasksByEntryId: function (tasksUrl) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        // return a Promise object so that the caller can handle success/failure
-        var tasks = [];
-        $http({
-          method: 'GET',
-          url: tasksUrl
-        }).success(function (data, status, headers, config) {
-          tasks = data;
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      create: function (_task, _entryTasksUrl) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify(_task),
-          headers: { 'userId': '112' },
-          url: _entryTasksUrl
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      update: function (_task) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'PUT',
-          contentType: 'application/json',
-          data: JSON.stringify(_task),
-          headers: { 'userId': '112' },
-          url: _task._links.self.href
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
-      },
-      deleteByLink: function (_link) {
-        var deferred = $q.defer();
-        // 声明延后执行，表示要去监控后面的执行
-        $http({
-          method: 'DELETE',
-          contentType: 'application/json',
-          headers: { 'userId': '112' },
-          url: _link
-        }).success(function (data, status, headers, config) {
-          console.log(data);
-          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
-        }).error(function (data, status, headers, config) {
-          deferred.reject(data);  // 声明执行失败，即服务器返回错误
-        });
-        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
       }
     };
   }
@@ -876,6 +617,316 @@ angular.module('entriesServices', ['ngResource']).factory('entriesServices', [
           headers: {'userId': '112'},
           url: _link
         }).success(function (data, status, headers, config) {
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      }
+    };
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('taskCreation', [
+  '$timeout',
+  function ($timeout) {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'component/task/partials/task-creation.html',
+      controller: [
+        '$scope',
+        'tasksServices',
+        function ($scope, tasksServices) {
+          var entry = $scope.entry;
+          $scope.displayCreationButton = true;
+          $scope.displayForm = false;
+          $scope.showCreateTaskForm = function () {
+            $scope.displayCreationButton = false;
+            $scope.displayForm = true;
+            $scope.summary = '';
+          };
+          $scope.cancelCreateTask = function () {
+            $scope.displayCreationButton = true;
+            $scope.displayForm = false;
+          };
+          $scope.createTask = function () {
+            var task = {
+                summary: $scope.summary,
+                entryId: entry.id
+              };
+            var taskPromise = tasksServices.create(task, entry._links.tasks.href);
+            taskPromise.then(function (data) {
+              var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+              _tasksPromise.then(function (data) {
+                $scope.tasks = data;
+                $scope.displayCreationButton = true;
+                $scope.displayForm = false;
+              });
+            });
+          };
+          $scope.keyPress = function ($event) {
+            if ($event.keyCode == 13) {
+              $scope.createTask();
+            }
+            if ($event.keyCode == 27) {
+              $scope.cancelCreateTask();
+            }
+          };
+          $scope.blur = function () {
+            if ($scope.summary === '') {
+              $scope.displayCreationButton = true;
+              $scope.displayForm = false;
+            }
+          };
+        }
+      ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 6/17/16.
+ */
+kanbanApp.directive('task', [
+  '$uibModal',
+  function ($uibModal) {
+    return {
+      restrict: 'E',
+      templateUrl: 'component/task/partials/task.html',
+      replace: true,
+      transclude: true,
+      scope: { task: '=' },
+      controller: [
+        '$scope',
+        'localStorageService',
+        'assignmentServices',
+        'tasksServices',
+        function ($scope, localStorageService, assignmentServices, tasksServices) {
+          $scope.assign = function (_task) {
+            localStorageService.set('userId', '341182');
+            var thisScope = $scope;
+            $uibModal.open({
+              animation: false,
+              templateUrl: 'component/task/partials/assignment-confirm.html',
+              controller: [
+                '$scope',
+                '$uibModalInstance',
+                function ($scope, $uibModalInstance) {
+                  $scope.title = '\u786e\u8ba4\u4fe1\u606f';
+                  if (thisScope.isIamAssigned) {
+                    $scope.message = '\u4f60\u786e\u5b9a\u4e0d\u518d\u505a\u8be5\u4efb\u52a1\u5417?';
+                    $scope.ok = function () {
+                      var userId = localStorageService.get('userId');
+                      var myAssignmentLink;
+                      angular.forEach(thisScope.assignments, function (_assignment) {
+                        if (userId === _assignment.assignee) {
+                          myAssignmentLink = _assignment._links.self.href;
+                          return;
+                        }
+                      });
+                      var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
+                      assignmentPromise.then(function (_data) {
+                        thisScope.loadAssignments();
+                      });
+                      $uibModalInstance.close();
+                    };
+                  } else {
+                    $scope.message = '\u4f60\u786e\u5b9a\u8981\u8ba4\u9886\u8be5\u4efb\u52a1\u5417?';
+                    $scope.ok = function () {
+                      var assignment = {
+                        taskId: _task.id,
+                        assignee: localStorageService.get('userId'),
+                        assigner: localStorageService.get('userId')
+                      };
+                      var assignmentPromise = assignmentServices.assign(assignment, _task._links.assignments.href);
+                      assignmentPromise.then(function (_data) {
+                        thisScope.loadAssignments();
+                      });
+                      $uibModalInstance.close();
+                    };
+                  }
+                  $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                }
+              ],
+              size: 'sm'
+            });
+          };
+          $scope.updateTask = function (_summary, _task) {
+            var task = _task;
+            task.summary = _summary;
+            var taskPromise = tasksServices.update(task);
+            taskPromise.then(function () {
+            });
+          };
+          $scope.openDeleteModal = function (_message, _link) {
+            var currentScope = $scope;
+            $uibModal.open({
+              animation: false,
+              templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+              controller: [
+                '$scope',
+                '$uibModalInstance',
+                function ($scope, $uibModalInstance) {
+                  $scope.title = '\u8b66\u544a';
+                  $scope.message = '\u786e\u5b9a\u8981\u5220\u9664' + _message + '\u5417?';
+                  $scope.ok = function () {
+                    var _taskDeletePromise = tasksServices.deleteByLink(_link);
+                    _taskDeletePromise.then(function () {
+                      currentScope.$parent.loadTasks();
+                    });
+                    $uibModalInstance.close();
+                  };
+                  $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                }
+              ],
+              size: 'sm'
+            });
+          };
+          $scope.isAssigned = function () {
+            var userId = localStorageService.get('userId');
+            $scope.isIamAssigned = false;
+            angular.forEach($scope.assignments, function (_assignment) {
+              if (userId === _assignment.assignee) {
+                $scope.isIamAssigned = true;
+                return;
+              }
+            });
+            $scope.assignTip = $scope.isIamAssigned === true ? '\u6211\u4e0d\u505a\u4e86' : '\u8ba4\u9886';
+          };
+        }
+      ]
+    };
+  }
+]);
+/**
+ * Created by xubt on 5/26/16.
+ */
+kanbanApp.directive('tasks', [
+  '$uibModal',
+  function ($uibModal) {
+    return {
+      restrict: 'E',
+      templateUrl: 'component/task/partials/tasks.html',
+      replace: true,
+      controller: [
+        '$scope',
+        '$routeParams',
+        'tasksServices',
+        'localStorageService',
+        'assignmentServices',
+        function ($scope, $routeParams, tasksServices, localStorageService, assignmentServices) {
+          $scope.loadTasks = function () {
+            var entry = $scope.entry;
+            var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+            _tasksPromise.then(function (data) {
+              $scope.tasks = data;
+              $scope.sortableOptions = {
+                connectWith: '.tasks',
+                opacity: 0.5,
+                placeholder: 'task-drag-placeholder',
+                start: function (e, ui) {
+                  console.log('staring sort.');
+                },
+                update: function (e, ui) {
+                  console.log('updating sort.');
+                },
+                stop: function (e, ui) {
+                  console.log('stopping sort.');
+                  if (ui.item.sortable.droptarget === undefined) {
+                    return;
+                  }
+                  var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr('entryId');
+                  if (targetEntryId == ui.item.sortable.model.entryId) {
+                    return;
+                  }
+                  ui.item.sortable.model.entryId = targetEntryId;
+                  ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
+                  var _tasksPromise = tasksServices.update(ui.item.sortable.model);
+                  _tasksPromise.then(function (data) {
+                  });
+                }
+              };
+            });
+          };
+          $scope.loadTasks();
+        }
+      ]
+    };
+  }
+]);
+/* Services */
+var tasksServices = angular.module('tasksServices', ['ngResource']);
+tasksServices.factory('tasksServices', [
+  '$http',
+  '$q',
+  function ($http, $q) {
+    return {
+      loadTasksByEntryId: function (tasksUrl) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        // return a Promise object so that the caller can handle success/failure
+        var tasks = [];
+        $http({
+          method: 'GET',
+          url: tasksUrl
+        }).success(function (data, status, headers, config) {
+          tasks = data;
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      create: function (_task, _entryTasksUrl) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(_task),
+          headers: { 'userId': '112' },
+          url: _entryTasksUrl
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      update: function (_task) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify(_task),
+          headers: { 'userId': '112' },
+          url: _task._links.self.href
+        }).success(function (data, status, headers, config) {
+          console.log(data);
+          deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
+        }).error(function (data, status, headers, config) {
+          deferred.reject(data);  // 声明执行失败，即服务器返回错误
+        });
+        return deferred.promise;  // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+      },
+      deleteByLink: function (_link) {
+        var deferred = $q.defer();
+        // 声明延后执行，表示要去监控后面的执行
+        $http({
+          method: 'DELETE',
+          contentType: 'application/json',
+          headers: { 'userId': '112' },
+          url: _link
+        }).success(function (data, status, headers, config) {
+          console.log(data);
           deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
         }).error(function (data, status, headers, config) {
           deferred.reject(data);  // 声明执行失败，即服务器返回错误

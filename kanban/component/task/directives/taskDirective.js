@@ -13,22 +13,46 @@ kanbanApp.directive('task', function ($uibModal) {
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'tasksServices', function ($scope, localStorageService, assignmentServices, tasksServices) {
             $scope.assign = function (_task) {
                 localStorageService.set("userId", "341182");
+                var thisScope = $scope;
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/task/partials/assignment-confirm.html',
                     controller: function ($scope, $uibModalInstance) {
                         $scope.title = '确认信息';
-                        $scope.message = "你确定要认领该任务吗?";
-                        $scope.ok = function () {
-                            var assignment = {
-                                taskId: _task.id,
-                                assignee: localStorageService.get("userId"),
-                                assigner: localStorageService.get("userId")
+                        if (thisScope.isIamAssigned) {
+                            $scope.message = "你确定不再做该任务吗?";
+                            $scope.ok = function () {
+                                var userId = localStorageService.get("userId");
+                                var myAssignmentLink;
+                                angular.forEach(thisScope.assignments, function (_assignment) {
+                                    if (userId === _assignment.assignee) {
+                                        myAssignmentLink = _assignment._links.self.href;
+                                        return;
+                                    }
+                                });
+                                var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
+                                assignmentPromise.then(function (_data) {
+                                    thisScope.loadAssignments();
+                                });
+                                $uibModalInstance.close();
                             };
+                        }
+                        else {
+                            $scope.message = "你确定要认领该任务吗?";
+                            $scope.ok = function () {
+                                var assignment = {
+                                    taskId: _task.id,
+                                    assignee: localStorageService.get("userId"),
+                                    assigner: localStorageService.get("userId")
+                                };
 
-                            var assignmentPromise = assignmentServices.assign(assignment, _task._links.assignments.href);
-                            $uibModalInstance.close();
-                        };
+                                var assignmentPromise = assignmentServices.assign(assignment, _task._links.assignments.href);
+                                assignmentPromise.then(function (_data) {
+                                    thisScope.loadAssignments();
+                                });
+                                $uibModalInstance.close();
+                            };
+                        }
                         $scope.cancel = function () {
                             $uibModalInstance.dismiss('cancel');
                         };
@@ -65,6 +89,18 @@ kanbanApp.directive('task', function ($uibModal) {
                     },
                     size: 'sm'
                 });
+            };
+
+            $scope.isAssigned = function () {
+                var userId = localStorageService.get("userId");
+                $scope.isIamAssigned = false;
+                angular.forEach($scope.assignments, function (_assignment) {
+                    if (userId === _assignment.assignee) {
+                        $scope.isIamAssigned = true;
+                        return;
+                    }
+                });
+                $scope.assignTip = $scope.isIamAssigned === true ? "我不做了" : "认领";
             };
         }]
     };
