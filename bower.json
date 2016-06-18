@@ -7,7 +7,7 @@
   "private": true,
   "dependencies": {
     "jquery": "~2.1.1",
-    "angular": "1.4.x",
+    "angular": "1.5.7",
     "angular-mocks": "1.4.x",
     "bootstrap": "~3.1.1",
     "angular-route": "1.4.x",
