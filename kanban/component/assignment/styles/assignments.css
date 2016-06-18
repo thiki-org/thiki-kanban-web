@@ -1,0 +1,11 @@
+.assignments {
+    border: 1px solid #d0d0d0;
+    float: left;
+    margin: 5px;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    cursor: pointer;
+}

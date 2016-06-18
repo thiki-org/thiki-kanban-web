@@ -6,7 +6,7 @@ kanbanApp.directive('boardBanner', function () {
     return {
         restrict: 'E',
         templateUrl: 'component/board/partials/board-banner.html',
-        replace: false,
+        replace: true,
         controller: ['$scope', '$location', 'boardsService', 'localStorageService', function ($scope, $location, boardsService, localStorageService) {
             var boardLink = localStorageService.get("boardLink");
 
