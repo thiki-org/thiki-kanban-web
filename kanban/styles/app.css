@@ -191,3 +191,14 @@ textarea.editable-input.form-control {
 .dropdown-menu {
     min-width: 120px !important;
 }
+
+div#thiki-logo {
+    height: 50px;
+    position: absolute;
+    line-height: 50px;
+    margin-left: 10px;
+}
+
+div#thiki-logo img {
+    height: 40px;
+}
