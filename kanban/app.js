@@ -17,7 +17,7 @@ var kanbanApp = angular.module('kanbanApp', [
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
-        $httpProvider.interceptors.push('myHttpResponseInterceptor');
+        $httpProvider.interceptors.push('httpInterceptor');
         $routeProvider.when('/boards/:boardId/entries', {
             templateUrl: 'component/entry/partials/entry-partial.html'
         }).when('/boards', {
