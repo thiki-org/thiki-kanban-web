@@ -2,8 +2,8 @@
     <div id="create-new-entry-button" ng-click="showCreateEntryForm()" ng-show="displayCreationButton">+</div>
     <form id="create-new-entry-form" name="createNewEntryForm" class="create-entry-form" ng-show="displayForm">
         <div class="input-group">
-            <input name="title" type="text" class="form-control" data-ng-model="entry.title"
-                   ng-keydown="keyPress($event)" required focus="displayForm"/>
+            <input name="title" type="text" class="form-control" data-ng-model="title"
+                   ng-keydown="keyPress($event)" required focus="displayForm" ng-blur="blur()"/>
         </div>
         <div class="create-entry-form-buttons">
             <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()"

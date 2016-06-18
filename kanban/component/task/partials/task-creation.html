@@ -5,7 +5,7 @@
     <form name="createNewTaskForm" class="create-task-form" ng-show="displayForm">
         <div class="input-group task-create-task-div">
             <textarea name="summary" rows="3" class="form-control task create-task-title" data-ng-model="summary"
-                      required ng-keydown="keyPress($event)" focus="displayForm"/>
+                      required ng-keydown="keyPress($event)" focus="displayForm" ng-blur="blur()"/>
         </div>
         <div class="create-task-form-buttons">
             <button type="button" class="create-task-form-button btn btn-primary"

@@ -6,7 +6,7 @@ kanbanApp.directive('focus', function ($timeout, $parse) {
         scope.$watch(attrs.focus,
             function (newValue) {
                 $timeout(function () {
-                    newValue && element[0].focus();
+                    if (newValue)element[0].focus();
                 });
             }, true);
     };

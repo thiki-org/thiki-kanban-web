@@ -1,9 +1,7 @@
-'use strict';
-
 /* App Module */
 var config = {
     localhost: 'http://localhost:8080'
-}
+};
 
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute', 'ngAnimate', 'ui.bootstrap',
@@ -12,11 +10,13 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.sortable',
     'tasksServices',
     'boardsService',
-    'xeditable'
+    'xeditable',
+    'LocalStorageModule'
 ]);
 
-kanbanApp.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
+    function ($routeProvider, $httpProvider, localStorageServiceProvider) {
+        localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
         $httpProvider.interceptors.push('myHttpResponseInterceptor');
         $routeProvider.when('/boards/:boardId/entries', {
             templateUrl: 'component/entry/partials/entry-partial.html'
@@ -44,7 +44,7 @@ kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q,
         'requestError': function (rejection) {
             // do something on error
             if (canRecover(rejection)) {
-                return responseOrNewPromise
+                return responseOrNewPromise;
             }
             return $q.reject(rejection);
         },
@@ -62,7 +62,7 @@ kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q,
             alert("请求出错");
             // do something on error
             if (canRecover(rejection)) {
-                return responseOrNewPromise
+                return responseOrNewPromise;
             }
             return $q.reject(rejection);
         }

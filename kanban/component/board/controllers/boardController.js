@@ -6,8 +6,8 @@ var boardController = angular.module('boardController', []);
 
 var boardsLink = "http://localhost:8080/boards";
 
-boardController.controller('boardController', ['$scope', '$location', '$q', 'boardsService',
-    function ($scope, $location, $q, boardsService) {
+boardController.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService',
+    function ($scope, $location, $q, boardsService, localStorageService) {
         var boardPromise = boardsService.load(boardsLink);
         boardsService.boardsLink = boardsLink;
         boardPromise.then(function (data) {
@@ -15,7 +15,8 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
         });
 
         $scope.toEntries = function (_boardId, _boardLink) {
-            $location.path('/boards/' + _boardId + '/entries').search({boardLink: _boardLink});
+            localStorageService.set("boardLink", _boardLink);
+            $location.path('/boards/' + _boardId + '/entries');
         };
         $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;
@@ -24,7 +25,7 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
             var board = {name: name};
             var entriesPromise = boardsService.create(board);
             entriesPromise.then(function (data) {
-                if ($scope.boards == null) {
+                if ($scope.boards === null) {
                     $scope.boards = [];
                 }
                 $scope.boards.push(data);

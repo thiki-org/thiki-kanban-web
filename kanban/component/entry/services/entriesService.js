@@ -1,10 +1,6 @@
-'use strict';
-
 /* Services */
 
-var entriesServices = angular.module('entriesServices', ['ngResource']);
-
-entriesServices.factory('entriesServices', ['$http', '$q',
+angular.module('entriesServices', ['ngResource']).factory('entriesServices', ['$http', '$q',
     function ($http, $q) {
         return {
             entriesLink: '',
@@ -71,7 +67,7 @@ entriesServices.factory('entriesServices', ['$http', '$q',
                     headers: {
                         'userId': '112'
                     },
-                    url:_link
+                    url: _link
                 }).success(function (data, status, headers, config) {
                     deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
                 }).error(function (data, status, headers, config) {
@@ -79,5 +75,5 @@ entriesServices.factory('entriesServices', ['$http', '$q',
                 });
                 return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
             }
-        }
+        };
     }]);

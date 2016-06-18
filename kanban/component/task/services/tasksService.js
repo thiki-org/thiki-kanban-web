@@ -1,5 +1,3 @@
-'use strict';
-
 /* Services */
 
 var tasksServices = angular.module('tasksServices', ['ngResource']);
@@ -69,7 +67,7 @@ tasksServices.factory('tasksServices', ['$http', '$q', function ($http, $q) {
                 headers: {
                     'userId': '112'
                 },
-                url:_link
+                url: _link
             }).success(function (data, status, headers, config) {
                 console.log(data);
                 deferred.resolve(data);  // 声明执行成功，即http请求数据成功，可以返回数据了
@@ -78,5 +76,5 @@ tasksServices.factory('tasksServices', ['$http', '$q', function ($http, $q) {
             });
             return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
         }
-    }
+    };
 }]);
