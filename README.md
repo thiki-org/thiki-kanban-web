@@ -28,7 +28,7 @@ http://localhost:8008/kanban/#/boards
 * node.js
 * npm  (~/.npm,  ~/.npmrc, ${project}/package.json)
 * bower.js (${project}/bower.json,  ${project}/bower_components)
-* gulp (${project}/Gulpfile.js)
+* gulp (${project}/gulpfile.js)
 
 ## npm
 
@@ -63,7 +63,7 @@ nodejs下的组件管理系统
 ```
 $ cd ${where_thiki-kanban-web_is}
 $ gulp
-//or specify a task in Gulpfile.js
+//or specify a task in gulpfile.js
 $ gulp watch
 ```
 
