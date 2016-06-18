@@ -41,7 +41,6 @@ kanbanApp.factory('assignmentServices', ['$http', '$q', function ($http, $q) {
                 },
                 url: _link
             }).success(function (data, status, headers, config) {
-                console.log(data);
                 deferred.resolve(data);
             }).error(function (data, status, headers, config) {
                 deferred.reject(data);
