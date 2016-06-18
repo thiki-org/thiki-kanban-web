@@ -6,7 +6,7 @@ kanbanApp.run(function (editableOptions, localStorageService) {
     editableOptions.theme = 'bs3';
     localStorageService.set("userId", "341182");
 });
-kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q, $location) {
+kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector) {
     return {
         // optional method
         'request': function (config) {
@@ -32,12 +32,24 @@ kanbanApp.factory('myHttpResponseInterceptor', ['$q', '$location', function ($q,
 
         // optional method
         'responseError': function (rejection) {
-            console.log(rejection);
-            alert("请求出错");
-            // do something on error
-            if (canRecover(rejection)) {
-                return responseOrNewPromise;
-            }
+            var modal = $injector.get("$uibModal");
+            var modalInstance = modal.open({
+                animation: true,
+                templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                controller: function ($scope, $uibModalInstance) {
+                    $scope.title = '连接错误';
+                    if (rejection.status === -1) {
+                        $scope.message = "网络错误,请确认远程服务器运行正常。";
+                    }
+                    $scope.ok = function () {
+                        $uibModalInstance.close();
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'sm'
+            });
             return $q.reject(rejection);
         }
     };
