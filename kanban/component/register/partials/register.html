@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{title}}</h3>
+</div>
+<div class="modal-body">
+    <input name="email" type="text" class="form-control" data-ng-model="email"
+           ng-keydown="keyPress($event)" focus="displayForm" placeholder="你的常用邮箱" required/></div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="ok()">注册</button>
+    <button class="btn thiki-secondary-button" type="button" ng-click="cancel()">放弃</button>
+</div>
+

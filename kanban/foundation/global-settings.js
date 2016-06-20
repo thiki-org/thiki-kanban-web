@@ -5,6 +5,7 @@
 kanbanApp.run(function (editableOptions, localStorageService) {
     editableOptions.theme = 'bs3';
     localStorageService.set("userId", "341182");
+    localStorageService.set("register", "341182");
 });
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector) {
     return {

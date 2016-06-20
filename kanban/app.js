@@ -6,26 +6,42 @@ var config = {
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute', 'ngAnimate', 'ui.bootstrap',
     'boardController',
+    'registerController',
     'entriesServices',
     'ui.sortable',
     'tasksServices',
     'boardsService',
     'xeditable',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'ui.router'
 ]);
 
-kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
-    function ($routeProvider, $httpProvider, localStorageServiceProvider) {
+kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider',
+    function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
         $httpProvider.interceptors.push('httpInterceptor');
-        $routeProvider.when('/boards/:boardId/entries', {
-            templateUrl: 'component/entry/partials/entry-partial.html'
-        }).when('/boards', {
-            templateUrl: 'component/board/partials/boards.html',
-            controller: 'boardController'
-        }).otherwise({
-            templateUrl: 'component/board/partials/boards.html',
-            controller: 'boardController'
-        });
+
+        $stateProvider
+            .state('register', {
+                url: "/register",
+                views: {
+                    "register": {templateUrl: "component/register/partials/register.html"},
+                    "kanban": {template: " "},
+                }
+            })
+            .state('boards', {
+                url: "/boards",
+                views: {
+                    "register": {template: " "},
+                    "kanban": {templateUrl: "component/board/partials/boards.html", controller: 'boardController'}
+                }
+            })
+            .state('entries', {
+                url: "/boards/:boardId/entries",
+                views: {
+                    "register": {template: " "},
+                    "kanban": {templateUrl: "component/entry/partials/entry-partial.html"}
+                }
+            });
     }]);
 
