@@ -7,7 +7,6 @@ kanbanApp.directive('taskCreation', function ($timeout) {
         replace: true,
         templateUrl: 'component/task/partials/task-creation.html',
         controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
-
             var entry = $scope.entry;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
@@ -21,6 +20,9 @@ kanbanApp.directive('taskCreation', function ($timeout) {
                 $scope.displayForm = false;
             };
             $scope.createTask = function () {
+                if ($scope.summary == "") {
+                    return;
+                }
                 var task = {summary: $scope.summary, entryId: entry.id};
                 var taskPromise = tasksServices.create(task, entry._links.tasks.href);
                 taskPromise.then(function (data) {
