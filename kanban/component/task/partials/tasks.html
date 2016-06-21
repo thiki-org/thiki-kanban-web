@@ -1,4 +1,5 @@
-<div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks">
+<div class="tasks" ui-sortable="sortableOptions" data-ng-model="tasks" ng-mouseover="mouseover($event)"
+     ng-mouseleave="onEntryMenuMouseLeave($event)">
     <task ng-repeat="task in tasks |orderBy:'orderNumber'" task="task"></task>
-    <task-creation/>
+    <task-creation ng-show="isShowTaskCreationButton"/>
 </div>

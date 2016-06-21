@@ -44,6 +44,15 @@ kanbanApp.directive('tasks', function ($uibModal) {
                     };
                 });
             };
+
+            $scope.mouseover = function () {
+                $scope.isShowTaskCreationButton = true;
+            };
+
+            $scope.onEntryMenuMouseLeave = function () {
+                $scope.isShowTaskCreationButton = false;
+            };
+
             $scope.loadTasks();
         }]
     };
