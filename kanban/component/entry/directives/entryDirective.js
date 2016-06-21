@@ -13,10 +13,10 @@ kanbanApp.directive('entry', function ($uibModal) {
         },
         controller: ['$scope', 'boardsService', 'entriesServices', function ($scope, boardsService, entriesServices) {
             $scope.displayEntryMenu = false;
-            $scope.onEntryMenuMouseOver = function () {
+            $scope.onEntryMenuMouseOver = function ($event) {
                 $scope.displayEntryMenu = true;
             };
-            $scope.onEntryMenuMouseLeave = function () {
+            $scope.onEntryMenuMouseLeave = function ($event) {
                 $scope.displayEntryMenu = false;
             };
 
