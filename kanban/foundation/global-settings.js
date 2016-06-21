@@ -42,6 +42,9 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
                     if (rejection.status === -1) {
                         $scope.message = "网络错误,请确认远程服务器运行正常。";
                     }
+                    if (rejection.status === 500) {
+                        $scope.message = "500-远程服务器内部发生错误。";
+                    }
                     $scope.ok = function () {
                         $uibModalInstance.close();
                     };
