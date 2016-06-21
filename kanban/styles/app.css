@@ -130,7 +130,15 @@ button.thiki-submit-button {
     background-color: #d43f3a !important;
 }
 
+.thiki-warning-button {
+    background-color: #d43f3a !important;
+}
+
 .thiki-delete-item :hover {
+    background-color: #d43f3a !important;
+}
+
+.thiki-warning-button :hover {
     background-color: #d43f3a !important;
 }
 
