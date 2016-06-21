@@ -49,7 +49,7 @@ kanbanApp.directive('tasks', function ($uibModal) {
                 $scope.isShowTaskCreationButton = true;
             };
 
-            $scope.onEntryMenuMouseLeave = function () {
+            $scope.onMouseLeave = function () {
                 $scope.isShowTaskCreationButton = false;
             };
 
