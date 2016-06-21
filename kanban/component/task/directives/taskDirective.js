@@ -104,6 +104,13 @@ kanbanApp.directive('task', function ($uibModal) {
                 });
                 $scope.assignTip = $scope.isIamAssigned === true ? "我不做了" : "认领";
             };
+            $scope.mouseover = function () {
+                $scope.isShowTaskOperationMenu = true;
+            };
+
+            $scope.onMouseLeave = function () {
+                $scope.isShowTaskOperationMenu = false;
+            };
         }]
     };
 });

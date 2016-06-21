@@ -1,10 +1,11 @@
-<div class="task">
+<div class="task" ng-mouseover="mouseover($event)"
+     ng-mouseleave="onMouseLeave($event)">
     <div class="task-summary" editable-textarea="task.summary" onbeforesave="updateTask($data,task)">
         {{task.summary}}
     </div>
     <div class="task-operations">
         <assignments></assignments>
-        <div class="dropdown task-menu">
+        <div class="dropdown task-menu" ng-show="isShowTaskOperationMenu">
             <button class="dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="true">
                 <span>...</span>
