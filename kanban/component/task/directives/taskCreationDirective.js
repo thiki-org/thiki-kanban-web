@@ -20,7 +20,7 @@ kanbanApp.directive('taskCreation', function ($timeout) {
                 $scope.displayForm = false;
             };
             $scope.createTask = function () {
-                if ($scope.summary == "") {
+                if ($scope.summary === "") {
                     return;
                 }
                 var task = {summary: $scope.summary, entryId: entry.id};

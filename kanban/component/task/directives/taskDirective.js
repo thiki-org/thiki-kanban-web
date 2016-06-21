@@ -62,7 +62,7 @@ kanbanApp.directive('task', function ($uibModal) {
 
             $scope.updateTask = function (_summary, _task) {
                 var task = _task;
-                if (task.summary == "") {
+                if (task.summary === "") {
                     return;
                 }
                 task.summary = _summary;
