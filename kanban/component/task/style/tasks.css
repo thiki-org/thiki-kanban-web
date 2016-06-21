@@ -8,6 +8,10 @@
     width: 95%;
 }
 
+div.task:hover {
+    background-color: #F9F8F6;
+}
+
 .task-summary {
     color: #000;
     margin: 5px;
