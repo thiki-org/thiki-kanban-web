@@ -34,9 +34,9 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
         // optional method
         'responseError': function (rejection) {
             var modal = $injector.get("$uibModal");
-            var modalInstance = modal.open({
+            modal.open({
                 animation: true,
-                templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                templateUrl: 'foundation/modal/partials/error-dialog.html',
                 controller: function ($scope, $uibModalInstance) {
                     $scope.title = '连接错误';
                     if (rejection.status === -1) {
@@ -45,11 +45,12 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
                     if (rejection.status === 500) {
                         $scope.message = "500-远程服务器内部发生错误。";
                     }
+                    if (rejection.status === 400) {
+                        $scope.title = '400-参数不合法';
+                        $scope.message = rejection.data.message;
+                    }
                     $scope.ok = function () {
                         $uibModalInstance.close();
-                    };
-                    $scope.cancel = function () {
-                        $uibModalInstance.dismiss('cancel');
                     };
                 },
                 size: 'sm'
