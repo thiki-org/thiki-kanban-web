@@ -45,17 +45,6 @@ kanbanApp.directive('entryCreation', function () {
                     $scope.cancelCreateEntry();
                 }
             };
-            $scope.updateEntry = function (_title, _entry) {
-                var entry = _entry;
-                if (entry.title === "") {
-                    return;
-                }
-                entry.title = _title;
-                var entryPromise = entriesServices.update(entry);
-                entryPromise.then(function () {
-                });
-            };
-
         }]
     };
 });
