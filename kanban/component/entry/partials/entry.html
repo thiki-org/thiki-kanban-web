@@ -1,6 +1,6 @@
 <div entryId="{{entry.id}}" class="entry-item" ng-mouseover="onEntryMenuMouseOver($event)"
      ng-mouseleave="onEntryMenuMouseLeave($event)">
-    <div class="entry-title" data-type="text" editable-text="entry.title"
+    <div class="entry-title" data-type="text" editable-text="entry.title" e-ng-click="open($event,'$data')"
          onbeforesave="updateEntry($data,entry)" data-mode="inline">
         {{entry.title}}
     </div>
