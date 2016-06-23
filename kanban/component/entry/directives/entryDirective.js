@@ -52,6 +52,10 @@ kanbanApp.directive('entry', function ($uibModal) {
                 entryPromise.then(function () {
                 });
             };
+
+            $scope.open = function () {
+                $scope.displayEntryMenu = false;
+            }
         }]
     };
 });
