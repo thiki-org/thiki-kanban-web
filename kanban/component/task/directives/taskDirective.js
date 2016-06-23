@@ -62,7 +62,7 @@ kanbanApp.directive('task', function ($uibModal) {
 
             $scope.updateTask = function (_summary, _task) {
                 if (_summary === "") {
-                    return;
+                    return "任务描述不能为空";
                 }
                 var task = _task;
                 task.summary = _summary;
