@@ -36,9 +36,6 @@ angular.module('xeditable').factory('editableThemes', function() {
             errorTpl:    '<div class="editable-error help-block" ng-show="$error" ng-bind="$error"></div>',
             buttonsTpl:  '<span class="editable-buttons"></span>',
             submitTpl:   '<button type="submit" class="btn btn-primary">好</button>',
-            cancelTpl:   '<button type="button" class="btn  editable-cancel-button" ng-click="$form.$cancel()">'+
-            '放弃'+
-            '</button>',
 
             //bs3 specific prop to change buttons class: btn-sm, btn-lg
             buttonsClass: '',
