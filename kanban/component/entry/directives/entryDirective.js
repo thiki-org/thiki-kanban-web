@@ -44,8 +44,8 @@ kanbanApp.directive('entry', function ($uibModal) {
             };
             $scope.updateEntry = function (_title, _entry) {
                 var entry = _entry;
-                if (entry.title === "") {
-                    return;
+                if (_title === "") {
+                    return "标题不能为空";
                 }
                 entry.title = _title;
                 var entryPromise = entriesServices.update(entry);
