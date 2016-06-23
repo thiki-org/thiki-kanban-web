@@ -216,3 +216,13 @@ div#thiki-banner {
     height: 50px;
     background: var(--theme-color) !important;
 }
+
+.has-error .form-control {
+    border-color: #ea4440 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .form-control-feedback, .has-error .help-block, .has-error .radio, .has-error .radio-inline {
+    color: #ea4440 !important;
+}
