@@ -8,6 +8,7 @@ kanbanApp.run(function (editableOptions, localStorageService) {
     localStorageService.set("register", "341182");
 });
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector) {
+    var isHasHttpError = false;
     return {
         // optional method
         'request': function (config) {
@@ -34,6 +35,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
         // optional method
         'responseError': function (rejection) {
             var modal = $injector.get("$uibModal");
+            if (isHasHttpError) {
+                return $q.reject(rejection);
+            }
+            isHasHttpError = true;
             modal.open({
                 animation: true,
                 templateUrl: 'foundation/modal/partials/error-dialog.html',
@@ -50,6 +55,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
                         $scope.message = rejection.data.message;
                     }
                     $scope.ok = function () {
+                        isHasHttpError = false;
                         $uibModalInstance.close();
                     };
                 },
