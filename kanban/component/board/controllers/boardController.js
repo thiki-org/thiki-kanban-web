@@ -21,7 +21,11 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
         $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;
         $scope.createBoard = function () {
-            var name = $scope.board.name;
+            if ($scope.name === undefined || $scope.name === "") {
+                $scope.isShowNameError = true;
+                return;
+            }
+            var name = $scope.name;
             var board = {name: name};
             var entriesPromise = boardsService.create(board);
             entriesPromise.then(function (data) {
@@ -29,7 +33,8 @@ boardController.controller('boardController', ['$scope', '$location', '$q', 'boa
                     $scope.boards = [];
                 }
                 $scope.boards.push(data);
-                $scope.board.name = "";
+                $scope.cancelCreateBoard();
+                $scope.name = "";
             });
         };
         $scope.keyPress = function ($event) {

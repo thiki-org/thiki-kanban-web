@@ -9,8 +9,9 @@
     <div ng-show="displayForm">
         <div id="create-new-entry">
             <form name="createBoardForm" class="create-board-form">
-                <div class="input-group  creation-box">
-                    <input name="name" type="text" class="form-control" data-ng-model="board.name"
+                <div class="input-group  creation-box"
+                     ng-class="{'has-error': createBoardForm.name.$invalid && !createBoardForm.name.$pristine}">
+                    <input name="name" type="text" class="form-control" data-ng-model="name"
                            ng-keydown="keyPress($event)" focus="displayForm" required/>
                 </div>
                 <div class="thiki-form-buttons">
