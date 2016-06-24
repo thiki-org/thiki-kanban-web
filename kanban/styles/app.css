@@ -226,3 +226,11 @@ div#thiki-banner {
 .has-error .checkbox, .has-error .checkbox-inline, .has-error .control-label, .has-error .form-control-feedback, .has-error .help-block, .has-error .radio, .has-error .radio-inline {
     color: #ea4440 !important;
 }
+
+span.thiki-input-error-message {
+    float: left;
+    margin-top: 5px;
+    color: red;
+    padding: 5px;
+    border-radius: 2px;
+}
