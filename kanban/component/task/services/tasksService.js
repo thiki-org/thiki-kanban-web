@@ -1,8 +1,6 @@
 /* Services */
 
-var tasksServices = angular.module('tasksServices', ['ngResource']);
-
-tasksServices.factory('tasksServices', ['$http', '$q', function ($http, $q) {
+kanbanApp.factory('tasksServices', ['$http', '$q', function ($http, $q) {
     return {
         loadTasksByEntryId: function (tasksUrl) {
             var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行

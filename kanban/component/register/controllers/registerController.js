@@ -2,9 +2,7 @@
  * Created by xubt on 4/20/16.
  */
 
-var registerController = angular.module('registerController', []);
-
-registerController.controller('registerController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal',
+kanbanApp.controller('registerController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal',
     function ($scope, $location, $q, boardsService, localStorageService, $uibModal) {
         console.log("dsdsd");
         $uibModal.open({

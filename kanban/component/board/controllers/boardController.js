@@ -1,12 +1,9 @@
 /**
  * Created by xubt on 4/20/16.
  */
-
-var boardController = angular.module('boardController', []);
-
 var boardsLink = "http://localhost:8080/boards";
 
-boardController.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService',
+kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService',
     function ($scope, $location, $q, boardsService, localStorageService) {
         var boardPromise = boardsService.load(boardsLink);
         boardsService.boardsLink = boardsLink;

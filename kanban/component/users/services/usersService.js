@@ -1,7 +1,9 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.factory('boardsService', ['$http', '$q',
+var usersService = angular.module('usersService', ['ngResource']);
+
+usersService.factory('usersService', ['$http', '$q',
     function ($http, $q) {
         return {
             boardsLink: '',

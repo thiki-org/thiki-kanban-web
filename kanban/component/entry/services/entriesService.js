@@ -1,6 +1,6 @@
 /* Services */
 
-angular.module('entriesServices', ['ngResource']).factory('entriesServices', ['$http', '$q',
+kanbanApp.factory('entriesServices', ['$http', '$q',
     function ($http, $q) {
         return {
             entriesLink: '',
