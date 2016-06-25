@@ -11,32 +11,36 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.router'
 ]);
 
-kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider',
-    function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider) {
+kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
+    function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
         $httpProvider.interceptors.push('httpInterceptor');
 
         $stateProvider
-            .state('register', {
-                url: "/register",
-                views: {
-                    "register": {templateUrl: "component/register/partials/register.html"},
-                    "kanban": {template: " "},
-                }
-            })
             .state('boards', {
                 url: "/boards",
                 views: {
                     "register": {template: " "},
-                    "kanban": {templateUrl: "component/board/partials/boards.html", controller: 'boardController'}
+                    "kanban": {templateUrl: "component/board/partials/boards.html", controller: 'boardController'},
+                    "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
             .state('entries', {
                 url: "/boards/:boardId/entries",
                 views: {
                     "register": {template: " "},
-                    "kanban": {templateUrl: "component/entry/partials/entry-partial.html"}
+                    "kanban": {templateUrl: "component/entry/partials/entry-partial.html"},
+                    "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
+                }
+            })
+            .state('welcome', {
+                url: "/welcome",
+                views: {
+                    "welcome": {templateUrl: "component/welcome/partials/index.html"},
+                    "kanban-banner": {template: " "},
+                    "kanban": {template: " "}
                 }
             });
+        $urlRouterProvider.otherwise('/welcome');
     }]);
 
