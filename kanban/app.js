@@ -41,6 +41,7 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
                     "kanban": {template: " "}
                 }
             });
+
         $urlRouterProvider.otherwise('/welcome');
     }]);
 
