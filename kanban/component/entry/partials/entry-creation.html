@@ -3,7 +3,7 @@
     <form id="create-new-entry-form" name="createNewEntryForm" class="create-entry-form" ng-show="displayForm">
         <div class="input-group">
             <input name="title" type="text" class="form-control" data-ng-model="title"
-                   ng-keydown="keyPress($event)" required focus="displayForm" ng-blur="blur()"/>
+                   ng-keydown="keyPress($event)" required focus="displayForm" ng-blur="blur()" autocomplete="off"/>
         </div>
         <div class="create-entry-form-buttons">
             <button type="button" class="create-entry-form-button btn btn-primary" ng-click="createEntry()"
