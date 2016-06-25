@@ -13,7 +13,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
 
         $scope.toEntries = function (_boardId, _boardLink) {
             localStorageService.set("boardLink", _boardLink);
-            $location.path('/boards/' + _boardId + '/entries');
+            $location.path('/boards/' + _boardId);
         };
         $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;

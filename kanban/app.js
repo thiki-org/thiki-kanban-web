@@ -26,7 +26,7 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
                 }
             })
             .state('entries', {
-                url: "/boards/:boardId/entries",
+                url: "/boards/:boardId",
                 views: {
                     "register": {template: " "},
                     "kanban": {templateUrl: "component/entry/partials/entry-partial.html"},
