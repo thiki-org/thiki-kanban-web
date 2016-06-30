@@ -37,7 +37,7 @@ kanbanApp.directive('entries', function () {
                                 _entryPromise.then(function (data) {
                                     $scope.loadEntries();
                                 });
-                            }
+                                }
                         };
                         }
                     );
