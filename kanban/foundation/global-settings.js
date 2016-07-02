@@ -54,6 +54,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', function ($q, $injector
                         $scope.title = '400-参数不合法';
                         $scope.message = rejection.data.message;
                     }
+                    if (rejection.status === 401) {
+                        $scope.title = '401- 访问受限';
+                        $scope.message = rejection.data.message;
+                    }
                     $scope.ok = function () {
                         isHasHttpError = false;
                         $uibModalInstance.close();
