@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('taskCreation', function ($timeout) {
+kanbanApp.directive('taskCreation', function () {
     return {
         restrict: 'E',
         replace: true,
