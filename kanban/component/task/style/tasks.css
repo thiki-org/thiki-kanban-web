@@ -26,6 +26,8 @@ div.task:hover {
     clear: both;
     float: inherit;
     width: inherit;
+    max-height: 550px;
+    overflow: auto;
 }
 
 .create-task-title {
