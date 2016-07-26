@@ -15,10 +15,11 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');
         $httpProvider.interceptors.push('httpInterceptor');
-
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common["X-Requested-With"];
         $stateProvider
             .state('boards', {
-                url: "/boards",
+                url: "/users/:userName/boards",
                 views: {
                     "register": {template: " "},
                     "kanban": {templateUrl: "component/board/partials/boards.html", controller: 'boardController'},
