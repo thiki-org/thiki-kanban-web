@@ -28,4 +28,9 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
+        $scope.keyPress = function ($event) {
+            if ($event.keyCode == 13) {
+                $scope.login();
+            }
+        };
     }]);
