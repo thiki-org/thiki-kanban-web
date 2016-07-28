@@ -234,3 +234,8 @@ span.thiki-input-error-message {
     padding: 5px;
     border-radius: 2px;
 }
+
+.thiki-button-large {
+    height: 40px;
+    width: 90px;
+}
