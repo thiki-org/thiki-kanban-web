@@ -239,3 +239,24 @@ span.thiki-input-error-message {
     height: 40px;
     width: 90px;
 }
+
+div.validation-error-message {
+    clear: both;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #911;
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid #bac6d3;
+    min-height: 35px;
+    padding: 5px;
+    background: #f9dbdb;
+    border-radius: 3px;
+    line-height: 35px;
+}
+
+.has-feedback .form-control-feedback {
+    right: 12px !important;
+    top: 0px;
+!important;
+}
