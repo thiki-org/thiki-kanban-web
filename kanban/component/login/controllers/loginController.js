@@ -16,12 +16,16 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                 var login = _data._links.login.href;
                 var loginPromise = loginService.login(login, identity, encryptedPassword);
                 loginPromise.then(function (_identity) {
-                    alert("login success!" + JSON.stringify(_identity));
                     $uibModalInstance.dismiss('cancel');
                     localStorageService.clearAll();
                     localStorageService.set("identity.token", _identity.token);
                     localStorageService.set("identity.userName", _identity.userName);
-                    $location.path('/users/' + _identity.userName + '/boards');
+
+                    var currentPath = $location.path();
+
+                    if (currentPath.indexOf("welcome")) {
+                        $location.path('/users/' + _identity.userName + '/boards');
+                    }
                 });
             });
         };
