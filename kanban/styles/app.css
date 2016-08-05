@@ -264,3 +264,7 @@ div.validation-error-message {
 .aside .aside-dialog .aside-header {
     background: var(--theme-color) !important;
 }
+
+.modal {
+    z-index: 2000 !important;
+}
