@@ -13,6 +13,7 @@ body {
     width: 100%;
     height: 100%;
     font-family: thiki !important;
+    padding-top: 0px !important;
 }
 
 body > a {
@@ -258,5 +259,8 @@ div.validation-error-message {
 .has-feedback .form-control-feedback {
     right: 12px !important;
     top: 0px;
-!important;
+}
+
+.aside .aside-dialog .aside-header {
+    background: var(--theme-color) !important;
 }
