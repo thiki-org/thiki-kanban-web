@@ -52,6 +52,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.title = '401- 访问受限';
                         $scope.message = rejection.data.message;
                     }
+                    if (rejection.status === 404) {
+                        $scope.title = '404- 资源未找到';
+                        $scope.message = "资源:" + rejection.config.url;
+                    }
                     if (rejection.status === 409) {
                         $scope.title = '409-冲突';
                         $scope.message = rejection.data.message;
