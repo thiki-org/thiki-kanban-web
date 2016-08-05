@@ -8,7 +8,7 @@ kanbanApp.run(function (editableOptions, localStorageService) {
     localStorageService.set("userId", "341182");
     localStorageService.set("register", "341182");
 });
-kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', function ($q, $injector, localStorageService) {
+kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
     var isHasHttpError = false;
     return {
         'request': function (config) {
@@ -49,11 +49,11 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.message = rejection.data.message;
                     }
                     if (rejection.status === 401) {
-                        $scope.title = '401- 访问受限';
+                        $scope.title = '401-访问受限';
                         $scope.message = rejection.data.message;
                     }
                     if (rejection.status === 404) {
-                        $scope.title = '404- 资源未找到';
+                        $scope.title = '404-资源未找到';
                         $scope.message = "资源:" + rejection.config.url;
                     }
                     if (rejection.status === 409) {
@@ -63,6 +63,9 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                     $scope.ok = function () {
                         isHasHttpError = false;
                         $uibModalInstance.close();
+                        if (rejection.status === 401) {
+                            $location.path("/welcome");
+                        }
                     };
                 },
                 size: 'sm'
