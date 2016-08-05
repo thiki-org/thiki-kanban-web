@@ -21,10 +21,9 @@ var lib = require('bower-files')({
 
 var cleanCSS = require('gulp-clean-css');
 
-
 // 语法检查
 gulp.task('jshint', function () {
-    return gulp.src(['kanban/**/*.js', '!kanban/static/**/*.js'])
+    return gulp.src(['kanban/**/*.js', '!kanban/static/**/*.js', '!kanban/**/util/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
@@ -55,7 +54,6 @@ gulp.task('minify', function () {
         .pipe(rename('thiki-kanban.min.js'))
         .pipe(gulp.dest('kanban/static/js'));
 });
-
 
 // 监视文件的变化
 gulp.task('watch', function () {
