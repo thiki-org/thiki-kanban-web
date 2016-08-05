@@ -1,0 +1,15 @@
+<div class="aside" tabindex="-1" role="dialog" ng-controller="userController">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header" ng-show="title">
+                <h4 class="aside-title" ng-bind="title"></h4>
+            </div>
+            <div class="aside-body" ng-show="content">
+                内容
+            </div>
+            <div class="aside-footer">
+                <button type="button" class="btn btn-default" ng-click="loginOut()">退出</button>
+            </div>
+        </div>
+    </div>
+</div>
