@@ -8,7 +8,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.sortable',
     'xeditable',
     'LocalStorageModule',
-    'ui.router'
+    'ui.router',
+    'mgcrea.ngStrap'
 ]);
 
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
