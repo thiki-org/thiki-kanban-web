@@ -19,9 +19,9 @@
             </div>
         </div>
     </form>
-    <div id="forget-password" ng-click="openForgetPasswordModal()">
+    <div id="forget-password">
         <a uib-tooltip="通过注册邮箱帮你找回丢失的密码" tooltip-placement="right"
-           tooltip-trigger="mouseenter">忘记密码</a>
+           tooltip-trigger="mouseenter" ng-click="openForgetPasswordModal()">忘记密码</a>
     </div>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
