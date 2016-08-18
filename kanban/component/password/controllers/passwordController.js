@@ -2,31 +2,31 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance) {
+kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwordService', '$interval', 'localStorageService', '$uibModalInstance',
+    function ($scope, $location, $q, passwordService, $interval, localStorageService, $uibModalInstance) {
         $scope.title = "找回密码";
-        $scope.login = function () {
-            var publicKeyPromise = publicKeyServices.loadPublicKey(localStorageService.get("publicKeyLink"));
-            publicKeyPromise.then(function (_data) {
-                var encrypt = new JSEncrypt();
-                encrypt.setPublicKey(_data.publicKey);
-                var identity = $scope.identity;
-                var encryptedPassword = encrypt.encrypt($scope.password);
+        $scope.sendVerificationCodeButtonText = "发送验证码";
+        $scope.sendPasswordRetrievalApplication = function () {
+            $scope.isDisableSendVerificationCodeButton = true;
+            $scope.sendVerificationCodeButtonText = "发送中...";
+            var retrievalApplication = {email: $scope.email};
+            var passwordRetrievalApplicationLink = localStorageService.get("entranceData")._links.passwordRetrievalApplication.href;
+            var retrievalApplicationPromise = passwordService.retrievalApplication(passwordRetrievalApplicationLink, retrievalApplication);
+            retrievalApplicationPromise.then(function (_data) {
 
-                var login = _data._links.login.href;
-                var loginPromise = loginService.login(login, identity, encryptedPassword);
-                loginPromise.then(function (_identity) {
-                    $uibModalInstance.dismiss('cancel');
-                    localStorageService.clearAll();
-                    localStorageService.set("identity.token", _identity.token);
-                    localStorageService.set("identity.userName", _identity.userName);
-
-                    var currentPath = $location.path();
-
-                    if (currentPath.indexOf("welcome")) {
-                        $location.path('/users/' + _identity.userName + '/boards');
+                var count = 60;
+                $scope.timer = $interval(function () {
+                    if (count == 0) {
+                        $interval.cancel($scope.timer);
+                        $scope.isDisableSendVerificationCodeButton = false;
+                        $scope.sendVerificationCodeButtonText = "发送验证码";
                     }
-                });
+                    else {
+                        $scope.isDisableSendVerificationCodeButton = true;
+                        $scope.sendVerificationCodeButtonText = count + "秒后再发送";
+                    }
+                    count--;
+                }, 1000);
             });
         };
         $scope.cancel = function () {
