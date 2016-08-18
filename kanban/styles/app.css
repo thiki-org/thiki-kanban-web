@@ -268,3 +268,12 @@ div.validation-error-message {
 .modal {
     z-index: 2000 !important;
 }
+
+.form-control {
+    -webkit-box-shadow: none !important;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus,
+.btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: none !important;
+}
