@@ -8,6 +8,7 @@ kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcome
         var entrance;
         entrancePromise.then(function (_entranceData) {
             entrance = _entranceData;
+            localStorageService.set("entranceData", _entranceData);
             localStorageService.set("publicKeyLink", _entranceData._links.publicKey.href);
         });
         $scope.register = function () {
