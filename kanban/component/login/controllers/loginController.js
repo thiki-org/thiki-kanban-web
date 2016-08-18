@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance) {
+kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance', '$uibModal',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance, $uibModal) {
         $scope.title = "登录";
         $scope.login = function () {
             var publicKeyPromise = publicKeyServices.loadPublicKey(localStorageService.get("publicKeyLink"));
@@ -39,5 +39,14 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
             if ($event.keyCode == 13) {
                 $scope.login();
             }
+        };
+        $scope.openForgetPasswordModal = function () {
+            $uibModalInstance.dismiss('cancel');
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'component/password/partials/forget-password.html',
+                controller: "passwordController",
+                size: 'sm'
+            });
         };
     }]);
