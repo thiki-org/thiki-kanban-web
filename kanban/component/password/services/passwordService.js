@@ -9,6 +9,14 @@ kanbanApp.factory('passwordService', ['$http', '$q', 'httpServices', function ($
                 data: JSON.stringify(_retrievalApplication),
                 url: _passwordRetrievalApplicationLink
             });
+        },
+        applyReset: function (passwordResetApplicationLink, resetApplication) {
+            return httpServices.send({
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(resetApplication),
+                url: passwordResetApplicationLink
+            });
         }
     };
 }]);
