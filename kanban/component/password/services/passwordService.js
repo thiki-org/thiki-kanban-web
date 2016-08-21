@@ -2,7 +2,7 @@
 
 kanbanApp.factory('passwordService', ['$http', '$q', 'httpServices', function ($http, $q, httpServices) {
     return {
-        retrievalApplication: function (_passwordRetrievalApplicationLink, _retrievalApplication) {
+        applyRetrieval: function (_passwordRetrievalApplicationLink, _retrievalApplication) {
             return httpServices.send({
                 method: 'POST',
                 contentType: 'application/json',
@@ -10,12 +10,20 @@ kanbanApp.factory('passwordService', ['$http', '$q', 'httpServices', function ($
                 url: _passwordRetrievalApplicationLink
             });
         },
-        applyReset: function (passwordResetApplicationLink, resetApplication) {
+        applyReset: function (_passwordResetApplicationLink, _resetApplication) {
             return httpServices.send({
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(resetApplication),
-                url: passwordResetApplicationLink
+                data: JSON.stringify(_resetApplication),
+                url: _passwordResetApplicationLink
+            });
+        },
+        resetPassword: function (_passwordResetLink, _password) {
+            return httpServices.send({
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(_password),
+                url: _passwordResetLink
             });
         }
     };
