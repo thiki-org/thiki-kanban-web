@@ -47,7 +47,7 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                 templateUrl: 'component/password/partials/forget-password.html',
                 controller: "passwordController",
                 size: 'sm',
-                backdrop: true
+                backdrop: "static"
             });
         };
     }]);

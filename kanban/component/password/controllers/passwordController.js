@@ -44,7 +44,8 @@ kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwo
                     animation: true,
                     templateUrl: 'component/password/partials/password-reset.html',
                     controller: "passwordController",
-                    size: 'sm'
+                    size: 'sm',
+                    backdrop: "static"
                 });
             });
         };
