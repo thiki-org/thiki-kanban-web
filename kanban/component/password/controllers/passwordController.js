@@ -47,4 +47,14 @@ kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwo
                 });
             });
         };
+
+        $scope.resetPassword = function () {
+            $uibModalInstance.dismiss('cancel');
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'component/password/partials/tip-dialog.html',
+                controller: "timerMessageController",
+                size: 'sm'
+            });
+        };
     }]);
