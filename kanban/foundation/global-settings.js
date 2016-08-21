@@ -28,9 +28,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
         // optional method
         'responseError': function (rejection) {
             var modal = $injector.get("$uibModal");
-            if (isHasHttpError) {
-                return $q.reject(rejection);
-            }
+
             isHasHttpError = true;
             modal.open({
                 animation: true,
@@ -55,6 +53,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                     if (rejection.status === 404) {
                         $scope.title = '404-资源未找到';
                         $scope.message = "资源:" + rejection.config.url;
+                    }
+                    if (rejection.status === 405) {
+                        $scope.title = '405-方法错误';
+                        $scope.message = rejection.data.message;
                     }
                     if (rejection.status === 409) {
                         $scope.title = '409-冲突';
