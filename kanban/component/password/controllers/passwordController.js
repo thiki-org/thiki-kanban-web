@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwordService', '$interval', 'localStorageService', '$uibModalInstance', '$uibModal',
-    function ($scope, $location, $q, passwordService, $interval, localStorageService, $uibModalInstance, $uibModal) {
+kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwordService', '$interval', 'localStorageService', '$uibModalInstance', '$uibModal', 'publicKeyServices',
+    function ($scope, $location, $q, passwordService, $interval, localStorageService, $uibModalInstance, $uibModal, publicKeyServices) {
         $scope.title = "找回密码";
         $scope.sendVerificationCodeButtonText = "发送验证码";
         var passwordResetApplicationLink;
@@ -12,7 +12,7 @@ kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwo
             $scope.sendVerificationCodeButtonText = "发送中...";
             var retrievalApplication = {email: $scope.email};
             var passwordRetrievalApplicationLink = localStorageService.get("entranceData")._links.passwordRetrievalApplication.href;
-            var retrievalApplicationPromise = passwordService.retrievalApplication(passwordRetrievalApplicationLink, retrievalApplication);
+            var retrievalApplicationPromise = passwordService.applyRetrieval(passwordRetrievalApplicationLink, retrievalApplication);
             retrievalApplicationPromise.then(function (_data) {
                 passwordResetApplicationLink = _data._links.passwordResetApplication.href;
                 var count = 60;
@@ -35,9 +35,10 @@ kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwo
 
         };
         $scope.applyReset = function () {
-            var resetApplication = {email: $scope.email, verificationCode: $scope.verificationCode};
+            var resetApplication = {verificationCode: $scope.verificationCode};
             var resetPromise = passwordService.applyReset(passwordResetApplicationLink, resetApplication);
             resetPromise.then(function (_data) {
+                localStorageService.set("passwordResetLink", _data._links.password.href);
                 $uibModalInstance.dismiss('cancel');
                 $uibModal.open({
                     animation: true,
@@ -49,12 +50,22 @@ kanbanApp.controller('passwordController', ['$scope', '$location', '$q', 'passwo
         };
 
         $scope.resetPassword = function () {
-            $uibModalInstance.dismiss('cancel');
-            $uibModal.open({
-                animation: true,
-                templateUrl: 'component/password/partials/tip-dialog.html',
-                controller: "timerMessageController",
-                size: 'sm'
+            var publicKeyPromise = publicKeyServices.loadPublicKey(localStorageService.get("publicKeyLink"));
+            publicKeyPromise.then(function (_data) {
+                var encrypt = new JSEncrypt();
+                encrypt.setPublicKey(_data.publicKey);
+                var encryptedPassword = encrypt.encrypt($scope.password);
+                var password = {password: encryptedPassword};
+                var passwordPromise = passwordService.resetPassword(localStorageService.get("passwordResetLink"), password);
+                passwordPromise.then(function (_data) {
+                    $uibModalInstance.dismiss('cancel');
+                    $uibModal.open({
+                        animation: true,
+                        templateUrl: 'component/password/partials/tip-dialog.html',
+                        controller: "timerMessageController",
+                        size: 'sm'
+                    });
+                });
             });
         };
     }]);
