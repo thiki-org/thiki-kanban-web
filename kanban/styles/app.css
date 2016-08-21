@@ -249,11 +249,11 @@ div.validation-error-message {
     font-size: 12px;
     width: 100%;
     border: 1px solid #bac6d3;
-    min-height: 35px;
+    min-height: 20px;
     padding: 5px;
     background: #f9dbdb;
     border-radius: 3px;
-    line-height: 35px;
+    line-height: 20px;
 }
 
 .has-feedback .form-control-feedback {
@@ -266,7 +266,9 @@ div.validation-error-message {
 }
 
 .modal {
+    /*
     z-index: 2000 !important;
+    */
 }
 
 .form-control {
@@ -276,4 +278,8 @@ div.validation-error-message {
 .btn:focus, .btn:active:focus, .btn.active:focus,
 .btn.focus, .btn:active.focus, .btn.active.focus {
     outline: none !important;
+}
+
+.btn-success {
+    border-color: #5cb85c !important;;
 }
