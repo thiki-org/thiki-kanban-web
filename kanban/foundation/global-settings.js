@@ -43,7 +43,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.message = rejection.data.message;
                     }
                     if (rejection.status === 400) {
-                        $scope.title = '400-参数不合法';
+                        $scope.title = '400-客户端错误';
                         $scope.message = rejection.data.message;
                     }
                     if (rejection.status === 401) {
