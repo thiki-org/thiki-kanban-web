@@ -20,7 +20,7 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
         delete $httpProvider.defaults.headers.common["X-Requested-With"];
         $stateProvider
             .state('boards', {
-                url: "/users/:userName/boards",
+                url: "/:userName/boards",
                 views: {
                     "register": {template: " "},
                     "kanban": {templateUrl: "component/board/partials/boards.html", controller: 'boardController'},
