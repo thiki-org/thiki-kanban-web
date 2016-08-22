@@ -19,9 +19,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
             return config;
         },
 
-        // optional method
         'response': function (response) {
-            // do something on success
+            if (response.headers()["token"]) {
+                localStorageService.set("identity.token", response.headers()["token"]);
+            }
             return response;
         },
 
