@@ -9,13 +9,14 @@ kanbanApp.directive('boardBanner', function () {
         replace: true,
         controller: ['$scope', '$location', 'boardsService', 'localStorageService', function ($scope, $location, boardsService, localStorageService) {
             var boardLink = localStorageService.get("boardLink");
+            var boardsLink = localStorageService.get("identity.userName") + '/boards';
 
             var boardPromise = boardsService.loadBoardByLink(boardLink);
             boardPromise.then(function (_board) {
                 $scope.board = _board;
             });
             $scope.toBoards = function () {
-                $location.path('/boards');
+                $location.path(boardsLink);
             };
         }]
     };
