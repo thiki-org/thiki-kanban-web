@@ -20,11 +20,12 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                     localStorageService.clearAll();
                     localStorageService.set("identity.token", _identity.token);
                     localStorageService.set("identity.userName", _identity.userName);
+                    localStorageService.set("user.links", _identity._links);
 
                     var currentPath = $location.path();
 
                     if (currentPath.indexOf("welcome")) {
-                        $location.path('/users/' + _identity.userName + '/boards');
+                        $location.path(_identity.userName + '/boards');
                     }
                 });
             });
