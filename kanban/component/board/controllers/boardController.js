@@ -1,10 +1,10 @@
 /**
  * Created by xubt on 4/20/16.
  */
-var boardsLink = "http://localhost:8080/boards";
 
 kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService',
     function ($scope, $location, $q, boardsService, localStorageService) {
+        var boardsLink = localStorageService.get("user.links").boards.href;
         var boardPromise = boardsService.load(boardsLink);
         boardsService.boardsLink = boardsLink;
         boardPromise.then(function (data) {
