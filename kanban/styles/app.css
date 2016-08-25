@@ -34,7 +34,7 @@ div#kanban-top {
 
 button.btn.btn-primary {
     background: none;
-    border: 1px solid white;
+    border: 1px solid #6495ed;
 }
 
 .input-group {
@@ -282,4 +282,47 @@ div.validation-error-message {
 
 .btn-success {
     border-color: #5cb85c !important;;
+}
+
+span.thiki-setting.glyphicon {
+    font-size: 11px;
+    color: #696767;
+}
+
+.editable-error.help-block.ng-binding {
+    margin-top: -8px;
+}
+
+form.form-inline.editable-wrap.editable-text.ng-valid.ng-scope.ng-dirty.ng-valid-parse.ng-submitted {
+    margin-left: 5px;
+}
+
+ul.thiki-menu-items.dropdown-menu {
+    margin-top: -10px;
+}
+
+button.dropdown-toggle.dropdown {
+    max-height: 35px;
+}
+
+.aside {
+    min-width: 10px !important;
+}
+
+button.btn.login-btn {
+    border: 1px solid #575e70;
+    width: 70px;
+}
+
+button.btn.login-btn:hover {
+    border-color: #00a0e9;
+    color: #00a0e9;
+}
+
+.btn.btn-primary {
+    width: 70px;
+}
+
+.register-btn {
+    border: 1px solid #6495ed !important;
 }
