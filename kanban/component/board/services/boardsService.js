@@ -30,6 +30,20 @@ kanbanApp.factory('boardsService', ['$http', '$q', 'httpServices',
                     data: JSON.stringify(_board),
                     url: this.boardsLink
                 });
+            },
+            update: function (_board) {
+                return httpServices.send({
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(_board),
+                    url: _board._links.self.href
+                });
+            },
+            deleteBoard: function (_board) {
+                return httpServices.send({
+                    method: 'DELETE',
+                    url: _board._links.self.href
+                });
             }
         };
     }]);
