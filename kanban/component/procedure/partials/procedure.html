@@ -1,0 +1,18 @@
+<div procedureId="{{procedure.id}}" class="procedure-item" ng-mouseover="onProcedureMenuMouseOver($event)"
+     ng-mouseleave="onProcedureMenuMouseLeave($event)">
+    <div class="procedure-title" data-type="text" editable-text="procedure.title" e-ng-click="open($event,'$data')"
+         onbeforesave="updateProcedure($data,procedure)" data-mode="inline">
+        {{procedure.title}}
+    </div>
+    <div class="dropdown procedure-menu" ng-show="displayProcedureMenu">
+        <span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">▼</span>
+        <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li class="thiki-menu-item"><a ng-click="open(procedure.title,procedure._links.self.href)">设置</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="thiki-menu-item thiki-delete-item"><a
+                    ng-click="openModal(procedure.title,procedure._links.self.href)">删除</a>
+            </li>
+        </ul>
+    </div>
+    <tasks/>
+</div>

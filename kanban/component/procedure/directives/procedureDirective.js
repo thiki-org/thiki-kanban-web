@@ -2,22 +2,22 @@
  * Created by xubt on 4/29/16.
  */
 
-kanbanApp.directive('entry', function ($uibModal) {
+kanbanApp.directive('procedure', function ($uibModal) {
     return {
         restrict: 'E',
-        templateUrl: 'component/entry/partials/entry.html',
+        templateUrl: 'component/procedure/partials/procedure.html',
         replace: true,
         transclude: true,
         scope: {
-            entry: '='
+            procedure: '='
         },
-        controller: ['$scope', 'boardsService', 'entriesServices', function ($scope, boardsService, entriesServices) {
-            $scope.displayEntryMenu = false;
-            $scope.onEntryMenuMouseOver = function ($event) {
-                $scope.displayEntryMenu = true;
+        controller: ['$scope', 'boardsService', 'proceduresServices', function ($scope, boardsService, proceduresServices) {
+            $scope.displayProcedureMenu = false;
+            $scope.onProcedureMenuMouseOver = function ($event) {
+                $scope.displayProcedureMenu = true;
             };
-            $scope.onEntryMenuMouseLeave = function ($event) {
-                $scope.displayEntryMenu = false;
+            $scope.onProcedureMenuMouseLeave = function ($event) {
+                $scope.displayProcedureMenu = false;
             };
 
             var currentScope = $scope;
@@ -29,9 +29,9 @@ kanbanApp.directive('entry', function ($uibModal) {
                         $scope.title = '警告';
                         $scope.message = "确定要删除" + _message + "吗?";
                         $scope.ok = function () {
-                            var _entryDeletePromise = entriesServices.deleteByLink(_link);
-                            _entryDeletePromise.then(function () {
-                                currentScope.$parent.loadEntries();
+                            var _procedureDeletePromise = proceduresServices.deleteByLink(_link);
+                            _procedureDeletePromise.then(function () {
+                                currentScope.$parent.loadprocedures();
                             });
                             $uibModalInstance.close();
                         };
@@ -42,19 +42,19 @@ kanbanApp.directive('entry', function ($uibModal) {
                     size: 'sm'
                 });
             };
-            $scope.updateEntry = function (_title, _entry) {
-                var entry = _entry;
+            $scope.updateProcedure = function (_title, _procedure) {
+                var procedure = _procedure;
                 if (_title === "") {
                     return "标题不能为空";
                 }
-                entry.title = _title;
-                var entryPromise = entriesServices.update(entry);
-                entryPromise.then(function () {
+                procedure.title = _title;
+                var procedurePromise = proceduresServices.update(procedure);
+                procedurePromise.then(function () {
                 });
             };
 
             $scope.open = function () {
-                $scope.displayEntryMenu = false;
+                $scope.displayProcedureMenu = false;
             };
         }]
     };

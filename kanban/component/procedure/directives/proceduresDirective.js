@@ -1,26 +1,26 @@
 /**
  * Created by xubt on 4/29/16.
  */
-kanbanApp.directive('entries', function () {
+kanbanApp.directive('procedures', function () {
     return {
         restrict: 'E',
-        templateUrl: 'component/entry/partials/entries.html',
+        templateUrl: 'component/procedure/partials/procedures.html',
         replace: true,
         scope: false,
-        controller: ['$scope', 'boardsService', 'entriesServices', 'localStorageService', function ($scope, boardsService, entriesServices, localStorageService) {
-            $scope.loadEntries = function () {
+        controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', function ($scope, boardsService, proceduresServices, localStorageService) {
+            $scope.loadProcedures = function () {
                 var boardLink = localStorageService.get("boardLink");
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
-                    entriesServices.entriesLink = _board._links.entries.href;
-                    var entriesPromise = entriesServices.load(_board._links.entries.href);
-                    entriesPromise.then(function (data) {
-                            $scope.entries = data;
-                        $scope.entrySortableOptions = {
-                            connectWith: ".entry-item",
+                    proceduresServices.proceduresLink = _board._links.procedures.href;
+                    var proceduresPromise = proceduresServices.load(_board._links.procedures.href);
+                    proceduresPromise.then(function (data) {
+                        $scope.procedures = data;
+                        $scope.procedureSortableOptions = {
+                            connectWith: ".procedure-item",
                             opacity: 0.5,
-                            placeholder: "entry-drag-placeholder",
+                            placeholder: "procedure-drag-placeholder",
                             start: function (e, ui) {
                                 console.log("staring sort.");
                             },
@@ -33,9 +33,9 @@ kanbanApp.directive('entries', function () {
                                     return;
                                 }
                                 ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                                var _entryPromise = entriesServices.update(ui.item.sortable.model);
-                                _entryPromise.then(function (data) {
-                                    $scope.loadEntries();
+                                var _procedurePromise = proceduresServices.update(ui.item.sortable.model);
+                                _procedurePromise.then(function (data) {
+                                    $scope.loadProcedures();
                                 });
                                 }
                         };
@@ -43,7 +43,7 @@ kanbanApp.directive('entries', function () {
                     );
                 });
             };
-            $scope.loadEntries();
+            $scope.loadProcedures();
         }]
     };
 });
