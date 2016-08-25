@@ -145,6 +145,7 @@ button.thiki-submit-button {
 
 .thiki-form-buttons {
     float: left;
+    margin: 10px;
 }
 
 .editable-text .editable-buttons {
