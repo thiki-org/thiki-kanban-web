@@ -33,6 +33,7 @@ div.board-item :hover {
 #toBoards {
     cursor: pointer;
     margin-left: 15px;
+    float: left;
 }
 
 a#toBoards {
@@ -55,4 +56,18 @@ a#toBoards {
     text-align: center;
     border-radius: 3px;
     float: left;
+}
+
+#board-name {
+    margin-left: 10px;
+    float: left;
+}
+
+.board-operation-menu {
+    float: left;
+    line-height: 36px;
+}
+
+#board-options {
+    height: 40px;
 }
