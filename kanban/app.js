@@ -27,11 +27,11 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
-            .state('entries', {
+            .state('procedures', {
                 url: "/boards/:boardId",
                 views: {
                     "register": {template: " "},
-                    "kanban": {templateUrl: "component/entry/partials/entry-partial.html"},
+                    "kanban": {templateUrl: "component/procedure/partials/procedures-partial.html"},
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
