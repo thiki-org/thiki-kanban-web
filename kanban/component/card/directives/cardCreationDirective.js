@@ -7,7 +7,7 @@ kanbanApp.directive('cardCreation', function () {
         replace: true,
         templateUrl: 'component/card/partials/card-creation.html',
         controller: ['$scope', 'cardsServices', function ($scope, cardsServices) {
-            var entry = $scope.entry;
+            var procedure = $scope.procedure;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
             $scope.showCreateCardForm = function () {
@@ -23,10 +23,10 @@ kanbanApp.directive('cardCreation', function () {
                 if ($scope.summary === "") {
                     return;
                 }
-                var card = {summary: $scope.summary, entryId: entry.id};
-                var cardPromise = cardsServices.create(card, entry._links.cards.href);
+                var card = {summary: $scope.summary, procedureId: procedure.id};
+                var cardPromise = cardsServices.create(card, procedure._links.cards.href);
                 cardPromise.then(function (data) {
-                    var _cardsPromise = cardsServices.loadCardsByEntryId(entry._links.cards.href);
+                    var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
 
                     _cardsPromise.then(function (data) {
                         $scope.cards = data;

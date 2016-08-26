@@ -8,8 +8,8 @@ kanbanApp.directive('cards', function ($uibModal) {
         replace: true,
         controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices) {
             $scope.loadCards = function () {
-                var entry = $scope.entry;
-                var _cardsPromise = cardsServices.loadCardsByEntryId(entry._links.cards.href);
+                var procedure = $scope.procedure;
+                var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
 
                 _cardsPromise.then(function (data) {
                     $scope.cards = data;
@@ -30,11 +30,11 @@ kanbanApp.directive('cards', function ($uibModal) {
                             if (ui.item.sortable.droptarget === undefined) {
                                 return;
                             }
-                            var targetEntryId = $(ui.item.sortable.droptarget[0]).parent().attr("entryId");
-                            if (targetEntryId == ui.item.sortable.model.entryId) {
+                            var targetProcedureId = $(ui.item.sortable.droptarget[0]).parent().attr("procedureId");
+                            if (targetProcedureId == ui.item.sortable.model.procedureId) {
                                 return;
                             }
-                            ui.item.sortable.model.entryId = targetEntryId;
+                            ui.item.sortable.model.procedureId = targetProcedureId;
                             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
                             var _cardsPromise = cardsServices.update(ui.item.sortable.model);
                             _cardsPromise.then(function (data) {
