@@ -26,6 +26,7 @@ kanbanApp.directive('procedureCreation', function () {
             $scope.displayForm = false;
             $scope.cancelCreateProcedure = function () {
                 $scope.displayCreationButton = true;
+                $scope.title = "";
                 $scope.displayForm = false;
             };
             $scope.showCreateProcedureForm = function () {
