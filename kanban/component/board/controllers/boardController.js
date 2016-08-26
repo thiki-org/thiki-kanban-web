@@ -2,10 +2,11 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'httpServices', 'localStorageService',
-    function ($scope, $location, $q, httpServices, localStorageService) {
+kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService',
+    function ($scope, $location, $q, boardsService, localStorageService) {
         var boardsLink = localStorageService.get("user.links").boards.href;
-        var boardPromise = httpServices.get(boardsLink);
+        var boardPromise = boardsService.load(boardsLink);
+        boardsService.boardsLink = boardsLink;
         boardPromise.then(function (data) {
             $scope.boards = data;
         });
@@ -23,7 +24,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'httpServi
             }
             var name = $scope.name;
             var board = {name: name};
-            var entriesPromise = httpServices.post(board, boardsLink);
+            var entriesPromise = boardsService.create(board);
             entriesPromise.then(function (data) {
                 if ($scope.boards === null) {
                     $scope.boards = [];
