@@ -9,7 +9,8 @@ kanbanApp.run(function (editableOptions, localStorageService) {
     localStorageService.set("register", "341182");
 });
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
-    var isHasHttpError = false;
+    var lastErrorCode;
+    var lastErrorOccurredTime;
     return {
         'request': function (config) {
             var token = localStorageService.get("identity.token");
@@ -26,11 +27,14 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
             return response;
         },
 
-        // optional method
         'responseError': function (rejection) {
-            var modal = $injector.get("$uibModal");
+            //2秒之内同类错误只允许弹窗一次,避免重复弹窗
+            var twoSecondAgo = moment().add(-3, "s");
+            if (lastErrorOccurredTime != null && lastErrorCode == rejection.status && moment(twoSecondAgo).isBefore(lastErrorOccurredTime)) {
+                return $q.reject(rejection);
+            }
 
-            isHasHttpError = true;
+            var modal = $injector.get("$uibModal");
             modal.open({
                 animation: true,
                 templateUrl: 'foundation/modal/partials/error-dialog.html',
@@ -73,6 +77,8 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                 },
                 size: 'sm'
             });
+            lastErrorCode = rejection.status;
+            lastErrorOccurredTime = moment();
             return $q.reject(rejection);
         }
     };
