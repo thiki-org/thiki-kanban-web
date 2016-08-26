@@ -31,7 +31,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
                         $scope.ok = function () {
                             var _procedureDeletePromise = proceduresServices.deleteByLink(_link);
                             _procedureDeletePromise.then(function () {
-                                currentScope.$parent.loadprocedures();
+                                currentScope.$parent.loadProcedures();
                             });
                             $uibModalInstance.close();
                         };
