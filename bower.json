@@ -18,7 +18,8 @@
     "angular-xeditable": "^0.1.12",
     "angular-local-storage": "^0.2.7",
     "angular-ui-router": "^0.3.1",
-    "angular-strap": "^2.3.9"
+    "angular-strap": "^2.3.9",
+    "moment": "^2.14.1"
   },
   "authors": [
     "濤 <btao.cn@gmail.com>"
