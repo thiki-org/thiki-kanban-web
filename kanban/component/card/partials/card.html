@@ -1,20 +1,20 @@
-<div class="task" ng-mouseover="mouseover($event)"
+<div class="card" ng-mouseover="mouseover($event)"
      ng-mouseleave="onMouseLeave($event)">
-    <div class="task-summary" editable-textarea="task.summary" onbeforesave="updateTask($data,task)">
-        {{task.summary}}
+    <div class="card-summary" editable-textarea="card.summary" onbeforesave="updateCard($data,card)">
+        {{card.summary}}
     </div>
-    <div class="task-operations">
+    <div class="card-operations">
         <assignments></assignments>
-        <div class="dropdown task-menu" ng-show="isShowTaskOperationMenu">
+        <div class="dropdown card-menu" ng-show="isShowCardOperationMenu">
             <button class="dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="true">
                 <span>...</span>
             </button>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item"><a ng-click="assign(task)">{{assignTip}}</a></li>
+                <li class="thiki-menu-item"><a ng-click="assign(card)">{{assignTip}}</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="thiki-menu-item thiki-delete-item"><a
-                        ng-click="openDeleteModal(task.summary,task._links.self.href)">删除</a></li>
+                        ng-click="openDeleteModal(card.summary,card._links.self.href)">删除</a></li>
             </ul>
         </div>
     </div>

@@ -1,0 +1,20 @@
+<div class="card-creation" data-type="text">
+    <div class="card-create-button" ng-click="showCreateCardForm()" ng-show="displayCreationButton">
+        +
+    </div>
+    <form name="createNewCardForm" class="create-card-form" ng-show="displayForm">
+        <div class="input-group card-create-card-div">
+            <textarea name="summary" rows="3" class="form-control card create-card-title" data-ng-model="summary"
+                      required ng-keydown="keyPress($event)" focus="displayForm" ng-blur="blur()"/>
+        </div>
+        <div class="create-card-form-buttons">
+            <button type="button" class="create-card-form-button btn btn-primary"
+                    ng-click="createCard()" ng-disabled="createNewCardForm.summary.$invalid">
+                创建 </span>
+            </button>
+            <div class="create-card-form-cancel-button"
+                 ng-click="cancelCreateCard()">取消
+            </div>
+        </div>
+    </form>
+</div>

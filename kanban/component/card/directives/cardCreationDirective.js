@@ -1,35 +1,35 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('taskCreation', function () {
+kanbanApp.directive('cardCreation', function () {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'component/task/partials/task-creation.html',
-        controller: ['$scope', 'tasksServices', function ($scope, tasksServices) {
+        templateUrl: 'component/card/partials/card-creation.html',
+        controller: ['$scope', 'cardsServices', function ($scope, cardsServices) {
             var entry = $scope.entry;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
-            $scope.showCreateTaskForm = function () {
+            $scope.showCreateCardForm = function () {
                 $scope.displayCreationButton = false;
                 $scope.displayForm = true;
                 $scope.summary = "";
             };
-            $scope.cancelCreateTask = function () {
+            $scope.cancelCreateCard = function () {
                 $scope.displayCreationButton = true;
                 $scope.displayForm = false;
             };
-            $scope.createTask = function () {
+            $scope.createCard = function () {
                 if ($scope.summary === "") {
                     return;
                 }
-                var task = {summary: $scope.summary, entryId: entry.id};
-                var taskPromise = tasksServices.create(task, entry._links.tasks.href);
-                taskPromise.then(function (data) {
-                    var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+                var card = {summary: $scope.summary, entryId: entry.id};
+                var cardPromise = cardsServices.create(card, entry._links.cards.href);
+                cardPromise.then(function (data) {
+                    var _cardsPromise = cardsServices.loadCardsByEntryId(entry._links.cards.href);
 
-                    _tasksPromise.then(function (data) {
-                        $scope.tasks = data;
+                    _cardsPromise.then(function (data) {
+                        $scope.cards = data;
                         $scope.displayCreationButton = true;
                         $scope.displayForm = false;
                     });
@@ -37,10 +37,10 @@ kanbanApp.directive('taskCreation', function () {
             };
             $scope.keyPress = function ($event) {
                 if ($event.keyCode == 13) {
-                    $scope.createTask();
+                    $scope.createCard();
                 }
                 if ($event.keyCode == 27) {
-                    $scope.cancelCreateTask();
+                    $scope.cancelCreateCard();
                 }
             };
             $scope.blur = function () {

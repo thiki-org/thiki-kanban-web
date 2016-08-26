@@ -1,22 +1,22 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('tasks', function ($uibModal) {
+kanbanApp.directive('cards', function ($uibModal) {
     return {
         restrict: 'E',
-        templateUrl: 'component/task/partials/tasks.html',
+        templateUrl: 'component/card/partials/cards.html',
         replace: true,
-        controller: ['$scope', '$routeParams', 'tasksServices', 'localStorageService', 'assignmentServices', function ($scope, $routeParams, tasksServices, localStorageService, assignmentServices) {
-            $scope.loadTasks = function () {
+        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices) {
+            $scope.loadCards = function () {
                 var entry = $scope.entry;
-                var _tasksPromise = tasksServices.loadTasksByEntryId(entry._links.tasks.href);
+                var _cardsPromise = cardsServices.loadCardsByEntryId(entry._links.cards.href);
 
-                _tasksPromise.then(function (data) {
-                    $scope.tasks = data;
+                _cardsPromise.then(function (data) {
+                    $scope.cards = data;
                     $scope.sortableOptions = {
-                        connectWith: ".tasks",
+                        connectWith: ".cards",
                         opacity: 0.5,
-                        placeholder: "task-drag-placeholder",
+                        placeholder: "card-drag-placeholder",
                         start: function (e, ui) {
                             console.log("staring sort.");
                         },
@@ -36,8 +36,8 @@ kanbanApp.directive('tasks', function ($uibModal) {
                             }
                             ui.item.sortable.model.entryId = targetEntryId;
                             ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                            var _tasksPromise = tasksServices.update(ui.item.sortable.model);
-                            _tasksPromise.then(function (data) {
+                            var _cardsPromise = cardsServices.update(ui.item.sortable.model);
+                            _cardsPromise.then(function (data) {
 
                             });
                         }
@@ -46,14 +46,14 @@ kanbanApp.directive('tasks', function ($uibModal) {
             };
 
             $scope.mouseover = function () {
-                $scope.isShowTaskCreationButton = true;
+                $scope.isShowCardCreationButton = true;
             };
 
             $scope.onMouseLeave = function () {
-                $scope.isShowTaskCreationButton = false;
+                $scope.isShowCardCreationButton = false;
             };
 
-            $scope.loadTasks();
+            $scope.loadCards();
         }]
     };
 });

@@ -1,4 +1,4 @@
-.task {
+.card {
     border: 1px solid #EAEAEA;
     margin: 5px;
     background-color: #fff;
@@ -8,11 +8,11 @@
     width: 95%;
 }
 
-div.task:hover {
+div.card:hover {
     background-color: #F9F8F6;
 }
 
-.task-summary {
+.card-summary {
     color: #000;
     margin: 5px;
     float: left;
@@ -20,7 +20,7 @@ div.task:hover {
     width: 95%;
 }
 
-.tasks {
+.cards {
     min-height: 20px;
     border-radius: 3px;
     clear: both;
@@ -30,22 +30,22 @@ div.task:hover {
     overflow: auto;
 }
 
-.create-task-title {
+.create-card-title {
     margin-left: 0px;
     border-radius: 3px;
 }
 
-.task-create-task-div {
+.card-create-card-div {
     width: 100%;
 }
 
-.create-task-form-button {
+.create-card-form-button {
     width: 120px;
     margin-top: 5px;
     float: left;
 }
 
-.create-task-form-cancel-button {
+.create-card-form-cancel-button {
     float: left;
     height: 30px;
     line-height: 30px;
@@ -56,14 +56,14 @@ div.task:hover {
     cursor: pointer;
 }
 
-.create-task-form-buttons {
+.create-card-form-buttons {
     width: 100%;
     height: 100%;
     display: inline-block;
     margin-top: 5px;
 }
 
-div.task-create-button {
+div.card-create-button {
     border: #d0d0d0;
     height: 15px;
     width: 15px;
@@ -84,23 +84,23 @@ button, input, select, textarea {
     border: none;
 }
 
-.task-operations {
+.card-operations {
     float: left;
     width: 100%;
     bottom: 0px;
     padding-right: 5px;
 }
 
-.task-menu {
+.card-menu {
     float: right;
 }
 
-.task-creation {
+.card-creation {
     float: left;
     margin: 5px;
 }
 
-.task-drag-placeholder {
+.card-drag-placeholder {
     border: 1px solid #EAEAEA;
     margin: 5px;
     background-color: #F9F8F6;
