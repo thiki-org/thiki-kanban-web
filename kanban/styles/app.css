@@ -72,10 +72,7 @@ button.btn.btn-primary {
 
 .thiki-menu-items {
     border-radius: 0 !important;
-    -webkit-box-shadow: 0 0 0 0 !important;
-    border-shadow: 0px !important;
     border: none !important;
-    background-color: #F8F6F2 !important;
 }
 
 .thiki-menu-item {
@@ -300,6 +297,7 @@ form.form-inline.editable-wrap.editable-text.ng-valid.ng-scope.ng-dirty.ng-valid
 
 ul.thiki-menu-items.dropdown-menu {
     margin-top: -10px;
+    position: relative;
 }
 
 button.dropdown-toggle.dropdown {
