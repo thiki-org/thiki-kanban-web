@@ -93,6 +93,9 @@ button, input, select, textarea {
 
 .card-menu {
     float: right;
+    position: absolute;
+    z-index: 1000;
+    right: 0px;
 }
 
 .card-creation {
