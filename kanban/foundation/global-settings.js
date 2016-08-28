@@ -8,6 +8,7 @@ kanbanApp.run(function (editableOptions, localStorageService) {
     localStorageService.set("userId", "341182");
     localStorageService.set("register", "341182");
 });
+
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
     var lastErrorCode;
     var lastErrorOccurredTime;
@@ -68,7 +69,6 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.message = rejection.data.message;
                     }
                     $scope.ok = function () {
-                        isHasHttpError = false;
                         $uibModalInstance.close();
                         if (rejection.status === 401) {
                             $location.path("/welcome");
