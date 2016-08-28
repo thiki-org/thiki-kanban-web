@@ -1,230 +1,222 @@
 /* app css stylesheet */
 @font-face {
-    font-family: 'thiki';
-    src: url('/kanban/static/css/sourcehansanscn-light.ttf');
+  font-family: 'thiki';
+  src: url('/kanban/static/css/sourcehansanscn-light.ttf');
 }
 
-@base: #f938ab;
-
-:root {
-    --theme-color: #6495ed;
-}
+@base: #ee5ba0;
+@error: rgb(253, 3, 96);
 
 body {
-    width: 100%;
-    height: 100%;
-    font-family: thiki !important;
-    padding-top: 0px !important;
+  width: 100%;
+  height: 100%;
+  font-family: thiki !important;
+  padding-top: 0px !important;
 }
 
 body > a {
-    color: black;
-}
-
-.tao {
-    color: @base;
+  color: black;
 }
 
 div#kanban-top {
-    width: 100%;
-    height: 50px;
-    background-color: @base !important;
+  width: 100%;
+  height: 50px;
+  background-color: @base !important;
 }
 
 .view-frame {
-    height: 100%;
-    position: fixed;
-    width: 100%;
+  height: 100%;
+  position: fixed;
+  width: 100%;
 }
 
 button.btn.btn-primary {
-    background: none;
-    border: 1px solid #6495ed;
+  background-color: @base !important;
+  border: 1px solid #6495ed;
 }
 
 .input-group {
-    float: left;
+  float: left;
 }
 
 .btn-group {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 div#search {
-    width: 15%;
-    float: right;
-    margin: 10px;
+  width: 15%;
+  float: right;
+  margin: 10px;
 }
 
 #search .form-control {
-    width: 100%;
-    height: 28px;
-    padding: 6px 12px;
-    background-color: #e3f5ec;
-    border: 1px solid #e3f5ec;
-    border-radius: 20px;
+  width: 100%;
+  height: 28px;
+  padding: 6px 12px;
+  background-color: #e3f5ec;
+  border: 1px solid #e3f5ec;
+  border-radius: 20px;
 }
 
 button.btn.btn-primary {
-    background: var(--theme-color);
-    border: 1px solid #EEECE8;
+  background: @base;
+  border: 1px solid #EEECE8;
 }
 
 .thiki-menu {
-    border: 1px solid red;
-    margin: 5px;
+  border: 1px solid red;
+  margin: 5px;
 }
 
 .thiki-menu-items {
-    border-radius: 0 !important;
-    border: none !important;
+  border-radius: 0 !important;
+  border: none !important;
 }
 
 .thiki-menu-item {
-    margin: auto 5px;
-    cursor: pointer;
-    text-align: center;
+  cursor: pointer;
+  text-align: left;
 }
 
 .thiki-menu-item :hover {
-    background-color: var(--theme-color) !important;
-    border-radius: 3px;
-    color: white !important;
+  background-color: @base !important;
+  border-radius: 0px;
+  color: white !important;
 }
 
 button.thiki-submit-button {
-    margin: 0 auto 0 10px;
-    float: left;
+  margin: 0 auto 0 10px;
+  float: left;
 }
 
 .thiki-cancel-button {
-    float: left;
-    height: 28px;
-    line-height: 28px;
-    margin: 2px auto auto 30px;
-    cursor: pointer;
+  float: left;
+  height: 28px;
+  line-height: 28px;
+  margin: 2px auto auto 30px;
+  cursor: pointer;
 }
 
 .modal-content {
-    position: relative;
-    background-color: #fff;
-    border: none !important;
-    border-radius: 3px !important;
-    -webkit-box-shadow: 0 !important;
-    box-shadow: 0 !important;
-    outline: 0;
+  position: relative;
+  background-color: #fff;
+  border: none !important;
+  border-radius: 1px !important;
+  -webkit-box-shadow: 0 !important;
+  box-shadow: 0 !important;
+  outline: 0;
 }
 
 @media (min-width: 768px) {
-    .modal-content {
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-    }
+  .modal-content {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #428bca;
-    border: none !important;
-    border-radius: 2px;
+  color: #fff;
+  background-color: @base;
+  border: none !important;
+  border-radius: 2px;
 }
 
 .thiki-delete-button {
-    background-color: #d43f3a !important;
+  background-color: @error !important;
 }
 
 .thiki-warning-button {
-    background-color: #d43f3a !important;
+  background-color: @error !important;
 }
 
 .thiki-delete-item :hover {
-    background-color: #d43f3a !important;
+  background-color: @error !important;
 }
 
 .thiki-warning-button :hover {
-    background-color: #d43f3a !important;
+  background-color: @error !important;
 }
 
 .thiki-form-buttons {
-    float: left;
-    margin: 10px;
+  float: left;
+  margin: 10px;
 }
 
 .editable-text .editable-buttons {
-    float: none !important;
-    margin-top: 0px !important;
+  float: none !important;
+  margin-top: 0px !important;
 }
 
 span.editable-buttons {
-    float: left !important;
-    margin-top: 10px !important;
-    margin-left: 0px !important;
+  float: left !important;
+  margin-top: 10px !important;
+  margin-left: 0px !important;
 }
 
 .editable-click,
 a.editable-click {
-    text-decoration: none;
-    color: black !important;
-    border-bottom: none !important;
+  text-decoration: none;
+  color: black !important;
+  border-bottom: none !important;
 }
 
 form.form-inline.editable-wrap.editable-textarea.ng-pristine.ng-valid.ng-scope {
-    width: 100%;
+  width: 100%;
 }
 
 .editable-controls.form-group {
-    width: inherit;
+  width: inherit;
 }
 
 textarea.editable-input.form-control.ng-pristine.ng-valid.ng-touched {
-    width: 100%;
+  width: 100%;
 }
 
 textarea.editable-input.form-control {
-    width: 100%;
+  width: 100%;
 }
 
 .editable-click:hover {
-    color: black !important;
+  color: black !important;
 }
 
 .editable-cancel-button {
-    border: none;
+  border: none;
 }
 
 .form-control {
-    border-radius: 2px !important;
+  border-radius: 2px !important;
 }
 
 .btn {
-    border-radius: 2px !important;
+  border-radius: 2px !important;
 }
 
 .dropdown-menu {
-    min-width: 120px !important;
+  min-width: 100px !important;
 }
 
 div#thiki-logo {
-    height: 50px;
-    position: absolute;
-    line-height: 50px;
-    margin-left: 10px;
+  height: 50px;
+  position: absolute;
+  line-height: 50px;
+  margin-left: 10px;
 }
 
 div#thiki-logo img {
-    height: 40px;
+  height: 40px;
 }
 
 div#thiki-banner {
-    width: 100%;
-    height: 50px;
-    background-color: @base !important;
+  width: 100%;
+  height: 50px;
+  background-color: @base !important;
 }
 
 .has-error .form-control {
-    border-color: #ea4440 !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
+  border-color: @error !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .has-error .checkbox,
@@ -234,54 +226,54 @@ div#thiki-banner {
 .has-error .help-block,
 .has-error .radio,
 .has-error .radio-inline {
-    color: #ea4440 !important;
+  color: #ea4440 !important;
 }
 
 span.thiki-input-error-message {
-    float: left;
-    margin-top: 5px;
-    color: red;
-    padding: 5px;
-    border-radius: 2px;
+  float: left;
+  margin-top: 5px;
+  color: @error;
+  padding: 5px;
+  border-radius: 2px;
 }
 
 .thiki-button-large {
-    height: 40px;
-    width: 90px;
+  height: 40px;
+  width: 90px;
 }
 
 div.validation-error-message {
-    clear: both;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    color: #911;
-    font-size: 12px;
-    width: 100%;
-    border: 1px solid #bac6d3;
-    min-height: 20px;
-    padding: 5px;
-    background: #f9dbdb;
-    border-radius: 3px;
-    line-height: 20px;
+  clear: both;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #911;
+  font-size: 12px;
+  width: 100%;
+  border: 1px solid #bac6d3;
+  min-height: 20px;
+  padding: 5px;
+  background: #f9dbdb;
+  border-radius: 3px;
+  line-height: 20px;
 }
 
 .has-feedback .form-control-feedback {
-    right: 12px !important;
-    top: 0px;
+  right: 12px !important;
+  top: 0px;
 }
 
 .aside .aside-dialog .aside-header {
-    background: var(--theme-color) !important;
+  background: @base !important;
 }
 
 .modal {
-    /*
-      z-index: 2000 !important;
-      */
+  /*
+    z-index: 2000 !important;
+    */
 }
 
 .form-control {
-    -webkit-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 
 .btn:focus,
@@ -290,70 +282,70 @@ div.validation-error-message {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 .btn-success {
-    border-color: #5cb85c !important;
+  border-color: #5cb85c !important;
 }
 
 span.thiki-setting.glyphicon {
-    font-size: 11px;
-    color: #696767;
+  font-size: 11px;
+  color: #696767;
 }
 
 .editable-error.help-block.ng-binding {
-    margin-top: -8px;
+  margin-top: -8px;
 }
 
 form.form-inline.editable-wrap.editable-text.ng-valid.ng-scope.ng-dirty.ng-valid-parse.ng-submitted {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 ul.thiki-menu-items.dropdown-menu {
-    margin-top: -10px;
-    position: relative;
+  margin-top: -10px;
+  position: relative;
 }
 
 button.dropdown-toggle.dropdown {
-    max-height: 35px;
+  max-height: 35px;
 }
 
 .aside {
-    min-width: 10px !important;
+  min-width: 10px !important;
 }
 
 button.btn.login-btn {
-    border: 1px solid #575e70;
-    width: 70px;
+  border: 1px solid #575e70;
+  width: 70px;
 }
 
 button.btn.login-btn:hover {
-    border-color: #00a0e9;
-    color: #00a0e9;
+  border-color: @base;
+  color: @base;
 }
 
 .btn.btn-primary {
-    width: 70px;
+  width: 70px;
 }
 
 .register-btn {
-    border: 1px solid #6495ed !important;
+  border: 1px solid @base !important;
 }
 
 .ng-hide-add,
 .ng-hide-remove {
-    /* ensure visibility during the transition */
-    display: block !important;
-    /* yes, important */
+  /* ensure visibility during the transition */
+  display: block !important;
+  /* yes, important */
 }
 
 .thiki-animation {
-    transition: 0.3s linear all;
-    opacity: 1;
+  transition: 0.3s linear all;
+  opacity: 1;
 }
 
 .thiki-animation.ng-hide {
-    opacity: 0;
+  opacity: 0;
 }
 
