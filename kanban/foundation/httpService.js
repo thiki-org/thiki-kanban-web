@@ -1,7 +1,31 @@
 /* Services */
 
-kanbanApp.factory('httpServices', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
+kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', function ($http, $q, $location, $injector, localStorageService) {
     var token = localStorageService.get("token");
+
+    function openErrorDialog(deferred) {
+        var modal = $injector.get("$uibModal");
+        modal.open({
+            animation: true,
+            templateUrl: 'foundation/modal/partials/error-dialog.html',
+            controller: function ($scope, $uibModalInstance) {
+                $scope.title = '错误';
+                $scope.message = "URL错误,请确认本地配置或远程服务器是否运行正常。";
+
+                $scope.ok = function () {
+                    $uibModalInstance.close();
+                };
+            },
+            size: 'sm'
+        });
+        var error = {message: "d"};
+        deferred.reject(error);
+        return deferred.promise;
+    }
+
+    function URLIsNotValid(_url) {
+        return _url === undefined || _url === null || _url === "";
+    }
 
     return {
         send: function (_options) {
@@ -19,7 +43,9 @@ kanbanApp.factory('httpServices', ['$http', '$q', 'localStorageService', functio
             return deferred.promise;
         },
         post: function (_payload, _url) {
-            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
             $http({
                 method: "POST",
                 url: _url,
@@ -33,7 +59,9 @@ kanbanApp.factory('httpServices', ['$http', '$q', 'localStorageService', functio
             return deferred.promise;
         },
         put: function (_payload, _url) {
-            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
             $http({
                 method: "PUT",
                 url: _url,
@@ -47,7 +75,9 @@ kanbanApp.factory('httpServices', ['$http', '$q', 'localStorageService', functio
             return deferred.promise;
         },
         delete: function (_url) {
-            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
             $http({
                 method: "DELETE",
                 url: _url,
@@ -61,6 +91,9 @@ kanbanApp.factory('httpServices', ['$http', '$q', 'localStorageService', functio
         },
         get: function (_url) {
             var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
             $http({
                 method: "GET",
                 url: _url,
