@@ -74,7 +74,7 @@ gulp.task('minify-js', function () {
 
 // 监视文件的变化
 gulp.task('watch', function () {
-    gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'kanban/**/*.less', 'kanban/**/*.css', 'gulpfile.js', '!kanban/static/**/*.js', '!kanban/static/**/*.css'], ['jshint', 'minify-js', 'minify-css']);
+    gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'kanban/**/*.less', 'kanban/**/*.css', 'gulpfile.js', '!kanban/static/**/*.js', '!kanban/static/**/*.css'], ['jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css']);
 });
 
 // 注册缺省任务
