@@ -9,6 +9,7 @@ kanbanApp.controller('bannerController', ['$scope', '$aside', 'localStorageServi
             "title": localStorageService.get("identity.userName"),
             "content": "内容"
         };
+        $scope.userName = localStorageService.get("identity.userName");
         $scope.init = function () {
             if (localStorageService.get("identity.token") === null) {
                 $location.path("/welcome");
