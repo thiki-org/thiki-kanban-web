@@ -2,8 +2,15 @@
     <div id="thiki-logo">
         <img src="static/img/thiki-logo.png">
     </div>
-
-    <div id="current-user-avatar" data-template-url="component/users/partials/user-slide.html" data-placement="right"
-         data-animation="am-slide-right" bs-aside="aside" data-container="body">T
+    <div id="user" class="dropdown" ng-controller="userController">
+        <div class="dropdown" id="user-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{userName}}
+        </div>
+        <ul class="user-menu dropdown-menu" aria-labelledby="user-menu">
+            <li><a href="#">我的团队</a></li>
+            <li><a href="#">修改密码</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a ng-click="loginOut()">退出登录</a></li>
+        </ul>
     </div>
 </div>
