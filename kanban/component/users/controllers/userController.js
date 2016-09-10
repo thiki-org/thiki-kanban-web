@@ -4,8 +4,10 @@
 
 kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal',
     function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal) {
+        $scope.gotoTeams = function () {
+            $location.path(localStorageService.get('identity.userName') + "/teams");
+        };
         $scope.loginOut = function () {
-            console.log("即将退出。。。");
             $uibModal.open({
                 animation: false,
                 templateUrl: 'foundation/modal/partials/confirm-dialog.html',
