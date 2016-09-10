@@ -43,6 +43,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             return deferred.promise;
         },
         post: function (_payload, _url) {
+            var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
             }
