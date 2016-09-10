@@ -16,7 +16,9 @@
                 </div>
                 <div class="thiki-form-buttons">
                     <button type="button" class="thiki-submit-button btn btn-primary"
-                            ng-click="createTeam()" ng-disabled="createTeamForm.name.$invalid">创建</span>
+                            ng-click="createTeam()"
+                            ng-disabled="createTeamForm.name.$invalid||createTeamForm.name.$modelValue.length>20">
+                        创建</span>
                     </button>
                     <div class="thiki-cancel-button" ng-click="cancelCreateTeam()">取消</div>
                 </div>
