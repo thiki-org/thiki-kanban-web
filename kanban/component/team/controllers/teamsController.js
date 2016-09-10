@@ -2,7 +2,7 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService',
+kanbanApp.controller('teamsController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService',
     function ($scope, $location, $q, teamsService, localStorageService) {
         var teamsLink = localStorageService.get("user.links").teams.href;
         var teamPromise = teamsService.load(teamsLink);
