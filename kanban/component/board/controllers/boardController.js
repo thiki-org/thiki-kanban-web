@@ -11,7 +11,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
             $scope.boards = data;
         });
 
-        $scope.toEntries = function (_boardId, _boardLink) {
+        $scope.toProcedures = function (_boardId, _boardLink) {
             localStorageService.set("boardLink", _boardLink);
             $location.path('/boards/' + _boardId);
         };

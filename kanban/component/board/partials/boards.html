@@ -1,7 +1,7 @@
 <div class="boards">
     <div id="board-{{board.id}}" ng-repeat="board in boards | orderBy:'creationTime'" repeat-finish class="board-item"
          data-ng-model="board.name" data-mode="inline">
-        <div ng-click=toEntries(board.id,board._links.self.href)> {{board.name}}</div>
+        <div ng-click=toProcedures(board.id,board._links.self.href)> {{board.name}}</div>
     </div>
     <div class="board-item board-creation" data-mode="inline" ng-show="displayBoardCreationForm">
         <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click=showBoardCreationForm()>添加一个看板</div>

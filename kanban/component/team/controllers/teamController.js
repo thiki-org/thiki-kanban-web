@@ -11,7 +11,7 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
             $scope.teams = data;
         });
 
-        $scope.toEntries = function (_teamId, _teamLink) {
+        $scope.toProcedures = function (_teamId, _teamLink) {
             localStorageService.set("teamLink", _teamLink);
             $location.path('/teams/' + _teamId);
         };
