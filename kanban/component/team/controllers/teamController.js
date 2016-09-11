@@ -4,50 +4,17 @@
 
 kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService',
     function ($scope, $location, $q, teamsService, localStorageService) {
-        var teamsLink = localStorageService.get("user.links").teams.href;
-        var teamPromise = teamsService.load(teamsLink);
-        teamsService.teamsLink = teamsLink;
-        teamPromise.then(function (data) {
-            $scope.teams = data;
-        });
+        var teamLink = localStorageService.get("teamLink");
+        var teamPromise = teamsService.loadTeamByLink(teamLink);
+        teamPromise.then(function (_team) {
+            $scope.team = _team;
 
-        $scope.toTeam = function (_teamId, _teamLink) {
-            localStorageService.set("teamLink", _teamLink);
-            $location.path('/teams/' + _teamId);
-        };
-        $scope.displayTeamCreationForm = true;
-        $scope.displayForm = false;
-        $scope.createTeam = function () {
-            if ($scope.name === undefined || $scope.name === "") {
-                $scope.isShowNameError = true;
-                return;
-            }
-            var name = $scope.name;
-            var team = {name: name};
-            var entriesPromise = teamsService.create(team, teamsLink);
-            entriesPromise.then(function (data) {
-                if ($scope.teams === null) {
-                    $scope.teams = [];
-                }
-                $scope.teams.push(data);
-                $scope.cancelCreateTeam();
-                $scope.name = "";
+            var membersLink = _team._links.members.href;
+
+            var membersPromise = teamsService.loadMembers(membersLink);
+
+            membersPromise.then(function (_data) {
+                $scope.members = _data;
             });
-        };
-        $scope.keyPress = function ($event) {
-            if ($event.keyCode == 13) {
-                $scope.createTeam();
-            }
-            if ($event.keyCode == 27) {
-                $scope.cancelCreateTeam();
-            }
-        };
-        $scope.showTeamCreationForm = function () {
-            $scope.displayTeamCreationForm = false;
-            $scope.displayForm = true;
-        };
-        $scope.cancelCreateTeam = function () {
-            $scope.displayTeamCreationForm = true;
-            $scope.displayForm = false;
-        };
+        });
     }]);
