@@ -34,28 +34,14 @@ kanbanApp.directive('teamBanner', function () {
                 $scope.isDisplaySetting = false;
             };
 
-            $scope.deleteTeam = function (_team) {
-                var thisScope = $scope;
+            $scope.openInvitationForm = function () {
                 $uibModal.open({
-                    animation: false,
-                    templateUrl: 'component/team/partials/delete-team-confirm.html',
-                    controller: function ($scope, $uibModalInstance) {
-                        $scope.title = '请输入看板名称以确认删除';
-                        $scope.team = _team;
-                        $scope.ok = function () {
-                            var teamPromise = teamsService.deleteTeam(_team);
-                            teamPromise.then(function (_data) {
-                                thisScope.toTeams();
-                            });
-                            $uibModalInstance.close();
-                        };
-                        $scope.cancel = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-                    },
+                    animation: true,
+                    templateUrl: 'component/team/partials/member-invitation.html',
+                    controller: "teamController",
                     size: 'sm'
                 });
-            }
+            };
         }]
     };
 });

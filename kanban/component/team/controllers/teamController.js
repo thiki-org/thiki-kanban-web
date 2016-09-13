@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService',
-    function ($scope, $location, $q, teamsService, localStorageService) {
+kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService', '$uibModal',
+    function ($scope, $location, $q, teamsService, localStorageService, $uibModal) {
         var teamLink = localStorageService.get("teamLink");
         var teamPromise = teamsService.loadTeamByLink(teamLink);
         teamPromise.then(function (_team) {
