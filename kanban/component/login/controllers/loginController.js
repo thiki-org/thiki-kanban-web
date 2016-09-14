@@ -33,14 +33,6 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
-        $scope.keyPress = function ($event) {
-            if ($scope.loginForm.$invalid) {
-                return;
-            }
-            if ($event.keyCode == 13) {
-                $scope.login();
-            }
-        };
         $scope.openForgetPasswordModal = function () {
             $uibModalInstance.dismiss('cancel');
             $uibModal.open({

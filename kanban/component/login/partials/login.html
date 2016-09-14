@@ -5,7 +5,7 @@
     <form name="loginForm">
         <div class="form-group">
             <input name="identity" type="text" class="form-control" data-ng-model="identity"
-                   ng-keydown="keyPress($event)" focus="displayForm" placeholder="你的注册邮箱/用户名" autocomplete="off"
+                   ng-enter="login()" focus="displayForm" placeholder="你的注册邮箱/用户名" autocomplete="off"
                    required/>
             <div class="validation-error-message"
                  ng-show="loginForm.identity.$error.required && loginForm.identity.$dirty">邮箱/用户名不能为空
