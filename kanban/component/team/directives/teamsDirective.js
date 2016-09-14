@@ -33,15 +33,6 @@ kanbanApp.directive('teamBanner', function () {
             $scope.onMouseLeave = function () {
                 $scope.isDisplaySetting = false;
             };
-
-            $scope.openInvitationForm = function () {
-                $uibModal.open({
-                    animation: true,
-                    templateUrl: 'component/team/partials/member-invitation.html',
-                    controller: "teamController",
-                    size: 'sm'
-                });
-            };
         }]
     };
 });
