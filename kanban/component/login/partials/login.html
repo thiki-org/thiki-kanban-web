@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <input name="password" type="password" class="form-control" data-ng-model="password"
-                   ng-keydown="keyPress($event)" focus="displayForm" placeholder="密码" required/>
+                   ng-enter="register()" focus="displayForm" placeholder="密码" required/>
             <div class="validation-error-message"
                  ng-show="loginForm.password.$error.required && loginForm.password.$dirty">密码不能为空
             </div>

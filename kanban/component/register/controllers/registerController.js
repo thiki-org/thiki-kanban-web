@@ -39,12 +39,4 @@ kanbanApp.controller('registerController', ['$scope', '$location', '$q', 'public
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };
-        $scope.keyPress = function ($event) {
-            if ($scope.registerForm.$invalid) {
-                return;
-            }
-            if ($event.keyCode == 13) {
-                $scope.register();
-            }
-        };
     }]);
