@@ -4,16 +4,18 @@
 <div class="modal-body">
     <form name="invitationForm">
         <div class="form-group">
-            <input name="identity" type="text" class="form-control" data-ng-model="identity"
-                   ng-keydown="keyPress($event)" focus="displayForm" placeholder="被邀请成员的注册邮箱/用户名" autocomplete="off"
+            <input name="invitation.invitee" type="text" class="form-control" data-ng-model="invitee"
+                   ng-keydown="keyPress($event)" focus="true" placeholder="被邀请成员的注册邮箱/用户名" autocomplete="off"
                    required/>
             <div class="validation-error-message"
-                 ng-show="invitationForm.identity.$error.required && invitationForm.identity.$dirty">邮箱/用户名不能为空
+                 ng-show="invitationForm.invitee.$error.required && invitationForm.invitee.$dirty">邮箱/用户名不能为空
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary" type="button" ng-click="invite()" ng-disabled="invitationForm.$invalid">邀请</button>
+    <button class="btn btn-primary" type="button" ng-click="invite()"
+            ng-disabled="invitationForm.$invalid||isDisableInvitationButton">{{invitationButtonText}}
+    </button>
 </div>
 
