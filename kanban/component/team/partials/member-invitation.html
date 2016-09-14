@@ -6,7 +6,7 @@
         <div class="form-group">
             <input name="invitation.invitee" type="text" class="form-control" data-ng-model="invitee"
                    ng-keydown="keyPress($event)" focus="true" placeholder="被邀请成员的注册邮箱/用户名" autocomplete="off"
-                   required/>
+                   required ng-enter="invite()"/>
             <div class="validation-error-message"
                  ng-show="invitationForm.invitee.$error.required && invitationForm.invitee.$dirty">邮箱/用户名不能为空
             </div>
