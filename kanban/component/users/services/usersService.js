@@ -1,12 +1,14 @@
 /**
  * Created by xubt on 5/26/16.
  */
-var usersService = angular.module('usersService', ['ngResource']);
 
-usersService.factory('usersService', ['$http', '$q',
-    function ($http, $q) {
+kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService',
+    function ($http, $q, localStorageService) {
         return {
             boardsLink: '',
+            getCurrentUser: function () {
+                return localStorageService.get("currentUser");
+            },
             load: function (_boardsLink) {
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
                 $http({
