@@ -14,6 +14,9 @@ kanbanApp.factory('teamsService', ['$http', '$q', 'httpServices',
             loadMembers: function (_membersLink) {
                 return httpServices.get(_membersLink);
             },
+            invite: function (_invitation, _invitationLink) {
+                return httpServices.post(_invitation, _invitationLink);
+            },
             create: function (_team, _teamsLink) {
                 return httpServices.post(_team, _teamsLink);
             },
