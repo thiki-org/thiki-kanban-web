@@ -2,8 +2,20 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal) {
+kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval) {
+        $scope.userName = localStorageService.get("identity.userName");
+
+        var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
+        $interval(function () {
+            var notificationPromise = notificationsService.loadUnreadNotificationsTotal(unreadNotificationsTotalLink);
+            notificationPromise.then(function (_data) {
+                $scope.unreadNotificationsTotal = _data.unreadNotificationsTotal;
+                $scope.isShowNotification = $scope.unreadNotificationsTotal === 0 ? false : true;
+            });
+        }, 5000);
+
+
         $scope.gotoTeams = function () {
             $location.path(localStorageService.get('identity.userName') + "/teams");
         };
