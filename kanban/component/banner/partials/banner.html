@@ -4,7 +4,10 @@
     </div>
     <div id="user" class="dropdown" ng-controller="userController">
         <div class="dropdown" id="user-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{userName}}
+            {{userName}}<span class="badge notification-badge" ng-show="isShowNotification" uib-tooltip="你有新的消息"
+                              tooltip-placement="bottom"
+                              tooltip-trigger="mouseenter"
+                              tooltip-append-to-body="true">{{unreadNotificationsTotal}}</span></a>
         </div>
         <ul class="user-menu dropdown-menu thiki-menu-items" aria-labelledby="user-menu">
             <li><a ng-click="gotoTeams()">我的团队</a></li>
