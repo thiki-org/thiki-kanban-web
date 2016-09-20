@@ -21,6 +21,7 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                     localStorageService.set("identity.token", _identity.token);
                     localStorageService.set("identity.userName", _identity.userName);
                     localStorageService.set("user.links", _identity._links);
+                    localStorageService.set("currentUser", _identity);
 
                     var currentPath = $location.path();
 
