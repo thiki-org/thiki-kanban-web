@@ -1,7 +1,5 @@
-<div class="board-banner">
-    <div id="toBoards" uib-tooltip="主界面" tooltip-placement="right"
-         tooltip-trigger="mouseenter" ng-click="toBoards()"><span class="glyphicon glyphicon-home"></span>
-    </div>
+<navigation-banner>
+    <dashboard-entrance></dashboard-entrance>
     <div id="board-options" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
     <span id="board-name" editable-text="board.name" e-ng-click="open($event,'$data')"
           onbeforesave="updateBoard($data,board)" data-mode="inline">
@@ -17,4 +15,4 @@
             </ul>
         </div>
     </div>
-</div>
+</navigation-banner>

@@ -1,4 +1,21 @@
 <div>
-    <board-banner></board-banner>
+    <navigation-banner>
+        <dashboard-entrance></dashboard-entrance>
+        <div id="board-options" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
+    <span id="board-name" editable-text="board.name" e-ng-click="open($event,'$data')"
+          onbeforesave="updateBoard($data,board)" data-mode="inline">
+        {{board.name}}
+    </span>
+            <div class="board-operation-menu dropdown">
+                <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="true">
+                    <span class="thiki-setting glyphicon glyphicon-cog" ng-show="isDisplaySetting"></span>
+                </button>
+                <ul class="thiki-banner-menu thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li class="thiki-menu-item thiki-delete-item" ng-click="deleteBoard(board)"><a>删除</a></li>
+                </ul>
+            </div>
+        </div>
+    </navigation-banner>
     <procedures></procedures>
 </div>
