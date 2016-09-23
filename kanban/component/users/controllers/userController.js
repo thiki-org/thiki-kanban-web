@@ -22,7 +22,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
             $location.path(localStorageService.get('identity.userName') + "/teams");
         };
         $scope.openNotifications = function () {
-            $location.path(usersService.getCurrentUser().name + "/notifications");
+            $location.path(usersService.getCurrentUser().userName + "/notifications");
         };
 
         $scope.loginOut = function () {
