@@ -8,7 +8,10 @@ kanbanApp.factory('notificationsService', ['$http', '$q', 'httpServices',
             loadUnreadNotificationsTotal: function (_loadUnreadNotificationsTotalLink) {
                 return httpServices.get(_loadUnreadNotificationsTotalLink);
             },
-            loadNotifications: function (_notificationUrl) {
+            loadNotifications: function (_notificationsUrl) {
+                return httpServices.get(_notificationsUrl);
+            },
+            loadNotificationByLink: function (_notificationUrl) {
                 return httpServices.get(_notificationUrl);
             }
         };

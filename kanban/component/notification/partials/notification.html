@@ -1,0 +1,10 @@
+<div id="notification-{{notification.id}}" class="notification-item" data-mode="inline">
+    <div class="notification-envelope" ng-class="{true : 'already-read-notification'}[notification.isRead]"><span
+            class="glyphicon glyphicon-envelope"></span></div>
+    <div class="notification-content" ng-class="{true : 'unread-notification'}[!notification.isRead]"
+         ng-click="readNotification()">
+        {{notification.content}}
+    </div>
+    <div class="notification-displayTime">{{notification.displayTime}}</div>
+    <div class="notification-detail" ng-show="isDisplayDetail">{{notification.displayTime}}</div>
+</div>

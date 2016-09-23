@@ -2,14 +2,7 @@
     <dashboard-entrance></dashboard-entrance>
     <div class="navigation-banner-custom-menu">消息中心</div>
 </navigation-banner>
-<div class="notifications domain-content" ng-controller="notificationController">
-    <div id="notification-{{notification.id}}" ng-repeat="notification in notifications | orderBy:'creationTime':true"
-         repeat-finish class="notification-item" data-ng-model="notification.content" data-mode="inline">
-        <div class="notification-envelope" ng-class="{true : 'already-read-notification'}[notification.isRead]"><span
-                class="glyphicon glyphicon-envelope"></span></div>
-        <div class="notification-content" ng-class="{true : 'unread-notification'}[!notification.isRead]">
-            {{notification.content}}
-        </div>
-        <div class="notification-displayTime">{{notification.displayTime}}</div>
-    </div>
+<div class="notifications domain-content" ng-controller="notificationsController">
+    <notification ng-repeat="notification in notifications | orderBy:'creationTime':true" notification="notification"
+                  data-ng-model="notification"></notification>
 </div>
