@@ -12,6 +12,10 @@ kanbanApp.directive('notification', function () {
                 var notificationPromise = notificationsService.loadNotificationByLink($scope.notification._links.self.href);
                 notificationPromise.then(function (_data) {
                     $scope.notification = _data;
+
+                    if ($scope.notification.type === "team-members-invitation") {
+                        
+                    }
                 });
             }
         }]
