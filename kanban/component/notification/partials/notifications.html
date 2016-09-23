@@ -1,6 +1,6 @@
 <navigation-banner>
     <dashboard-entrance></dashboard-entrance>
-    <div>消息中心</div>
+    <div class="navigation-banner-custom-menu">消息中心</div>
 </navigation-banner>
 <div class="notifications" ng-controller="notificationController">
     <div id="notification-{{notification.id}}" ng-repeat="notification in notifications | orderBy:'creationTime'"
