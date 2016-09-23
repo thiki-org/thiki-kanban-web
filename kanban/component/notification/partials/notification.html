@@ -1,6 +1,7 @@
 <div id="notification-{{notification.id}}" class="notification-item" data-mode="inline">
     <div class="notification-envelope" ng-class="{true : 'already-read-notification'}[notification.isRead]"><span
             class="glyphicon glyphicon-envelope"></span></div>
+    <div class="notification-typeName">{{notification.typeName}}</div>
     <div class="notification-content" ng-class="{true : 'unread-notification'}[!notification.isRead]"
          ng-click="readNotification()">
         {{notification.content}}
