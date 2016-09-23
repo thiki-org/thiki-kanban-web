@@ -1,3 +1,8 @@
+<navigation-banner>
+    <dashboard-entrance></dashboard-entrance>
+    <div class="navigation-banner-custom-menu">DashBoard</div>
+</navigation-banner>
+
 <div class="boards">
     <div id="board-{{board.id}}" ng-repeat="board in boards | orderBy:'creationTime'" repeat-finish class="board-item"
          data-ng-model="board.name" data-mode="inline">
