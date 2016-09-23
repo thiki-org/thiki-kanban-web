@@ -3,10 +3,12 @@
     <div class="navigation-banner-custom-menu">消息中心</div>
 </navigation-banner>
 <div class="notifications domain-content" ng-controller="notificationController">
-    <div id="notification-{{notification.id}}" ng-repeat="notification in notifications | orderBy:'creationTime'"
+    <div id="notification-{{notification.id}}" ng-repeat="notification in notifications | orderBy:'creationTime':true"
          repeat-finish class="notification-item" data-ng-model="notification.content" data-mode="inline">
         <div class="notification-envelope"><span class="glyphicon glyphicon-envelope"></span></div>
-        <div class="notification-content">{{notification.content}}</div>
-        <div class="notification-read">阅读</div>
+        <div class="notification-content" ng-class="{true : 'unread-notification'}[!notification.isRead]">
+            {{notification.content}}
+        </div>
+        <div class="notification-displayTime">{{notification.displayTime}}</div>
     </div>
 </div>
