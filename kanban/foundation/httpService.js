@@ -60,6 +60,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             return deferred.promise;
         },
         put: function (_payload, _url) {
+            var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
             }
@@ -76,6 +77,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             return deferred.promise;
         },
         delete: function (_url) {
+            var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
             }
