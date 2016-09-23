@@ -2,13 +2,11 @@
     <dashboard-entrance></dashboard-entrance>
     <div class="navigation-banner-custom-menu">消息中心</div>
 </navigation-banner>
-<div class="notifications" ng-controller="notificationController">
+<div class="notifications domain-content" ng-controller="notificationController">
     <div id="notification-{{notification.id}}" ng-repeat="notification in notifications | orderBy:'creationTime'"
-         repeat-finish class="notification-item"
-         data-ng-model="notification.content" data-mode="inline">
-        <a href="#" class="list-group-item">
-            <h4 class="list-group-item-heading">{{notification.content}}</h4>
-            <p class="list-group-item-text">...</p>
-        </a>
+         repeat-finish class="notification-item" data-ng-model="notification.content" data-mode="inline">
+        <div class="notification-envelope"><span class="glyphicon glyphicon-envelope"></span></div>
+        <div class="notification-content">{{notification.content}}</div>
+        <div class="notification-read">阅读</div>
     </div>
 </div>
