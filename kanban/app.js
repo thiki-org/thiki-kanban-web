@@ -51,6 +51,14 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
+            .state('notifications', {
+                url: "/:userName/notifications",
+                views: {
+                    "register": {template: " "},
+                    "kanban": {templateUrl: "component/notification/partials/notifications.html"},
+                    "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
+                }
+            })
             .state('welcome', {
                 url: "/welcome",
                 views: {
