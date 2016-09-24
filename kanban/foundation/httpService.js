@@ -18,7 +18,6 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             },
             size: 'sm'
         });
-        var error = {message: "d"};
         deferred.reject(error);
         return deferred.promise;
     }
@@ -68,6 +67,22 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 method: "PUT",
                 url: _url,
                 data: _payload,
+                contentType: 'application/json'
+            }).success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            }).error(function (data, status, headers, config) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
+        },
+        putWithNoBody: function (_url) {
+            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
+            $http({
+                method: "PUT",
+                url: _url,
                 contentType: 'application/json'
             }).success(function (data, status, headers, config) {
                 deferred.resolve(data);

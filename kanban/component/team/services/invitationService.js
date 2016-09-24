@@ -8,7 +8,7 @@ kanbanApp.factory('invitationService', ['$http', '$q', 'httpServices',
                 return httpServices.get(_invitationLink);
             },
             acceptInvitation: function (_invitationLink) {
-                return httpServices.put(_invitationLink);
+                return httpServices.putWithNoBody(_invitationLink);
             }
         };
     }]);
