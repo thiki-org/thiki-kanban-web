@@ -17,7 +17,7 @@ kanbanApp.directive('notification', function () {
                         var invitationPromise = invitationService.loadInvitationByLink($scope.notification.link);
                         invitationPromise.then(function (_invitation) {
                             if (_invitation.isAccepted) {
-                                timerMessageService.message("你此前已经接受该邀请。");
+                                timerMessageService.message("你此前已经接受该团队的邀请。");
                                 return;
                             }
                             var teamPromise = teamsService.loadTeamByLink(_invitation._links.team.href);
