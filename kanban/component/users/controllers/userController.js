@@ -8,6 +8,12 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
 
         var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
         var pollNotifications = $interval(function () {
+            loadUnreadNotificationTotal();
+        }, 5000);
+
+        loadUnreadNotificationTotal();
+
+        function loadUnreadNotificationTotal() {
             var notificationPromise = notificationsService.loadUnreadNotificationsTotal(unreadNotificationsTotalLink);
             notificationPromise.then(function (_data) {
                 $scope.unreadNotificationsTotal = _data.unreadNotificationsTotal;
@@ -16,7 +22,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
             }, function () {
                 $interval.cancel(pollNotifications);
             });
-        }, 5000);
+        }
 
         $scope.gotoTeams = function () {
             $location.path(localStorageService.get('identity.userName') + "/teams");
