@@ -1,4 +1,7 @@
-<div id="dashboard-entrance" uib-tooltip="dashBoard" tooltip-placement="right"
-     tooltip-trigger="mouseenter" ng-click="toDashBoard()">
-    <span class="glyphicon glyphicon-home"></span>
+<div id="dashboard-entrance">
+    <div class="dashboard-entrance-ico" ng-click="toDashBoard()">
+        <span class="glyphicon glyphicon-home" uib-tooltip="dashBoard" tooltip-placement="right"
+              tooltip-trigger="mouseenter"></span>
+    </div>
+    <div class="navigation-name"><span ng-transclude></span></div>
 </div>

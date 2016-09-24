@@ -4,8 +4,7 @@
     </div>
     <div id="team-options" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
     <span id="team-name" editable-text="team.name" e-ng-click="open($event,'$data')"
-          onbeforesave="updateTeam($data,team)" data-mode="inline">
-       我的团队 |  {{team.name}}
+          onbeforesave="updateTeam($data,team)" data-mode="inline">{{team.name}}
     </span>
         <div class="team-operation-menu dropdown">
             <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
