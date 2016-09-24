@@ -35,6 +35,9 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                 return $q.reject(rejection);
             }
 
+            if ($location.path() === "/welcome" && rejection.status === 401) {
+                return $q.reject(rejection);
+            }
             var modal = $injector.get("$uibModal");
             modal.open({
                 animation: true,
