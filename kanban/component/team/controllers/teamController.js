@@ -2,12 +2,11 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService', '$uibModal',
-    function ($scope, $location, $q, teamsService, localStorageService, $uibModal) {
+kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsService', 'localStorageService', 'timerMessageService', '$uibModal', '$injector',
+    function ($scope, $location, $q, teamsService, localStorageService, timerMessageService, $uibModal, $injector) {
         var teamLink = localStorageService.get("teamLink");
         var teamPromise = teamsService.loadTeamByLink(teamLink);
-        $scope.isDisableInvitationButton = false;
-        $scope.invitationButtonText = "邀请";
+
         teamPromise.then(function (_team) {
             $scope.team = _team;
 
@@ -21,24 +20,29 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
 
             });
             $scope.openInvitationForm = function () {
+                var teamScope = $scope;
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/team/partials/member-invitation.html',
-                    controller: "teamController",
+                    controller: function ($scope, $uibModalInstance) {
+                        $scope.isDisableInvitationButton = false;
+                        $scope.invitationButtonText = "邀请";
+                        $scope.invite = function () {
+                            $scope.invitationButtonText = "邀请中..";
+                            $scope.isDisableInvitationButton = true;
+                            var invitation = {invitee: $scope.invitee};
+                            var invitationPromise = teamsService.invite(invitation, teamScope.invitationLink);
+                            invitationPromise.then(function () {
+                                $uibModalInstance.dismiss('cancel');
+                                timerMessageService.message("邀请成功,邀请函已经发出。");
+                            }).finally(function () {
+                                $scope.invitationButtonText = "邀请";
+                                $scope.isDisableInvitationButton = false;
+                            });
+                        };
+                    },
                     size: 'sm'
                 });
             };
-
-            $scope.invite = function () {
-                $scope.invitationButtonText = "邀请中..";
-                $scope.isDisableInvitationButton = true;
-                var invitation = {invitee: $scope.invitee};
-                var invitationPromise = teamsService.invite(invitation, $scope.invitationLink);
-                invitationPromise.then(function (_data) {
-                }).finally(function () {
-                    $scope.invitationButtonText = "邀请";
-                    $scope.isDisableInvitationButton = false;
-                });
-            }
         });
     }]);
