@@ -19,6 +19,11 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
                 $scope.invitationLink = _data._links.invitation.href;
 
             });
+
+            $scope.toMyTeams = function () {
+                $location.path(localStorageService.get('identity.userName') + "/teams");
+            };
+
             $scope.openInvitationForm = function () {
                 var teamScope = $scope;
                 $uibModal.open({
