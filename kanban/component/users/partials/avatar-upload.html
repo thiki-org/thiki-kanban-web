@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{title}}</h3>
+</div>
+<div class="modal-body user-profile">
+
+    <div id="avatar-area">
+<span class="btn btn-default btn-file">
+    选择头像 <input type="file" accept="image/png,image/jpeg" img-cropper-fileread image="cropper.sourceImage"/>
+</span>
+        <div id="avatar-crop-preview" ng-if='cropper != undefined'>
+            <div id="avatar-crop">
+                <div>
+                    <canvas width="250" height="250" id="canvas" image-cropper image="cropper.sourceImage"
+                            cropped-image="cropper.croppedImage" crop-width="240" crop-height="240">
+                    </canvas>
+                </div>
+            </div>
+
+            <div id="avatar-preview">
+                <div ng-show="cropper.croppedImage!=null"><img ng-src="{{cropper.croppedImage}}"/></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary thiki-delete-button" type="button" ng-click="uploadAvatar()"
+            ng-disabled="cropper.sourceImage==undefined">{{uploadButtonText}}
+    </button>
+</div>

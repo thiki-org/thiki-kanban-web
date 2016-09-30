@@ -14,7 +14,6 @@ div#avatar-crop {
 div#avatar-preview {
   float: left;
   width: 250px;
-  padding: 30px;
 }
 
 .user-profile {
@@ -27,14 +26,37 @@ div#avatar-preview {
 }
 
 .btn-file input[type=file] {
-  height: 0px;
-  width: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
   filter: alpha(opacity=0);
   opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
 
 #avatar-crop-preview {
   width: 800px;
   height: 320px;
   margin: 10px;
+}
+
+img#user-avatar-img {
+  height: 40px;
+  width: 40px;
+}
+
+div#unreadNotificationsTotal {
+  position: absolute;
+  float: right;
+  top: 0px;
+  right: -7px;
+  height: 20px;
+  line-height: 20px;
 }

@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval) {
+kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval', 'timerMessageService',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService) {
         $scope.userName = localStorageService.get("identity.userName");
 
         var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
@@ -27,6 +27,17 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
             });
         }
 
+        var profileLink = usersService.getCurrentUser()._links.profile.href;
+
+        var profilePromise = usersService.loadProfile(profileLink);
+        profilePromise.then(function (_profile) {
+            $scope.profile = _profile;
+            var avatarPromise = usersService.loadAvatar(_profile._links.avatar.href);
+            avatarPromise.then(function (_avatar) {
+                console.log(_avatar);
+                $scope.avatar = "data:image/png;base64," + _avatar.replaceAll("\"", "");
+            });
+        });
         $scope.gotoTeams = function () {
             $location.path(localStorageService.get('identity.userName') + "/teams");
         };
@@ -47,20 +58,48 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
                     };
-                    $scope.cropper = {};
-                    $scope.cropper.sourceImage = null;
-                    $scope.cropper.croppedImage = null;
-                    function dataURItoBlob(dataURI) {
-                        var binary = atob(dataURI.split(',')[1]);
-                        var array = [];
-                        for (var i = 0; i < binary.length; i++) {
-                            array.push(binary.charCodeAt(i));
-                        }
-                        return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
-                    }
 
-                    $scope.uploadAvatar = function () {
-                        usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), "http://localhost:8080/users/xutao/avatar");
+                    $scope.openAvatarUpload = function () {
+                        $uibModal.open({
+                            animation: false,
+                            templateUrl: 'component/users/partials/avatar-upload.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.title = '上传头像';
+                                $scope.uploadButtonText = "上传";
+                                $scope.ok = function () {
+                                    localStorageService.clearAll();
+                                    $uibModalInstance.close();
+                                    $location.path("/welcome");
+                                };
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+
+                                $scope.cropper = {};
+                                $scope.cropper.sourceImage = null;
+                                $scope.cropper.croppedImage = null;
+                                function dataURItoBlob(dataURI) {
+                                    var binary = atob(dataURI.split(',')[1]);
+                                    var array = [];
+                                    for (var i = 0; i < binary.length; i++) {
+                                        array.push(binary.charCodeAt(i));
+                                    }
+                                    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+                                }
+
+                                $scope.uploadAvatar = function () {
+                                    $scope.uploadButtonText = "上传中..";
+                                    var avatarPromise = usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), "http://localhost:8080/users/xutao/avatar");
+                                    avatarPromise.then(function () {
+                                        timerMessageService.message("头像设置成功。");
+                                    }).finally(function () {
+                                        $scope.uploadButtonText = "上传";
+                                        $uibModalInstance.dismiss('cancel');
+                                    });
+                                };
+                            },
+                            size: 'mid'
+                        });
                     };
                 },
                 size: 'lg'
@@ -103,3 +142,7 @@ kanbanApp.directive('fileUpload', function () {
         }
     };
 });
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};

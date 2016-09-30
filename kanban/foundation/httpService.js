@@ -141,6 +141,21 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 deferred.reject(data);
             });
             return deferred.promise;
+        },
+        getFile: function (_url) {
+            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
+            $http({
+                method: "GET",
+                url: _url
+            }).success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            }).error(function (data, status, headers, config) {
+                deferred.reject(data);
+            });
+            return deferred.promise;
         }
     };
 }]);

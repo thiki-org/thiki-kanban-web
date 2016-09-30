@@ -52,7 +52,13 @@ kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService', 'httpSe
                 return deferred.promise;
             },
             uploadAvatar: function (_avatar, _avatarLink) {
-                httpServices.upload("avatar", _avatar, _avatarLink);
+                return httpServices.upload("avatar", _avatar, _avatarLink);
+            },
+            loadProfile: function (_profileLinks) {
+                return httpServices.get(_profileLinks);
+            },
+            loadAvatar: function (_avatarLink) {
+                return httpServices.getFile(_avatarLink);
             }
         };
     }]);
