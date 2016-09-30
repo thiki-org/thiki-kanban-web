@@ -5,14 +5,18 @@
 </navigation-banner>
 
 <div class="members">
-    <div id="member-{{member.id}}" ng-repeat="member in members | orderBy:'creationTime'" repeat-finish
-         class="member-item"
-         data-ng-model="member.name" data-mode="inline">
-        <div ng-click=toProcedures(member.id,member._links.self.href)> {{member.userName}}</div>
+    <div class="panel panel-warning">
+        <div class="panel-heading">成员</div>
+        <div class="panel-body">
+            <div id="member-{{member.id}}" ng-repeat="member in members | orderBy:'creationTime'" repeat-finish
+                 class="member-item"
+                 data-ng-model="member.name" data-mode="inline">
+                <div ng-click=toProcedures(member.id,member._links.self.href)> {{member.userName}}</div>
+            </div>
+        </div>
     </div>
 
-    <div class="member-item"
-         data-ng-model="member.name" data-mode="inline">
-        <div ng-click=openInvitationForm()> +</div>
-    </div>
+    <button class="btn btn-default" type="button" ng-click="openInvitationForm()" ng-disabled="loginForm.$invalid">
+        邀请成员
+    </button>
 </div>

@@ -2,8 +2,8 @@
  * Created by xubt on 5/26/16.
  */
 
-kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService',
-    function ($http, $q, localStorageService) {
+kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService', 'httpServices',
+    function ($http, $q, localStorageService, httpServices) {
         return {
             boardsLink: '',
             getCurrentUser: function () {
@@ -50,6 +50,9 @@ kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService',
                     deferred.reject(data);
                 });
                 return deferred.promise;
+            },
+            uploadAvatar: function (_avatar, _avatarLink) {
+                httpServices.upload("avatar", _avatar, _avatarLink);
             }
         };
     }]);

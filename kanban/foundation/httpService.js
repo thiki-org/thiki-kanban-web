@@ -58,6 +58,25 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
+        upload: function (_fileName, _file, _url) {
+            var deferred = $q.defer();
+            if (URLIsNotValid(_url)) {
+                return openErrorDialog(deferred);
+            }
+
+            var fileToSend = new FormData();
+            fileToSend.append(_fileName, _file);
+            $http.post(_url, fileToSend, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function (data, status, headers, config) {
+                deferred.resolve(data);
+            }).error(function (data, status, headers, config) {
+                deferred.reject(data);
+            });
+
+            return deferred.promise;
+        },
         put: function (_payload, _url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
