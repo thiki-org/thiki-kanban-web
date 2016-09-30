@@ -32,6 +32,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
         var profilePromise = usersService.loadProfile(profileLink);
         profilePromise.then(function (_profile) {
             $scope.profile = _profile;
+            $rootScope.profile = _profile;
             var avatarPromise = usersService.loadAvatar(_profile._links.avatar.href);
             avatarPromise.then(function (_avatar) {
                 $rootScope.avatar = "data:image/png;base64," + _avatar.replaceAll("\"", "");

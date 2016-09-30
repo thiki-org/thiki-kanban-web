@@ -4,6 +4,37 @@
 <div class="modal-body user-profile">
     <div id="profile-avatar" ng-show="avatar!=null" ng-click="openAvatarUpload()">
         <img id="profile-avatar-img" ng-src="{{avatar}}"/></div>
+
+    <div id="profile-form">
+        <form name="profileForm">
+            <div class="form-group">
+                <label for="userName">用户名</label>
+                <input id="userName" name="identity" type="text" class="form-control" data-ng-model="profile.userName"
+                       ng-enter="login()" ng-disabled="true" placeholder="昵称" autocomplete="off"
+                       required/>
+            </div>
+
+            <div class="form-group">
+                <label for="nickName">昵称</label>
+                <input id="nickName" name="identity" type="text" class="form-control" data-ng-model="profile.nickName"
+                       ng-enter="login()" placeholder="昵称" autocomplete="off"
+                       required/>
+                <div class="validation-error-message"
+                     ng-show="profileForm.identity.$error.required && profileForm.identity.$dirty">邮箱
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input id="email" name="identity" type="text" class="form-control" data-ng-model="profile.email"
+                       ng-enter="login()" autocomplete="off"
+                       required/>
+                <div class="validation-error-message"
+                     ng-show="profileForm.identity.$error.required && profileForm.identity.$dirty">邮箱
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="modal-footer" ng-keydown="keyPress($event)">
