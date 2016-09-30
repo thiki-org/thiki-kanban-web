@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval', 'timerMessageService',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService) {
+kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval', 'timerMessageService', '$rootScope',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService, $rootScope) {
         $scope.userName = localStorageService.get("identity.userName");
 
         var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
@@ -34,8 +34,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
             $scope.profile = _profile;
             var avatarPromise = usersService.loadAvatar(_profile._links.avatar.href);
             avatarPromise.then(function (_avatar) {
-                console.log(_avatar);
-                $scope.avatar = "data:image/png;base64," + _avatar.replaceAll("\"", "");
+                $rootScope.avatar = "data:image/png;base64," + _avatar.replaceAll("\"", "");
             });
         });
         $scope.gotoTeams = function () {

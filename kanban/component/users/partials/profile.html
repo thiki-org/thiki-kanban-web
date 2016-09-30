@@ -2,8 +2,8 @@
     <h3 class="modal-title">{{title}}</h3>
 </div>
 <div class="modal-body user-profile">
-    <button class="btn" type="button" ng-click="openAvatarUpload()">上传头像</button>
-
+    <div id="profile-avatar" ng-show="avatar!=null" ng-click="openAvatarUpload()">
+        <img id="profile-avatar-img" ng-src="{{avatar}}"/></div>
 </div>
 
 <div class="modal-footer" ng-keydown="keyPress($event)">

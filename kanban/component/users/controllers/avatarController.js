@@ -2,8 +2,8 @@
  * Created by xubt on 9/30/16.
  */
 
-kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval', 'timerMessageService',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService) {
+kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModal', 'notificationsService', 'usersService', '$interval', 'timerMessageService', '$rootScope',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService, $rootScope) {
         $scope.title = '上传头像';
         $scope.uploadButtonText = "上传";
         $scope.ok = function () {
@@ -24,29 +24,10 @@ kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKe
             var avatarPromise = usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), "http://localhost:8080/users/xutao/avatar");
             avatarPromise.then(function () {
                 timerMessageService.message("头像设置成功。");
+                $rootScope.avatar = $scope.cropper.croppedImage;
             }).finally(function () {
                 $scope.uploadButtonText = "上传";
                 $uibModalInstance.dismiss('cancel');
             });
         };
     }]);
-
-kanbanApp.directive('fileUpload', function () {
-    return {
-        scope: true,        //create a new scope
-        link: function (scope, el, attrs) {
-            el.bind('change', function (event) {
-                var files = event.target.files;
-                //iterate files since 'multiple' may be specified on the element
-                for (var i = 0; i < files.length; i++) {
-                    //emit event upward
-                    scope.$emit("fileSelected", {file: files[i]});
-                }
-            });
-        }
-    };
-});
-String.prototype.replaceAll = function (search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
