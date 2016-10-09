@@ -17,26 +17,20 @@
             <div class="form-group">
                 <label for="nickName">昵称</label>
                 <input id="nickName" name="identity" type="text" class="form-control" data-ng-model="profile.nickName"
-                       ng-enter="login()" placeholder="昵称" autocomplete="off"
+                       placeholder="昵称" autocomplete="off"
                        required/>
-                <div class="validation-error-message"
-                     ng-show="profileForm.identity.$error.required && profileForm.identity.$dirty">邮箱
-                </div>
             </div>
 
             <div class="form-group">
                 <label for="email">邮箱</label>
-                <input id="email" name="identity" type="text" class="form-control" data-ng-model="profile.email"
-                       ng-enter="login()" autocomplete="off"
+                <input id="email" name="identity" type="text" ng-disabled="true" class="form-control"
+                       data-ng-model="profile.email" autocomplete="off"
                        required/>
-                <div class="validation-error-message"
-                     ng-show="profileForm.identity.$error.required && profileForm.identity.$dirty">邮箱
-                </div>
             </div>
         </form>
     </div>
 </div>
 
 <div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary thiki-delete-button" type="button" ng-click="uploadAvatar()">保存</button>
+    <button class="btn btn-primary thiki-delete-button" type="button" ng-click="updateProfile()">保存</button>
 </div>
