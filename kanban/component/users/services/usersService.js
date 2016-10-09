@@ -34,22 +34,7 @@ kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService', 'httpSe
                 return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
             },
             create: function (_board) {
-                var deferred = $q.defer();
-                $http({
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(_board),
-                    headers: {
-                        'userId': '112'
-                    },
-                    url: this.boardsLink
-                }).success(function (data, status, headers, config) {
-                    console.log(data);
-                    deferred.resolve(data);
-                }).error(function (data, status, headers, config) {
-                    deferred.reject(data);
-                });
-                return deferred.promise;
+                return httpServices.post(_board, this.boardsLink);
             },
             uploadAvatar: function (_avatar, _avatarLink) {
                 return httpServices.upload("avatar", _avatar, _avatarLink);
