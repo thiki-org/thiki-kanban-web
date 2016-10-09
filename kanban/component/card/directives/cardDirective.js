@@ -21,12 +21,12 @@ kanbanApp.directive('card', function ($uibModal) {
                         if (thisScope.isIamAssigned) {
                             $scope.message = "你确定不再做该卡片吗?";
                             $scope.ok = function () {
-                                var userId = localStorageService.get("userId");
+                                var userName = localStorageService.get("userName");
                                 var myAssignmentLink;
                                 angular.forEach(thisScope.assignments, function (_assignment) {
-                                    if (userId === _assignment.assignee) {
+                                    if (userName === _assignment.assignee) {
                                         myAssignmentLink = _assignment._links.self.href;
-                                        return;
+
                                     }
                                 });
                                 var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
@@ -41,8 +41,8 @@ kanbanApp.directive('card', function ($uibModal) {
                             $scope.ok = function () {
                                 var assignment = {
                                     cardId: _card.id,
-                                    assignee: localStorageService.get("userId"),
-                                    assigner: localStorageService.get("userId")
+                                    assignee: localStorageService.get("userName"),
+                                    assigner: localStorageService.get("userName")
                                 };
 
                                 var assignmentPromise = assignmentServices.assign(assignment, _card._links.assignments.href);
@@ -94,12 +94,12 @@ kanbanApp.directive('card', function ($uibModal) {
             };
 
             $scope.isAssigned = function () {
-                var userId = localStorageService.get("userId");
+                var userName = localStorageService.get("userName");
                 $scope.isIamAssigned = false;
                 angular.forEach($scope.assignments, function (_assignment) {
-                    if (userId === _assignment.assignee) {
+                    if (userName === _assignment.assignee) {
                         $scope.isIamAssigned = true;
-                        return;
+
                     }
                 });
                 $scope.assignTip = $scope.isIamAssigned === true ? "我不做了" : "认领";

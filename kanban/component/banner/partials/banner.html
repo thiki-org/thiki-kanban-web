@@ -3,7 +3,7 @@
         <img src="static/img/thiki-logo.png">
     </div>
     <div id="user" class="dropdown" ng-controller="userController">
-        <div id="user-avatar" ng-show="avatar!=null" class="dropdown" data-toggle="dropdown" aria-haspopup="false"
+        <div id="user-avatar" ng-show="avatar!=null" class="dropdown" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="false"><img id="user-avatar-img" ng-src="{{avatar}}"/></div>
 
         <div id="unreadNotificationsTotal">
@@ -11,9 +11,7 @@
         </div>
         <ul class="user-menu dropdown-menu thiki-menu-items" aria-labelledby="user-menu">
             <li><a ng-click="gotoTeams()">我的团队</a></li>
-            <li><a ng-click="openNotifications(notificationsLink)">我的消息 <span class="badge notification-badge-menu"
-                                                                              ng-show="isShowNotification">{{unreadNotificationsTotal}}</span></a>
-                </a></li>
+            <li><a ng-click="openNotifications(notificationsLink)">我的消息</a></li>
             <li><a ng-click="openProfile()">个人资料</a></li>
             <li role="separator" class="divider"></li>
             <li><a ng-click="loginOut()">退出登录</a></li>
