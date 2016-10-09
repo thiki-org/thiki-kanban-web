@@ -35,7 +35,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
             $rootScope.profile = _profile;
             var avatarPromise = usersService.loadAvatar(_profile._links.avatar.href);
             avatarPromise.then(function (_avatar) {
-                $rootScope.avatar = "data:image/png;base64," + _avatar.replaceAll("\"", "");
+                $rootScope.avatar = "data:image/png;base64," + _avatar.avatar.replaceAll("\"", "");
             });
         });
         $scope.gotoTeams = function () {
