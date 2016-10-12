@@ -8,236 +8,39 @@
     <script src="static/js/lib.min.js"></script>
     <script src="static/js/thiki-kanban.js"></script>
     <link rel="icon" href="favicon.ico">
-    <!--[if IE]>
-    <link rel="shortcut icon" href="static/img/favicon.ico"><![endif]-->
-    <!-- Bootstrap core CSS -->
-    <link href="static/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="static/lib/style.css" rel="stylesheet">
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
-
-<!-------new------->
-<!-- Fixed navbar -->
+<body data-spy="scroll" data-target=".navbar" data-offset="50" ng-controller="welcomeController">
 <nav class="navbar navbar-default navbar-fixed-top blue-bg">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Thiki kanban</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand logo" href="./"><img src="static/img/index/ds-logo-2.png"></a>
+        <div class="navbar-header">思奇团队 | 精益看板
         </div>
         <div id="navbar" class="navbar-collapse collapse pull-right">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#top">首页</a></li>
-                <li><a href="#section3">介绍</a></li>
-                <li><a href="#section5">团队协作</a></li>
-                <li><a href="#section6">任务认领</a></li>
-                <li><a href="#section7">结对编程</a></li>
-                <li><a href="#section8">团队介绍</a></li>
+                <li><a href="#top">首页</a></li>
+                <li><a href="https://github.com/thiki-org/thiki-kanban-backend">GitHub</a></li>
+                <li><a href="https://toutiao.io/subjects/138803">独家号</a></li>
+                <li><a href="https://toutiao.io/subjects/138803">下载</a></li>
+                <li ng-click="login()"><a data-toggle="modal" data-target="#myModal">登录</a></li>
                 <li>
-                    <div ui-view="welcome"></div>
+                    <div id="login-registration">
+                        <button class="btn btn-primary register-btn" type="button" ng-click="register()">注册</button>
+                    </div>
                 </li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </nav>
 
 <section id="section1" class="region region-1 align-center blue-bg">
     <div class="container">
-        <h1 class="wow zoomIn">思奇开源看板系统</h1>
+        <img id="navbar-thiki-logo" src="static/img/index/thiki-banner.png">
+
+        <div id="mission-text" class="wow zoomIn">以乐趣创造乐趣</div>
         <div class="desc wow zoomIn">
             <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
         </div>
         <img src="static/img/index/learn-how.png" class="wow fadeInUp img-responsive center" data-wow-delay=".5s"/>
     </div>
 </section>
-
-<section id="section2" class="region region-2 align-center">
-    <div class="container">
-        <h1 class="scrollflow -pop -opacity">思奇看板</h1>
-        <div class="scrollflow -slide-top -opacity desc">
-            <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-            <p class="tagline">We empower your business online. <br>If you think it's expensive to hire a professional.
-                Wait till you hire an amateur.</p>
-        </div>
-    </div>
-</section>
-
-<section id="section3" class="region region-3 dark-grey-bg centerVert">
-    <div class="container">
-        <div class="col col-md-5 col-left detail">
-            <h1 class="scrollflow -slide-bottom -opacity">思奇看板</h1>
-            <div class="scrollflow -slide-top -opacity desc">
-                <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-            </div>
-        </div>
-        <div class="col col-md-7 col-right">
-            <img src="static/img/index/responsive-web-design.png"
-                 class="scrollflow -pop -opacity img-responsive center"/>
-        </div>
-    </div>
-</section>
-
-<section id="section4" class="region region-4 light-grey-bg centerVert">
-    <div class="container">
-        <div class="scrollflow -slide-right -opacity col col-md-7 col-md-push-5 detail">
-            <h1>思奇看板</h1>
-            <div class="desc">
-                <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-            </div>
-        </div>
-        <div class="scrollflow -slide-left -opacity col col-md-4 col-md-pull-7">
-            <img src="static/img/index/Photography-and-Videography.png" class="img-responsive center"/>
-        </div>
-    </div>
-</section>
-
-<section id="section5" class="region region-5 blue-bg centerVert">
-    <div class="container">
-        <div class="col col-md-5 col-left detail">
-            <h1 class="scrollflow -slide-right -opacity">思奇看板</h1>
-            <div class="scrollflow -slide-left -opacity desc">
-                <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-            </div>
-        </div>
-        <div class="scrollflow -pop -opacity col col-md-7 col-right">
-            <img src="static/img/index/Online-Advertising-and-SEO.png" class="img-responsive center"/>
-        </div>
-    </div>
-</section>
-
-<section id="section6" class="region region-6 align-center">
-    <div class="container">
-        <h1 class="scrollflow -pop -opacity">看板样例.</h1>
-        <div class="scrollflow -pop -opacity desc">
-            <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-        </div>
-        <img src="static/img/index/web-design-studio.png" class="scrollflow -slide-top -opacity img-responsive center"
-             data-wow-delay=".5s"/>
-    </div>
-</section>
-
-<section id="section7" class="region region-7 light-grey-bg centerVert">
-    <div class="container">
-        <div class="col col-md-6 col-left">
-            <div class="row">
-                <div class="col-md-4"><a href="https://goo.gl/L6gK29" target="_blank"><img
-                        src="static/img/index/drupal-legoland.png"
-                        class="scrollflow -slide-top -opacity wow rubberBand img-responsive center"
-                        data-wow-iteration="2"/></a></div>
-                <div class="col-md-8 detail">
-                    <h2 class="scrollflow -slide-right -opacity">思奇看板</h2>
-                    <div class=" scrollflow -slide-top -opacity subscribe"><a href="https://goo.gl/eivrW0"
-                                                                              target="_blank">思奇看板</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-6 col-right scrollflow -slide-left -opacity">
-            <h1>关于看板</h1>
-            <div class="desc">
-                <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="section8" class="region region-8 align-center">
-    <div class="container">
-        <h1 class="scrollflow -pop -opacity">团队介绍</h1>
-        <div class="scrollflow -slide-left -opacity desc">
-            <p>团队成员的照片</p>
-        </div>
-    </div>
-    <div class="grid">
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="modal" data-target="#modal-gardenkl">
-                <img src="static/img/index/project/gardenkl-thumb.jpg" alt="Virtual Tour 360" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>BOTANIC GARDEN, KL</h3>
-                        <span>VIRTUAL TOUR 360</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="modal" data-target="#modal-nosk">
-                <img src="static/img/index/project/nosk-thumb.jpg" alt="NOSK Malaysia" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>NOSK MALAYSIA</h3>
-                        <span>WEB DESIGN, MALAYSIA</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="modal" data-target="#modal-alr">
-                <img src="static/img/index/project/alr-thumb.jpg" alt="ALR Technologies Sdn Bhd" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>ALR TECHNOLOGIES SDN BHD</h3>
-                        <span>WEB DESIGN, MALAYSIA</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="modal" data-target="#modal-genius">
-                <img src="static/img/index/project/genius-thumb.jpg" alt="Genius Mind Damansara" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>GENIUS MIND DAMANSARA</h3>
-                        <span>WEB DESIGN, MALAYSIA</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="modal" data-target="#modal-iimat">
-                <img src="static/img/index/project/iimat-thumb.jpg" alt="IIMAT" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>IIMAT</h3>
-                        <span>WEB DESIGN, MALAYSIA</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="grid-item col-sm-6 col-md-4">
-            <a data-toggle="#" data-target="#">
-                <img src="static/img/index/project/coming-soon.jpg" alt="Designed Studio" class="wow zoomIn">
-                <div class="caption">
-                    <div class="inner">
-                        <h3>陆续加入</h3>
-                        <span>期待你的加入</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- /grid -->
-    </div>
-</section>
-
-<footer class="region blue-bg align-center">
-    <div class="container wow zoomIn">
-        <h1>立即尝试一下我们的看板？</h1>
-        <a class="btn" href="#" data-toggle="modal" data-target="#myModal">联系我们</a>
-    </div>
-</footer>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-
-<script src="static/js/bootstrap.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-
 </body>
 </html>
