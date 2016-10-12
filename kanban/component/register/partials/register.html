@@ -48,12 +48,10 @@
                 密码至少6个字符
             </div>
         </div>
-        <div class="modal-footer form-group" ng-enter="register()">
-            <button class="btn btn-primary thiki-button-large" type="submit" ng-click="register()"
-                    ng-disabled="registerForm.$invalid">注册
-            </button>
-        </div>
     </form>
-
 </div>
-
+<div class="modal-footer" ng-enter="register()">
+    <button class="btn btn-primary" type="submit" ng-click="register()"
+            ng-disabled="registerForm.$invalid">注册
+    </button>
+</div>
