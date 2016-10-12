@@ -1,0 +1,144 @@
+/* Customized */
+.tagline{
+margin-top:50px;
+font-size:1.2em;
+}
+
+/* Common */
+body {
+  min-height: 2000px;
+  padding-top: 50px;
+  font-family: 'Roboto', sans-serif;
+  color: #000; 
+}
+img.center{ margin: 0 auto; display: block; }
+h1{ margin: 0 0 30px; font-size: 23px; font-weight:300; }
+.desc{ margin-bottom: 50px; } /* 30 Ori */
+.blue-bg{ background: #128ff9; color: #fff; }
+.dark-grey-bg{ background: #616060; color: #fff; }
+.light-grey-bg{ background: #f0f0f0; }
+a{ 
+	color: #f15d27; }
+a:focus{ outline:none; }
+a, figure, figcaption, img{
+    -webkit-transition: all 0.5s ease; 
+       -moz-transition: all 0.5s ease; 
+        -ms-transition: all 0.5s ease; 
+         -o-transition: all 0.5s ease; 
+            transition: all 0.5s ease;   
+}
+.region{ overflow: hidden; padding-top: 120px; padding-bottom: 120px;} /*73 ori */
+.align-center{ text-align: center;  }
+
+
+/* Logo */
+.navbar-brand{ padding: 0; margin: 0; position: relative; z-index: 99;}
+
+
+/* Navigation */
+.navbar-default .navbar-nav>li>a:focus{ color: #eee; }
+.navbar-default{ border: none;}
+.navbar-default .navbar-nav>li>a{ color: #fff; }
+.fixed-top-active { background: rgba(255, 255, 255, 0.90); border-bottom: 1px solid #eee; }
+.fixed-top-active .logo img{ border: 1px solid #eee; border-top: none;}
+.fixed-top-active .logo,
+.fixed-top-active .logo:hover{ background: #128ff9; }
+.fixed-top-active.navbar-default .navbar-nav>li>a{ color: #555; }
+
+
+/* Regions */
+.region-1,.region-8{ padding-bottom: 0; }
+
+
+/* Masonry */
+
+.grid-item { position: relative; padding: 0; overflow: hidden; }
+.grid-item a{ position: relative; }
+.grid-item a,
+.grid-item img{ display: block;  width: 100%; height: auto; }	
+.grid-item a:hover{ cursor: pointer; }
+.grid-item--width2 { width: 320px; }
+.grid-item--width3 { width: 480px; }
+.grid-item--width4 { width: 640px; }	
+.grid-item--height2 { height: 200px; }
+.grid-item--height3 { height: 260px; }
+.grid-item--height4 { height: 360px; }
+.grid-item .caption{ overflow: hidden; color : #333; position: absolute; top:0; left:0; width:100%; height:100%; background: #fff; opacity: 0;}
+.grid-item:hover img{
+  -webkit-transform: scale(1.2) rotate(5deg);
+  -moz-transform: scale(1.2) rotate(5deg);
+  transform: scale(1.2) rotate(5deg);
+  opacity: .5;
+  }
+
+.grid-item:hover .caption{ opacity: .9; 
+  -webkit-transition: all 0.5s ease; 
+     -moz-transition: all 0.5s ease; 
+      -ms-transition: all 0.5s ease; 
+       -o-transition: all 0.5s ease; 
+          transition: all 0.5s ease;   
+   
+}
+.grid-item .caption .inner{ padding-top: 50px; text-transform: uppercase; } /* 30 Ori */
+.grid-item .caption .inner h3{
+	font-weight: 100; /* 400 Ori */
+	font-size: 18px;
+} 
+.grid-item .caption span{ color: #999 !important; }
+
+
+
+/* Section 7: Drupal Legoland */
+.region-7 h2{ margin-top: 0; font-weight: 400; font-size: 41px; }
+.region-7 .subscribe a{ text-transform: uppercase; color: #ff0606; }
+
+
+/* Contact Us Form */
+.hpot { display: none !important; }
+
+/* Footer */
+footer a.btn{ padding: 6px 72px; color: #fff; border: 2px solid #cbcbcb; }
+footer a.btn:hover{ color: #fff; border: 2px solid #fff; padding: 6px 80px;}
+footer a.btn:focus{ color: #fff; }
+
+/*----------------------------------------------------
+    Responsive - Media Quries
+  ----------------------------------------------------*/
+
+@media (max-width: 1199px) {}
+@media (max-width: 991px) {
+	.centerVert .detail{ position: static; }
+	
+  /* Section 7: Drupal Legoland */
+  .region-7{ margin-bottom: 35px; text-align: center;  }
+  .region-7 h2{ font-size: margin: 20px 0 30px;} 
+  .region-7 .col-left{ margin-bottom: 20px; }	
+}
+@media (max-width: 767px) {
+	 
+	/* Navigation */
+	#navbar{ float: none !important; }
+	
+	/* Portfolio */
+	.grid{ height: auto !important; }
+	.grid-item{ position: static !important; }
+	.grid-item img{ width: 100%; height: auto; }	
+	        
+}
+@media (max-width: 479px) {	
+
+  /* Awards */
+ .award{ display: none; }	
+
+}
+
+@media (max-width: 330px) {	
+
+  /* Navigation */
+ .navbar-brand img{ width: 230px;  }
+ .fixed-top-active .logo img{ border: none; }	
+
+
+}
+
+
