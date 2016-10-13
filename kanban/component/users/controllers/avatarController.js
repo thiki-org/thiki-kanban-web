@@ -21,7 +21,8 @@ kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKe
 
         $scope.uploadAvatar = function () {
             $scope.uploadButtonText = "上传中..";
-            var avatarPromise = usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), "http://localhost:8080/users/xutao/avatar");
+            var avatarLink = usersService.getCurrentUserProfile()._links.avatar.href;
+            var avatarPromise = usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), avatarLink);
             avatarPromise.then(function () {
                 timerMessageService.message("头像设置成功。");
                 $rootScope.avatar = $scope.cropper.croppedImage;

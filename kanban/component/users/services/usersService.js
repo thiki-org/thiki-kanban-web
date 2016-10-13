@@ -9,6 +9,9 @@ kanbanApp.factory('usersService', ['$http', '$q', 'localStorageService', 'httpSe
             getCurrentUser: function () {
                 return localStorageService.get("currentUser");
             },
+            getCurrentUserProfile: function () {
+                return localStorageService.get("profile");
+            },
             load: function (_boardsLink) {
                 var deferred = $q.defer(); // 声明延后执行，表示要去监控后面的执行
                 $http({

@@ -7,12 +7,8 @@
 <div class="members">
     <div class="panel panel-warning">
         <div class="panel-heading">成员</div>
-        <div class="panel-body">
-            <div id="member-{{member.id}}" ng-repeat="member in members | orderBy:'creationTime'" repeat-finish
-                 class="member-item"
-                 data-ng-model="member.name" data-mode="inline">
-                <div ng-click=toProcedures(member.id,member._links.self.href)> {{member.userName}}</div>
-            </div>
+        <div class="panel-body team-members">
+            <member ng-repeat="member in members" member="member" data-ng-model="member"></member>
         </div>
     </div>
 

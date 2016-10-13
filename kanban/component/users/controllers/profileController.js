@@ -18,6 +18,7 @@ kanbanApp.controller('profileController', ['$scope', '$location', '$q', 'publicK
 
         var profilePromise = usersService.loadProfile(profileLink);
         profilePromise.then(function (_profile) {
+            localStorageService.set("profile", _profile);
             $scope.profile = _profile;
             $rootScope.profile = _profile;
             var avatarPromise = usersService.loadAvatar(_profile._links.avatar.href);
