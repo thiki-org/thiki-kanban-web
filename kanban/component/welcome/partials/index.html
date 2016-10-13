@@ -1,7 +1,30 @@
-<div id="login-registration" ng-controller="welcomeController">
-   <!-- <button class="btn btn-primary register-btn" type="button" ng-click="register()">注册</button>
-    <button class="btn thiki-secondary-button login-btn" type="button" ng-click="login()">登录</button>
-    --><a ng-click="register()" data-toggle="modal" data-target="#myModal">注册</a>
-    <a  ng-click="login()" data-toggle="modal" data-target="#myModal">登录</a>
-</div>
+<nav class="navbar navbar-default navbar-fixed-top blue-bg" ng-controller="welcomeController">
+    <div class="container">
+        <div class="navbar-header"><img id="navbar-thiki-logo" src="static/img/index/thiki-banner.png"> 思奇团队 | 精益看板
+        </div>
+        <div id="navbar" class="navbar-collapse collapse pull-right">
+            <ul class="nav navbar-nav">
+                <li><a href="#top">首页</a></li>
+                <li><a href="https://github.com/thiki-org/thiki-kanban-backend">GitHub</a></li>
+                <li><a href="https://toutiao.io/subjects/138803">独家号</a></li>
+                <li><a href="https://toutiao.io/subjects/138803">下载</a></li>
+                <li ng-click="login()"><a data-toggle="modal" data-target="#myModal">登录</a></li>
+                <li>
+                    <div id="login-registration">
+                        <button class="btn btn-primary register-btn" type="button" ng-click="register()">注册</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<section id="section1" class="region region-1 align-center blue-bg">
+    <div class="container">
+        <div id="mission-text" class="wow zoomIn">以乐趣创造乐趣</div>
+        <div class="desc wow zoomIn">
+            <p>thiki-kanban是一个精益看板系统,以看板方法为核心,内嵌精益思想,研发过程中覆盖了丰富的技术实践。</p>
+        </div>
+        <img src="static/img/index/learn-how.png" class="wow fadeInUp img-responsive center" data-wow-delay=".5s"/>
+    </div>
+</section>
