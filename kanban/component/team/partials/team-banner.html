@@ -3,19 +3,6 @@
          tooltip-trigger="mouseenter" ng-click="toTeams()"><span class="glyphicons glyphicons-family"></span>
     </div>
     <div id="team-options" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
-    <span id="team-name" editable-text="team.name" e-ng-click="open($event,'$data')"
-          onbeforesave="updateTeam($data,team)" data-mode="inline">{{team.name}}
-    </span>
-        <div class="team-operation-menu dropdown">
-            <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="true">
-                <span class="thiki-setting glyphicon glyphicon-cog" ng-show="isDisplaySetting"></span>
-            </button>
-            <ul class="thiki-banner-menu thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item" ng-click="openInvitationForm(team)"><a>邀请加入</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="thiki-menu-item thiki-delete-item" ng-click="deleteTeam(team)"><a>解散团队</a></li>
-            </ul>
-        </div>
+        <span id="team-name">{{team.name}}</span>
     </div>
 </div>

@@ -5,22 +5,23 @@
 </navigation-banner>
 
 <div class="members">
-    <uib-tabset active="activeForm">
+    <uib-tabset>
         <uib-tab index="0" heading="基本信息">
             <div class="tab-team-basic-info">
                 <form name="teamForm" novalidate>
                     <div class="form-group">
-                        <label for="nickName">名称</label>
-                        <input id="nickName" name="identity" type="text" class="form-control"
-                               data-ng-model="profile.nickName"
-                               placeholder="昵称" autocomplete="off"
+                        <label for="teamName">名称</label>
+                        <input id="teamName" name="teamName" type="text" class="form-control"
+                               data-ng-model="team.name"
+                               placeholder="团队名称" autocomplete="off"
                                required/>
+                        <div class="validation-error-message"
+                             ng-show="teamForm.teamName.$error.required && teamForm.teamName.$dirty">请输入团队名称
+                        </div>
                     </div>
-
                 </form>
                 <div class="tab-members-invitation-button">
-                    <button class="btn btn-primary" type="button" ng-click="openInvitationForm()"
-                            ng-disabled="loginForm.$invalid">
+                    <button class="btn btn-primary" type="button" ng-click="saveTeam()" ng-disabled="!teamForm.$dirty">
                         保存
                     </button>
                 </div>

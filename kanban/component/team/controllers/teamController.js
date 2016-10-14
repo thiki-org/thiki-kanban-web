@@ -24,6 +24,13 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
                 $location.path(localStorageService.get('identity.userName') + "/teams");
             };
 
+            $scope.saveTeam = function () {
+                var teamPromise = teamsService.update($scope.team);
+                teamPromise.then(function (_team) {
+                    $scope.team = _team;
+                    timerMessageService.message("团队信息已经更新。");
+                });
+            };
             $scope.openInvitationForm = function () {
                 var teamScope = $scope;
                 $uibModal.open({
