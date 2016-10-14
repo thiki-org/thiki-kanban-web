@@ -5,14 +5,14 @@
 </navigation-banner>
 
 <div class="members">
-    <div class="panel panel-warning">
-        <div class="panel-heading">成员</div>
+    <div class="panel panel-warning members-panel">
+        <div class="panel-heading members-panel-heading">成员</div>
         <div class="panel-body team-members">
             <member ng-repeat="member in members" member="member" data-ng-model="member"></member>
         </div>
     </div>
 
-    <button class="btn btn-default" type="button" ng-click="openInvitationForm()" ng-disabled="loginForm.$invalid">
+    <button class="btn btn-success" type="button" ng-click="openInvitationForm()" ng-disabled="loginForm.$invalid">
         邀请成员
     </button>
 </div>
