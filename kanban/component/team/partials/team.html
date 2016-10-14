@@ -5,14 +5,37 @@
 </navigation-banner>
 
 <div class="members">
-    <div class="panel panel-warning members-panel">
-        <div class="panel-heading members-panel-heading">成员</div>
-        <div class="panel-body team-members">
-            <member ng-repeat="member in members" member="member" data-ng-model="member"></member>
-        </div>
-    </div>
+    <uib-tabset active="activeForm">
+        <uib-tab index="0" heading="基本信息">
+            <div class="tab-team-basic-info">
+                <form name="teamForm" novalidate>
+                    <div class="form-group">
+                        <label for="nickName">名称</label>
+                        <input id="nickName" name="identity" type="text" class="form-control"
+                               data-ng-model="profile.nickName"
+                               placeholder="昵称" autocomplete="off"
+                               required/>
+                    </div>
 
-    <button class="btn btn-success" type="button" ng-click="openInvitationForm()" ng-disabled="loginForm.$invalid">
-        邀请成员
-    </button>
+                </form>
+                <div class="tab-members-invitation-button">
+                    <button class="btn btn-primary" type="button" ng-click="openInvitationForm()"
+                            ng-disabled="loginForm.$invalid">
+                        保存
+                    </button>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="成员">
+            <div class="tab-members">
+                <member ng-repeat="member in members" member="member" data-ng-model="member"></member>
+            </div>
+            <div class="tab-members-invitation-button">
+                <button class="btn btn-primary" type="button" ng-click="openInvitationForm()"
+                        ng-disabled="loginForm.$invalid">
+                    邀请成员
+                </button>
+            </div>
+        </uib-tab>
+    </uib-tabset>
 </div>

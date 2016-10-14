@@ -15,7 +15,7 @@ body {
 }
 
 body > a {
-  color: black;
+  color: black !important;
   cursor: default;
 }
 
@@ -35,6 +35,7 @@ button.btn.btn-primary {
   background-color: @base !important;
   border: 1px solid @base;
   width: auto !important;
+  min-width: 80px;
 }
 
 .input-group {
@@ -410,4 +411,18 @@ ul.thiki-banner-menu.dropdown-menu {
   max-height: 400px !important;
   margin-right: 10px !important;
   height: auto;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0px 2px 0 0 !important;
+  color: black !important;
+}
+
+.nav > li > a {
+  padding: 7px 25px !important;
+}
+
+.tab-content {
+  border: 1px solid #ddd;
+  border-top: none;
 }
