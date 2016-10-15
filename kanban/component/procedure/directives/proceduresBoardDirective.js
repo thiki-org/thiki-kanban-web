@@ -72,6 +72,33 @@ kanbanApp.directive('proceduresBoard', function () {
                     size: 'sm'
                 });
             };
+            $scope.openBoardDelete = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/procedure/partials/board-delete-confirm.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
+                        function ($scope, teamsService, timerMessageService, $location, $uibModalInstance) {
+                            $scope.board = proceduresScope.board;
+                            $scope.deleteButtonText = "删除";
+                            $scope.deleteBoard = function () {
+                                $scope.deleteButtonText = "删除中..";
+                                $scope.isDisableBoardSaveButton = true;
+                                var boardPromise = boardsService.deleteBoard(proceduresScope.board);
+                                boardPromise.then(function (_board) {
+                                    timerMessageService.message("看板【" + $scope.board.name + "】已经删除,马上为你跳转..");
+                                    var dashboardLink = localStorageService.get("identity.userName") + '/dashboard';
+                                    $uibModalInstance.dismiss('cancel');
+                                    $location.path(dashboardLink);
+                                }).finally(function () {
+                                    $scope.deleteButtonText = "删除";
+                                    $scope.deleteButtonText = false;
+                                });
+                            }
+                        }],
+                    size: 'sm'
+                });
+            };
+
         }]
     };
 });

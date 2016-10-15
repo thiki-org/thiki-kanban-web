@@ -18,7 +18,7 @@ kanbanApp.factory('boardsService', ['$http', '$q', 'httpServices',
                 return httpServices.put(_board, _board._links.self.href);
             },
             deleteBoard: function (_board) {
-                return httpServices.post(_board, _board._links.self.href);
+                return httpServices.delete(_board._links.self.href);
             }
         };
     }]);

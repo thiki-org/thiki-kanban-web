@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">看板删除确认</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <input name="boardName" data-ng-model="boardName" type="text" class="form-control"
+               placeholder="输入待删除的看板的名称" autocomplete="off"/>
+    </div>
+</div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary accept-invitation-button"
+            ng-disabled="boardName==undefined||(boardName != board.name)||isDisabledDeleteButton"
+            type="button" ng-click="deleteBoard()">{{deleteButtonText}}
+    </button>
+</div>
+
