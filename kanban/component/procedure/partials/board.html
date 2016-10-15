@@ -1,0 +1,16 @@
+<div id="board-options">
+    <span id="board-name">
+        {{board.name}}
+    </span>
+
+    <div class="board-operation-menu dropdown">
+        <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="true">
+            <span class="thiki-setting glyphicon glyphicon-cog"></span>
+        </button>
+        <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
+            <li class="thiki-menu-item" ng-click="openTeamsDialog()"><a>所属团队</a></li>
+            <li class="thiki-menu-item" ng-click="openBoardConfiguration()"><a>配置</a></li>
+        </ul>
+    </div>
+</div>

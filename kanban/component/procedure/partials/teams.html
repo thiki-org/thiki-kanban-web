@@ -17,8 +17,8 @@
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
     <button class="btn btn-primary accept-invitation-button"
-            ng-disabled="selectedTeamName==undefined||(selectedTeamName != teams.selected.name)"
-            type="button" ng-click="archiveBoard()">变更所有权
+            ng-disabled="selectedTeamName==undefined||(selectedTeamName != teams.selected.name)||isDisabledArchiveButton"
+            type="button" ng-click="archiveBoard()">{{archiveButtonText}}
     </button>
 </div>
 

@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">看板配置</h3>
+</div>
+<div class="modal-body">
+    <form name="boardForm">
+        <div class="form-group">
+            <input name="boardName" type="text" class="form-control" data-ng-model="board.name"
+                   focus="true" placeholder="看板名称" autocomplete="off"
+                   required/>
+            <div class="validation-error-message"
+                 ng-show="boardForm.invitee.$error.required && boardForm.invitee.$dirty">请确定看板名称
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="saveBoard()"
+            ng-disabled="(!boardForm.$dirty)||boardForm.$invalid||isDisableBoardSaveButton">{{boardSaveButton}}
+    </button>
+</div>
+
