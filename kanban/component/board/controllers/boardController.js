@@ -10,11 +10,6 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
         boardPromise.then(function (data) {
             $scope.boards = data;
         });
-
-        $scope.toProcedures = function (_boardId, _boardLink) {
-            localStorageService.set("boardLink", _boardLink);
-            $location.path('/boards/' + _boardId);
-        };
         $scope.displayBoardCreationForm = true;
         $scope.displayForm = false;
         $scope.createBoard = function () {
