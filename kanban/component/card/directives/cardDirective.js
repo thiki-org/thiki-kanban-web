@@ -119,7 +119,8 @@ kanbanApp.directive('card', function ($uibModal) {
                             $uibModalInstance.dismiss('cancel');
                         };
                     },
-                    size: 'sm'
+                    size: 'sm',
+                    backdrop: "static"
                 });
             };
 
