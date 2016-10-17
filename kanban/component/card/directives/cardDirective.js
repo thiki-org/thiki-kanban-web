@@ -77,11 +77,15 @@ kanbanApp.directive('card', function ($uibModal) {
                                     timerMessageService.message("配置已经更新");
                                     cardScope.card = _card;
                                     $scope.card = _card;
+
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
                                     $scope.isDisableCardSaveButton = false;
                                 });
-                            }
+                            };
+                            $scope.cancel = function () {
+                                $uibModalInstance.dismiss('cancel');
+                            };
                         }],
                     size: 'mid'
                 });
