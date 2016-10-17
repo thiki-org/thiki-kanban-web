@@ -7,7 +7,7 @@
     <div class="dropdown procedure-menu thiki-animation" ng-show="displayProcedureMenu">
         <span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">▼</span>
         <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li class="thiki-menu-item"><a ng-click="open(procedure.title,procedure._links.self.href)">设置</a></li>
+            <li class="thiki-menu-item"><a ng-click="openProcedureConfiguration()">配置</a></li>
             <li role="separator" class="divider"></li>
             <li class="thiki-menu-item thiki-delete-item"><a
                     ng-click="openModal(procedure.title,procedure._links.self.href)">删除</a>

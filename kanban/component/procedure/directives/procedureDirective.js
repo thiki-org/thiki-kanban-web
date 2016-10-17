@@ -56,6 +56,33 @@ kanbanApp.directive('procedure', function ($uibModal) {
             $scope.open = function () {
                 $scope.displayProcedureMenu = false;
             };
+            var proceduresScope = $scope;
+            $scope.openProcedureConfiguration = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/procedure/partials/procedure-configuration.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                            $scope.procedure = proceduresScope.procedure;
+                            $scope.procedureSaveButton = "保存";
+                            $scope.saveProcedure = function () {
+                                $scope.procedureSaveButton = "保存中..";
+                                $scope.isDisableProcedureSaveButton = true;
+                                var procedurePromise = proceduresServices.update($scope.procedure);
+                                procedurePromise.then(function (_procedure) {
+                                    timerMessageService.message("配置已经更新");
+                                    proceduresScope.procedure = _procedure;
+                                    $scope.procedure = _procedure;
+                                    $uibModalInstance.dismiss('cancel');
+                                }).finally(function () {
+                                    $scope.procedureSaveButton = "保存";
+                                    $scope.isDisableProcedureSaveButton = false;
+                                });
+                            }
+                        }],
+                    size: 'sm'
+                });
+            };
         }]
     };
 });
