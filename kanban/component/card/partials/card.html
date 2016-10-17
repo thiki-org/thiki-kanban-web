@@ -1,6 +1,6 @@
 <div class="card" ng-mouseover="mouseover($event)"
      ng-mouseleave="onMouseLeave($event)">
-    <div class="card-summary" editable-textarea="card.summary" onbeforesave="updateCard($data,card)">
+    <div class="card-summary" ng-click="openCardConfiguration()">
         {{card.summary}}
     </div>
     <div class="card-operations">

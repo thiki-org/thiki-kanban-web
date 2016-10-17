@@ -60,6 +60,32 @@ kanbanApp.directive('card', function ($uibModal) {
                 });
             };
 
+            var cardScope = $scope;
+            $scope.openCardConfiguration = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/card/partials/card-configuration.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                            $scope.card = cardScope.card;
+                            $scope.cardSaveButton = "保存";
+                            $scope.saveCard = function () {
+                                $scope.cardSaveButton = "保存中..";
+                                $scope.isDisableCardSaveButton = true;
+                                var cardPromise = cardsServices.update($scope.card);
+                                cardPromise.then(function (_card) {
+                                    timerMessageService.message("配置已经更新");
+                                    cardScope.card = _card;
+                                    $scope.card = _card;
+                                }).finally(function () {
+                                    $scope.cardSaveButton = "保存";
+                                    $scope.isDisableCardSaveButton = false;
+                                });
+                            }
+                        }],
+                    size: 'mid'
+                });
+            };
             $scope.updateCard = function (_summary, _card) {
                 if (_summary === "") {
                     return "卡片描述不能为空";

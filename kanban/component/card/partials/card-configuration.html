@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h3 class="modal-title">卡片配置</h3>
+</div>
+<div class="modal-body">
+    <form name="cardForm">
+        <div class="form-group">
+            <label for="cardSummary">卡片概要</label>
+            <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
+                      data-ng-model="card.summary"
+                      focus="true" placeholder="看板名称" autocomplete="off"
+                      required/>
+            <div class="validation-error-message"
+                 ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请确定看板名称
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="saveCard()"
+            ng-disabled="(!cardForm.$dirty)||cardForm.$invalid||isDisableCardSaveButton">{{cardSaveButton}}
+    </button>
+</div>
+
