@@ -1,28 +1,34 @@
 <div class="acceptanceCriterias">
-    <div class="acceptanceCriterias-items">
+    <div class="acceptanceCriterias-items" ui-sortable="acceptanceCriteriasSortableOptions"
+         data-ng-model="acceptanceCriterias">
+        <div id="acceptanceCriteria-delete-area" class="acceptanceCriteria" ng-show="isShowDeleteArea"
+             data-ng-model="delete"><span
+                class="glyphicon glyphicon-trash"></span>
+        </div>
+
         <acceptance ng-repeat="acceptanceCriteria in acceptanceCriterias"
                     acceptance-criteria="acceptanceCriteria"></acceptance>
-    </div>
-    <div class="tab-card-configuration-save">
-        <form name="acceptanceCriteriaForm" ng-show="isShowAcceptanceCriteriaForm">
-            <div class="form-group">
+        <div class="acceptanceCriteria-creation thiki-animation" data-type="text">
+            <div class="card-create-button" ng-click="openAcceptanceCriteriaCreationForm()"
+                 ng-show="isShowAcceptanceCriteriaCreationButton">
+                +
+            </div>
+            <form name="acceptanceCriteriaForm" ng-show="isShowAcceptanceCriteriaForm">
+                <div class="form-group">
                         <textarea id="acceptanceCriteriaSummary" name="acceptanceCriteriaSummary" rows="3"
                                   class="form-control"
                                   data-ng-model="acceptanceCriteriaSummary"
                                   focus="true" placeholder="验收标准" autocomplete="off"
                                   required/>
-                <div class="validation-error-message"
-                     ng-show="acceptanceCriteriaForm.acceptanceCriteriaSummary.$error.required && acceptanceCriteriaForm.acceptanceCriteriaSummary.$dirty">
-                    请填写卡片概述
                 </div>
-            </div>
-        </form>
-        <button class="btn btn-primary" type="button" ng-click="createAcceptanceCriteria()"
-                ng-disabled="isDisableAcceptanceCriteriaSaveButton">
-            {{acceptanceCriteriaSaveButton}}
-        </button>
-        <button class="btn thiki-secondary-button" ng-show="isShowAcceptanceCriteriaForm" type="button"
-                ng-click="cancel()">放弃
-        </button>
+                <button class="btn btn-primary" type="button" ng-click="addAcceptanceCriteriaCreation()"
+                        ng-disabled="acceptanceCriteriaForm.$invalid||isDisableAcceptanceCriteriaSaveButton">
+                    {{acceptanceCriteriaSaveButton}}
+                </button>
+                <button class="btn thiki-secondary-button" ng-show="isShowAcceptanceCriteriaForm" type="button"
+                        ng-click="cancelCreateAcceptanceCriteria()">放弃
+                </button>
+            </form>
+        </div>
     </div>
 </div>
