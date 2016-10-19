@@ -1,0 +1,28 @@
+<div class="acceptanceCriterias">
+    <div class="acceptanceCriterias-items">
+        <acceptance ng-repeat="acceptanceCriteria in acceptanceCriterias"
+                    acceptance-criteria="acceptanceCriteria"></acceptance>
+    </div>
+    <div class="tab-card-configuration-save">
+        <form name="acceptanceCriteriaForm" ng-show="isShowAcceptanceCriteriaForm">
+            <div class="form-group">
+                        <textarea id="acceptanceCriteriaSummary" name="acceptanceCriteriaSummary" rows="3"
+                                  class="form-control"
+                                  data-ng-model="acceptanceCriteriaSummary"
+                                  focus="true" placeholder="验收标准" autocomplete="off"
+                                  required/>
+                <div class="validation-error-message"
+                     ng-show="acceptanceCriteriaForm.acceptanceCriteriaSummary.$error.required && acceptanceCriteriaForm.acceptanceCriteriaSummary.$dirty">
+                    请填写卡片概述
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-primary" type="button" ng-click="createAcceptanceCriteria()"
+                ng-disabled="isDisableAcceptanceCriteriaSaveButton">
+            {{acceptanceCriteriaSaveButton}}
+        </button>
+        <button class="btn thiki-secondary-button" ng-show="isShowAcceptanceCriteriaForm" type="button"
+                ng-click="cancel()">放弃
+        </button>
+    </div>
+</div>

@@ -2,23 +2,37 @@
     <h3 class="modal-title">卡片配置</h3>
 </div>
 <div class="modal-body">
-    <form name="cardForm">
-        <div class="form-group">
-            <label for="cardSummary">卡片概要</label>
-            <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
-                      data-ng-model="card.summary"
-                      focus="true" placeholder="看板名称" autocomplete="off"
-                      required/>
-            <div class="validation-error-message"
-                 ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请确定看板名称
+    <uib-tabset>
+        <uib-tab index="0" heading="基本信息">
+            <div class="tab-card-basic-info">
+                <form name="cardForm">
+                    <div class="form-group">
+                        <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
+                                  data-ng-model="card.summary"
+                                  focus="true" placeholder="卡片概要" autocomplete="off"
+                                  required/>
+                        <div class="validation-error-message"
+                             ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
+                        </div>
+                    </div>
+                </form>
+
+                <div class="tab-card-configuration-save">
+                    <button class="btn btn-primary" type="button" ng-click="saveCard()"
+                            ng-disabled="(!cardForm.$dirty)||cardForm.$invalid||isDisableCardSaveButton">
+                        {{cardSaveButton}}
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary" type="button" ng-click="saveCard()"
-            ng-disabled="(!cardForm.$dirty)||cardForm.$invalid||isDisableCardSaveButton">{{cardSaveButton}}
-    </button>
-    <button class="btn thiki-secondary-button" type="button" ng-click="cancel()">放弃</button>
+        </uib-tab>
+        <uib-tab index="1" heading="验收标准">
+            <div class="tab-acceptance-criterias">
+                <acceptance-criterias card="card"/>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="评论">
+
+        </uib-tab>
+    </uib-tabset>
 </div>
 
