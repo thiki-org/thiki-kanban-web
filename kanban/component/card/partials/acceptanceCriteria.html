@@ -4,9 +4,14 @@
     </div>
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished==true?'finished' : ''"
-         data-type="text" e-rows="3" e-cols="30" editable-textarea="acceptanceCriteria.summary"
+         data-type="text" e-rows="3" e-cols="30" e-maxlength="200" editable-textarea="acceptanceCriteria.summary"
          e-ng-click="open($event,'$data')"
-         onbeforesave="updateProcedure($data,procedure)"> {{acceptanceCriteria.summary}}
+         onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)"> {{acceptanceCriteria.summary}}
+    </div>
+    <div class="acceptanceCriteria-delete" ng-mouseover="onMouseOver($event)"
+         ng-mouseleave="onMouseLeave($event)">
+        <span class="glyphicon glyphicon-trash" ng-show="isShowDeleteButton"
+              ng-click="deleteAcceptanceCriteria()"></span>
     </div>
 </div>
 

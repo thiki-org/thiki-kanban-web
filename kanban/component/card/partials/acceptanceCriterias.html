@@ -1,13 +1,9 @@
 <div class="acceptanceCriterias">
     <div class="acceptanceCriterias-items" ui-sortable="acceptanceCriteriasSortableOptions"
          data-ng-model="acceptanceCriterias">
-        <div id="acceptanceCriteria-delete-area" class="acceptanceCriteria" ng-show="isShowDeleteArea"
-             data-ng-model="delete"><span
-                class="glyphicon glyphicon-trash"></span>
-        </div>
+        <acceptance-criteria ng-repeat="acceptanceCriteria in acceptanceCriterias |orderBy:'sortNumber'"
+                             acceptance-criteria="acceptanceCriteria"></acceptance-criteria>
 
-        <acceptance ng-repeat="acceptanceCriteria in acceptanceCriterias"
-                    acceptance-criteria="acceptanceCriteria"></acceptance>
         <div class="acceptanceCriteria-creation thiki-animation" data-type="text">
             <div class="card-create-button" ng-click="openAcceptanceCriteriaCreationForm()"
                  ng-show="isShowAcceptanceCriteriaCreationButton">

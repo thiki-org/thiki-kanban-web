@@ -13,28 +13,36 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
         controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
             $scope.acceptanceCriteriaSaveButton = "保存";
             $scope.isShowAcceptanceCriteriaForm = false;
-            var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
-            acceptanceCriterias.then(function (_acceptanceCriterias) {
-                $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
-                $scope.acceptanceCriteriasSortableOptions = {
-                    connectWith: ".acceptanceCriteria",
-                    placeholder: "acceptanceCriteria-drag-placeholder",
-                    start: function (e, ui) {
-                        console.log("staring sort.");
-                        $scope.isShowDeleteArea = true;
-                    },
-                    update: function (e, ui) {
-                        console.log("updating sort.");
-                        console.log(ui);
-                        $scope.isShowDeleteArea = true;
-                    },
-                    stop: function (e, ui) {
-                        console.log("stopping sort.");
-                        $scope.isShowDeleteArea = false;
-                    }
-                };
-            });
 
+            $scope.loadAcceptanceCriterias = function () {
+                var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
+                acceptanceCriterias.then(function (_acceptanceCriterias) {
+                    $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
+                    $scope.acceptanceCriteriasSortableOptions = {
+                        connectWith: ".acceptanceCriteria",
+                        placeholder: "acceptanceCriteria-drag-placeholder",
+                        start: function (e, ui) {
+                            console.log("staring sort.");
+                        },
+                        update: function (e, ui) {
+                            console.log("updating sort.");
+                            console.log(ui);
+                        },
+                        stop: function (e, ui) {
+                            console.log("stopping sort.");
+                            console.log(ui);
+
+                            var acceptanceCriterias = ui.item.sortable.sourceModel;
+                            for (var index in acceptanceCriterias) {
+                                acceptanceCriterias[index].sortNumber = index;
+                            }
+                            var sortNumbersLink = _acceptanceCriterias._links.sortNumbers.href;
+                            acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink);
+                        }
+                    };
+                });
+            };
+            $scope.loadAcceptanceCriterias();
             $scope.isShowAcceptanceCriteriaCreationButton = true;
             $scope.isDisableAcceptanceCriteriaSaveButton = false;
             $scope.openAcceptanceCriteriaCreationForm = function () {
@@ -51,7 +59,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 var acceptanceCriteria = {summary: $scope.acceptanceCriteriaSummary};
                 var acceptanceCriteriaPromise = acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href);
                 acceptanceCriteriaPromise.then(function (_acceptanceCriteria) {
-                    $scope.acceptanceCriterias.push(_acceptanceCriteria);
+                    $scope.loadAcceptanceCriterias();
                     $scope.isShowAcceptanceCriteriaForm = false;
                     $scope.isShowAcceptanceCriteriaCreationButton = true;
                     $scope.acceptanceCriteriaSummary = "";

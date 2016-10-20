@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 10/18/16.
  */
-kanbanApp.directive('acceptance', function () {
+kanbanApp.directive('acceptanceCriteria', function () {
     return {
         restrict: 'E',
         templateUrl: 'component/card/partials/acceptanceCriteria.html',
@@ -17,6 +17,25 @@ kanbanApp.directive('acceptance', function () {
                 }
                 acceptanceCriteriaService.update($scope.acceptanceCriteria);
             });
+            $scope.updateAcceptanceCriteria = function (_summary) {
+                $scope.acceptanceCriteria.summary = _summary;
+                acceptanceCriteriaService.update($scope.acceptanceCriteria);
+            };
+
+            $scope.isShowDeleteButton = false;
+            $scope.onMouseOver = function () {
+                $scope.isShowDeleteButton = true;
+            };
+
+            $scope.onMouseLeave = function () {
+                $scope.isShowDeleteButton = false;
+            };
+            $scope.deleteAcceptanceCriteria = function () {
+                var acceptanceCriteriaPromise = acceptanceCriteriaService.delete($scope.acceptanceCriteria);
+                acceptanceCriteriaPromise.then(function () {
+                    $scope.$parent.loadAcceptanceCriterias();
+                });
+            }
         }]
     };
 });
