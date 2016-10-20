@@ -11,9 +11,12 @@ kanbanApp.directive('acceptance', function () {
             acceptanceCriteria: '='
         },
         controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
-
+            $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {
+                if (oldValue === newValue) {
+                    return;
+                }
+                acceptanceCriteriaService.update($scope.acceptanceCriteria);
+            });
         }]
     };
 });
-
-
