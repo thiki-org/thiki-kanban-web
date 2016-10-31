@@ -1,7 +1,7 @@
 /* Services */
 
-kanbanApp.factory('proceduresServices', ['$http', '$q',
-    function ($http, $q) {
+kanbanApp.factory('proceduresServices', ['$http', '$q', 'httpServices',
+    function ($http, $q, httpServices) {
         return {
             proceduresLink: '',
             load: function () {
@@ -65,6 +65,9 @@ kanbanApp.factory('proceduresServices', ['$http', '$q',
                     deferred.reject(data);   // 声明执行失败，即服务器返回错误
                 });
                 return deferred.promise;   // 返回承诺，这里并不是最终数据，而是访问最终数据的API
+            },
+            resort: function (_procedures, _resortLink) {
+                return httpServices.put(_procedures, _resortLink);
             }
         };
     }]);

@@ -4,10 +4,7 @@
 
 kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcomeServices', 'publicKeyServices', 'localStorageService', '$uibModal',
     function ($scope, $location, $q, welcomeServices, publicKeyServices, localStorageService, $uibModal) {
-        var entrancePromise = welcomeServices.loadEntrance(kanbanApp.romote_entrance);
-        var entrance;
-        entrancePromise.then(function (_entranceData) {
-            entrance = _entranceData;
+        welcomeServices.loadEntrance(kanbanApp.romote_entrance).then(function (_entranceData) {
             localStorageService.set("entranceData", _entranceData);
             localStorageService.set("publicKeyLink", _entranceData._links.publicKey.href);
         });

@@ -29,7 +29,7 @@ kanbanApp.directive('cardCreation', function () {
                     var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
 
                     _cardsPromise.then(function (data) {
-                        $scope.cards = data;
+                        $scope.cards = data.cards;
                         $scope.displayCreationButton = true;
                         $scope.displayForm = false;
                     });

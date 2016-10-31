@@ -15,8 +15,8 @@ kanbanApp.directive('procedures', function () {
                     $scope.board = _board;
                     proceduresServices.proceduresLink = _board._links.procedures.href;
                     var proceduresPromise = proceduresServices.load(_board._links.procedures.href);
-                    proceduresPromise.then(function (data) {
-                        $scope.procedures = data;
+                    proceduresPromise.then(function (_data) {
+                        $scope.procedures = _data.procedures;
                         $scope.procedureSortableOptions = {
                             connectWith: ".procedure-item",
                             opacity: 0.5,
@@ -26,21 +26,21 @@ kanbanApp.directive('procedures', function () {
                             },
                             update: function (e, ui) {
                                 console.log("updating sort.");
-
                             },
                             stop: function (e, ui) {
                                 if (ui.item.sortable.droptarget === undefined) {
                                     return;
                                 }
-                                ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                                var _procedurePromise = proceduresServices.update(ui.item.sortable.model);
-                                _procedurePromise.then(function (data) {
-                                    $scope.loadProcedures();
-                                });
+
+                                var procedures = ui.item.sortable.sourceModel;
+                                for (var index in procedures) {
+                                    procedures[index].sortNumber = index;
                                 }
+                                var sortNumbersLink = _data._links.sortNumbers.href;
+                                proceduresServices.resort(procedures, sortNumbersLink);
+                            }
                         };
-                        }
-                    );
+                    });
                 });
             };
             $scope.loadProcedures();

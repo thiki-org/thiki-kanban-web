@@ -1,6 +1,6 @@
 /* App Module */
 var config = {
-    localhost: 'http://localhost:8080'
+    localhost: 'http://localhost:8096'
 };
 
 var kanbanApp = angular.module('kanbanApp', [

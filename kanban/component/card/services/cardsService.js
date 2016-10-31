@@ -13,6 +13,9 @@ kanbanApp.factory('cardsServices', ['$http', '$q', 'httpServices', function ($ht
         },
         deleteByLink: function (_link) {
             return httpServices.delete(_link);
+        },
+        resort: function (_cards, _resortLink) {
+            return httpServices.put(_cards, _resortLink);
         }
     };
 }]);

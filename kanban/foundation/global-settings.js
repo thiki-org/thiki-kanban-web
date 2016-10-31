@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 6/18/16.
  */
-kanbanApp.romote_entrance = "http://localhost:8080/entrance";
+kanbanApp.romote_entrance = "http://localhost:8096/entrance";
 
 kanbanApp.run(function (editableOptions, localStorageService) {
     editableOptions.theme = 'bs3';

@@ -11,8 +11,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var procedure = $scope.procedure;
                 var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
 
-                _cardsPromise.then(function (data) {
-                    $scope.cards = data;
+                _cardsPromise.then(function (_data) {
+                    $scope.cards = _data.cards;
                     $scope.sortableOptions = {
                         connectWith: ".cards",
                         opacity: 0.5,
@@ -30,16 +30,24 @@ kanbanApp.directive('cards', function ($uibModal) {
                             if (ui.item.sortable.droptarget === undefined) {
                                 return;
                             }
-                            var targetProcedureId = $(ui.item.sortable.droptarget[0]).parent().attr("procedureId");
-                            if (targetProcedureId == ui.item.sortable.model.procedureId) {
-                                return;
+                            var sourceModelCards = ui.item.sortable.sourceModel;
+                            var droptargetModelCards = ui.item.sortable.droptargetModel;
+                            var sourceProcedureId = ui.item.sortable.source.parent().attr("procedureId");
+                            var targetProcedureId = ui.item.sortable.droptarget[0].parentNode.getAttribute("procedureId");
+                            for (var index in sourceModelCards) {
+                                sourceModelCards[index].sortNumber = index;
                             }
-                            ui.item.sortable.model.procedureId = targetProcedureId;
-                            ui.item.sortable.model.orderNumber = ui.item.sortable.dropindex;
-                            var _cardsPromise = cardsServices.update(ui.item.sortable.model);
-                            _cardsPromise.then(function (data) {
+                            var cards = sourceModelCards;
+                            if (sourceProcedureId !== targetProcedureId) {
+                                for (var index in droptargetModelCards) {
+                                    droptargetModelCards[index].sortNumber = index;
+                                    droptargetModelCards[index].procedureId = targetProcedureId;
+                                }
+                            }
 
-                            });
+                            cards = cards.concat(droptargetModelCards);
+                            var sortNumbersLink = _data._links.sortNumbers.href;
+                            cardsServices.resort(cards, sortNumbersLink);
                         }
                     };
                 });
@@ -47,10 +55,6 @@ kanbanApp.directive('cards', function ($uibModal) {
 
             $scope.mouseover = function () {
                 $scope.isShowCardCreationButton = true;
-            };
-
-            $scope.onMouseLeave = function () {
-                $scope.isShowCardCreationButton = false;
             };
 
             $scope.loadCards();
