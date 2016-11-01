@@ -19,7 +19,7 @@ kanbanApp.directive('comments', function ($uibModal) {
                 var comments = commentService.loadComments($scope.card._links.comments.href);
                 comments.then(function (_comments) {
                     $scope.comments = _comments.comments;
-                    $scope.commentCount = $scope.comments.length;
+                    $scope.$parent.commentCount = $scope.comments.length;
                 });
             };
             $scope.loadComments();

@@ -18,6 +18,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
                 acceptanceCriterias.then(function (_acceptanceCriterias) {
                     $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
+                    $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                     $scope.acceptanceCriteriasSortableOptions = {
                         connectWith: ".acceptanceCriteria",
                         placeholder: "acceptanceCriteria-drag-placeholder",

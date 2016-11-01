@@ -25,12 +25,19 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab index="1" heading="验收标准">
+        <uib-tab index="1">
+            <uib-tab-heading>
+                验收标准<span class='badge comment-badge'
+                          ng-show='acceptanceCriteriasCount>0'>{{acceptanceCriteriasCount}}</span>
+            </uib-tab-heading>
             <div class="tab-acceptance-criterias">
                 <acceptance-criterias card="card"/>
             </div>
         </uib-tab>
-        <uib-tab index="2" heading="评论{{commentCount}}">
+        <uib-tab index="2">
+            <uib-tab-heading>
+                评论<span class='badge comment-badge' ng-show='commentCount>0'>{{commentCount}}</span>
+            </uib-tab-heading>
             <div class="tab-comments">
                 <comments card="card"/>
             </div>

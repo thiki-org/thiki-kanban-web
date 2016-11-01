@@ -17,7 +17,9 @@ kanbanApp.directive('comment', function () {
             });
             $scope.isShowDeleteButton = false;
             $scope.onMouseOver = function () {
-                $scope.isShowDeleteButton = true;
+                if ($scope.comment._links.self.actions.delete) {
+                    $scope.isShowDeleteButton = true;
+                }
             };
 
             $scope.onMouseLeave = function () {
@@ -26,7 +28,7 @@ kanbanApp.directive('comment', function () {
             $scope.deleteComment = function () {
                 var commentPromise = commentService.delete($scope.comment);
                 commentPromise.then(function () {
-                    $scope.$parent.loadcomments();
+                    $scope.$parent.loadComments();
                 });
             }
         }]
