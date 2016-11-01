@@ -10,7 +10,21 @@ kanbanApp.directive('card', function ($uibModal) {
         scope: {
             card: '='
         },
-        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', function ($scope, localStorageService, assignmentServices, cardsServices) {
+        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService) {
+
+            var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
+            acceptanceCriterias.then(function (_acceptanceCriteriasResponse) {
+                var acceptanceCriterias = _acceptanceCriteriasResponse.acceptanceCriterias;
+                var finishedAcceptanceCriteriasCount = 0;
+                for (var index in acceptanceCriterias) {
+                    if (acceptanceCriterias[index].finished === true) {
+                        finishedAcceptanceCriteriasCount++;
+                    }
+                }
+                $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
+                $scope.card.totalAcceptanceCriteriasCount = acceptanceCriterias.length;
+            });
+
             $scope.assign = function (_card) {
                 var thisScope = $scope;
                 $uibModal.open({

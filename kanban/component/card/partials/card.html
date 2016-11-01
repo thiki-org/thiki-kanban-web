@@ -3,6 +3,7 @@
     <div class="card-summary" ng-click="openCardConfiguration()">
         {{card.summary}}
     </div>
+
     <div class="card-operations">
         <assignments></assignments>
         <div class="dropdown card-menu" ng-show="isShowCardOperationMenu">
@@ -17,5 +18,10 @@
                         ng-click="openDeleteModal(card.summary,card._links.self.href)">删除</a></li>
             </ul>
         </div>
+    </div>
+
+    <div class="card-progress" ng-if="card.totalAcceptanceCriteriasCount>0">
+        <uib-progressbar max="card.totalAcceptanceCriteriasCount"
+                         value="card.finishedAcceptanceCriteriasCount" animate="true"></uib-progressbar>
     </div>
 </div>

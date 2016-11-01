@@ -21,6 +21,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                         finishedAcceptanceCriteriasCount++;
                     }
                 }
+
+                $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
+                $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.$parent.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
             };
 
@@ -86,7 +89,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.isShowAcceptanceCriteriaCreationButton = true;
             }
         }]
-    };
-});
+    }
+        ;
+})
+;
 
 
