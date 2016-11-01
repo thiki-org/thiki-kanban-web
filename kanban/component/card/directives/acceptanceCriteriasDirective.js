@@ -14,11 +14,22 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             $scope.acceptanceCriteriaSaveButton = "保存";
             $scope.isShowAcceptanceCriteriaForm = false;
 
+            $scope.updateAcceptanceCriteriasCount = function () {
+                var finishedAcceptanceCriteriasCount = 0;
+                for (var index in $scope.acceptanceCriterias) {
+                    if ($scope.acceptanceCriterias[index].finished === true) {
+                        finishedAcceptanceCriteriasCount++;
+                    }
+                }
+                $scope.$parent.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
+            };
+
             $scope.loadAcceptanceCriterias = function () {
                 var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
                 acceptanceCriterias.then(function (_acceptanceCriterias) {
                     $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
                     $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
+                    $scope.updateAcceptanceCriteriasCount();
                     $scope.acceptanceCriteriasSortableOptions = {
                         connectWith: ".acceptanceCriteria",
                         placeholder: "acceptanceCriteria-drag-placeholder",
@@ -52,7 +63,6 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             };
 
             $scope.addAcceptanceCriteriaCreation = function () {
-
                 $scope.isShowAcceptanceCriteriaCreationButton = false;
                 $scope.isDisableAcceptanceCriteriaSaveButton = true;
                 $scope.acceptanceCriteriaSaveButton = "保存中..";

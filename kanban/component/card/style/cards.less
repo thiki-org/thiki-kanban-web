@@ -271,23 +271,29 @@ button, input, select, textarea {
 }
 
 .comment {
-  margin: 7px;
   min-height: 80px;
   padding-top: 6px;
   display: flex;
-  background: ivory;
+  border-bottom: 1px solid #ccc;
+  margin: 7px 7px 10px;
 }
 
 .comment-avatar {
   margin: 2px 5px 5px;
   float: left;
   border-radius: 5px;
-  width: 8%;
+  width: 6%;
   max-width: 150px;
+}
+
+.comment-user-avatar-img {
+  height: 40px;
+  width: 40px;
 }
 
 .comment-creation-time.ng-binding {
   font-size: 12px;
+  color: #969393;
 }
 
 .comment-summary {
@@ -299,6 +305,7 @@ button, input, select, textarea {
   margin-right: 5px;
   padding-bottom: 10px;
   height: auto;
+  font-size: 12px;
 }
 
 .comment-delete {
@@ -315,4 +322,14 @@ button, input, select, textarea {
 
 span.badge.comment-badge.ng-binding {
   margin-left: 5px;
+}
+
+span.badge.acceptance-criteria-all-finished-badge.ng-binding {
+  margin-left: 5px;
+  background-color: #64bd63 !important;
+}
+
+span.badge.acceptance-criteria-un-finished-badge.ng-binding {
+  margin-left: 5px;
+  background-color: @base !important;
 }

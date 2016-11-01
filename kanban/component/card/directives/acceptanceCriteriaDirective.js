@@ -15,6 +15,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
                 if (oldValue === newValue) {
                     return;
                 }
+                $scope.$parent.updateAcceptanceCriteriasCount();
                 acceptanceCriteriaService.update($scope.acceptanceCriteria);
             });
             $scope.updateAcceptanceCriteria = function (_summary) {
