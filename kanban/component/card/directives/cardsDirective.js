@@ -57,6 +57,7 @@ kanbanApp.directive('cards', function ($uibModal) {
                 $scope.isShowCardCreationButton = true;
             };
 
+            $scope.commentCount = 0;
             $scope.loadCards();
         }]
     };

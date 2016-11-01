@@ -1,0 +1,17 @@
+<div class="comment">
+    <div class="comment-avatar">
+        <img class="team-member-avatar-img" ng-src="{{avatar}}"/>
+    </div>
+    <div class="comment-summary">
+
+        <div class="comment-creation-time">{{comment.creationTime}}</div>
+        <div class="comment-summary-text">{{comment.summary}}
+        </div>
+    </div>
+    <div class="comment-delete" ng-mouseover="onMouseOver($event)"
+         ng-mouseleave="onMouseLeave($event)">
+        <span class="glyphicon glyphicon-trash" ng-show="isShowDeleteButton"
+              ng-click="deleteComment()"></span>
+    </div>
+</div>
+

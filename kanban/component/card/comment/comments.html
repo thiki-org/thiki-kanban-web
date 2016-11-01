@@ -1,0 +1,29 @@
+<div class="comments">
+    <div class="comments-items" data-ng-model="comments">
+        <comment ng-repeat="comment in comments |orderBy:'creationTime'"
+                 comment="comment"></comment>
+
+        <div class="comment-creation thiki-animation" data-type="text">
+            <div class="card-create-button" ng-click="openCommentCreationForm()"
+                 ng-show="isShowCommentCreationButton">
+                +
+            </div>
+            <form name="commentForm" ng-show="isShowCommentForm">
+                <div class="form-group">
+                        <textarea id="commentSummary" name="commentSummary" rows="3"
+                                  class="form-control"
+                                  data-ng-model="commentSummary"
+                                  focus="true" placeholder="你的看法" autocomplete="off"
+                                  required maxlength="200"/>
+                </div>
+                <button class="btn btn-primary" type="button" ng-click="addCommentCreation()"
+                        ng-disabled="commentForm.$invalid||isDisableCommentSaveButton">
+                    {{commentSaveButton}}
+                </button>
+                <button class="btn thiki-secondary-button" ng-show="isShowCommentForm" type="button"
+                        ng-click="cancelCreateComment()">放弃
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
