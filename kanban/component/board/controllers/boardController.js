@@ -5,7 +5,6 @@
 kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal',
     function ($scope, $location, $q, boardsService, localStorageService, $uibModal) {
         var boardsLink = localStorageService.get("user.links").boards.href;
-        var boardsPromise = boardsService.load(boardsLink);
         boardsService.boardsLink = boardsLink;
         var uploadWorkTileTasksLink;
 
@@ -18,24 +17,6 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
         };
         $scope.loadBoards();
         $scope.displayBoardCreationForm = true;
-        $scope.displayForm = false;
-        $scope.createBoard = function () {
-            if ($scope.name === undefined || $scope.name === "") {
-                $scope.isShowNameError = true;
-                return;
-            }
-            var name = $scope.name;
-            var board = {name: name};
-            var entriesPromise = boardsService.create(board);
-            entriesPromise.then(function (data) {
-                if ($scope.boards === null) {
-                    $scope.boards = [];
-                }
-                $scope.boards.push(data);
-                $scope.cancelCreateBoard();
-                $scope.name = "";
-            });
-        };
         $scope.keyPress = function ($event) {
             if ($event.keyCode == 13) {
                 $scope.createBoard();
@@ -51,6 +32,36 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                 animation: false,
                 templateUrl: 'component/board/partials/board-creation-type.html',
                 controller: function ($scope, $uibModalInstance) {
+                    $scope.openPersonalBoardCreationDialog = function () {
+                        $uibModalInstance.dismiss('cancel');
+                        $uibModal.open({
+                            animation: false,
+                            templateUrl: 'component/board/partials/personal-board-creation.html',
+                            controller: function ($scope, $uibModalInstance, timerMessageService) {
+                                $scope.creationButtonText = "创建";
+                                $scope.isDisableCreationButton = false;
+                                $scope.boardName = "";
+                                $scope.createBoard = function () {
+                                    $scope.creationButtonText = "创建中..";
+                                    $scope.isDisableCreationButton = false;
+
+                                    var board = {name: $scope.boardName};
+                                    boardsService.create(board).then(function (data) {
+                                        timerMessageService.message("创建成功，正在更新数据。");
+                                        $uibModalInstance.dismiss('cancel');
+                                        boardsScope.loadBoards();
+                                    }).finally(function () {
+                                        $scope.creationButtonText = "创建";
+                                        $scope.isDisableCreationButton = true;
+                                    });
+                                };
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: 'sm'
+                        });
+                    };
                     $scope.openWorktileDialog = function () {
                         $uibModalInstance.dismiss('cancel');
                         $uibModal.open({
@@ -88,15 +99,5 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                 },
                 size: 'board'
             });
-        };
-
-
-        $scope.showBoardCreationForm = function () {
-            $scope.displayBoardCreationForm = false;
-            $scope.displayForm = true;
-        };
-        $scope.cancelCreateBoard = function () {
-            $scope.displayBoardCreationForm = true;
-            $scope.displayForm = false;
         };
     }]);

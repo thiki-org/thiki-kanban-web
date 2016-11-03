@@ -10,21 +10,4 @@
     <div class="board-item board-creation" data-mode="inline" ng-show="displayBoardCreationForm">
         <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click=openBoardCreationDialog()>添加一个看板</div>
     </div>
-    <div ng-show="displayForm">
-        <div id="create-new-entry">
-            <form name="createBoardForm" class="create-board-form">
-                <div class="input-group  creation-box"
-                     ng-class="{'has-error': createBoardForm.name.$invalid && !createBoardForm.name.$pristine}">
-                    <input name="name" type="text" class="form-control" data-ng-model="name"
-                           ng-keydown="keyPress($event)" focus="displayForm" required autocomplete="off"/>
-                </div>
-                <div class="thiki-form-buttons">
-                    <button type="button" class="thiki-submit-button btn btn-primary"
-                            ng-click="createBoard()" ng-disabled="createBoardForm.name.$invalid">创建</span>
-                    </button>
-                    <div class="thiki-cancel-button" ng-click="cancelCreateBoard()">取消</div>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
