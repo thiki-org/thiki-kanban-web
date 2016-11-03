@@ -15,6 +15,7 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
             var membersPromise = teamsService.loadMembers(membersLink);
 
             membersPromise.then(function (_data) {
+                $scope.currentUserMemberLink = _data._links.member.href;
                 $scope.members = _data.members;
                 $scope.invitationLink = _data._links.invitation.href;
 
@@ -31,25 +32,51 @@ kanbanApp.controller('teamController', ['$scope', '$location', '$q', 'teamsServi
                     timerMessageService.message("团队信息已经更新。");
                 });
             };
-            $scope.openInvitationForm = function () {
+            $scope.openLeaveForm = function () {
                 var teamScope = $scope;
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/team/partials/member-invitation.html',
                     controller: function ($scope, $uibModalInstance) {
-                        $scope.isDisableInvitationButton = false;
-                        $scope.invitationButtonText = "邀请";
+                        $scope.isDisableLeaveButton = false;
+                        $scope.leaveButtonText = "邀请";
                         $scope.invite = function () {
-                            $scope.invitationButtonText = "邀请中..";
-                            $scope.isDisableInvitationButton = true;
+                            $scope.leaveButtonText = "邀请中..";
+                            $scope.isDisableLeaveButton = true;
                             var invitation = {invitee: $scope.invitee};
                             var invitationPromise = teamsService.invite(invitation, teamScope.invitationLink);
                             invitationPromise.then(function () {
                                 $uibModalInstance.dismiss('cancel');
                                 timerMessageService.message("邀请成功,邀请函已经发出。");
                             }).finally(function () {
-                                $scope.invitationButtonText = "邀请";
-                                $scope.isDisableInvitationButton = false;
+                                $scope.leaveButtonText = "邀请";
+                                $scope.isDisableLeaveButton = false;
+                            });
+                        };
+                    },
+                    size: 'sm'
+                });
+            };
+            $scope.openLeaveTeamDialog = function () {
+                var teamScope = $scope;
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/team/partials/leave-team.html',
+                    controller: function ($scope, $uibModalInstance, teamMembersService) {
+                        $scope.team = teamScope.team;
+                        $scope.isDisableLeaveButton = false;
+                        $scope.leaveButtonText = "离开";
+                        $scope.leaveTeam = function () {
+                            $scope.leaveButtonText = "稍等..";
+                            $scope.isDisableLeaveButton = true;
+                            teamMembersService.leave(teamScope.currentUserMemberLink)
+                                .then(function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                    timerMessageService.message("你已经离开该团队。");
+                                    $location.path(localStorageService.get('identity.userName') + "/teams");
+                                }).finally(function () {
+                                $scope.leaveButtonText = "离开";
+                                $scope.isDisableLeaveButton = false;
                             });
                         };
                     },
