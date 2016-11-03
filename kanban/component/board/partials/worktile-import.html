@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3 class="modal-title">从worktile导入</h3>
+</div>
+<div class="modal-body">
+    <div id="board-creation-types-selection">
+        <span class="btn btn-default btn-file">
+    选择worktile导出文件 <input type="file" accept="json" ngf-select="updateTasksFile($file, $invalidFiles)"
+                          ngf-max-height="1000" ngf-max-size="1MB"/>
+</span>
+        {{file.name}}
+    </div>
+
+
+</div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary thiki-delete-button" type="button" ng-click="uploadTasksFile()"
+            ng-disabled="isDisableImportButton">{{importButtonText}}
+    </button>
+</div>

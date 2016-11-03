@@ -12,7 +12,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'mgcrea.ngStrap',
     'ui.select',
     'ngSanitize',
-    'uiSwitch'
+    'uiSwitch',
+    'ngFileUpload'
 ]);
 
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',

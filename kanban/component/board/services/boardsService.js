@@ -19,6 +19,9 @@ kanbanApp.factory('boardsService', ['$http', '$q', 'httpServices',
             },
             deleteBoard: function (_board) {
                 return httpServices.delete(_board._links.self.href);
+            },
+            uploadWorkTileTasks: function (_tasksFile, _worktileLink) {
+                return httpServices.upload("worktileTasks", _tasksFile, _worktileLink);
             }
         };
     }]);

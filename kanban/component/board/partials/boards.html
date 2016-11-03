@@ -8,7 +8,7 @@
            data-ng-model="board" board="board">
     </board>
     <div class="board-item board-creation" data-mode="inline" ng-show="displayBoardCreationForm">
-        <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click=showBoardCreationForm()>添加一个看板</div>
+        <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click=openBoardCreationDialog()>添加一个看板</div>
     </div>
     <div ng-show="displayForm">
         <div id="create-new-entry">

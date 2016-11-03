@@ -22,6 +22,7 @@
 
     <div class="card-progress" ng-if="card.totalAcceptanceCriteriasCount>0">
         <uib-progressbar max="card.totalAcceptanceCriteriasCount"
-                         value="card.finishedAcceptanceCriteriasCount" animate="true"></uib-progressbar>
+                         value="card.finishedAcceptanceCriteriasCount" animate="true"
+                         ng-class="card.finishedAcceptanceCriteriasCount==0?'':'process-unstart'"></uib-progressbar>
     </div>
 </div>
