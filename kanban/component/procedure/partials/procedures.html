@@ -2,6 +2,6 @@
     <div class="procedure" ui-sortable="procedureSortableOptions" data-ng-model="procedures">
         <procedure ng-repeat="procedure in procedures | orderBy:'orderNumber'" procedure="procedure"
                    data-ng-model="procedure"></procedure>
+        <procedure-creation/>
     </div>
-    <procedure-creation/>
 </div>
