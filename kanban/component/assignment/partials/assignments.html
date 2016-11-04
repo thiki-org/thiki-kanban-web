@@ -1,5 +1,6 @@
 <div class="assignments">
     <div class="assignment" ng-repeat="assignment in assignments">
-        <div title="{{assignment.name}}">{{assignment.name | assignmentUserNameFilter}}</div>
+        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"
+                profile-link="assignment._links.assigneeProfile.href"></avatar>
     </div>
 </div>

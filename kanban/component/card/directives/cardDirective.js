@@ -10,8 +10,7 @@ kanbanApp.directive('card', function ($uibModal) {
         scope: {
             card: '='
         },
-        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService) {
-
+        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService) {
             var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
             acceptanceCriterias.then(function (_acceptanceCriteriasResponse) {
                 var acceptanceCriterias = _acceptanceCriteriasResponse.acceptanceCriterias;
@@ -35,7 +34,7 @@ kanbanApp.directive('card', function ($uibModal) {
                         if (thisScope.isIamAssigned) {
                             $scope.message = "你确定不再做该卡片吗?";
                             $scope.ok = function () {
-                                var userName = localStorageService.get("userName");
+                                var userName = usersService.getCurrentUser().userName;
                                 var myAssignmentLink;
                                 angular.forEach(thisScope.assignments, function (_assignment) {
                                     if (userName === _assignment.assignee) {
@@ -55,8 +54,8 @@ kanbanApp.directive('card', function ($uibModal) {
                             $scope.ok = function () {
                                 var assignment = {
                                     cardId: _card.id,
-                                    assignee: localStorageService.get("userName"),
-                                    assigner: localStorageService.get("userName")
+                                    assignee: usersService.getCurrentUser().userName,
+                                    assigner: usersService.getCurrentUser().userName
                                 };
 
                                 var assignmentPromise = assignmentServices.assign(assignment, _card._links.assignments.href);
@@ -139,7 +138,7 @@ kanbanApp.directive('card', function ($uibModal) {
             };
 
             $scope.isAssigned = function () {
-                var userName = localStorageService.get("userName");
+                var userName = usersService.getCurrentUser().userName;
                 $scope.isIamAssigned = false;
                 angular.forEach($scope.assignments, function (_assignment) {
                     if (userName === _assignment.assignee) {

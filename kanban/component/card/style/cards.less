@@ -12,12 +12,14 @@ div.card:hover {
 }
 
 .card-summary {
-  color: #000000;
+  color: #000;
+  min-height: 36px;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 12px;
   margin: 5px;
   float: left;
-  min-height: 36px;
   width: 95%;
-  cursor: pointer;
 }
 
 .cards {
@@ -89,8 +91,9 @@ button, input, select, textarea {
 .card-operations {
   float: left;
   width: 100%;
-  bottom: 0px;
+  bottom: 0;
   padding-right: 5px;
+  margin-bottom: 3px;
   height: 30px;
 }
 
@@ -98,7 +101,8 @@ button, input, select, textarea {
   float: right;
   position: absolute;
   z-index: 1000;
-  right: 0px;
+  right: 0;
+  width: 48%;
 }
 
 .card-creation {
@@ -352,4 +356,14 @@ span.badge.acceptance-criteria-un-finished-badge.ng-binding {
 
 .progress {
   height: 5px !important;
+}
+
+button.dropdown-toggle.card-options-menu-button {
+  float: right;
+  right: 0px;
+  cursor: pointer;
+}
+
+button.dropdown-toggle.card-options-menu-button span {
+  cursor: pointer;
 }

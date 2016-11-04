@@ -11,7 +11,7 @@ kanbanApp.directive('assignments', function () {
                 var thisScope = $scope;
                 var assignmentsPromise = assignmentServices.loadAssignments($scope.card._links.assignments.href);
                 assignmentsPromise.then(function (_data) {
-                    $scope.assignments = _data;
+                    $scope.assignments = _data.assignments;
                     thisScope.isAssigned();
                 });
             };
