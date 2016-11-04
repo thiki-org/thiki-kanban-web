@@ -15,6 +15,12 @@
                              ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="code">卡片编号</label>
+
+                        <input id="code" name="code" type="text" class="form-control card-code"
+                               data-ng-model="card.code" autocomplete="off"/>
+                    </div>
                 </form>
 
                 <div class="tab-card-configuration-save">

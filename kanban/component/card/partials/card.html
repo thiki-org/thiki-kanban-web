@@ -1,5 +1,8 @@
 <div class="card" ng-mouseover="mouseover($event)"
      ng-mouseleave="onMouseLeave($event)">
+    <div class="card-code-label">
+        <span class="label label-large label-pink arrowed-right">{{card.code}}</span>
+    </div>
     <div class="card-summary" ng-click="openCardConfiguration()">
         {{card.summary}}
     </div>
