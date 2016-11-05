@@ -8,10 +8,19 @@
                 <li><a href="https://github.com/thiki-org/thiki-kanban-backend">GitHub</a></li>
                 <li><a href="https://toutiao.io/subjects/138803">独家号</a></li>
                 <li><a href="https://toutiao.io/subjects/138803">下载</a></li>
-                <li ng-click="login()"><a data-toggle="modal" data-target="#myModal">登录</a></li>
-                <li>
+                <li ng-click="login()" ng-hide="isAlreadyLogin"><a data-toggle="modal" data-target="#myModal">登录</a>
+                </li>
+
+                <li ng-hide="isAlreadyLogin">
                     <div id="login-registration">
                         <button class="btn btn-primary register-btn" type="button" ng-click="register()">注册</button>
+                    </div>
+                </li>
+
+                <li ng-show="isAlreadyLogin">
+                    <div id="back-to-kanban">
+                        <button class="btn btn-primary register-btn" type="button" ng-click="backToKanban()">回到看板
+                        </button>
                     </div>
                 </li>
             </ul>

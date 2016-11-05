@@ -75,6 +75,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $uibModalInstance.dismiss();
                         if (rejection.status === 401) {
                             if (rejection.data != undefined && rejection.data.code == 1102) {
+                                localStorageService.clearAll();
                                 $location.path("/welcome");
                             }
                         }
