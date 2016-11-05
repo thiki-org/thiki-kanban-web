@@ -72,9 +72,11 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.message = rejection.data.message;
                     }
                     $scope.ok = function () {
-                        $uibModalInstance.close();
+                        $uibModalInstance.dismiss();
                         if (rejection.status === 401) {
-                            $location.path("/welcome");
+                            if (rejection.data != undefined && rejection.data.code == 1102) {
+                                $location.path("/welcome");
+                            }
                         }
                     };
                 },
