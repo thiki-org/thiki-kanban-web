@@ -43,6 +43,16 @@
         </uib-tab>
         <uib-tab index="2">
             <uib-tab-heading>
+                标签<span class='badge comment-badge'
+                        ng-show='acceptanceCriteriasCount>0'
+                        ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
+            </uib-tab-heading>
+            <div class="tab-acceptance-criterias">
+                <acceptance-criterias card="card"/>
+            </div>
+        </uib-tab>
+        <uib-tab index="3">
+            <uib-tab-heading>
                 评论<span class='badge comment-badge' ng-show='commentCount>0'>{{commentCount}}</span>
             </uib-tab-heading>
             <div class="tab-comments">

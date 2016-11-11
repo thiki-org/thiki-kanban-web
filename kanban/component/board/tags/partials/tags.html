@@ -1,0 +1,30 @@
+<div id="tags-options">
+
+    <div class="tags" ng-repeat="tag in tags">
+        <div class="tag" ng-class="tag.color">{{tag.name}}</div>
+    </div>
+    <div id="tags-creation">
+        <form name="tagsCreationForm">
+            <div class="form-group">
+                <input name="name" type="text" class="form-control" data-ng-model="name" focus="displayForm"
+                       placeholder="标签名称" autocomplete="off"
+                       required/>
+                <div class="validation-error-message"
+                     ng-show="tagsCreationForm.name.$error.required && tagsCreationForm.name.$dirty">标签名称
+                </div>
+            </div>
+
+            <div id="colors-selection">
+                <div ng-repeat="color in colors">
+                    <div ng-class="color.name" class="tag-color" ng-click="selectTagColor(color)" data-ng-model="color">
+                        <span id="color.name" ng-show="color.isSelected" class="glyphicon glyphicon-ok-circle"></span>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <button class="btn btn-primary" type="button" ng-click="saveTag()" ng-disabled="isDisableTagSaveButton">
+            {{tagSaveButton}}
+        </button>
+    </div>
+</div>

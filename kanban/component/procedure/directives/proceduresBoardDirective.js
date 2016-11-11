@@ -99,6 +99,18 @@ kanbanApp.directive('proceduresBoard', function () {
                 });
             };
 
+            $scope.openBoardTags = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/procedure/partials/tags-configuration.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
+                        function ($scope) {
+                            $scope.board = proceduresScope.board;
+                        }],
+                    size: 'mid',
+                    backdrop: "static"
+                });
+            };
         }]
     };
 });
