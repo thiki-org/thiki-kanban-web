@@ -7,12 +7,6 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
         $scope.userName = localStorageService.get("identity.userName");
 
         var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
-        var pollNotifications = $interval(function () {
-            if ($location.path() === "/welcome") {
-                $interval.cancel(pollNotifications);
-            }
-            loadUnreadNotificationTotal();
-        }, 5000);
 
         loadUnreadNotificationTotal();
 

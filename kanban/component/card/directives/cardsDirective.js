@@ -6,13 +6,14 @@ kanbanApp.directive('cards', function ($uibModal) {
         restrict: 'E',
         templateUrl: 'component/card/partials/cards.html',
         replace: true,
-        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices) {
+        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService) {
             $scope.loadCards = function () {
                 var procedure = $scope.procedure;
                 var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
-
+                $scope.loadingInstance = timerMessageService.loading();
                 _cardsPromise.then(function (_data) {
                     $scope.cards = _data.cards;
+                    timerMessageService.close($scope.loadingInstance);
                     $scope.sortableOptions = {
                         connectWith: ".cards",
                         opacity: 0.5,
@@ -59,6 +60,9 @@ kanbanApp.directive('cards', function ($uibModal) {
 
             $scope.commentCount = 0;
             $scope.loadCards();
+            $scope.closeLoading = function () {
+                timerMessageService.close($scope.loadingInstance);
+            };
         }]
     };
 });

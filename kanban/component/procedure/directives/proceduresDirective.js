@@ -7,11 +7,12 @@ kanbanApp.directive('procedures', function () {
         templateUrl: 'component/procedure/partials/procedures.html',
         replace: true,
         scope: false,
-        controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService) {
+        controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService, timerMessageService) {
             $scope.loadProcedures = function () {
                 var boardLink = localStorageService.get("boardLink");
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
                 boardPromise.then(function (_board) {
+                    $scope.loadingInstance = timerMessageService.loading();
                     $scope.board = _board;
                     proceduresServices.proceduresLink = _board._links.procedures.href;
                     var proceduresPromise = proceduresServices.load(_board._links.procedures.href);
@@ -44,6 +45,17 @@ kanbanApp.directive('procedures', function () {
                 });
             };
             $scope.loadProcedures();
+            $scope.closeLoading = function () {
+                timerMessageService.close($scope.loadingInstance);
+            };
         }]
+    };
+});
+
+kanbanApp.directive('proceduresRepeatDirective', function () {
+    return function (scope) {
+        if (scope.$last) {
+            scope.closeLoading();
+        }
     };
 });

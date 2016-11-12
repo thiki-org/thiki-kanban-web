@@ -4,8 +4,17 @@
 
 kanbanApp.provider('timerMessageService', ['$injector',
     function ($injector) {
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds) {
+                    break;
+                }
+            }
+        }
 
         this.$get = function ($uibModal) {
+            var instance;
             return {
                 message: function (_message) {
                     $uibModal.open({
@@ -32,6 +41,30 @@ kanbanApp.provider('timerMessageService', ['$injector',
                         ],
                         size: 'sm'
                     });
+                },
+                loading: function () {
+                    if (instance !== undefined) {
+                        return instance;
+                    }
+
+                    instance = $uibModal.open({
+                        animation: false,
+                        templateUrl: 'foundation/modal/partials/loading-dialog.html',
+                        controller: [
+                            '$scope',
+                            '$uibModalInstance', '$interval',
+                            function ($scope, $uibModalInstance, $interval) {
+                            }
+                        ],
+                        size: 'sm',
+                        backdropClass: 'loading-windows',
+                        backdrop: 'static'
+                    });
+                    return instance;
+                },
+                close: function (_modalInstance) {
+                    _modalInstance.dismiss('cancel');
+                    instance = undefined;
                 }
             };
         };

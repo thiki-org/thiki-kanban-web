@@ -1,8 +1,7 @@
 /* Services */
 
-kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', function ($http, $q, $location, $injector, localStorageService) {
+kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', 'timerMessageService', function ($http, $q, $location, $injector, localStorageService, timerMessageService) {
     var token = localStorageService.get("token");
-
     function openErrorDialog(deferred) {
         var modal = $injector.get("$uibModal");
         modal.open({
@@ -29,6 +28,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
     return {
         send: function (_options) {
             var deferred = $q.defer();
+            var loadingInstance = timerMessageService.loading();
             $http({
                 method: _options.method,
                 url: _options.url,
@@ -36,8 +36,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 contentType: 'application/json'
             }).success(function (data, status, headers, config) {
                 deferred.resolve(data);
+                loadingInstance.close();
             }).error(function (data, status, headers, config) {
                 deferred.reject(data);
+                loadingInstance.close();
             });
             return deferred.promise;
         },

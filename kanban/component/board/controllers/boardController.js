@@ -2,17 +2,20 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal',
-    function ($scope, $location, $q, boardsService, localStorageService, $uibModal) {
+kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal', 'timerMessageService',
+    function ($scope, $location, $q, boardsService, localStorageService, $uibModal, timerMessageService) {
         var boardsLink = localStorageService.get("user.links").boards.href;
         boardsService.boardsLink = boardsLink;
         var uploadWorkTileTasksLink;
 
         $scope.loadBoards = function () {
+            var loadingInstance = timerMessageService.loading("正在用力搬您的看板..");
             var boardsPromise = boardsService.load(boardsLink);
             boardsPromise.then(function (_data) {
                 $scope.boards = _data.boards;
                 uploadWorkTileTasksLink = _data._links.worktileTasks.href;
+            }).finally(function () {
+                timerMessageService.close(loadingInstance);
             });
         };
         $scope.loadBoards();
