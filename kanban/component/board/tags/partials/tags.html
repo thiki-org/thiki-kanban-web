@@ -1,30 +1,49 @@
 <div id="tags-options">
-
-    <div class="tags" ng-repeat="tag in tags">
-        <div class="tag" ng-class="tag.color">{{tag.name}}</div>
+    <div class="tags">
+        <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
+            <div ng-class="tag.color" ng-click="editTag(tag)">{{tag.name}}</div>
+        </div>
+    </div>
+    <div class="tag-creation-options">
+        <div class="creation-button tag-creation-button" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="true" ng-show="isShowTagCreationButton">+
+        </div>
+        <ul class="thiki-menu-items dropdown-menu tags-creation-menu" aria-labelledby="dropdownMenu1">
+            <li class="thiki-menu-item"><a ng-click="displayTagCreationForm()">创建新标签</a></li>
+            <li class="thiki-menu-item"><a ng-click="openProcedureConfiguration()">从其他看板导入</a></li>
+        </ul>
     </div>
     <div id="tags-creation">
-        <form name="tagsCreationForm">
-            <div class="form-group">
-                <input name="name" type="text" class="form-control" data-ng-model="name" focus="displayForm"
-                       placeholder="标签名称" autocomplete="off"
-                       required/>
-                <div class="validation-error-message"
-                     ng-show="tagsCreationForm.name.$error.required && tagsCreationForm.name.$dirty">标签名称
-                </div>
-            </div>
-
-            <div id="colors-selection">
-                <div ng-repeat="color in colors">
-                    <div ng-class="color.name" class="tag-color" ng-click="selectTagColor(color)" data-ng-model="color">
-                        <span id="color.name" ng-show="color.isSelected" class="glyphicon glyphicon-ok-circle"></span>
+        <div ng-show="isShowTagCreationForm">
+            <form name="tagsCreationForm">
+                <div class="form-group">
+                    <input name="name" type="text" class="form-control" data-ng-model="name" placeholder="标签名称"
+                           autocomplete="off" required/>
+                    <div class="validation-error-message"
+                         ng-show="tagsCreationForm.name.$error.required && tagsCreationForm.name.$dirty">标签名称
                     </div>
                 </div>
+                <div id="colors-selection">
+                    <div ng-repeat="color in colors">
+                        <div ng-class="color.name" class="tag-color" ng-click="selectTagColor(color)"
+                             data-ng-model="color">
+                            <span id="color.name" ng-show="color.isSelected"
+                                  class="glyphicon glyphicon-ok-circle"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="tag-creation-save-buttons">
+                <button class="btn btn-primary" type="button" ng-click="saveTag()"
+                        ng-disabled="isDisableTagSaveButton||(tagsCreationForm.name.$error.required && tagsCreationForm.name.$dirty)">
+                    {{tagSaveButton}}
+                </button>
+                <button class="btn btn-primary thiki-delete-button" type="button" ng-click="deleteTag()"
+                        ng-show="isShowDeleteButton">
+                    {{tagDeleteButton}}
+                </button>
+                <button class="btn thiki-secondary-button" type="button" ng-click="reset()">放弃</button>
             </div>
-
-        </form>
-        <button class="btn btn-primary" type="button" ng-click="saveTag()" ng-disabled="isDisableTagSaveButton">
-            {{tagSaveButton}}
-        </button>
+        </div>
     </div>
 </div>

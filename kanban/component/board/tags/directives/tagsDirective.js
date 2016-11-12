@@ -28,13 +28,26 @@ kanbanApp.directive('tags', function () {
                 {name: "tag-color-E7235E"},
                 {name: "tag-color-929396"}
             ];
+            $scope.reset = function () {
+                $scope.isShowTagCreationForm = false;
+                $scope.isShowTagCreationButton = true;
+                $scope.name = "";
+                $scope.selectedColor = null;
+                $scope.currentUpdateTag = undefined;
+                $scope.isShowDeleteButton = false;
+                for (var index in $scope.colors) {
+                    $scope.colors[index].isSelected = false;
+                }
+            };
 
             $scope.loadTags = function () {
                 tagsService.loadTagsByBoard(tagsLink).then(function (_data) {
                     $scope.tags = _data.tags;
                 });
             };
+            $scope.reset();
             $scope.loadTags();
+
             $scope.selectTagColor = function (_color) {
                 for (var index in $scope.colors) {
                     $scope.colors[index].isSelected = false;
@@ -44,15 +57,6 @@ kanbanApp.directive('tags', function () {
             };
             $scope.isDisableTagSaveButton = true;
             $scope.tagSaveButton = "保存";
-
-            $scope.$watch('name', function (newValue, oldValue) {
-                if (oldValue === newValue) {
-                    return;
-                }
-                if ($scope.name !== undefined && $scope.name.length > 0 && $scope.selectedColor !== undefined) {
-                    $scope.isDisableTagSaveButton = false;
-                }
-            });
 
             $scope.$watch('selectedColor', function (newValue, oldValue) {
                 if (oldValue === newValue) {
@@ -64,10 +68,58 @@ kanbanApp.directive('tags', function () {
             });
 
             $scope.saveTag = function () {
-                var tag = {name: $scope.name, color: $scope.selectedColor.name};
-                tagsService.createTag(tag, tagsLink).then(function (_data) {
+                if ($scope.currentUpdateTag != undefined) {
+                    $scope.tagSaveButton = "创建中..";
+                    $scope.currentUpdateTag.name = $scope.name;
+                    $scope.currentUpdateTag.color = $scope.selectedColor.name;
+                    tagsService.update($scope.currentUpdateTag).then(function (_data) {
+                        $scope.loadTags();
+                        timerMessageService.message("标签" + $scope.currentUpdateTag.name + "已经更新。");
+                        $scope.reset();
+                    }).finally(function () {
+                        $scope.tagSaveButton = "保存";
+                    });
+                    return;
+                }
+                $scope.tagSaveButton = "保存中..";
+                var newTag = {name: $scope.name, color: $scope.selectedColor.name};
+                tagsService.createTag(newTag, tagsLink).then(function (_data) {
                     $scope.loadTags();
-                    timerMessageService.message("标签" + tag.name + "已经创建。");
+                    timerMessageService.message("标签" + newTag.name + "已经创建。");
+                    $scope.reset();
+                }).finally(function () {
+                    $scope.tagSaveButton = "保存";
+                });
+            };
+            $scope.displayTagCreationForm = function () {
+                $scope.isShowTagCreationForm = true;
+                $scope.isShowTagCreationButton = false;
+            };
+
+            $scope.editTag = function (_tag) {
+                $scope.currentUpdateTag = _tag;
+                $scope.displayTagCreationForm();
+                $scope.name = _tag.name;
+                $scope.color = _tag.name;
+                $scope.isShowDeleteButton = true;
+                $scope.selectedColor = null;
+                for (var index in $scope.colors) {
+                    $scope.colors[index].isSelected = false;
+                    if ($scope.colors[index].name === _tag.color) {
+                        $scope.colors[index].isSelected = true;
+                        $scope.selectedColor = $scope.colors[index];
+                    }
+                }
+                $scope.tagDeleteButton = "删除";
+            };
+            $scope.deleteTag = function () {
+                $scope.tagDeleteButton = "删除中..";
+                tagsService.deleteTag($scope.currentUpdateTag).then(function (_data) {
+                    $scope.loadTags();
+                    timerMessageService.message("标签" + $scope.currentUpdateTag.name + "已经删除。");
+                    $scope.reset();
+                }).finally(function () {
+                    $scope.tagDeleteButton = "删除";
                 });
             }
         }]
