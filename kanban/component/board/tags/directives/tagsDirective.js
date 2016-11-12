@@ -11,7 +11,7 @@ kanbanApp.directive('tags', function () {
         scope: {
             board: '='
         },
-        controller: ['$scope', 'boardsService', 'tagsService', 'localStorageService', '$location', 'timerMessageService', function ($scope, boardsService, tagsService, localStorageService, $location, timerMessageService) {
+        controller: ['$scope', 'boardsService', 'tagsService', 'localStorageService', '$location', 'timerMessageService', 'usersService', function ($scope, boardsService, tagsService, localStorageService, $location, timerMessageService, usersService) {
             var tagsLink = $scope.board._links.tags.href;
             $scope.colors = [
                 {name: "tag-color-228EC6"},
@@ -35,6 +35,8 @@ kanbanApp.directive('tags', function () {
                 $scope.selectedColor = null;
                 $scope.currentUpdateTag = undefined;
                 $scope.isShowDeleteButton = false;
+                $scope.isDisableTagsImportButton = true;
+                $scope.isShowTagImportForm = false;
                 for (var index in $scope.colors) {
                     $scope.colors[index].isSelected = false;
                 }
@@ -43,6 +45,7 @@ kanbanApp.directive('tags', function () {
             $scope.loadTags = function () {
                 tagsService.loadTagsByBoard(tagsLink).then(function (_data) {
                     $scope.tags = _data.tags;
+                    $scope.tagsCloneLink = _data._links.clone.href;
                 });
             };
             $scope.reset();
@@ -120,6 +123,39 @@ kanbanApp.directive('tags', function () {
                     $scope.reset();
                 }).finally(function () {
                     $scope.tagDeleteButton = "删除";
+                });
+            };
+
+            $scope.displayTagImportCreation = function () {
+                $scope.tagsImportButton = "克隆";
+                $scope.isShowTagImportForm = true;
+                $scope.isShowTagCreationButton = false;
+                $scope.selectedBoard = {};
+                var boardsUrl = usersService.getCurrentUser()._links.boards.href;
+                boardsService.load(boardsUrl).then(function (_data) {
+                    $scope.boards = _data.boards;
+                    $scope.isDisableTagsImportButton = false;
+                });
+            };
+            $scope.$watch('boards.selected', function (newValue, oldValue) {
+                if (newValue === oldValue) {
+                    return;
+                }
+                $scope.selectedBoard = newValue;
+                $scope.isDisableTagsImportButton = false;
+            });
+            $scope.importTags = function () {
+                $scope.tagsImportButton = "稍等..";
+                $scope.isDisableTagsImportButton = true;
+                var sourceBoardId = $scope.selectedBoard.id;
+                tagsService.cloneTags(sourceBoardId, $scope.tagsCloneLink).then(function (_data) {
+                    $scope.loadTags();
+                    timerMessageService.message("克隆成功。");
+                    $scope.loadTags();
+                    $scope.reset();
+                }).finally(function () {
+                    $scope.tagDeleteButton = "克隆";
+                    $scope.isDisableTagsImportButton = false;
                 });
             }
         }]

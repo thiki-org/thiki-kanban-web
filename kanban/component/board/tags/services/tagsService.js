@@ -19,8 +19,8 @@ kanbanApp.factory('tagsService', ['$http', '$q', 'httpServices',
             deleteTag: function (_tag) {
                 return httpServices.delete(_tag._links.self.href);
             },
-            uploadWorkTileTasks: function (_tasksFile, _worktileLink) {
-                return httpServices.upload("worktileTasks", _tasksFile, _worktileLink);
+            cloneTags: function (sourceBoardId, _link) {
+                return httpServices.postWithNoPayLoad(_link + sourceBoardId);
             }
         };
     }]);

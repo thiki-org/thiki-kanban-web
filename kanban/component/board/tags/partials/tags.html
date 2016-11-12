@@ -3,6 +3,10 @@
         <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
             <div ng-class="tag.color" ng-click="editTag(tag)">{{tag.name}}</div>
         </div>
+
+        <div class="no-tags-tip" ng-show="tags.length==0">
+            暂无标签。
+        </div>
     </div>
     <div class="tag-creation-options">
         <div class="creation-button tag-creation-button" data-toggle="dropdown" aria-haspopup="true"
@@ -10,7 +14,7 @@
         </div>
         <ul class="thiki-menu-items dropdown-menu tags-creation-menu" aria-labelledby="dropdownMenu1">
             <li class="thiki-menu-item"><a ng-click="displayTagCreationForm()">创建新标签</a></li>
-            <li class="thiki-menu-item"><a ng-click="openProcedureConfiguration()">从其他看板导入</a></li>
+            <li class="thiki-menu-item"><a ng-click="displayTagImportCreation()">从其他看板导入</a></li>
         </ul>
     </div>
     <div id="tags-creation">
@@ -41,6 +45,24 @@
                 <button class="btn btn-primary thiki-delete-button" type="button" ng-click="deleteTag()"
                         ng-show="isShowDeleteButton">
                     {{tagDeleteButton}}
+                </button>
+                <button class="btn thiki-secondary-button" type="button" ng-click="reset()">放弃</button>
+            </div>
+        </div>
+
+        <div ng-show="isShowTagImportForm">
+            <div id="boards-selection">
+                <ui-select data-ng-model="boards.selected">
+                    <ui-select-match placeholder="选择看板">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="board in boards | filter: $select.search">
+                        <span ng-bind-html="board.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="tag-creation-save-buttons">
+                <button class="btn btn-primary" type="button" ng-click="importTags()"
+                        ng-disabled="isDisableTagsImportButton||selectedBoard.name==undefined">
+                    {{tagsImportButton}}
                 </button>
                 <button class="btn thiki-secondary-button" type="button" ng-click="reset()">放弃</button>
             </div>
