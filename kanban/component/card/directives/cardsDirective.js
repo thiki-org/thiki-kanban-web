@@ -12,8 +12,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
                 $scope.loadingInstance = timerMessageService.loading();
                 _cardsPromise.then(function (_data) {
-                    $scope.cards = _data.cards;
                     timerMessageService.close($scope.loadingInstance);
+                    $scope.cards = _data.cards;
                     $scope.sortableOptions = {
                         connectWith: ".cards",
                         opacity: 0.5,

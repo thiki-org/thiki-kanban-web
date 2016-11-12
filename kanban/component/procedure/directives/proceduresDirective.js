@@ -11,12 +11,13 @@ kanbanApp.directive('procedures', function () {
             $scope.loadProcedures = function () {
                 var boardLink = localStorageService.get("boardLink");
                 var boardPromise = boardsService.loadBoardByLink(boardLink);
+                $scope.loadingInstance = timerMessageService.loading();
                 boardPromise.then(function (_board) {
-                    $scope.loadingInstance = timerMessageService.loading();
                     $scope.board = _board;
                     proceduresServices.proceduresLink = _board._links.procedures.href;
                     var proceduresPromise = proceduresServices.load(_board._links.procedures.href);
                     proceduresPromise.then(function (_data) {
+                        timerMessageService.close($scope.loadingInstance);
                         $scope.procedures = _data.procedures;
                         $scope.procedureSortableOptions = {
                             connectWith: ".procedure-item",
@@ -49,13 +50,5 @@ kanbanApp.directive('procedures', function () {
                 timerMessageService.close($scope.loadingInstance);
             };
         }]
-    };
-});
-
-kanbanApp.directive('proceduresRepeatDirective', function () {
-    return function (scope) {
-        if (scope.$last) {
-            scope.closeLoading();
-        }
     };
 });
