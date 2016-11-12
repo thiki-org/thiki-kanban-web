@@ -12,7 +12,7 @@ kanbanApp.directive('board', function () {
             board: '='
         },
         controller: ['$scope', 'boardsService', 'teamsService', 'localStorageService', '$location', function ($scope, boardsService, teamsService, localStorageService, $location) {
-            if ($scope.board._links.team != undefined) {
+            if ($scope.board._links.team !== undefined) {
                 var teamPromise = teamsService.loadTeamByLink($scope.board._links.team.href);
                 teamPromise.then(function (_team) {
                     $scope.team = _team;

@@ -52,7 +52,7 @@ kanbanApp.directive('comments', function ($uibModal) {
                 $scope.isShowCommentForm = false;
                 $scope.commentSummary = "";
                 $scope.isShowCommentCreationButton = true;
-            }
+            };
         }]
     };
 });

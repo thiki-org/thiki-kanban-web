@@ -39,9 +39,9 @@ kanbanApp.directive('cards', function ($uibModal) {
                             }
                             var cards = sourceModelCards;
                             if (sourceProcedureId !== targetProcedureId) {
-                                for (var index in droptargetModelCards) {
-                                    droptargetModelCards[index].sortNumber = index;
-                                    droptargetModelCards[index].procedureId = targetProcedureId;
+                                for (var cardIndex in droptargetModelCards) {
+                                    droptargetModelCards[cardIndex].sortNumber = cardIndex;
+                                    droptargetModelCards[cardIndex].procedureId = targetProcedureId;
                                 }
                             }
 

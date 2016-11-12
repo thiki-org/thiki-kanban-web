@@ -22,8 +22,8 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
         },
 
         'response': function (response) {
-            if (response.headers()["token"]) {
-                localStorageService.set("identity.token", response.headers()["token"]);
+            if (response.headers().token) {
+                localStorageService.set('identity.token', response.headers().token);
             }
             return response;
         },
@@ -31,7 +31,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
         'responseError': function (rejection) {
             //2秒之内同类错误只允许弹窗一次,避免重复弹窗
             var twoSecondAgo = moment().add(-3, "s");
-            if (lastErrorOccurredTime != null && lastErrorCode == rejection.status && moment(twoSecondAgo).isBefore(lastErrorOccurredTime)) {
+            if (lastErrorOccurredTime !== null && lastErrorCode == rejection.status && moment(twoSecondAgo).isBefore(lastErrorOccurredTime)) {
                 return $q.reject(rejection);
             }
 
@@ -74,7 +74,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                     $scope.ok = function () {
                         $uibModalInstance.dismiss();
                         if (rejection.status === 401) {
-                            if (rejection.data != undefined && rejection.data.code == 1102) {
+                            if (rejection.data !== undefined && rejection.data.code == 1102) {
                                 localStorageService.clearAll();
                                 $location.path("/welcome");
                             }

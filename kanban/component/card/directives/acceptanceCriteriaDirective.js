@@ -36,7 +36,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
                 acceptanceCriteriaPromise.then(function () {
                     $scope.$parent.loadAcceptanceCriterias();
                 });
-            }
+            };
         }]
     };
 });

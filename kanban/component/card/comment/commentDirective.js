@@ -30,7 +30,7 @@ kanbanApp.directive('comment', function () {
                 commentPromise.then(function () {
                     $scope.$parent.loadComments();
                 });
-            }
+            };
         }]
     };
 });

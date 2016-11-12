@@ -71,7 +71,7 @@ kanbanApp.directive('tags', function () {
             });
 
             $scope.saveTag = function () {
-                if ($scope.currentUpdateTag != undefined) {
+                if ($scope.currentUpdateTag !== undefined) {
                     $scope.tagSaveButton = "创建中..";
                     $scope.currentUpdateTag.name = $scope.name;
                     $scope.currentUpdateTag.color = $scope.selectedColor.name;
@@ -157,7 +157,7 @@ kanbanApp.directive('tags', function () {
                     $scope.tagDeleteButton = "克隆";
                     $scope.isDisableTagsImportButton = false;
                 });
-            }
+            };
         }]
     };
 });

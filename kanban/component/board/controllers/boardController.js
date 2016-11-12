@@ -91,7 +91,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                         });
 
                                     }
-                                }
+                                };
                             },
                             size: 'board'
                         });

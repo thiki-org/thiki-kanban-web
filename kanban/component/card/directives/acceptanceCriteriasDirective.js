@@ -87,11 +87,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.isShowAcceptanceCriteriaForm = false;
                 $scope.acceptanceCriteriaSummary = "";
                 $scope.isShowAcceptanceCriteriaCreationButton = true;
-            }
+            };
         }]
-    }
-        ;
-})
-;
+    };
+});
 
 

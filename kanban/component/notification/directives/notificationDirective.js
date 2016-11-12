@@ -44,7 +44,7 @@ kanbanApp.directive('notification', function () {
                         });
                     }
                 });
-            }
+            };
         }]
     };
 });

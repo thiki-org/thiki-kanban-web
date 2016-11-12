@@ -41,7 +41,7 @@ kanbanApp.directive('proceduresBoard', function () {
                                     $scope.archiveButtonText = "变更所有权";
                                     $scope.isDisabledArchiveButton = false;
                                 });
-                            }
+                            };
                         }],
                     size: 'sm'
                 });
@@ -67,7 +67,7 @@ kanbanApp.directive('proceduresBoard', function () {
                                     $scope.boardSaveButton = "保存";
                                     $scope.isDisableBoardSaveButton = false;
                                 });
-                            }
+                            };
                         }],
                     size: 'sm'
                 });
@@ -93,7 +93,7 @@ kanbanApp.directive('proceduresBoard', function () {
                                     $scope.deleteButtonText = "删除";
                                     $scope.deleteButtonText = false;
                                 });
-                            }
+                            };
                         }],
                     size: 'sm'
                 });

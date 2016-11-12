@@ -78,7 +78,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
                                     $scope.procedureSaveButton = "保存";
                                     $scope.isDisableProcedureSaveButton = false;
                                 });
-                            }
+                            };
                         }],
                     size: 'sm'
                 });

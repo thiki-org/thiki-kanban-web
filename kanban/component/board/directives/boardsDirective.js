@@ -55,7 +55,7 @@ kanbanApp.directive('boardBanner', function () {
                     },
                     size: 'sm'
                 });
-            }
+            };
         }]
     };
 });

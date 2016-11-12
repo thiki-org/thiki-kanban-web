@@ -33,5 +33,5 @@ kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcome
 
         $scope.backToKanban = function () {
             $location.path(usersService.getCurrentUser().userName + '/boards');
-        }
+        };
     }]);
