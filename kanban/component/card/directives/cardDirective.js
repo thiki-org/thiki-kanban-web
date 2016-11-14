@@ -100,7 +100,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $uibModalInstance.dismiss('cancel');
                             };
                         }],
-                    size: 'mid'
+                    size: 'mid',
+                    backdrop: "static"
                 });
             };
             $scope.updateCard = function (_summary, _card) {

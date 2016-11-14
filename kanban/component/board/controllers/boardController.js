@@ -80,7 +80,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                 };
 
                                 $scope.uploadTasksFile = function () {
-                                    $scope.importButtonText = "导入中";
+                                    $scope.importButtonText = "导入中..";
                                     $scope.isDisableImportButton = true;
                                     if ($scope.file) {
                                         boardsService.uploadWorkTileTasks($scope.file, uploadWorkTileTasksLink)
