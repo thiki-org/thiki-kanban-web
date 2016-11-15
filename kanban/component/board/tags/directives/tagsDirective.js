@@ -9,7 +9,8 @@ kanbanApp.directive('tags', function () {
         replace: true,
         transclude: true,
         scope: {
-            board: '='
+            board: '=',
+            parentCallback: '@'
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'localStorageService', '$location', 'timerMessageService', 'usersService', function ($scope, boardsService, tagsService, localStorageService, $location, timerMessageService, usersService) {
             var tagsLink = $scope.board._links.tags.href;
@@ -46,6 +47,7 @@ kanbanApp.directive('tags', function () {
                 tagsService.loadTagsByBoard(tagsLink).then(function (_data) {
                     $scope.tags = _data.tags;
                     $scope.tagsCloneLink = _data._links.clone.href;
+                    $scope.callback();
                 });
             };
             $scope.reset();
@@ -69,7 +71,11 @@ kanbanApp.directive('tags', function () {
                     $scope.isDisableTagSaveButton = false;
                 }
             });
-
+            $scope.callback = function () {
+                if ($scope.$parent.parentCallback) {
+                    $scope.$parent.parentCallback();
+                }
+            };
             $scope.saveTag = function () {
                 if ($scope.currentUpdateTag !== undefined) {
                     $scope.tagSaveButton = "创建中..";

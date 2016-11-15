@@ -11,9 +11,10 @@ kanbanApp.directive('cardTags', function () {
         scope: {
             card: '='
         },
-        controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
+        controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', '$uibModal', function ($scope, boardsService, tagsService, cardTagsService, $uibModal) {
             var tagsLink = $scope.card._links.tags.href;
             var cardTagsLink = $scope.card._links.cardTags.href;
+            var boardlink;
             $scope.loadTags = function () {
                 tagsService.loadTagsByBoard(tagsLink).then(function (_data) {
                     $scope.tags = _data.tags;
@@ -25,6 +26,7 @@ kanbanApp.directive('cardTags', function () {
                 cardTagsService.loadTagsByCard(cardTagsLink).then(function (_data) {
                     $scope.cardTags = _data.cardTags;
                     $scope.$parent.tagsCount = $scope.cardTags.length;
+                    boardlink = _data._links.board.href;
                     for (var cardTagIndex in $scope.cardTags) {
                         for (var tagIndex in $scope.tags) {
                             if ($scope.tags[tagIndex].name === $scope.cardTags[cardTagIndex].name) {
@@ -50,6 +52,24 @@ kanbanApp.directive('cardTags', function () {
                     $scope.$parent.card.tags = _data.cardTags;
                     $scope.$parent.tagsCount = stickTags.length;
                 });
+            };
+
+            $scope.openBoardTags = function () {
+                var currentScope = $scope;
+                boardsService.loadBoardByLink(boardlink)
+                    .then(function (_data) {
+                        $uibModal.open({
+                            animation: true,
+                            templateUrl: 'component/procedure/partials/tags-configuration.html',
+                            controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
+                                function ($scope) {
+                                    $scope.board = _data;
+                                    $scope.parentCallback = currentScope.loadStickTags;
+                                }],
+                            size: 'mid',
+                            backdrop: "static"
+                        });
+                    });
             };
         }]
     };
