@@ -1,0 +1,56 @@
+/**
+ * Created by xubt on 10/14/16.
+ */
+
+kanbanApp.directive('cardTags', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'component/card/tags/partials/tags.html',
+        replace: true,
+        transclude: true,
+        scope: {
+            card: '='
+        },
+        controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
+            var tagsLink = $scope.card._links.tags.href;
+            var cardTagsLink = $scope.card._links.cardTags.href;
+            $scope.loadTags = function () {
+                tagsService.loadTagsByBoard(tagsLink).then(function (_data) {
+                    $scope.tags = _data.tags;
+                    $scope.loadStickTags();
+                });
+            };
+
+            $scope.loadStickTags = function () {
+                cardTagsService.loadTagsByCard(cardTagsLink).then(function (_data) {
+                    $scope.cardTags = _data.cardTags;
+                    $scope.$parent.tagsCount = $scope.cardTags.length;
+                    for (var cardTagIndex in $scope.cardTags) {
+                        for (var tagIndex in $scope.tags) {
+                            if ($scope.tags[tagIndex].name === $scope.cardTags[cardTagIndex].name) {
+                                $scope.tags[tagIndex].stick = true;
+                            }
+                        }
+                    }
+                });
+            };
+
+            $scope.loadTags();
+
+            $scope.stickTags = function (_tag) {
+                _tag.stick = !_tag.stick;
+                var stickTags = [];
+                for (var tagIndex in $scope.tags) {
+                    if ($scope.tags[tagIndex].stick) {
+                        var tag = {tagId: $scope.tags[tagIndex].id};
+                        stickTags.push(tag);
+                    }
+                }
+                cardTagsService.stickTags(stickTags, cardTagsLink).then(function (_data) {
+                    $scope.$parent.card.tags = _data.cardTags;
+                    $scope.$parent.tagsCount = stickTags.length;
+                });
+            };
+        }]
+    };
+});

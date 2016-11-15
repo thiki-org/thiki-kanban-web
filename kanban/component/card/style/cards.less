@@ -94,15 +94,13 @@ button, input, select, textarea {
   bottom: 0;
   padding-right: 5px;
   margin-bottom: 3px;
-  height: 30px;
 }
 
 .card-menu {
-  float: right;
-  position: absolute;
+  float: left;
   z-index: 1000;
-  right: 0;
-  width: 48%;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .card-creation {
@@ -362,11 +360,11 @@ span.badge.acceptance-criteria-un-finished-badge.ng-binding {
 
 button.dropdown-toggle.card-options-menu-button {
   float: right;
-  right: 0px;
+  right: 0;
   cursor: pointer;
 }
 
-button.dropdown-toggle.card-options-menu-button span {
+button.dropdown-toggle.card-options-menu-button div {
   cursor: pointer;
 }
 
@@ -384,4 +382,9 @@ button.dropdown-toggle.card-options-menu-button span {
   background-color: @base !important;
   padding: 3px 5px 3px 3px;
   color: white;
+}
+
+.card-menu-items {
+  margin-top: -10px;
+  position: absolute !important;
 }

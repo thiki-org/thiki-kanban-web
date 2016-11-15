@@ -44,12 +44,10 @@
         </uib-tab>
         <uib-tab index="2">
             <uib-tab-heading>
-                标签<span class='badge comment-badge'
-                        ng-show='acceptanceCriteriasCount>0'
-                        ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
+                标签<span class='badge comment-badge' ng-show='tagsCount>0'>{{tagsCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
-                <acceptance-criterias card="card"/>
+                <card-tags card="card"/>
             </div>
         </uib-tab>
         <uib-tab index="3">
