@@ -88,6 +88,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                 var cardPromise = cardsServices.update($scope.card);
                                 cardPromise.then(function (_card) {
                                     timerMessageService.message("配置已经更新");
+                                    _card.tags = cardScope.card.tags;
                                     cardScope.card = _card;
                                     $scope.card = _card;
 
