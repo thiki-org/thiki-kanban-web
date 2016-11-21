@@ -78,4 +78,4 @@ gulp.task('watch', function () {
 });
 
 // 注册缺省任务
-gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'watch'));
+gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css'));
