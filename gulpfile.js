@@ -49,13 +49,7 @@ gulp.task('minify-css', function () {
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('kanban/static/css'));
 });
-// 合并LESS
-gulp.task('minify-less', function () {
-    return gulp.src(['kanban/**/*.less', '!kanban/static/**/*.less'])
-        .pipe(concat('thiki-kanban.min.less'))
-        .pipe(cleanCSS({compatibility: 'ie8'}))
-        .pipe(gulp.dest('kanban/static/less'));
-});
+
 //Less转css
 gulp.task('build-less-to-css', function () {
     return gulp.src('kanban/static/less/thiki-kanban.min.less')
