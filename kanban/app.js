@@ -1,7 +1,4 @@
 /* App Module */
-var config = {
-    localhost: 'http://localhost:8096'
-};
 
 var kanbanApp = angular.module('kanbanApp', [
     'ngRoute', 'ngAnimate', 'ui.bootstrap',
