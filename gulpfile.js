@@ -33,8 +33,12 @@ gulp.task('jshint', function () {
 
 // 合并压缩第三方类库
 gulp.task('minify-bower-components', function () {
-    gulp.src("bower-components/**/*.min.js")
+    gulp.src(lib.ext('js').files)
         .pipe(concat('lib.min.js'))
+        .pipe(gulp.dest('kanban/static/js/'))
+        .pipe(ngmin())
+        .pipe(ngAnnotate())
+        .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('kanban/static/js/'));
 });
 
