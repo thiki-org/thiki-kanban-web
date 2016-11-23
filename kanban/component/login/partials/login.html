@@ -27,7 +27,9 @@
     </div>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary" type="button" ng-click="login()" ng-disabled="loginForm.$invalid">登录</button>
+    <button class="btn btn-primary" type="button" ng-click="login()"
+            ng-disabled="loginForm.$invalid||isDisableLoginButton">{{loginButtonText}}
+    </button>
     <button class="btn thiki-secondary-button" type="button" ng-click="cancel()">放弃</button>
 </div>
 

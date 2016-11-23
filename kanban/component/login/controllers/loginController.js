@@ -5,7 +5,11 @@
 kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance', '$uibModal',
     function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance, $uibModal) {
         $scope.title = "登录";
+        $scope.isDisableLoginButton = false;
+        $scope.loginButtonText = "登录";
         $scope.login = function () {
+            $scope.isDisableLoginButton = true;
+            $scope.loginButtonText = "登录中..";
             var publicKeyPromise = publicKeyServices.loadPublicKey(localStorageService.get("publicKeyLink"));
             publicKeyPromise.then(function (_data) {
                 var encrypt = new JSEncrypt();
@@ -28,6 +32,9 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                     if (currentPath.indexOf("welcome")) {
                         $location.path(_identity.userName + '/boards');
                     }
+                }).finally(function () {
+                    $scope.isDisableLoginButton = false;
+                    $scope.loginButtonText = "登录";
                 });
             });
         };
