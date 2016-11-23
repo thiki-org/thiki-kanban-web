@@ -46,7 +46,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                 $scope.boardName = "";
                                 $scope.createBoard = function () {
                                     $scope.creationButtonText = "创建中..";
-                                    $scope.isDisableCreationButton = false;
+                                    $scope.isDisableCreationButton = true;
 
                                     var board = {name: $scope.boardName};
                                     boardsService.create(board).then(function (data) {
@@ -55,7 +55,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                         boardsScope.loadBoards();
                                     }).finally(function () {
                                         $scope.creationButtonText = "创建";
-                                        $scope.isDisableCreationButton = true;
+                                        $scope.isDisableCreationButton = false;
                                     });
                                 };
                                 $scope.cancel = function () {
