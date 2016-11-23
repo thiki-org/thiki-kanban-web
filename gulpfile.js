@@ -33,12 +33,8 @@ gulp.task('jshint', function () {
 
 // 合并压缩第三方类库
 gulp.task('minify-bower-components', function () {
-    gulp.src(lib.ext('js').files)
+    gulp.src("bower-components/**/*.min.js")
         .pipe(concat('lib.min.js'))
-        .pipe(gulp.dest('kanban/static/js/'))
-        .pipe(ngmin())
-        .pipe(ngAnnotate())
-        .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('kanban/static/js/'));
 });
 
@@ -48,6 +44,14 @@ gulp.task('minify-css', function () {
         .pipe(concat('thiki-kanban.min.css'))
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('kanban/static/css'));
+});
+
+// 合并LESS
+gulp.task('minify-less', function () {
+    return gulp.src(['kanban/**/*.less', '!kanban/static/**/*.less'])
+        .pipe(concat('thiki-kanban.min.less'))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(gulp.dest('kanban/static/less'));
 });
 
 //Less转css
