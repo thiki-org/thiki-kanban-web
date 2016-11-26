@@ -10,6 +10,8 @@ kanbanApp.directive('cardCreation', function () {
             var procedure = $scope.procedure;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
+            $scope.cardCreationButtonText = "创建";
+            $scope.isDisableCardCreationButton = false;
             $scope.showCreateCardForm = function () {
                 $scope.displayCreationButton = false;
                 $scope.displayForm = true;
@@ -23,15 +25,17 @@ kanbanApp.directive('cardCreation', function () {
                 if ($scope.summary === "") {
                     return;
                 }
+                $scope.cardCreationButtonText = "稍等..";
+                $scope.isDisableCardCreationButton = true;
                 var card = {summary: $scope.summary, procedureId: procedure.id};
-                var cardPromise = cardsServices.create(card, procedure._links.cards.href);
-                cardPromise.then(function (data) {
-                    var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
-
-                    _cardsPromise.then(function (data) {
+                cardsServices.create(card, procedure._links.cards.href).then(function (data) {
+                    cardsServices.loadCardsByProcedureId(procedure._links.cards.href).then(function (data) {
                         $scope.cards = data.cards;
                         $scope.displayCreationButton = true;
                         $scope.displayForm = false;
+                    }).finally(function () {
+                        $scope.cardCreationButtonText = "创建";
+                        $scope.isDisableCardCreationButton = false;
                     });
                 });
             };
