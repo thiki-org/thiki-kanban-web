@@ -33,8 +33,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                             }
                             var sourceModelCards = ui.item.sortable.sourceModel;
                             var droptargetModelCards = ui.item.sortable.droptargetModel;
-                            var sourceProcedureId = ui.item.sortable.source.parent().attr("procedureId");
-                            var targetProcedureId = ui.item.sortable.droptarget[0].parentNode.getAttribute("procedureId");
+                            var sourceProcedureId = ui.item.sortable.source.parent().parent().attr("procedureId");
+                            var targetProcedureId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("procedureId");
                             for (var index in sourceModelCards) {
                                 sourceModelCards[index].sortNumber = index;
                             }
