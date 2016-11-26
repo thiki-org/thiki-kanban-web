@@ -6,6 +6,7 @@ kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKe
     function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModal, notificationsService, usersService, $interval, timerMessageService, $rootScope) {
         $scope.title = '上传头像';
         $scope.uploadButtonText = "上传";
+        $scope.isDisableUploadButton = false;
         $scope.ok = function () {
             localStorageService.clearAll();
             $uibModalInstance.close();
@@ -21,6 +22,7 @@ kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKe
 
         $scope.uploadAvatar = function () {
             $scope.uploadButtonText = "上传中..";
+            $scope.isDisableUploadButton = true;
             var avatarLink = usersService.getCurrentUserProfile()._links.avatar.href;
             var avatarPromise = usersService.uploadAvatar(dataURItoBlob($scope.cropper.croppedImage), avatarLink);
             avatarPromise.then(function () {
@@ -28,6 +30,7 @@ kanbanApp.controller('avatarController', ['$scope', '$location', '$q', 'publicKe
                 $rootScope.avatar = $scope.cropper.croppedImage;
             }).finally(function () {
                 $scope.uploadButtonText = "上传";
+                $scope.isDisableUploadButton = false;
                 $uibModalInstance.dismiss('cancel');
             });
         };

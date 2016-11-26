@@ -26,6 +26,6 @@
 
 <div class="modal-footer" ng-keydown="keyPress($event)">
     <button class="btn btn-primary thiki-delete-button" type="button" ng-click="uploadAvatar()"
-            ng-disabled="cropper.sourceImage==undefined">{{uploadButtonText}}
+            ng-disabled="cropper.sourceImage==undefined||isDisableUploadButton">{{uploadButtonText}}
     </button>
 </div>

@@ -10,8 +10,8 @@
         <div class="create-card-form-buttons">
             <button type="button" class="create-card-form-button btn btn-primary"
                     ng-click="createCard()"
-                    ng-disabled="createNewCardForm.summary.$invalid || createNewCardForm.summary.$modelValue.length>50">
-                创建 </span>
+                    ng-disabled="createNewCardForm.summary.$invalid || createNewCardForm.summary.$modelValue.length>50||isDisableCardCreationButton">
+                {{cardCreationButtonText}} </span>
             </button>
             <div class="create-card-form-cancel-button"
                  ng-click="cancelCreateCard()">取消
