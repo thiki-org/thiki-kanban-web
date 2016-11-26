@@ -2,18 +2,19 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('notificationsController', ['$scope', 'notificationsService', 'localStorageService', '$uibModal',
-    function ($scope, notificationsService, localStorageService, $uibModal) {
+kanbanApp.controller('notificationsController', ['$scope', 'notificationsService', 'localStorageService', 'timerMessageService',
+    function ($scope, notificationsService, localStorageService, timerMessageService) {
 
 
         var loadNotifications = function () {
             var notificationsUrl = localStorageService.get("notificationsUrl");
-            var notificationsPromise = notificationsService.loadNotifications(notificationsUrl);
-
-            notificationsPromise.then(function (_data) {
-                $scope.notifications = _data.notifications;
+            $scope.loadingInstance = timerMessageService.loading();
+            notificationsService.loadNotifications(notificationsUrl)
+                .then(function (_data) {
+                    $scope.notifications = _data.notifications;
+                }).finally(function () {
+                timerMessageService.close($scope.loadingInstance);
             });
         };
-
         loadNotifications();
     }]);

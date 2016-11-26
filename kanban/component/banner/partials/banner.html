@@ -6,6 +6,8 @@
         <div id="user-avatar" ng-show="avatar!=null" class="dropdown" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="false" ng-controller="profileController"><img id="user-avatar-img" ng-src="{{avatar}}"/>
         </div>
+        <div ng-show="avatar==undefined">加载中..</div>
+
 
         <div id="unreadNotificationsTotal">
             <span class="badge notification-badge" ng-show="isShowNotification">{{unreadNotificationsTotal}}</span>
