@@ -167,6 +167,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 return openErrorDialog(deferred);
             }
             $http({
+                cache: true,
                 method: "GET",
                 url: _url
             }).success(function (data, status, headers, config) {
