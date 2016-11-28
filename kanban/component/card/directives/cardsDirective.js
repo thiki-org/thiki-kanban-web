@@ -9,10 +9,9 @@ kanbanApp.directive('cards', function ($uibModal) {
         controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService) {
             $scope.loadCards = function () {
                 var procedure = $scope.procedure;
-                var _cardsPromise = cardsServices.loadCardsByProcedureId(procedure._links.cards.href);
-                $scope.loadingInstance = timerMessageService.loading();
-                _cardsPromise.then(function (_data) {
-                    timerMessageService.close($scope.loadingInstance);
+                var loadingInstance = timerMessageService.loading();
+                cardsServices.loadCardsByProcedureId(procedure._links.cards.href).then(function (_data) {
+                    timerMessageService.close(loadingInstance);
                     $scope.cards = _data.cards;
                     $scope.sortableOptions = {
                         connectWith: ".cards",

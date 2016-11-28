@@ -384,7 +384,6 @@ ul.thiki-banner-menu.dropdown-menu {
 .modal-content {
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
   box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-  margin-top: 100px !important;
 }
 
 .cr-viewport {
@@ -401,6 +400,24 @@ ul.thiki-banner-menu.dropdown-menu {
 .modal-mid {
   width: 880px !important;
   height: 500px !important;
+  top: 80px !important;
+}
+
+.modal-sm {
+  top: 80px !important;
+}
+
+.modal-fullscreen {
+  width: 100% !important;
+  height: 100% !important;
+  top: 10px !important;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin-top: 0px !important;
+  }
 }
 
 .modal-backdrop.in {
@@ -480,4 +497,11 @@ button.btn.danger-button {
 
 .loading-windows {
   background: none !important;
+}
+
+.thiki-menu-ico {
+  height: 20px;
+  width: 15px;
+  line-height: 20px;
+  font-size: 11px;
 }

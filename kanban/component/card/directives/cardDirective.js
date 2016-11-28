@@ -10,7 +10,7 @@ kanbanApp.directive('card', function ($uibModal) {
         scope: {
             card: '='
         },
-        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService) {
+        controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', 'timerMessageService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService, timerMessageService) {
             var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
             acceptanceCriterias.then(function (_acceptanceCriteriasResponse) {
                 var acceptanceCriterias = _acceptanceCriteriasResponse.acceptanceCriterias;
@@ -124,8 +124,8 @@ kanbanApp.directive('card', function ($uibModal) {
                         $scope.title = '警告';
                         $scope.message = "确定要删除" + _message + "吗?";
                         $scope.ok = function () {
-                            var _cardDeletePromise = cardsServices.deleteByLink(_link);
-                            _cardDeletePromise.then(function () {
+                            cardsServices.deleteByLink(_link).then(function () {
+                                timerMessageService.message("卡片已经删除。");
                                 currentScope.$parent.loadCards();
                             });
                             $uibModalInstance.close();

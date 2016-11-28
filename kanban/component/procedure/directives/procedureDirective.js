@@ -83,6 +83,21 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'sm'
                 });
             };
+
+            $scope.toFullScreen = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/procedure/partials/procedure-full-screen.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                            $scope.procedure = proceduresScope.procedure;
+                            $scope.finishCardsOperation = function () {
+                                $uibModalInstance.dismiss('cancel');
+                            }
+                        }],
+                    size: 'fullscreen'
+                });
+            };
         }]
     };
 });

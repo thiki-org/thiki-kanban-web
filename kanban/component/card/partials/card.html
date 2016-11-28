@@ -18,8 +18,11 @@
             <ul class="thiki-menu-items dropdown-menu card-menu-items" aria-labelledby="dropdownMenu1">
                 <li class="thiki-menu-item"><a ng-click="assign(card)">{{assignTip}}</a></li>
                 <li role="separator" class="divider"></li>
-                <li class="thiki-menu-item thiki-delete-item"><a
-                        ng-click="openDeleteModal(card.summary,card._links.self.href)">删除</a></li>
+                <li class="thiki-menu-item thiki-delete-item">
+                    <a ng-click="openDeleteModal(card.summary,card._links.self.href)">
+                        <span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

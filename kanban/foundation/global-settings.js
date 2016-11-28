@@ -3,11 +3,6 @@
  */
 kanbanApp.run(function (editableOptions, localStorageService, $http, CacheFactory) {
     editableOptions.theme = 'bs3';
-    $http.defaults.cache = CacheFactory('defaultCache', {
-        maxAge: 15 * 60 * 1000, // Items added to this cache expire after 15 minutes
-        cacheFlushInterval: 60 * 60 * 1000, // This cache will clear itself every hour
-        deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
-    });
 });
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
     var lastErrorCode;
