@@ -1,12 +1,14 @@
 /**
  * Created by xubt on 6/18/16.
  */
-kanbanApp.run(function (editableOptions, localStorageService) {
+kanbanApp.run(function (editableOptions, localStorageService, $http, CacheFactory) {
     editableOptions.theme = 'bs3';
-    localStorageService.set("userId", "341182");
-    localStorageService.set("register", "341182");
+    $http.defaults.cache = CacheFactory('defaultCache', {
+        maxAge: 15 * 60 * 1000, // Items added to this cache expire after 15 minutes
+        cacheFlushInterval: 60 * 60 * 1000, // This cache will clear itself every hour
+        deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
+    });
 });
-
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
     var lastErrorCode;
     var lastErrorOccurredTime;

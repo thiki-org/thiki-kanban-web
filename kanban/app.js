@@ -10,9 +10,9 @@ var kanbanApp = angular.module('kanbanApp', [
     'ui.select',
     'ngSanitize',
     'uiSwitch',
-    'ngFileUpload'
+    'ngFileUpload',
+    'angular-cache'
 ]);
-
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');

@@ -1,7 +1,8 @@
 /* Services */
 
-kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', 'timerMessageService', function ($http, $q, $location, $injector, localStorageService, timerMessageService) {
+kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', 'timerMessageService', function ($http, $q, $location, $injector, localStorageService, timerMessageService, CacheFactory) {
     var token = localStorageService.get("token");
+
     function openErrorDialog(deferred) {
         var modal = $injector.get("$uibModal");
         modal.open({
@@ -149,6 +150,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 return openErrorDialog(deferred);
             }
             $http({
+                cache: true,
                 method: "GET",
                 url: _url,
                 contentType: 'application/json'
