@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance', '$uibModal',
-    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance, $uibModal) {
+kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKeyServices', 'loginService', 'localStorageService', '$uibModalInstance', '$uibModal', 'timerMessageService',
+    function ($scope, $location, $q, publicKeyServices, loginService, localStorageService, $uibModalInstance, $uibModal, timerMessageService) {
         $scope.title = "登录";
         $scope.isDisableLoginButton = false;
         $scope.loginButtonText = "登录";
@@ -32,6 +32,7 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                     if (currentPath.indexOf("welcome")) {
                         $location.path(_identity.userName + '/boards');
                     }
+                    timerMessageService.message("登录成功，正在为你准备数据..");
                 }).finally(function () {
                     $scope.isDisableLoginButton = false;
                     $scope.loginButtonText = "登录";
