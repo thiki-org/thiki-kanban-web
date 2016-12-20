@@ -19,11 +19,10 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
         $httpProvider.interceptors.push('httpInterceptor');
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common["X-Requested-With"];
-        //Reset headers to avoid OPTIONS request
-        $httpProvider.defaults.headers.common = {};
-        $httpProvider.defaults.headers.post = {};
-        $httpProvider.defaults.headers.put = {};
-        $httpProvider.defaults.headers.patch = {};
+
+        $httpProvider.defaults.headers.put['Content-Type'] = 'application/json';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+
         $stateProvider
             .state('boards', {
                 url: "/:userName/boards",

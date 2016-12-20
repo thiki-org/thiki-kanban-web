@@ -9,16 +9,9 @@ kanbanApp.directive('assignments', function () {
         controller: ['$scope', 'assignmentServices', 'timerMessageService', function ($scope, assignmentServices, timerMessageService) {
             $scope.loadAssignments = function () {
                 var thisScope = $scope;
-                var loadingInstance = timerMessageService.loading();
-                var assignmentsPromise = assignmentServices.loadAssignments($scope.card._links.assignments.href);
-                assignmentsPromise.then(function (_data) {
-                    $scope.assignments = _data.assignments;
-                    thisScope.isAssigned();
-                }).finally(function () {
-                    timerMessageService.close(loadingInstance);
-                });
+                $scope.assignments = $scope.card.assignments.assignments;
+                thisScope.isAssigned();
             };
-
             $scope.loadAssignments();
         }]
     };

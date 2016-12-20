@@ -12,13 +12,7 @@ kanbanApp.directive('cardTagsSmall', function () {
             card: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
-            var cardTagsLink = $scope.card._links.cardTags.href;
-            $scope.loadStickTags = function () {
-                cardTagsService.loadTagsByCard(cardTagsLink).then(function (_data) {
-                    $scope.card.tags = _data.cardTags;
-                });
-            };
-            $scope.loadStickTags();
+            $scope.card.tags = $scope.card.tags.tags;
         }]
     };
 });

@@ -10,6 +10,8 @@ var ngmin = require('gulp-ngmin');
 var ngAnnotate = require('gulp-ng-annotate');
 var less = require('gulp-less');
 var gulpSequence = require('gulp-sequence');
+var clean = require('gulp-clean');
+
 
 var lib = require('bower-files')({
     overrides: {
@@ -65,17 +67,48 @@ gulp.task('build-less-to-css', function () {
         .pipe(less())
         .pipe(gulp.dest('kanban/static/less'));
 });
+gulp.task('clean-static', function () {
+    return gulp.src(['kanban/static/js'], {read: false})
+        .pipe(clean());
+});
+
 // 合并文件之后压缩代码
-gulp.task('minify-js', function () {
-    return gulp.src([
-        'kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js'])
-        .pipe(concat('thiki-kanban.js'))
+gulp.task('minify-js', ['clean-static'], function () {
+    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js'])
+        .pipe(concat('thiki-kanban.min.js'))
         .pipe(gulp.dest('kanban/static/js'))
-        .pipe(rename('thiki-kanban.min.js'))
         .pipe(ngmin())
         .pipe(ngAnnotate())
         .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('kanban/static/js'));
+});
+
+gulp.task('clean-release', function () {
+    return gulp.src(['release/*'], {read: false})
+        .pipe(clean());
+});
+
+gulp.task('release', ['clean-release'], function () {
+    gulp.src("kanban/static/js/*")
+        .pipe(gulp.dest('release/js'));
+
+    gulp.src("kanban/static/css/thiki-kanban.min.css")
+        .pipe(gulp.dest('release/css'));
+
+    gulp.src("kanban/static/img/**")
+        .pipe(gulp.dest('release/img'));
+
+    gulp.src("kanban/static/fonts/**")
+        .pipe(gulp.dest('release/fonts'));
+
+    gulp.src("kanban/component/**/*.html")
+        .pipe(gulp.dest('release/component'));
+
+    gulp.src("kanban/foundation/modal/partials/**")
+        .pipe(gulp.dest('release/foundation/modal/partials'));
+
+    gulp.src("kanban/index.html")
+        .pipe(gulp.dest('release'));
 });
 
 // 监视文件的变化
@@ -84,4 +117,4 @@ gulp.task('watch', function () {
 });
 
 // 注册缺省任务
-gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css'));
+gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
