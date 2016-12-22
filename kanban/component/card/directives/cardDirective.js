@@ -11,7 +11,7 @@ kanbanApp.directive('card', function ($uibModal) {
             card: '='
         },
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', 'timerMessageService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService, timerMessageService) {
-            var acceptanceCriterias = $scope.card.acceptanceCriterias.acceptanceCriterias;
+            var acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
             var finishedAcceptanceCriteriasCount = 0;
             for (var index in acceptanceCriterias) {
                 if (acceptanceCriterias[index].finished === true) {

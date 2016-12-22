@@ -28,15 +28,13 @@ kanbanApp.directive('cardCreation', function () {
                 $scope.cardCreationButtonText = "稍等..";
                 $scope.isDisableCardCreationButton = true;
                 var card = {summary: $scope.summary, procedureId: procedure.id};
-                cardsServices.create(card, procedure._links.cards.href).then(function (data) {
-                    cardsServices.loadCardsByProcedureId(procedure._links.cards.href).then(function (data) {
-                        $scope.cards = data.cards;
-                        $scope.displayCreationButton = true;
-                        $scope.displayForm = false;
-                    }).finally(function () {
-                        $scope.cardCreationButtonText = "创建";
-                        $scope.isDisableCardCreationButton = false;
-                    });
+                cardsServices.create(card, procedure._links.cards.href).then(function (_card) {
+                    $scope.cards.push(_card);
+                }).finally(function () {
+                    $scope.cardCreationButtonText = "创建";
+                    $scope.isDisableCardCreationButton = false;
+                    $scope.displayForm = false;
+                    $scope.summary = "";
                 });
             };
             $scope.keyPress = function ($event) {
