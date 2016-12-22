@@ -13,6 +13,7 @@
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-bower": "0.0.13",
+    "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.13",
     "gulp-concat": "^2.6.0",
     "gulp-inject": "^4.0.0",
@@ -40,8 +41,8 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "http-server -a 0.0.0.0 -p 8008",
+    "prestart": "gulp",
+    "start": "cd release && http-server -a 0.0.0.0 -p 8008",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
