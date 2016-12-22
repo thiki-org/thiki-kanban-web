@@ -33,8 +33,7 @@ kanbanApp.directive('cardCreation', function () {
                 }).finally(function () {
                     $scope.cardCreationButtonText = "创建";
                     $scope.isDisableCardCreationButton = false;
-                    $scope.displayForm = false;
-                    $scope.summary = "";
+                    $scope.cancelCreateCard();
                 });
             };
             $scope.keyPress = function ($event) {
