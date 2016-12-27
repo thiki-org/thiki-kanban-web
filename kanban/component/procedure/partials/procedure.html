@@ -5,19 +5,20 @@
              onbeforesave="updateProcedure($data,procedure)" data-mode="inline">
             {{procedure.title}}
         </div>
-        <div class="dropdown procedure-menu thiki-animation" ng-show="displayProcedureMenu">
-            <span class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">▼</span>
+        <div class="dropdown procedure-menu thiki-animation">
+            <span class="procedure-menu-ico dropdown-toggle glyphicon glyphicon-tasks" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true"></span>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li class="thiki-menu-item">
+                    <a ng-click="scrollToCardCreation()">
+                        <span class="thiki-menu-ico glyphicon glyphicon-file"></span>新建卡片
+                    </a>
+                </li>
                 <li class="thiki-menu-item"><a ng-click="toFullScreen()"><span class="thiki-menu-ico glyphicon glyphicon-fullscreen
 "></span>全屏</a></li>
                 <li class="thiki-menu-item">
                     <a ng-click="openProcedureConfiguration()">
                         <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>配置
-                    </a>
-                </li>
-                <li class="thiki-menu-item">
-                    <a ng-click="scrollToCardCreation()">
-                        <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>创建卡片
                     </a>
                 </li>
                 <li role="separator" class="divider"></li>
