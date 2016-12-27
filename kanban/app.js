@@ -11,7 +11,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'ngSanitize',
     'uiSwitch',
     'ngFileUpload',
-    'angular-cache'
+    'angular-cache',
+    'duScroll'
 ]);
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
