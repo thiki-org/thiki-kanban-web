@@ -108,7 +108,7 @@ gulp.task('release', ['clean-release'], function () {
         .pipe(gulp.dest('release/foundation/modal/partials'));
 
     gulp.src("kanban/index.html")
-        .pipe(gulp.dest('release'));
+        .pipe(gulp.dest('release/'));
 });
 
 // 监视文件的变化
