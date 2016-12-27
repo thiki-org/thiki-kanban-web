@@ -90,16 +90,16 @@ gulp.task('clean-release', function () {
 
 gulp.task('release', ['clean-release'], function () {
     gulp.src("kanban/static/js/*")
-        .pipe(gulp.dest('release/js'));
+        .pipe(gulp.dest('release/static/js'));
 
     gulp.src("kanban/static/css/thiki-kanban.min.css")
-        .pipe(gulp.dest('release/css'));
+        .pipe(gulp.dest('release/static/css'));
 
     gulp.src("kanban/static/img/**")
-        .pipe(gulp.dest('release/img'));
+        .pipe(gulp.dest('release/static/img'));
 
     gulp.src("kanban/static/fonts/**")
-        .pipe(gulp.dest('release/fonts'));
+        .pipe(gulp.dest('release/static/fonts'));
 
     gulp.src("kanban/component/**/*.html")
         .pipe(gulp.dest('release/component'));
@@ -107,7 +107,7 @@ gulp.task('release', ['clean-release'], function () {
     gulp.src("kanban/foundation/modal/partials/**")
         .pipe(gulp.dest('release/foundation/modal/partials'));
 
-    gulp.src("kanban/static/index.html")
+    gulp.src("kanban/index.html")
         .pipe(gulp.dest('release'));
 });
 
