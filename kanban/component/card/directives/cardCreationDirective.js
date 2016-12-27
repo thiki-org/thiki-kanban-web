@@ -18,8 +18,8 @@ kanbanApp.directive('cardCreation', function () {
                 $scope.summary = "";
             };
             $scope.cancelCreateCard = function () {
-                $scope.displayCreationButton = true;
-                $scope.displayForm = false;
+                $scope.procedure.isShowCardCreation = false;
+                $scope.summary = "";
             };
             $scope.createCard = function () {
                 if ($scope.summary === "") {
@@ -29,7 +29,10 @@ kanbanApp.directive('cardCreation', function () {
                 $scope.isDisableCardCreationButton = true;
                 var card = {summary: $scope.summary, procedureId: procedure.id};
                 cardsServices.create(card, procedure._links.cards.href).then(function (_card) {
+                    _card.isNew = true;
                     $scope.cards.push(_card);
+                    var newCardElement = angular.element(document.getElementById("card-" + _card.id));
+                    newCardElement.removeClass('new-card');
                 }).finally(function () {
                     $scope.cardCreationButtonText = "创建";
                     $scope.isDisableCardCreationButton = false;

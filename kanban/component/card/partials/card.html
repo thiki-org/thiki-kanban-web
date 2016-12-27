@@ -1,4 +1,5 @@
-<div class="card" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
+<div id="card-{{card.id}}" class="card" ng-class="card.isNew?'new-card':''" ng-mouseover="mouseover($event)"
+     ng-mouseleave="onMouseLeave($event)">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
     </div>

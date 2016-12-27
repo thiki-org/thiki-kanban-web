@@ -1,4 +1,5 @@
-<div procedureId="{{procedure.id}}" class="procedure-item" ng-mouseover="onProcedureMenuMouseOver($event)">
+<div id="procedure-{{procedure.id}}" procedureId="{{procedure.id}}" class="procedure-item"
+     ng-mouseover="onProcedureMenuMouseOver($event)">
     <div class="procedure-wrap">
         <div class="procedure-title" data-type="text" editable-text="procedure.title" e-ng-click="open($event,'$data')"
              onbeforesave="updateProcedure($data,procedure)" data-mode="inline">
@@ -12,6 +13,11 @@
                 <li class="thiki-menu-item">
                     <a ng-click="openProcedureConfiguration()">
                         <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>配置
+                    </a>
+                </li>
+                <li class="thiki-menu-item">
+                    <a ng-click="scrollToCardCreation()">
+                        <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>创建卡片
                     </a>
                 </li>
                 <li role="separator" class="divider"></li>

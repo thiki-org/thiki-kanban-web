@@ -1,5 +1,6 @@
-<div class="cards" ui-sortable="sortableOptions" data-ng-model="cards" ng-mouseover="mouseover($event)"
+<div id="cards-{{procedure.id}}" class="cards" ui-sortable="sortableOptions" data-ng-model="cards"
+     ng-mouseover="mouseover($event)"
      ng-mouseleave="onMouseLeave($event)">
     <card ng-repeat="card in cards |orderBy:'orderNumber'" card="card"></card>
-    <card-creation/>
+    <card-creation procedure="procedure"></card-creation>
 </div>

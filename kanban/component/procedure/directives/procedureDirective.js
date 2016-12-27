@@ -11,7 +11,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
         scope: {
             procedure: '='
         },
-        controller: ['$scope', 'boardsService', 'proceduresServices', function ($scope, boardsService, proceduresServices) {
+        controller: ['$scope', 'boardsService', 'proceduresServices', function ($scope, boardsService, proceduresServices, $document) {
             $scope.displayProcedureMenu = false;
             $scope.onProcedureMenuMouseOver = function ($event) {
                 $scope.displayProcedureMenu = true;
@@ -83,7 +83,13 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'sm'
                 });
             };
-
+            $scope.scrollToCardCreation = function () {
+                $scope.procedure.isShowCardCreation = true;
+                var cardsElement = angular.element(document.getElementById("cards-" + $scope.procedure.id));
+                var cardCreationElement = angular.element(document.getElementById("card-creation-" + $scope.procedure.id));
+                cardsElement.scrollToElement(cardCreationElement, 20, 500).then(function () {
+                });
+            };
             $scope.toFullScreen = function () {
                 $uibModal.open({
                     animation: true,
@@ -98,6 +104,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'fullscreen'
                 });
             };
-        }]
+        }
+        ]
     };
 });
