@@ -12,7 +12,7 @@ kanbanApp.directive('cardTagsSmall', function () {
             card: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
-            $scope.card.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.tags;
+            $scope.card.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.cardTags;
         }]
     };
 });
