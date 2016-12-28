@@ -46,6 +46,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.title = "500-远程服务器内部错误";
                         $scope.message = rejection.data.message;
                     }
+                    if (rejection.status === 504) {
+                        $scope.title = "504-请求超时";
+                        $scope.message = rejection.data.message;
+                    }
                     if (rejection.status === 400) {
                         $scope.title = '400-客户端错误';
                         $scope.message = rejection.data.message;
