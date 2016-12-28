@@ -34,7 +34,7 @@ kanbanApp.directive('procedures', function () {
                             for (var index in procedures) {
                                 procedures[index].sortNumber = index;
                             }
-                            var sortNumbersLink = _data._links.sortNumbers.href;
+                            var sortNumbersLink = JSON.parse(ui.item.sortable.source.attr("boardClone")).procedures._links.sortNumbers.href;
                             proceduresServices.resort(procedures, sortNumbersLink);
                         }
                     };

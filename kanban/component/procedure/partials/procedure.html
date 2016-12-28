@@ -1,4 +1,5 @@
-<div id="procedure-{{procedure.id}}" procedureId="{{procedure.id}}" class="procedure-item"
+<div id="procedure-{{procedure.id}}" procedureId="{{procedure.id}}" procedureClone="{{procedure}}"
+     class="procedure-item"
      ng-mouseover="onProcedureMenuMouseOver($event)">
     <div class="procedure-wrap">
         <div class="procedure-title" data-type="text" editable-text="procedure.title" e-ng-click="open($event,'$data')"
