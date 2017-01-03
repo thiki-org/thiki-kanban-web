@@ -1,14 +1,32 @@
 <div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
     <h3 class="modal-title">工序配置</h3>
 </div>
 <div class="modal-body">
-    <form name="procedureForm">
+    <form name="procedureForm" role="form" class="form-horizontal">
         <div class="form-group">
-            <input name="procedureTitle" type="text" class="form-control" data-ng-model="procedure.title"
-                   focus="true" placeholder="名称" autocomplete="off"
-                   required/>
-            <div class="validation-error-message"
-                 ng-show="procedureForm.procedureTitle.$error.required && procedureForm.invitee.$dirty">请确定当前工序名称
+            <label for="procedureTitle" class="col-sm-1 control-label">名称</label>
+
+            <div class="col-sm-10">
+                <input id="procedureTitle" name="procedureTitle" type="text" class="form-control"
+                       data-ng-model="procedure.title"
+                       focus="true" placeholder="名称" autocomplete="off" maxlength="30"
+                       required/>
+
+                <div class="validation-error-message"
+                     ng-show="procedureForm.procedureTitle.$error.required && procedureForm.procedureTitle.$dirty">
+                    工序名称不能为空
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="procedureDescription" class="col-sm-1 control-label">描述</label>
+            <div class="col-sm-10">
+            <textarea id="procedureDescription" name="procedureDescription" rows="3" ng-maxlength="100"
+                      class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
+                      data-ng-model="procedure.description" focus="true" placeholder="工序描述"
+                      autocomplete="off"></textarea>
             </div>
         </div>
     </form>

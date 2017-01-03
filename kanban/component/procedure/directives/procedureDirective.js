@@ -80,7 +80,8 @@ kanbanApp.directive('procedure', function ($uibModal) {
                                 });
                             };
                         }],
-                    size: 'sm'
+                    size: 'mid',
+                    backdrop: "static"
                 });
             };
             $scope.scrollToCardCreation = function () {
