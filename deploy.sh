@@ -5,6 +5,6 @@ server_host=$2
 server_dir=$3
 
 echo "-> upload artifact to remote server"
-scp $artifact $server_host:$server_dir
+scp  -rp  $artifact $server_host:$server_dir
 
 echo "-> everything is done."
