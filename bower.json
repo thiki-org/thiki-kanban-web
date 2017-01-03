@@ -22,7 +22,7 @@
     "angular-strap": "^2.3.9",
     "moment": "^2.14.1",
     "angular-ui-select": "^0.19.4",
-    "angular-sanitize": "^1.5.8",
+    "angular-sanitize": "^1.5.9",
     "switchery": "^0.8.1",
     "angular-ui-switch": "^0.1.1",
     "ng-file-upload-shim": "^12.2.12",
