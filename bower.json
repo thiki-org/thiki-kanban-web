@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "jquery": "~2.1.1",
-    "angular": "1.5.8",
+    "angular": "1.5.9",
+    "angular-animate": "1.5.9",
+    "angular-aria": "1.5.9",
     "angular-mocks": "1.4.x",
     "bootstrap": "~3.3.5",
     "angular-route": "1.4.x",
@@ -19,7 +21,6 @@
     "angular-ui-router": "^0.3.1",
     "angular-strap": "^2.3.9",
     "moment": "^2.14.1",
-    "angular-animate": "^1.5.8",
     "angular-ui-select": "^0.19.4",
     "angular-sanitize": "^1.5.8",
     "switchery": "^0.8.1",
