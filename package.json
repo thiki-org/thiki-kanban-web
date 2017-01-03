@@ -40,7 +40,6 @@
     "tmp": "0.0.23"
   },
   "scripts": {
-    "postinstall": "bower install",
     "prestart": "gulp",
     "start": "http-server -a 0.0.0.0 -p 8008",
     "pretest": "npm install",
