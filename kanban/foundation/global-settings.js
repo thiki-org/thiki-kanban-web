@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 6/18/16.
  */
-kanbanApp.run(function (editableOptions, localStorageService, $http, CacheFactory) {
+kanbanApp.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
 });
 kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
