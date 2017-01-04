@@ -1,8 +1,8 @@
 /**
  * Created by xubt on 9/20/16.
  */
-kanbanApp.factory('notificationsService', ['$http', '$q', 'httpServices',
-    function ($http, $q, httpServices) {
+kanbanApp.factory('notificationsService', ['httpServices',
+    function (httpServices) {
         return {
             teamsLink: '',
             loadUnreadNotificationsTotal: function (_loadUnreadNotificationsTotalLink) {
