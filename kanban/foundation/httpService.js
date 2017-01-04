@@ -34,10 +34,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 url: _options.url,
                 data: _options.data,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -51,10 +51,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 url: _url,
                 data: _payload,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -66,10 +66,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             $http({
                 method: "POST",
                 url: _url
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -84,10 +84,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             $http.post(_url, fileToSend, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
 
             return deferred.promise;
@@ -102,10 +102,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 url: _url,
                 data: _payload,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -118,10 +118,10 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 method: "PUT",
                 url: _url,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -134,14 +134,14 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 method: "DELETE",
                 url: _url,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
-        get: function (_url) {
+        get: function (_url, _params) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -149,11 +149,12 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             $http({
                 method: "GET",
                 url: _url,
+                params: _params,
                 contentType: 'application/json'
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         },
@@ -163,13 +164,12 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 return openErrorDialog(deferred);
             }
             $http({
-                cache: true,
                 method: "GET",
                 url: _url
-            }).success(function (data, status, headers, config) {
-                deferred.resolve(data);
-            }).error(function (data, status, headers, config) {
-                deferred.reject(data);
+            }).then(function successCallback(response) {
+                deferred.resolve(response.data);
+            }, function errorCallback(response) {
+                deferred.reject(response.data);
             });
             return deferred.promise;
         }
