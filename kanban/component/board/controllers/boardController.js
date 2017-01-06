@@ -9,7 +9,7 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
         var uploadWorkTileTasksLink;
 
         $scope.loadBoards = function () {
-            var loadingInstance = timerMessageService.loading("正在用力搬您的看板..");
+            var loadingInstance = timerMessageService.loading();
             var boardsPromise = boardsService.load(boardsLink);
             boardsPromise.then(function (_data) {
                 $scope.boards = _data.boards;
