@@ -52,7 +52,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                                 acceptanceCriterias[index].sortNumber = index;
                             }
                             var sortNumbersLink = _acceptanceCriterias._links.sortNumbers.href;
-                            acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink);
+                            acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function () {
+                                $scope.loadAcceptanceCriterias();
+                            });
                         }
                     };
                 });
