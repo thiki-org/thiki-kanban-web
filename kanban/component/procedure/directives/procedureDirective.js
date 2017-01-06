@@ -100,7 +100,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
                             $scope.procedure = proceduresScope.procedure;
                             $scope.finishCardsOperation = function () {
                                 $uibModalInstance.dismiss('cancel');
-                            }
+                            };
                         }],
                     size: 'fullscreen'
                 });
