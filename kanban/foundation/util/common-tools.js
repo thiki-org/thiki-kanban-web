@@ -13,3 +13,16 @@ function dataURItoBlob(dataURI) {
     }
     return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
 }
+
+kanbanApp.factory('jsonService', function () {
+    return {
+        findById: function (_jsonArray, _id) {
+            for (var index in _jsonArray) {
+                if (_jsonArray[index].id === _id) {
+                    return _jsonArray[index];
+                }
+            }
+            return {};
+        }
+    };
+});
