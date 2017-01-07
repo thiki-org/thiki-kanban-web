@@ -42,7 +42,12 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }
                         cards = cards.concat(droptargetModelCards);
                         var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("procedureClone")).cards._links.sortNumbers.href;
-                        cardsServices.resort(cards, sortNumbersLink);
+                        var loadingInstance = timerMessageService.loading();
+                        cardsServices.resort(cards, sortNumbersLink).then(function () {
+                            $scope.loadCards();
+                        }).finally(function () {
+                            timerMessageService.close(loadingInstance);
+                        });
                     }
                 };
             };

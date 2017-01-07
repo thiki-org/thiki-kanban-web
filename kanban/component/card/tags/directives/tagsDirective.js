@@ -49,6 +49,7 @@ kanbanApp.directive('cardTags', function () {
                     }
                 }
                 cardTagsService.stickTags(stickTags, cardTagsLink).then(function (_data) {
+                    $scope.card.tags.tags = _data.cardTags;
                     $scope.$parent.card.tags = _data.cardTags;
                     $scope.$parent.tagsCount = stickTags.length;
                 });
