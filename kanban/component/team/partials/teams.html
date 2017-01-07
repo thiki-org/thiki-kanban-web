@@ -2,8 +2,7 @@
     <dashboard-entrance>我的团队</dashboard-entrance>
 </navigation-banner>
 <div class="teams">
-    <div id="team-{{team.id}}" ng-repeat="team in teams | orderBy:'creationTime'" repeat-finish class="team-item"
-         data-ng-model="team.name" data-mode="inline">
+    <div id="team-{{team.id}}" ng-repeat="team in teams | orderBy:'creationTime'" repeat-finish class="team-item">
         <div ng-click=toTeam(team.id,team._links.self.href)> {{team.name}}</div>
     </div>
     <div class="team-item team-creation" data-mode="inline" ng-show="displayTeamCreationForm">

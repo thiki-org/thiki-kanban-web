@@ -19,7 +19,7 @@ kanbanApp.directive('proceduresBoard', function () {
                             var teamsPromise = teamsService.load(teamsUrl);
                             $scope.selectedTeam = {};
                             teamsPromise.then(function (_teams) {
-                                $scope.teams = _teams;
+                                $scope.teams = _teams.teams;
                                 var teamPromise = teamsService.loadTeamByLink(proceduresScope.board._links.team.href);
                                 teamPromise.then(function (_team) {
                                     $scope.teams.selected = _team;

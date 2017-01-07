@@ -7,8 +7,8 @@ kanbanApp.controller('teamsController', ['$scope', '$location', '$q', 'teamsServ
         var teamsLink = localStorageService.get("user.links").teams.href;
         var teamPromise = teamsService.load(teamsLink);
         teamsService.teamsLink = teamsLink;
-        teamPromise.then(function (data) {
-            $scope.teams = data;
+        teamPromise.then(function (_data) {
+            $scope.teams = _data.teams;
         });
 
         $scope.toTeam = function (_teamId, _teamLink) {
