@@ -72,9 +72,18 @@ gulp.task('clean-static', function () {
         .pipe(clean());
 });
 
-// 合并文件之后压缩代码
 gulp.task('minify-js', ['clean-static'], function () {
-    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js'])
+    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', 'config/dev/config.js'])
+        .pipe(concat('thiki-kanban.min.js'))
+        .pipe(gulp.dest('kanban/static/js'))
+        .pipe(ngmin())
+        .pipe(ngAnnotate())
+        .pipe(uglify({mangle: false}))
+        .pipe(gulp.dest('kanban/static/js'));
+});
+
+gulp.task('minify-js-release', ['clean-static'], function () {
+    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', 'config/prod/config.js'])
         .pipe(concat('thiki-kanban.min.js'))
         .pipe(gulp.dest('kanban/static/js'))
         .pipe(ngmin())
@@ -117,4 +126,5 @@ gulp.task('watch', function () {
 });
 
 // 注册缺省任务
-gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
+gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css'));
+gulp.task('release', gulpSequence('jshint', 'minify-bower-components', 'minify-js-release', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
