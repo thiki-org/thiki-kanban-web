@@ -18,7 +18,6 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             },
             size: 'sm'
         });
-        deferred.reject(error);
         return deferred.promise;
     }
 

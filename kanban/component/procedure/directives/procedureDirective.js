@@ -65,7 +65,10 @@ kanbanApp.directive('procedure', function ($uibModal) {
                         function ($scope, teamsService, timerMessageService, $uibModalInstance) {
                             $scope.procedure = proceduresScope.procedure;
                             $scope.procedureSaveButton = "保存";
+                            $scope.types = [{id: 0, name: "尚未开始迭代"}, {id: 1, name: "迭代计划中"}];
+                            $scope.types.selected = $scope.types[$scope.procedure.type];
                             $scope.saveProcedure = function () {
+                                $scope.procedure.type = $scope.types.selected.id;
                                 $scope.procedureSaveButton = "保存中..";
                                 $scope.isDisableProcedureSaveButton = true;
                                 var procedurePromise = proceduresServices.update($scope.procedure);

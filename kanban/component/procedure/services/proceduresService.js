@@ -11,7 +11,7 @@ kanbanApp.factory('proceduresServices', ['httpServices',
                 return httpServices.post(_procedure, this.proceduresLink);
             },
             update: function (_procedure) {
-                return httpServices.put(_procedure, this.proceduresLink);
+                return httpServices.put(_procedure, _procedure._links.self.href);
             },
             deleteByLink: function (_link) {
                 return httpServices.delete(_link);

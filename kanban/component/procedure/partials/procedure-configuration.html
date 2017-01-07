@@ -33,10 +33,10 @@
         <div class="form-group">
             <label for="procedureType" class="col-sm-1 control-label">类型</label>
             <div class="col-sm-10">
-                <ui-select data-ng-model="teams.selected" id="procedureType">
+                <ui-select data-ng-model="types.selected" id="procedureType">
                     <ui-select-match placeholder="选择类型">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="team in teams | filter: $select.search">
-                        <span ng-bind-html="team.name | highlight: $select.search"></span>
+                    <ui-select-choices repeat="type in types | filter: $select.search">
+                        <span ng-bind-html="type.name | highlight: $select.search"></span>
                     </ui-select-choices>
                 </ui-select>
             </div>
