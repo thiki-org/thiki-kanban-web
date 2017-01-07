@@ -5,7 +5,9 @@
         <div class="procedure-title" data-type="text">
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-th" ng-show="procedure.type==0"></span>
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-circle-arrow-right"
-                  ng-show="procedure.type==1"></span>
+                  ng-show="procedure.type==1&&procedure.status!=9"></span>
+            <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-folder-open"
+                  ng-show="procedure.type==1&&procedure.status==9"></span>
             {{procedure.title}}
         </div>
         <div class="dropdown procedure-menu thiki-animation">
