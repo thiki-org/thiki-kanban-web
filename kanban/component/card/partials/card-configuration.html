@@ -1,10 +1,17 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="$dismiss()">&times;</button>
-    <h3 class="modal-title">卡片配置</h3>
+    <h3 class="modal-title">
+        <span class="glyphicon glyphicon-cog"></span>
+        卡片配置
+    </h3>
 </div>
 <div class="modal-body">
     <uib-tabset>
-        <uib-tab index="0" heading="基本信息">
+        <uib-tab index="0">
+            <uib-tab-heading>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-list-alt"></span>
+                基本信息
+            </uib-tab-heading>
             <div class="tab-card-basic-info">
                 <form name="cardForm">
                     <div class="form-group">
@@ -34,6 +41,7 @@
         </uib-tab>
         <uib-tab index="1">
             <uib-tab-heading>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-list"></span>
                 验收标准<span class='badge comment-badge'
                           ng-show='acceptanceCriteriasCount>0'
                           ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
@@ -44,6 +52,7 @@
         </uib-tab>
         <uib-tab index="2">
             <uib-tab-heading>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-tags"></span>
                 标签<span class='badge comment-badge' ng-show='tagsCount>0'>{{tagsCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
@@ -52,6 +61,7 @@
         </uib-tab>
         <uib-tab index="3">
             <uib-tab-heading>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-comment"></span>
                 评论<span class='badge comment-badge' ng-show='commentCount>0'>{{commentCount}}</span>
             </uib-tab-heading>
             <div class="tab-comments">
