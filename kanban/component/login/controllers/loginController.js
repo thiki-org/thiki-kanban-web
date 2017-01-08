@@ -52,4 +52,14 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                 backdrop: "static"
             });
         };
+
+        $scope.register = function () {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'component/register/partials/register.html',
+                controller: "registerController",
+                size: 'sm',
+                backdrop: "static"
+            });
+        };
     }]);

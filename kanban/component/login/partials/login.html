@@ -4,28 +4,40 @@
 </div>
 <div class="modal-body" id="login-form">
     <form name="loginForm">
-        <div class="form-group">
-            <input name="identity" type="text" class="form-control" data-ng-model="identity"
-                   ng-enter="login()" focus="displayForm" placeholder="你的注册邮箱/用户名" autocomplete="off"
+        <div id="default-avatar"><img src="static/img/default-avatar.png"/></div>
+
+        <div class="input-group">
+            <span class="input-group-addon"> <span class="glyphicon glyphicon-user login-form-ico"></span>
+                身份标识</span>
+            <input id="identity" name="identity" type="text" class="form-control" data-ng-model="identity"
+                   ng-enter="login()" focus="displayForm" placeholder="email/username" autocomplete="off"
                    required/>
-            <div class="validation-error-message"
-                 ng-show="loginForm.identity.$error.required && loginForm.identity.$dirty">邮箱/用户名不能为空
-            </div>
         </div>
 
-        <div class="form-group">
-            <input name="password" type="password" class="form-control" data-ng-model="password"
-                   ng-enter="login()" focus="displayForm" placeholder="密码" required/>
-            <div class="validation-error-message"
-                 ng-show="loginForm.password.$error.required && loginForm.password.$dirty">密码不能为空
-            </div>
+        <div class="input-group">
+            <span class="input-group-addon"> <span class="glyphicon glyphicon-lock login-form-ico"></span>
+                您的密码</span>
+
+            <input id="password" name="password" type="password" class="form-control" data-ng-model="password"
+                   ng-enter="login()" focus="displayForm" placeholder="password" required/>
         </div>
     </form>
     <div id="forget-password">
         <a uib-tooltip="通过注册邮箱帮你找回丢失的密码" tooltip-placement="right"
            tooltip-trigger="mouseenter" ng-click="openForgetPasswordModal()">忘记密码</a>
+
+        <a uib-tooltip="注册新用户" tooltip-placement="right"
+           tooltip-trigger="mouseenter" ng-click="register()">注册</a>
     </div>
+
+
 </div>
+<div class="alert alert-warning login-form-alert" role="alert"
+     ng-show="(loginForm.identity.$error.required && loginForm.identity.$dirty)||(loginForm.password.$error.required && loginForm.password.$dirty)">
+    <span class="login-form-warning-message" ng-show="loginForm.identity.$error.required && loginForm.identity.$dirty">警告：邮箱/用户名不能为空</span>
+    <span class="login-form-warning-message" ng-show="loginForm.password.$error.required && loginForm.password.$dirty">警告：密码不能为空</span>
+</div>
+
 <div class="modal-footer" ng-keydown="keyPress($event)">
     <button class="btn btn-primary" type="button" ng-click="login()"
             ng-disabled="loginForm.$invalid||isDisableLoginButton">{{loginButtonText}}

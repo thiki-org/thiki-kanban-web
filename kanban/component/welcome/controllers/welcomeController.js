@@ -30,7 +30,7 @@ kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcome
                 animation: true,
                 templateUrl: 'component/login/partials/login.html',
                 controller: "loginController",
-                size: 'sm',
+                size: 'login',
                 backdrop: "static"
             });
         };
