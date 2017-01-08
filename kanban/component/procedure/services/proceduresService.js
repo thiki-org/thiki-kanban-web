@@ -6,8 +6,8 @@ kanbanApp.factory('proceduresServices', ['httpServices', function (httpServices)
         load: function () {
             return httpServices.get(this.proceduresLink);
         },
-        create: function (_procedure) {
-            return httpServices.post(_procedure, this.proceduresLink);
+        create: function (_procedure, _link) {
+            return httpServices.post(_procedure, _link);
         },
         update: function (_procedure) {
             return httpServices.put(_procedure, _procedure._links.self.href);

@@ -9,7 +9,7 @@ kanbanApp.directive('cards', function ($uibModal) {
         controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService) {
             $scope.loadCards = function () {
                 var procedure = $scope.procedure;
-                $scope.cards = procedure.cards.cards;
+                $scope.cards = procedure.cards === undefined ? [] : procedure.cards.cards;
                 $scope.sortableOptions = {
                     connectWith: ".cards",
                     opacity: 0.5,

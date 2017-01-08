@@ -6,30 +6,46 @@
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-th" ng-show="procedure.type==0"></span>
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-circle-arrow-right"
                   ng-show="procedure.type==1&&procedure.status!=9"></span>
-            <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-folder-open"
+            <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-pushpin"
                   ng-show="procedure.type==1&&procedure.status==9"></span>
+            <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-briefcase"
+                  ng-show="procedure.archived"></span>
             {{procedure.title}}
         </div>
         <div class="dropdown procedure-menu thiki-animation">
             <span class="procedure-menu-ico dropdown-toggle glyphicon glyphicon-tasks" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="true"></span>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item">
+                <li class="thiki-menu-item" ng-hide="procedure.archived">
                     <a ng-click="scrollToCardCreation()">
                         <span class="thiki-menu-ico glyphicon glyphicon-file"></span>新建卡片
                     </a>
                 </li>
-                <li class="thiki-menu-item"><a ng-click="toFullScreen()">
-                    <span class="thiki-menu-ico glyphicon glyphicon-fullscreen"></span>全屏</a></li>
+                <li class="thiki-menu-item">
+                    <a ng-click="toFullScreen()">
+                        <span class="thiki-menu-ico glyphicon glyphicon-fullscreen"></span>全屏
+                    </a>
+                </li>
                 <li class="thiki-menu-item">
                     <a ng-click="openProcedureConfiguration()">
                         <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>配置
                     </a>
                 </li>
+                <li class="thiki-menu-item" ng-show="procedure._links.archive!=null">
+                    <a ng-click="openArchiveDialog()">
+                        <span class="thiki-menu-ico glyphicon glyphicon-briefcase"></span>归档
+                    </a>
+                </li>
                 <li role="separator" class="divider"></li>
-                <li class="thiki-menu-item thiki-delete-item">
+                <li class="thiki-menu-item thiki-delete-item" ng-hide="procedure.archived">
                     <a ng-click="openModal(procedure.title,procedure._links.self.href)">
                         <span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除
+                    </a>
+                </li>
+
+                <li class="thiki-menu-item thiki-delete-item" ng-show="procedure.archived">
+                    <a ng-click="openModal(procedure.title,procedure._links.self.href)">
+                        <span class="thiki-menu-ico glyphicon glyphicon-repeat"></span>撤销归档
                     </a>
                 </li>
             </ul>

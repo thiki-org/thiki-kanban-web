@@ -6,12 +6,14 @@ kanbanApp.directive('procedureCreation', function () {
         restrict: 'E',
         templateUrl: 'component/procedure/partials/procedures-creation.html',
         replace: true,
-        scope: true,
+        scope: {
+            procedures: '='
+        },
         controller: ['$scope', 'proceduresServices', function ($scope, proceduresServices) {
             $scope.createProcedure = function () {
                 var title = $scope.title;
-                var procedure = {title: title, boardId: $scope.board.id};
-                var proceduresPromise = proceduresServices.create(procedure);
+                var procedure = {title: title};
+                var proceduresPromise = proceduresServices.create(procedure, $scope.$parent.board._links.procedures.href);
                 proceduresPromise.then(function (data) {
                     if ($scope.procedures === null) {
                         $scope.procedures = [];

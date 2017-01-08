@@ -112,6 +112,33 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'fullscreen'
                 });
             };
+
+            $scope.openArchiveDialog = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/procedure/partials/procedure-archive.html',
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                            $scope.procedure = {};
+                            $scope.archiveButtonText = "归档";
+                            $scope.isDisableArchiveButton = false;
+                            $scope.archive = function () {
+                                $scope.archiveButtonText = "归档中..";
+                                $scope.isDisableArchiveButton = true;
+                                proceduresServices.create($scope.procedure, proceduresScope.procedure._links.archive.href)
+                                    .then(function () {
+                                        timerMessageService.message("归档成功，正在为您刷新数据..");
+                                        currentScope.$parent.loadProcedures();
+                                    }).finally(function () {
+                                    $scope.isDisableArchiveButton = false;
+                                    $scope.archiveButtonText = "归档";
+                                });
+                                $uibModalInstance.dismiss('cancel');
+                            };
+                        }],
+                    size: 'mid'
+                });
+            };
         }
         ]
     };
