@@ -129,11 +129,11 @@ kanbanApp.directive('procedure', function ($uibModal) {
                                     .then(function () {
                                         timerMessageService.message("归档成功，正在为您刷新数据..");
                                         currentScope.$parent.loadProcedures();
+                                        $uibModalInstance.dismiss('cancel');
                                     }).finally(function () {
                                     $scope.isDisableArchiveButton = false;
                                     $scope.archiveButtonText = "归档";
                                 });
-                                $uibModalInstance.dismiss('cancel');
                             };
                         }],
                     size: 'mid'

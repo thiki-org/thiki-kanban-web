@@ -8,7 +8,8 @@ kanbanApp.directive('acceptanceCriteria', function () {
         replace: true,
         transclude: true,
         scope: {
-            acceptanceCriteria: '='
+            acceptanceCriteria: '=',
+            procedure: '='
         },
         controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
             $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {

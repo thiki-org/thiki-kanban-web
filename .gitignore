@@ -6,3 +6,4 @@ kanban/static/less
 .idea/
 test/
 /release/
+/kanban/static/bower-main-files/

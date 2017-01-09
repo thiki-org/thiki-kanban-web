@@ -9,7 +9,8 @@ kanbanApp.directive('cardTagsSmall', function () {
         replace: true,
         transclude: true,
         scope: {
-            card: '='
+            card: '=',
+            procedure: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
             $scope.card.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.cardTags;

@@ -155,13 +155,14 @@ button, input, select, textarea {
 .acceptanceCriterias {
   max-height: 400px;
   overflow: auto;
+  margin-bottom: 10px;
 }
 
 .is-finished {
   float: left;
   margin-left: 5px;
   margin-right: 5px;
-  width: 45px;
+  width: 30px;
   clear: right;
   height: 30px;
   line-height: 38px;
@@ -172,12 +173,15 @@ button, input, select, textarea {
   padding: 0px 3px 3px 5px;
   width: 88%;
   float: left;
-  min-height: 28px;
+  min-height: 24px;
+  line-height: 24px;
+  height: 24px;
   margin-top: 5px;
   margin-right: 10px;
-  line-height: 28px;
-  background: #fcf8e3;
   border-radius: 2px;
+  background: grey;
+  font-size: 12px;
+  color: white !important;
 }
 
 .acceptanceCriteria-delete {
@@ -187,7 +191,7 @@ button, input, select, textarea {
 }
 
 .finished {
-  background: #64bd63;
+  background: #09ad7e;
   color: white !important;
 }
 
@@ -332,7 +336,7 @@ span.badge.comment-badge.ng-binding {
 
 span.badge.acceptance-criteria-all-finished-badge.ng-binding {
   margin-left: 5px;
-  background-color: #64bd63 !important;
+  background-color: #09ad7e !important;
 }
 
 span.badge.acceptance-criteria-un-finished-badge.ng-binding {
@@ -350,7 +354,7 @@ span.badge.acceptance-criteria-un-finished-badge.ng-binding {
 }
 
 .progress-bar {
-  background-color: #64bd63 !important;
+  background-color: #09ad7e !important;
   border-radius: 2px;
 }
 
@@ -380,8 +384,10 @@ button.dropdown-toggle.card-options-menu-button div {
 
 .card-code-label span {
   background-color: @base !important;
-  padding: 3px 5px 3px 3px;
-  color: white;
+  padding: 2px 5px 2px 3px;
+  color: #fff;
+  border-radius: 1px;
+  margin-left: -5px;
 }
 
 .card-menu-items {
@@ -442,4 +448,8 @@ button.dropdown-toggle.card-options-menu-button div {
 .finished:hover {
   cursor: default !important;
   color: #fff !important;
+}
+
+.acceptanceCriterias label {
+  display: inherit !important;
 }

@@ -16,8 +16,6 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
                 $scope.unreadNotificationsTotal = _data.unreadNotificationsTotal;
                 $scope.isShowNotification = $scope.unreadNotificationsTotal === 0 ? false : true;
                 localStorageService.set("notificationsUrl", _data._links.notifications.href);
-            }, function () {
-                $interval.cancel(pollNotifications);
             });
         }
 

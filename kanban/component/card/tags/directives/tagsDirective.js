@@ -9,7 +9,8 @@ kanbanApp.directive('cardTags', function () {
         replace: true,
         transclude: true,
         scope: {
-            card: '='
+            card: '=',
+            procedure: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', '$uibModal', function ($scope, boardsService, tagsService, cardTagsService, $uibModal) {
             var tagsLink = $scope.card._links.tags.href;

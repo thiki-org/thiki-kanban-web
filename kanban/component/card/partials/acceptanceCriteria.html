@@ -1,13 +1,22 @@
 <div class="acceptanceCriteria">
-    <div class="is-finished">
-        <switch id="enabled" name="enabled" ng-model="acceptanceCriteria.finished" class="green"></switch>
+    <div class="is-finished" ng-hide="procedure.archived">
+        <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}" ng-model="acceptanceCriteria.finished"/>
+        <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
     </div>
     <div class="acceptanceCriteria-summary" ng-class="
-         acceptanceCriteria.finished==true?'finished' : ''"
+         acceptanceCriteria.finished===true?'finished' : ''"
          data-type="text" e-rows="3" e-cols="30" e-maxlength="200" editable-textarea="acceptanceCriteria.summary"
-         e-ng-click="open($event,'$data')"
-         onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)"> {{acceptanceCriteria.summary}}
+         e-ng-click="open($event,'$data')" onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)"
+         ng-hide="procedure.archived">
+        {{acceptanceCriteria.summary}}
     </div>
+
+    <div class="acceptanceCriteria-summary" ng-class="
+         acceptanceCriteria.finished==true?'finished' : ''"
+         data-type="text" ng-show="procedure.archived">
+        {{acceptanceCriteria.summary}}
+    </div>
+
     <div class="acceptanceCriteria-delete" ng-mouseover="onMouseOver($event)"
          ng-mouseleave="onMouseLeave($event)">
         <span class="glyphicon glyphicon-trash" ng-show="isShowDeleteButton"

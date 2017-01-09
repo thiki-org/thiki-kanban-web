@@ -8,7 +8,8 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
         replace: true,
         transclude: true,
         scope: {
-            card: '='
+            card: '=',
+            procedure: '='
         },
         controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
             $scope.acceptanceCriteriaSaveButton = "保存";

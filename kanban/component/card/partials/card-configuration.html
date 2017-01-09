@@ -18,7 +18,7 @@
                         <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
                                   data-ng-model="card.summary"
                                   focus="true" placeholder="卡片概要" autocomplete="off"
-                                  required/>
+                                  required ng-disabled="procedure.archived"/>
                         <div class="validation-error-message"
                              ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
                         </div>
@@ -27,11 +27,11 @@
                         <label for="code">卡片编号</label>
 
                         <input id="code" name="code" type="text" class="form-control card-code"
-                               data-ng-model="card.code" autocomplete="off"/>
+                               data-ng-model="card.code" autocomplete="off" ng-disabled="procedure.archived"/>
                     </div>
                 </form>
 
-                <div class="tab-card-configuration-save">
+                <div class="tab-card-configuration-save" ng-hide="procedure.archived">
                     <button class="btn btn-primary" type="button" ng-click="saveCard()"
                             ng-disabled="(!cardForm.$dirty)||cardForm.$invalid||isDisableCardSaveButton">
                         {{cardSaveButton}}
@@ -47,7 +47,7 @@
                           ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
-                <acceptance-criterias card="card"/>
+                <acceptance-criterias card="card" procedure="procedure"/>
             </div>
         </uib-tab>
         <uib-tab index="2">
@@ -56,7 +56,7 @@
                 标签<span class='badge comment-badge' ng-show='tagsCount>0'>{{tagsCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
-                <card-tags card="card"/>
+                <card-tags card="card" procedure="procedure"/>
             </div>
         </uib-tab>
         <uib-tab index="3">
@@ -65,7 +65,7 @@
                 评论<span class='badge comment-badge' ng-show='commentCount>0'>{{commentCount}}</span>
             </uib-tab-heading>
             <div class="tab-comments">
-                <comments card="card"/>
+                <comments card="card" procedure="procedure"/>
             </div>
         </uib-tab>
     </uib-tabset>

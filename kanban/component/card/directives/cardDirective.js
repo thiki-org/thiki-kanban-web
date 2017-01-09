@@ -8,7 +8,8 @@ kanbanApp.directive('card', function ($uibModal) {
         replace: true,
         transclude: true,
         scope: {
-            card: '='
+            card: '=',
+            procedure: '='
         },
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', 'timerMessageService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService, timerMessageService) {
             var acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
@@ -79,6 +80,7 @@ kanbanApp.directive('card', function ($uibModal) {
                         function ($scope, teamsService, timerMessageService, $uibModalInstance) {
                             $scope.card = cardScope.card;
                             $scope.cardSaveButton = "保存";
+                            $scope.procedure = cardScope.procedure;
                             $scope.saveCard = function () {
                                 $scope.cardSaveButton = "保存中..";
                                 $scope.isDisableCardSaveButton = true;

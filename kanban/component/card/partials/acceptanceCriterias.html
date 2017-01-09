@@ -2,9 +2,9 @@
     <div class="acceptanceCriterias-items" ui-sortable="acceptanceCriteriasSortableOptions"
          data-ng-model="acceptanceCriterias">
         <acceptance-criteria ng-repeat="acceptanceCriteria in acceptanceCriterias |orderBy:'sortNumber'"
-                             acceptance-criteria="acceptanceCriteria"></acceptance-criteria>
+                             acceptance-criteria="acceptanceCriteria" procedure="procedure"></acceptance-criteria>
 
-        <div class="acceptanceCriteria-creation thiki-animation" data-type="text">
+        <div class="acceptanceCriteria-creation thiki-animation" data-type="text" ng-hide="procedure.archived">
             <div class="card-create-button" ng-click="openAcceptanceCriteriaCreationForm()"
                  ng-show="isShowAcceptanceCriteriaCreationButton">
                 +
