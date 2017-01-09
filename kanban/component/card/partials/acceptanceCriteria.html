@@ -1,6 +1,7 @@
 <div class="acceptanceCriteria">
-    <div class="is-finished" ng-hide="procedure.archived">
-        <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}" ng-model="acceptanceCriteria.finished"/>
+    <div class="is-finished">
+        <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
+               ng-model="acceptanceCriteria.finished" ng-disabled="procedure.archived"/>
         <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
     </div>
     <div class="acceptanceCriteria-summary" ng-class="
