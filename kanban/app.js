@@ -1,7 +1,9 @@
 /* App Module */
 
 var kanbanApp = angular.module('kanbanApp', [
-    'ngRoute', 'ngAnimate', 'ui.bootstrap',
+    'ngRoute',
+    'ngAnimate',
+    'ui.bootstrap',
     'ui.sortable',
     'xeditable',
     'LocalStorageModule',
