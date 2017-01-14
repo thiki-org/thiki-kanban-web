@@ -45,6 +45,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
                     $scope.ok = function () {
                         localStorageService.clearAll();
                         $uibModalInstance.close();
+                        $rootScope.isAutoExit = false;
                         $location.path("/welcome");
                     };
                     $scope.cancel = function () {

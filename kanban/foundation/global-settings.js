@@ -4,7 +4,7 @@
 kanbanApp.run(function (editableOptions) {
     editableOptions.theme = 'bs3';
 });
-kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', function ($q, $injector, localStorageService, $location) {
+kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', '$location', '$rootScope', function ($q, $injector, localStorageService, $location, $rootScope) {
     var lastErrorCode;
     var lastErrorOccurredTime;
     return {
@@ -20,6 +20,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
             if (response.headers().token) {
                 localStorageService.set('identity.token', response.headers().token);
             }
+            $rootScope.lastestOperationTime = moment();
             return response;
         },
 

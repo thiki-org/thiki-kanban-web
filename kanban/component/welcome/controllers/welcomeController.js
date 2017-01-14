@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcomeServices', 'publicKeyServices', 'localStorageService', '$uibModal', '$window', 'usersService', 'timerMessageService',
-    function ($scope, $location, $q, welcomeServices, publicKeyServices, localStorageService, $uibModal, $window, usersService, timerMessageService) {
+kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcomeServices', 'publicKeyServices', 'localStorageService', '$uibModal', '$window', 'usersService', 'timerMessageService', '$rootScope',
+    function ($scope, $location, $q, welcomeServices, publicKeyServices, localStorageService, $uibModal, $window, usersService, timerMessageService, $rootScope) {
         var loadingInstance = timerMessageService.loading();
 
         welcomeServices.loadEntrance(kanbanApp.remote_entrance).then(function (_entranceData) {
@@ -12,10 +12,12 @@ kanbanApp.controller('welcomeController', ['$scope', '$location', '$q', 'welcome
         }).finally(function () {
             timerMessageService.close(loadingInstance);
         });
+
         if ($('.modal-backdrop').length > 0) {
             $window.location.reload();
         }
         $scope.isAlreadyLogin = usersService.getCurrentUser() !== null;
+        $scope.isAutoExit = localStorageService.get("isAutoExit");
         $scope.register = function () {
             $uibModal.open({
                 animation: true,

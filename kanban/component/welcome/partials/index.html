@@ -1,11 +1,15 @@
 <nav class="navbar navbar-default navbar-fixed-top blue-bg" ng-controller="welcomeController">
+    <div class="auto-exit alert alert-warning" role="alert" ng-show="isAutoExit"><span
+            class="glyphicon glyphicon-info-sign"></span> 警告！您已经5分钟未操作系统，为了保证您的信息安全，系统已经自动退出。如有需要，请重新登录。
+    </div>
     <div class="container">
         <div class="navbar-header"><img id="navbar-thiki-logo" src="static/img/index/thiki-banner.png"> 思奇团队 | 精益看板
         </div>
         <div id="navbar" class="navbar-collapse collapse pull-right">
             <ul class="nav navbar-nav">
                 <li><a href="#top">首页</a></li>
-                <li><a href="https://github.com/thiki-org/thiki-kanban-backend">GitHub</a></li>
+                <li><a href="
+                https://github.com/thiki-org/thiki-kanban-backend">GitHub</a></li>
                 <li><a href="https://toutiao.io/subjects/138803">独家号</a></li>
                 <li><a href="https://toutiao.io/subjects/138803">下载</a></li>
                 <li ng-click="login()" id="login-button" ng-hide="isAlreadyLogin">
@@ -31,6 +35,5 @@
 
 <section id="section1" class="region region-1 align-center blue-bg">
     <div class="container">
-
     </div>
 </section>
