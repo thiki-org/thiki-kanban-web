@@ -2,19 +2,19 @@
  * Created by xubt on 01/14/17.
  */
 
-kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', '$rootScope', '$location',
-    function ($scope, $uibModal, $interval, $rootScope, $location) {
+kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', '$rootScope', '$location', 'localStorageService',
+    function ($scope, $uibModal, $interval, $rootScope, $location, localStorageService) {
         $rootScope.isAutoExitWarningDialogWasOpened = false;
         $interval(function () {
-            var twoSecondAgo = moment().add(-60 * 5, "s");
-            if ((moment(twoSecondAgo).isAfter($rootScope.lastestOperationTime)) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
+            console.log("checking...");
+            var autoExitTime = moment().add(-60 * 5, "s");
+            if ((moment(autoExitTime).isAfter(localStorageService.get("lastestOperationTime"))) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'foundation/safety/partials/auto-exit-system-warning.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance', 'localStorageService',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance, localStorageService) {
+                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance', 'localStorageService', '$rootScope',
+                        function ($scope, teamsService, timerMessageService, $uibModalInstance, localStorageService, $rootScope) {
                             $rootScope.isAutoExitWarningDialogWasOpened = true;
-                            $scope.message = "您已经5分钟未操作系统，为了保证您的数据安全，系统即自动退出。";
                             $scope.timerMessage = "20秒后自动退出";
                             var count = 20;
                             $scope.timer = $interval(function () {
@@ -30,11 +30,14 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
                                 }
                                 count--;
                             }, 1000);
-                            $scope.finishCardsOperation = function () {
-                                $uibModalInstance.dismiss('cancel');
+                            $scope.keepStay = function () {
+                                localStorageService.set("lastestOperationTime", moment());
+                                $rootScope.isAutoExitWarningDialogWasOpened = false;
+                                $uibModalInstance.close();
                             };
                         }],
-                    size: 'sm'
+                    size: 'sm',
+                    backdrop: "static"
                 });
             }
         }, 1000);
