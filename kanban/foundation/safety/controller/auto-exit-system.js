@@ -6,7 +6,6 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
     function ($scope, $uibModal, $interval, $rootScope, $location, localStorageService) {
         $rootScope.isAutoExitWarningDialogWasOpened = false;
         $interval(function () {
-            console.log("checking...");
             var autoExitTime = moment().add(-60 * 5, "s");
             if ((moment(autoExitTime).isAfter(localStorageService.get("lastestOperationTime"))) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
                 $uibModal.open({
