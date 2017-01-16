@@ -40,8 +40,8 @@
     "tmp": "0.0.23"
   },
   "scripts": {
-    "prestart": "gulp",
-    "start": "http-server -a 0.0.0.0 -p 8008",
+    "prestart": "gulp default",
+    "start": "cd release && http-server -a 0.0.0.0 -p 8008",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
