@@ -20,7 +20,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
             if (response.headers().token) {
                 localStorageService.set('identity.token', response.headers().token);
             }
-            localStorageService.set("lastestOperationTime", moment());
+            c = moment();
             return response;
         },
 
