@@ -39,7 +39,8 @@ kanbanApp.provider('timerMessageService', ['$injector',
                                 }, 1000);
                             }
                         ],
-                        size: 'sm'
+                        size: 'sm',
+                        backdrop: "static"
                     });
                 },
                 loading: function () {
