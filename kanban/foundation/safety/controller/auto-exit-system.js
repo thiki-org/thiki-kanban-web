@@ -6,8 +6,7 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
     function ($scope, $uibModal, $interval, $rootScope, $location, localStorageService) {
         $rootScope.isAutoExitWarningDialogWasOpened = false;
         $interval(function () {
-            var autoExitTime = moment().add(-60 * 5, "s");
-            if ((moment(autoExitTime).isAfter($rootScope.lastestOperationTime)) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
+            if ((moment().isAfter($rootScope.autoExitTime)) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'foundation/safety/partials/auto-exit-system-warning.html',
@@ -15,7 +14,7 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
                         function ($scope, teamsService, timerMessageService, $uibModalInstance, localStorageService, $rootScope) {
                             $rootScope.isAutoExitWarningDialogWasOpened = true;
                             $scope.timerMessage = "20秒后自动退出";
-                            var count = 20;
+                            var count = 19;
                             $scope.timer = $interval(function () {
                                 if (count === 0) {
                                     $interval.cancel($scope.timer);
@@ -30,8 +29,9 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
                                 count--;
                             }, 1000);
                             $scope.keepStay = function () {
-                                $rootScope.lastestOperationTime = moment();
+                                $rootScope.autoExitTime = moment().add(kanbanApp.autoExitTime, "s");
                                 $rootScope.isAutoExitWarningDialogWasOpened = false;
+                                $interval.cancel($scope.timer);
                                 $uibModalInstance.close();
                             };
                         }],
