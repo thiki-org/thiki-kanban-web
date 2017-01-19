@@ -6,7 +6,7 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
     function ($scope, $uibModal, $interval, $rootScope, $location, localStorageService) {
         $rootScope.isAutoExitWarningDialogWasOpened = false;
         $interval(function () {
-            if ((moment().isAfter($rootScope.autoExitTime)) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() != "/welcome") {
+            if ((moment().isAfter($rootScope.autoExitTime)) && !$rootScope.isAutoExitWarningDialogWasOpened && $location.path() !== "/welcome") {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'foundation/safety/partials/auto-exit-system-warning.html',
