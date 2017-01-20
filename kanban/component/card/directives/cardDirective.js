@@ -156,6 +156,13 @@ kanbanApp.directive('card', function ($uibModal) {
             $scope.onMouseLeave = function () {
                 $scope.isShowCardOperationMenu = false;
             };
+            $scope.calculateWidth = function (_totalAcceptanceCriteriasCount) {
+                if (_totalAcceptanceCriteriasCount === 0) {
+                    return 0;
+                }
+                var width = (100 / _totalAcceptanceCriteriasCount) - 1;
+                return (width.toFixed(2) + "%");
+            }
         }]
     };
 });

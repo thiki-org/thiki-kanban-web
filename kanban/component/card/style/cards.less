@@ -363,10 +363,13 @@ span.badge.acceptance-criteria-un-finished-badge.ng-binding {
 .progress-bar {
   background-color: #09ad7e !important;
   border-radius: 2px;
+  width: 100% !important;
 }
 
 .progress {
-  height: 5px !important;
+  height: 3px !important;
+  float: left;
+  margin-right: 1px;
 }
 
 button.dropdown-toggle.card-options-menu-button {
@@ -395,6 +398,7 @@ button.dropdown-toggle.card-options-menu-button div {
   color: #fff;
   border-radius: 1px;
   margin-left: -5px;
+  font-size: 12px;
 }
 
 .card-menu-items {
@@ -459,4 +463,8 @@ button.dropdown-toggle.card-options-menu-button div {
 
 .acceptanceCriterias label {
   display: inherit !important;
+}
+
+.process-unstart > .progress-bar {
+  background: #999 !important;
 }

@@ -29,8 +29,12 @@
     </div>
 
     <div class="card-progress" ng-if="card.totalAcceptanceCriteriasCount>0">
-        <uib-progressbar max="card.totalAcceptanceCriteriasCount"
-                         value="card.finishedAcceptanceCriteriasCount" animate="true"
-                         ng-class="card.finishedAcceptanceCriteriasCount==0?'':'process-unstart'"></uib-progressbar>
+        <uib-progressbar ng-repeat="n in [].constructor(card.totalAcceptanceCriteriasCount) track by $index"
+                         max="index"
+                         value="$index"
+                         animate="true"
+                         ng-style="{'width':calculateWidth(card.totalAcceptanceCriteriasCount)}"
+                         ng-class="$index < card.finishedAcceptanceCriteriasCount?'':'process-unstart'">
+        </uib-progressbar>
     </div>
 </div>
