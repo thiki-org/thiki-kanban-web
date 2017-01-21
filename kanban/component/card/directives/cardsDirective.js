@@ -52,10 +52,6 @@ kanbanApp.directive('cards', function ($uibModal) {
                 };
             };
 
-            $scope.mouseover = function () {
-                $scope.isShowCardCreationButton = true;
-            };
-
             $scope.commentCount = 0;
             $scope.loadCards();
             $scope.closeLoading = function () {
