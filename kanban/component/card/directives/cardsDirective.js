@@ -44,7 +44,6 @@ kanbanApp.directive('cards', function ($uibModal) {
                         var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("procedureClone")).cards._links.sortNumbers.href;
                         var loadingInstance = timerMessageService.loading();
                         cardsServices.resort(cards, sortNumbersLink).then(function () {
-                            $scope.loadCards();
                         }).finally(function () {
                             timerMessageService.close(loadingInstance);
                         });

@@ -7,13 +7,8 @@ kanbanApp.directive('cardTagsSmall', function () {
         restrict: 'E',
         templateUrl: 'component/card/tags/partials/tags-small.html',
         replace: true,
-        transclude: true,
-        scope: {
-            card: '=',
-            procedure: '='
-        },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
-            $scope.card.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.cardTags;
+            $scope.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.cardTags;
         }]
     };
 });
