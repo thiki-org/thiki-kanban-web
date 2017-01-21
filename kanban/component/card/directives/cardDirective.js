@@ -37,7 +37,6 @@ kanbanApp.directive('card', function ($uibModal) {
                                 angular.forEach(thisScope.assignments, function (_assignment) {
                                     if (userName === _assignment.assignee) {
                                         myAssignmentLink = _assignment._links.self.href;
-
                                     }
                                 });
                                 var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
@@ -124,8 +123,8 @@ kanbanApp.directive('card', function ($uibModal) {
                         $scope.message = "确定要删除" + _message + "吗?";
                         $scope.ok = function () {
                             cardsServices.deleteByLink(_link).then(function () {
+                                currentScope.$parent.removeCard(currentScope.card);
                                 timerMessageService.message("卡片已经删除。");
-                                currentScope.$parent.loadCards();
                             });
                             $uibModalInstance.close();
                         };

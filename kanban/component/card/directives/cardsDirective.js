@@ -61,6 +61,11 @@ kanbanApp.directive('cards', function ($uibModal) {
             $scope.closeLoading = function () {
                 timerMessageService.close($scope.loadingInstance);
             };
+
+            $scope.removeCard = function (_card) {
+                var index = $scope.procedure.cards.cards.indexOf(_card);
+                $scope.procedure.cards.cards.splice(index, 1);
+            };
         }]
     };
 });

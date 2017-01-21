@@ -25,8 +25,8 @@ kanbanApp.provider('timerMessageService', ['$injector',
                             '$uibModalInstance', '$interval',
                             function ($scope, $uibModalInstance, $interval) {
                                 $scope.message = _message;
-                                $scope.timerMessage = "4秒后自动关闭";
-                                var count = 3;
+                                $scope.timerMessage = "3秒后自动关闭";
+                                var count = 2;
                                 $scope.timer = $interval(function () {
                                     if (count === 0) {
                                         $interval.cancel($scope.timer);
