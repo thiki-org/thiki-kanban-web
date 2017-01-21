@@ -138,23 +138,28 @@ kanbanApp.directive('card', function ($uibModal) {
                 });
             };
 
-            $scope.isAssigned = function () {
+            $scope.initAssignmentStatus = function () {
                 var userName = usersService.getCurrentUser().userName;
                 $scope.isIamAssigned = false;
                 angular.forEach($scope.assignments, function (_assignment) {
                     if (userName === _assignment.assignee) {
                         $scope.isIamAssigned = true;
-
                     }
                 });
                 $scope.assignTip = $scope.isIamAssigned === true ? "我不做了" : "认领";
-            };
-            $scope.mouseover = function () {
-                $scope.isShowCardOperationMenu = true;
-            };
+                $scope.assignIco = $scope.isIamAssigned === true ? "heart" : "heart-empty";
 
-            $scope.onMouseLeave = function () {
-                $scope.isShowCardOperationMenu = false;
+                $scope.menuOptions = [
+                    ['<span class="thiki-menu-ico glyphicon glyphicon-' + $scope.assignIco + '"' + '></span>' + $scope.assignTip, function ($itemScope) {
+                        console.log("Assign");
+                        $itemScope.assign($itemScope.card);
+                    }],
+                    null,
+                    ['<span class="thiki-menu-ico glyphicon glyphicon-trash thiki-delete-item"></span>删除', function ($itemScope) {
+                        console.log("Delete");
+                        $itemScope.openDeleteModal($itemScope.card.summary, $itemScope.card._links.self.href);
+                    }]
+                ];
             };
             $scope.calculateWidth = function (_totalAcceptanceCriteriasCount) {
                 if (_totalAcceptanceCriteriasCount === 0) {
@@ -162,7 +167,9 @@ kanbanApp.directive('card', function ($uibModal) {
                 }
                 var width = (100 / _totalAcceptanceCriteriasCount) - 1;
                 return (width.toFixed(2) + "%");
-            }
+            };
+
+            $scope.initAssignmentStatus();
         }]
     };
 });

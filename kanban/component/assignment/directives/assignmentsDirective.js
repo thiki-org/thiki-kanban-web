@@ -10,7 +10,7 @@ kanbanApp.directive('assignments', function () {
             $scope.loadAssignments = function () {
                 var thisScope = $scope;
                 $scope.assignments = $scope.card.assignments === undefined ? [] : $scope.card.assignments.assignments;
-                thisScope.isAssigned();
+                thisScope.initAssignmentStatus();
             };
             $scope.loadAssignments();
         }]

@@ -1,5 +1,5 @@
-<div id="card-{{card.id}}" class="card" ng-class="card.isNew?'new-card':''" ng-mouseover="mouseover($event)"
-     ng-mouseleave="onMouseLeave($event)">
+<div id="card-{{card.id}}" class="card" ng-class="card.isNew?'new-card':''" context-menu="menuOptions"
+     context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
     </div>
@@ -10,22 +10,6 @@
     <div class="card-operations">
         <card-tags-small card="card"></card-tags-small>
         <assignments></assignments>
-        <div class="dropdown card-menu" ng-show="isShowCardOperationMenu">
-            <div class="dropdown-toggle card-options-menu-button" type="button" data-toggle="dropdown"
-                 aria-haspopup="true"
-                 aria-expanded="true">
-                <div>...</div>
-            </div>
-            <ul class="thiki-menu-items dropdown-menu card-menu-items" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item"><a ng-click="assign(card)">{{assignTip}}</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="thiki-menu-item thiki-delete-item">
-                    <a ng-click="openDeleteModal(card.summary,card._links.self.href)">
-                        <span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除
-                    </a>
-                </li>
-            </ul>
-        </div>
     </div>
 
     <div class="card-progress" ng-if="card.totalAcceptanceCriteriasCount>0">
