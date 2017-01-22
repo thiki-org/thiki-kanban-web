@@ -41,7 +41,9 @@ kanbanApp.directive('card', function ($uibModal) {
                                 });
                                 var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
                                 assignmentPromise.then(function (_data) {
-                                    thisScope.loadAssignments();
+                                    var index = thisScope.assignments.indexOf(_data);
+                                    thisScope.assignments.splice(index, 1);
+                                    thisScope.initAssignmentStatus();
                                 });
                                 $uibModalInstance.close();
                             };
@@ -57,7 +59,8 @@ kanbanApp.directive('card', function ($uibModal) {
 
                                 var assignmentPromise = assignmentServices.assign(assignment, _card._links.assignments.href);
                                 assignmentPromise.then(function (_data) {
-                                    thisScope.loadAssignments();
+                                    thisScope.assignments.push(_data);
+                                    thisScope.initAssignmentStatus();
                                 });
                                 $uibModalInstance.close();
                             };
