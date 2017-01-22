@@ -22,42 +22,48 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                         finishedAcceptanceCriteriasCount++;
                     }
                 }
-
                 $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
                 $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.$parent.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
             };
 
-            $scope.loadAcceptanceCriterias = function () {
-                var acceptanceCriterias = acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href);
-                acceptanceCriterias.then(function (_acceptanceCriterias) {
-                    $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
-                    $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
-                    $scope.updateAcceptanceCriteriasCount();
-                    $scope.acceptanceCriteriasSortableOptions = {
-                        connectWith: ".acceptanceCriteria",
-                        placeholder: "acceptanceCriteria-drag-placeholder",
-                        start: function (e, ui) {
-                            console.log("staring sort.");
-                        },
-                        update: function (e, ui) {
-                            console.log("updating sort.");
-                            console.log(ui);
-                        },
-                        stop: function (e, ui) {
-                            console.log("stopping sort.");
-                            console.log(ui);
+            $scope.updateAcceptanceCriteria = function (__acceptanceCriteria) {
+                for (var index in $scope.acceptanceCriterias) {
+                    if ($scope.acceptanceCriterias[index].id === __acceptanceCriteria.id) {
+                        $scope.acceptanceCriterias[index] = __acceptanceCriteria;
+                        $scope.card.acceptanceCriterias.acceptanceCriterias = $scope.acceptanceCriterias;
+                        return;
+                    }
+                }
+            };
 
-                            var acceptanceCriterias = ui.item.sortable.sourceModel;
-                            for (var index in acceptanceCriterias) {
-                                acceptanceCriterias[index].sortNumber = index;
-                            }
-                            var sortNumbersLink = _acceptanceCriterias._links.sortNumbers.href;
-                            acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function () {
-                            });
+            $scope.loadAcceptanceCriterias = function () {
+                $scope.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
+                $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
+                $scope.updateAcceptanceCriteriasCount();
+                $scope.acceptanceCriteriasSortableOptions = {
+                    connectWith: ".acceptanceCriteria",
+                    placeholder: "acceptanceCriteria-drag-placeholder",
+                    start: function (e, ui) {
+                        console.log("staring sort.");
+                    },
+                    update: function (e, ui) {
+                        console.log("updating sort.");
+                        console.log(ui);
+                    },
+                    stop: function (e, ui) {
+                        console.log("stopping sort.");
+                        console.log(ui);
+
+                        var acceptanceCriterias = ui.item.sortable.sourceModel;
+                        for (var index in acceptanceCriterias) {
+                            acceptanceCriterias[index].sortNumber = index;
                         }
-                    };
-                });
+                        var sortNumbersLink = _acceptanceCriterias._links.sortNumbers.href;
+                        acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function () {
+                        });
+                    }
+                };
             };
             $scope.loadAcceptanceCriterias();
             $scope.isShowAcceptanceCriteriaCreationButton = true;
@@ -75,7 +81,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 var acceptanceCriteria = {summary: $scope.acceptanceCriteriaSummary};
                 var acceptanceCriteriaPromise = acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href);
                 acceptanceCriteriaPromise.then(function (_acceptanceCriteria) {
-                    $scope.loadAcceptanceCriterias();
+                    $scope.acceptanceCriterias.push(_acceptanceCriteria);
+                    $scope.card.acceptanceCriterias.acceptanceCriterias = $scope.acceptanceCriterias;
+                    $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                     $scope.isShowAcceptanceCriteriaForm = false;
                     $scope.isShowAcceptanceCriteriaCreationButton = true;
                     $scope.acceptanceCriteriaSummary = "";

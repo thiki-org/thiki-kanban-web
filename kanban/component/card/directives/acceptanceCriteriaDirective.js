@@ -21,7 +21,10 @@ kanbanApp.directive('acceptanceCriteria', function () {
             });
             $scope.updateAcceptanceCriteria = function (_summary) {
                 $scope.acceptanceCriteria.summary = _summary;
-                acceptanceCriteriaService.update($scope.acceptanceCriteria);
+                acceptanceCriteriaService.update($scope.acceptanceCriteria).then(function (_acceptanceCriteria) {
+                    $scope.acceptanceCriteria = _acceptanceCriteria;
+                    $scope.$parent.updateAcceptanceCriteria(_acceptanceCriteria);
+                });
             };
 
             $scope.isShowDeleteButton = false;
