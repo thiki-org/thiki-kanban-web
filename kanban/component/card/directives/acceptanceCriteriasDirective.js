@@ -98,6 +98,39 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.acceptanceCriteriaSummary = "";
                 $scope.isShowAcceptanceCriteriaCreationButton = true;
             };
+
+            $scope.$watch('card.finishedAcceptanceCriteriasCount', function (newValue, oldValue) {
+                if (oldValue === newValue) {
+                    return;
+                }
+                if ($scope.acceptanceCriterias.length === newValue) {
+                    console.log("All the Ac Finished.");
+                    $uibModal.open({
+                        animation: false,
+                        templateUrl: 'component/card/partials/acceptance-criterias-finished-dialog.html',
+                        controller: [
+                            '$scope',
+                            '$uibModalInstance', '$interval',
+                            function ($scope, $uibModalInstance, $interval) {
+                                $scope.timerMessage = "3秒后自动关闭";
+                                var count = 2;
+                                $scope.timer = $interval(function () {
+                                    if (count === 0) {
+                                        $interval.cancel($scope.timer);
+                                        $uibModalInstance.dismiss('cancel');
+                                    }
+                                    else {
+                                        $scope.timerMessage = count + "秒后自动关闭";
+                                    }
+                                    count--;
+                                }, 1000);
+                            }
+                        ],
+                        size: 'ac',
+                        backdrop: "static"
+                    });
+                }
+            });
         }]
     };
 });
