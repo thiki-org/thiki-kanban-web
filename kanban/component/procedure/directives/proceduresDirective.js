@@ -15,6 +15,7 @@ kanbanApp.directive('procedures', function () {
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
                     $scope.procedures = _board.procedures.procedures;
+                    timerMessageService.message("马上就好...");
                     $scope.procedureSortableOptions = {
                         connectWith: ".procedure-item",
                         opacity: 0.5,
