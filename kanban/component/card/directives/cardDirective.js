@@ -153,13 +153,15 @@ kanbanApp.directive('card', function ($uibModal) {
 
                 $scope.menuOptions = [
                     ['<span class="thiki-menu-ico glyphicon glyphicon-' + $scope.assignIco + '"' + '></span>' + $scope.assignTip, function ($itemScope) {
-                        console.log("Assign");
                         $itemScope.assign($itemScope.card);
+                    }, function ($itemScope) {
+                        return !$itemScope.procedure.archived;
                     }],
                     null,
                     ['<span class="thiki-menu-ico glyphicon glyphicon-trash thiki-delete-item"></span>删除', function ($itemScope) {
-                        console.log("Delete");
                         $itemScope.openDeleteModal($itemScope.card.summary, $itemScope.card._links.self.href);
+                    }, function ($itemScope) {
+                        return !$itemScope.procedure.archived;
                     }]
                 ];
             };
