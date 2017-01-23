@@ -11,18 +11,10 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var procedure = $scope.procedure;
                 $scope.cards = procedure.cards === undefined ? [] : procedure.cards.cards;
                 $scope.sortableOptions = {
-                    connectWith: ".cards",
+                    connectWith: ".cards-sortable",
                     opacity: 0.5,
                     placeholder: "card-drag-placeholder",
-                    start: function (e, ui) {
-                        console.log("staring sort.");
-                    },
-                    update: function (e, ui) {
-                        console.log("updating sort.");
-                    },
                     stop: function (e, ui) {
-                        console.log("stopping sort.");
-
                         if (ui.item.sortable.droptarget === undefined) {
                             return;
                         }
@@ -47,7 +39,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }).finally(function () {
                             timerMessageService.close(loadingInstance);
                         });
-                    }
+                    },
+                    cancel: ".not-sortable"
                 };
             };
 

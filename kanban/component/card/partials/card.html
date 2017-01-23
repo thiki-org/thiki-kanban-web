@@ -1,4 +1,5 @@
-<div id="card-{{card.id}}" class="card" ng-class="card.isNew?'new-card':''" context-menu="menuOptions"
+<div id="card-{{card.id}}" class="card" ng-class="[{'new-card':card.isNew},{'not-sortable': procedure.archived}]"
+     context-menu="menuOptions"
      context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
