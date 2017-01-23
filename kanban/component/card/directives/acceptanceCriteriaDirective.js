@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
             acceptanceCriteria: '=',
             procedure: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService) {
             $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
@@ -38,7 +38,8 @@ kanbanApp.directive('acceptanceCriteria', function () {
             $scope.deleteAcceptanceCriteria = function () {
                 var acceptanceCriteriaPromise = acceptanceCriteriaService.delete($scope.acceptanceCriteria);
                 acceptanceCriteriaPromise.then(function () {
-                    $scope.$parent.loadAcceptanceCriterias();
+                    $scope.$parent.deleteAcceptanceCriteria($scope.acceptanceCriteria);
+                    timerMessageService.message("验收标准已经删除。");
                 });
             };
         }]

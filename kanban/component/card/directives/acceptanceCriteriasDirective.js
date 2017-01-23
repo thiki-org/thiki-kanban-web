@@ -37,6 +37,12 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 }
             };
 
+            $scope.deleteAcceptanceCriteria = function (__acceptanceCriteria) {
+                var index = $scope.card.acceptanceCriterias.acceptanceCriterias.indexOf(__acceptanceCriteria);
+                $scope.card.acceptanceCriterias.acceptanceCriterias.splice(index, 1);
+                $scope.updateAcceptanceCriteriasCount();
+            };
+
             $scope.loadAcceptanceCriterias = function () {
                 $scope.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
                 $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
@@ -103,8 +109,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 if (oldValue === newValue) {
                     return;
                 }
-                if ($scope.acceptanceCriterias.length === newValue) {
-                    console.log("All the Ac Finished.");
+                if (newValue > 0 && $scope.acceptanceCriterias.length === newValue) {
                     $uibModal.open({
                         animation: false,
                         templateUrl: 'component/card/partials/acceptance-criterias-finished-dialog.html',

@@ -40,7 +40,8 @@ kanbanApp.controller('profileController', ['$scope', '$location', '$q', 'publicK
                 animation: false,
                 templateUrl: 'component/users/partials/avatar-upload.html',
                 controller: "avatarController",
-                size: 'mid'
+                size: 'mid',
+                backdrop: "static"
             });
         };
     }]);

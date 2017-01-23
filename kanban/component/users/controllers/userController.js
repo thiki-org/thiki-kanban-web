@@ -31,7 +31,8 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
                 animation: false,
                 templateUrl: 'component/users/partials/profile.html',
                 controller: "profileController",
-                size: 'lg'
+                size: 'lg',
+                backdrop: "static"
             });
         };
 
@@ -52,7 +53,8 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
                         $uibModalInstance.dismiss('cancel');
                     };
                 },
-                size: 'sm'
+                size: 'sm',
+                backdrop: "static"
             });
         };
     }]);

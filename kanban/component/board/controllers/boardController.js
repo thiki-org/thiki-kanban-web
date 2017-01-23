@@ -62,7 +62,8 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                     $uibModalInstance.dismiss('cancel');
                                 };
                             },
-                            size: 'sm'
+                            size: 'sm',
+                            backdrop: "static"
                         });
                     };
                     $scope.openWorktileDialog = function () {
@@ -96,11 +97,13 @@ kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsSer
                                     }
                                 };
                             },
-                            size: 'board'
+                            size: 'board',
+                            backdrop: "static"
                         });
                     };
                 },
-                size: 'board'
+                size: 'board',
+                backdrop: "static"
             });
         };
     }]);
