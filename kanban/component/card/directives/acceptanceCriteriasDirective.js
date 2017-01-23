@@ -88,6 +88,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 var acceptanceCriteriaPromise = acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href);
                 acceptanceCriteriaPromise.then(function (_acceptanceCriteria) {
                     $scope.acceptanceCriterias.push(_acceptanceCriteria);
+                    $scope.card.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? {acceptanceCriterias: []} : $scope.card.acceptanceCriterias;
                     $scope.card.acceptanceCriterias.acceptanceCriterias = $scope.acceptanceCriterias;
                     $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                     $scope.isShowAcceptanceCriteriaForm = false;
