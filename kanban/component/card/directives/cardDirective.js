@@ -88,11 +88,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $scope.isDisableCardSaveButton = true;
                                 var cardPromise = cardsServices.update($scope.card);
                                 cardPromise.then(function (_card) {
-                                    timerMessageService.message("配置已经更新");
-                                    _card.tags = cardScope.card.tags;
-                                    cardScope.card = _card;
-                                    $scope.card = _card;
-
+                                    timerMessageService.message("卡片已经更新。");
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
                                     $scope.isDisableCardSaveButton = false;
