@@ -94,11 +94,19 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.isDisableCardSaveButton = false;
                                 });
                             };
+                            $scope.$watch('card', function (newValue, oldValue) {
+                                if (oldValue === newValue) {
+                                    return;
+                                }
+                                console.log(newValue);
+                                $scope.isDisableCardSaveButton = false;
+                            });
+
                             $scope.cancel = function () {
                                 $uibModalInstance.dismiss('cancel');
                             };
                         }],
-                    size: 'mid',
+                    size: 'card',
                     backdrop: "static"
                 });
             };

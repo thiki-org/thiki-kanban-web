@@ -50,6 +50,7 @@ kanbanApp.directive('cardTags', function () {
                     }
                 }
                 cardTagsService.stickTags(stickTags, cardTagsLink).then(function (_data) {
+                    $scope.card.tags = $scope.card.tags === undefined ? {tags: []} : $scope.card.tags;
                     $scope.card.tags.tags = _data.cardTags;
                     $scope.$parent.card.tags.cardTags = _data.cardTags;
                     $scope.$parent.tagsCount = stickTags.length;

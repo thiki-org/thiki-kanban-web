@@ -13,21 +13,33 @@
                 基本信息
             </uib-tab-heading>
             <div class="tab-card-basic-info">
-                <form name="cardForm">
+                <form name="cardForm" role="form" class="form-horizontal">
                     <div class="form-group">
+                        <label for="code" class="col-sm-1">编号</label>
+                        <div class="col-sm-10">
+                            <input id="code" name="code" type="text" class="form-control card-code"
+                                   data-ng-model="card.code" autocomplete="off" ng-disabled="procedure.archived"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardSummary" class="col-sm-1">概要描述</label>
+                        <div class="col-sm-10">
                         <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
                                   data-ng-model="card.summary"
                                   focus="true" placeholder="卡片概要" autocomplete="off"
                                   required ng-disabled="procedure.archived"/>
-                        <div class="validation-error-message"
-                             ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
+                            <div class="validation-error-message"
+                                 ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="code">卡片编号</label>
-
-                        <input id="code" name="code" type="text" class="form-control card-code"
-                               data-ng-model="card.code" autocomplete="off" ng-disabled="procedure.archived"/>
+                        <label for="code" class="col-sm-1">内容</label>
+                        <div class="col-sm-10">
+                            <div class="card-content" ng-bind-html="card.content" ng-show="procedure.archived"></div>
+                            <div class="card-content" ng-model="card.content" ng-hide="procedure.archived" text-angular
+                                 toolbar="toolbar"></div>
+                        </div>
                     </div>
                 </form>
 
