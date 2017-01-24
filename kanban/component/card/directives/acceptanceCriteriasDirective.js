@@ -47,25 +47,16 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
                 $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.updateAcceptanceCriteriasCount();
+                var currentScope = $scope;
                 $scope.acceptanceCriteriasSortableOptions = {
                     connectWith: ".acceptanceCriteria",
                     placeholder: "acceptanceCriteria-drag-placeholder",
-                    start: function (e, ui) {
-                        console.log("staring sort.");
-                    },
-                    update: function (e, ui) {
-                        console.log("updating sort.");
-                        console.log(ui);
-                    },
                     stop: function (e, ui) {
-                        console.log("stopping sort.");
-                        console.log(ui);
-
                         var acceptanceCriterias = ui.item.sortable.sourceModel;
                         for (var index in acceptanceCriterias) {
                             acceptanceCriterias[index].sortNumber = index;
                         }
-                        var sortNumbersLink = _acceptanceCriterias._links.sortNumbers.href;
+                        var sortNumbersLink = currentScope.card.acceptanceCriterias._links.sortNumbers.href;
                         acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function () {
                         });
                     }
