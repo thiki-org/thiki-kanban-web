@@ -2,6 +2,53 @@
     <button type="button" class="close" ng-click="$dismiss()">&times;</button>
 </div>
 <div class="modal-body">
-    <div ng-bind-html="content" class="card-content-full-screen"></div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="code" class="col-sm-2">编号</label>
+            <div class="col-sm-10">
+                <span id="code">{{card.code}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cardSummary" class="col-sm-2">概要描述</label>
+            <div class="col-sm-10">
+                <div id="cardSummary" name="cardSummary">{{card.summary}}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="code" class="col-sm-2">内容</label>
+            <div class="col-sm-10">
+                <div ng-bind-html="card.content" class="card-content-html"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="acceptance-criterias" class="col-sm-2">验收标准</label>
+
+            <div id="acceptance-criterias" class="tab-acceptance-criterias col-sm-10">
+                <div ng-repeat="acceptanceCriteria in card.acceptanceCriterias.acceptanceCriterias |orderBy:'sortNumber'"
+                     acceptance-criteria="acceptanceCriteria" procedure="procedure" class="acceptance-criteria">
+                    <div class="acceptanceCriteria-summary"
+                         ng-class="acceptanceCriteria.finished==true?'finished' : ''"
+                         data-type="text">
+                        {{acceptanceCriteria.summary}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="code" class="col-sm-2">标签</label>
+            <div class="tab-tags col-sm-10">
+                <div id="tags-options">
+                    <div class="tags">
+                        <div class="tag" ng-repeat="tag in card.tags.cardTags" ng-class="tag.color">
+                            <div ng-class="tag.color">
+                                <span id="color.name" ng-show="tag.stick" class="glyphicon glyphicon-ok-circle"></span>{{tag.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 

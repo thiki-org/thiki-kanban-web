@@ -107,7 +107,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                     animation: false,
                                     templateUrl: 'component/card/partials/card-content-full-screen.html',
                                     controller: function ($scope) {
-                                        $scope.content = currentScope.card.content;
+                                        $scope.card = currentScope.card;
+                                        $scope.procedure = currentScope.procedure;
                                     },
                                     size: 'fs',
                                     backdrop: "static"
