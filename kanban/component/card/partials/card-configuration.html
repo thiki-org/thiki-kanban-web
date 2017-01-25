@@ -39,6 +39,13 @@
                             <div class="card-content" ng-bind-html="card.content" ng-show="procedure.archived"></div>
                             <div class="card-content" ng-model="card.content" ng-hide="procedure.archived" text-angular
                                  toolbar="toolbar"></div>
+                            <div class="card-content-full-screen-button"
+                                 ng-click="displayContentInFullScreen()"
+                                 uib-tooltip="全屏演示卡片内容"
+                                 tooltip-placement="right"
+                                 tooltip-trigger="mouseenter">
+                                <span class="thiki-menu-ico glyphicon glyphicon-fullscreen"></span>全屏演示
+                            </div>
                         </div>
                     </div>
                 </form>

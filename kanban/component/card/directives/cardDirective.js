@@ -101,7 +101,18 @@ kanbanApp.directive('card', function ($uibModal) {
                                 console.log(newValue);
                                 $scope.isDisableCardSaveButton = false;
                             });
-
+                            var currentScope = $scope;
+                            $scope.displayContentInFullScreen = function () {
+                                $uibModal.open({
+                                    animation: false,
+                                    templateUrl: 'component/card/partials/card-content-full-screen.html',
+                                    controller: function ($scope) {
+                                        $scope.content = currentScope.card.content;
+                                    },
+                                    size: 'fs',
+                                    backdrop: "static"
+                                });
+                            };
                             $scope.cancel = function () {
                                 $uibModalInstance.dismiss('cancel');
                             };
