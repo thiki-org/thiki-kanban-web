@@ -25,6 +25,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
                 $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.$parent.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
+                $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
             };
 
             $scope.updateAcceptanceCriteria = function (__acceptanceCriteria) {
@@ -85,6 +86,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                     $scope.isShowAcceptanceCriteriaForm = false;
                     $scope.isShowAcceptanceCriteriaCreationButton = true;
                     $scope.acceptanceCriteriaSummary = "";
+                    $scope.updateAcceptanceCriteriasCount();
                 }).finally(function () {
                     $scope.acceptanceCriteriaSaveButton = "保存";
                     $scope.isDisableAcceptanceCriteriaSaveButton = false;

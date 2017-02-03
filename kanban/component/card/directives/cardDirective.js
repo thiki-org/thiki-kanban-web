@@ -87,7 +87,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $scope.cardSaveButton = "保存中..";
                                 $scope.isDisableCardSaveButton = true;
                                 var cardPromise = cardsServices.update($scope.card);
-                                cardPromise.then(function (_card) {
+                                cardPromise.then(function (_savedCard) {
+                                    $scope.card.code = _savedCard.code;
                                     timerMessageService.message("卡片已经更新。");
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
@@ -129,7 +130,8 @@ kanbanApp.directive('card', function ($uibModal) {
                 var card = _card;
                 card.summary = _summary;
                 var cardPromise = cardsServices.update(card);
-                cardPromise.then(function () {
+                cardPromise.then(function (_savedCard) {
+
                 });
             };
             $scope.openDeleteModal = function (_message, _link) {
