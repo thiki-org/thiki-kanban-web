@@ -3,14 +3,14 @@
 kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', function ($http, $q, $location, $injector, localStorageService, CacheFactory) {
     var token = localStorageService.get("token");
 
-    function openErrorDialog(deferred) {
+    function openErrorDialog(deferred, _url) {
         var modal = $injector.get("$uibModal");
         modal.open({
             animation: true,
             templateUrl: 'foundation/modal/partials/error-dialog.html',
             controller: function ($scope, $uibModalInstance) {
                 $scope.title = '错误';
-                $scope.message = "URL错误,请确认本地配置或远程服务器是否运行正常。";
+                $scope.message = "URL错误:" + _url + "\n请确认本地配置或远程服务器是否运行正常。";
 
                 $scope.ok = function () {
                     $uibModalInstance.close();
@@ -143,7 +143,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
         get: function (_url, _params) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
-                return openErrorDialog(deferred);
+                return openErrorDialog(deferred, _url);
             }
             $http({
                 method: "GET",
