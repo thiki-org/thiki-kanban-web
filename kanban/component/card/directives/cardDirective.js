@@ -76,7 +76,7 @@ kanbanApp.directive('card', function ($uibModal) {
             var cardScope = $scope;
             $scope.openCardConfiguration = function () {
                 $uibModal.open({
-                    animation: true,
+                    animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance) {
