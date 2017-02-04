@@ -4,6 +4,9 @@
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
     </div>
+    <div class="card-comment" ng-show="card.comments!=undefined&&card.comments.comments.length>0">
+        <span class="procedure-ico glyphicon glyphicon-comment"></span>
+    </div>
     <div class="card-summary" ng-click="openCardConfiguration()">
         {{card.summary}}
     </div>
