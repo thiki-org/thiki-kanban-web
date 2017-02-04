@@ -10,8 +10,8 @@ kanbanApp.controller('autoExitController', ['$scope', '$uibModal', '$interval', 
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'foundation/safety/partials/auto-exit-system-warning.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance', 'localStorageService', '$rootScope',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance, localStorageService, $rootScope) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'localStorageService', '$rootScope',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, localStorageService, $rootScope) {
                             $rootScope.isAutoExitWarningDialogWasOpened = true;
                             $scope.timerMessage = "20秒后自动退出";
                             var count = 19;

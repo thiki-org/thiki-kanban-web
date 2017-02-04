@@ -9,20 +9,20 @@ kanbanApp.directive('proceduresBoard', function () {
         scope: false,
         controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService) {
             var proceduresScope = $scope;
-            var teamsUrl = usersService.getCurrentUser()._links.teams.href;
-            $scope.openTeamsDialog = function () {
+            var projectsUrl = usersService.getCurrentUser()._links.projects.href;
+            $scope.openProjectsDialog = function () {
                 $uibModal.open({
                     animation: true,
-                    templateUrl: 'component/procedure/partials/teams.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
-                            var teamsPromise = teamsService.load(teamsUrl);
-                            $scope.selectedTeam = {};
-                            teamsPromise.then(function (_teams) {
-                                $scope.teams = _teams.teams;
-                                var teamPromise = teamsService.loadTeamByLink(proceduresScope.board._links.team.href);
-                                teamPromise.then(function (_team) {
-                                    $scope.teams.selected = _team;
+                    templateUrl: 'component/procedure/partials/projects.html',
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
+                            var projectsPromise = projectsService.load(projectsUrl);
+                            $scope.selectedProject = {};
+                            projectsPromise.then(function (_projects) {
+                                $scope.projects = _projects.projects;
+                                var projectPromise = projectsService.loadProjectByLink(proceduresScope.board._links.project.href);
+                                projectPromise.then(function (_project) {
+                                    $scope.projects.selected = _project;
                                 });
                             });
                             $scope.archiveButtonText = "变更所有权";
@@ -30,11 +30,11 @@ kanbanApp.directive('proceduresBoard', function () {
                             $scope.archiveBoard = function () {
                                 $scope.archiveButtonText = "所有权变更中..";
                                 $scope.isDisabledArchiveButton = true;
-                                proceduresScope.board.teamId = $scope.teams.selected.id;
+                                proceduresScope.board.projectId = $scope.projects.selected.id;
                                 var boardPromise = boardsService.update(proceduresScope.board);
 
                                 boardPromise.then(function (_board) {
-                                    timerMessageService.message("看板已为" + $scope.teams.selected.name + "团队所有");
+                                    timerMessageService.message("看板已为" + $scope.projects.selected.name + "项目所有");
                                     proceduresScope.board = _board;
                                     $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
@@ -51,8 +51,8 @@ kanbanApp.directive('proceduresBoard', function () {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/board/partials/board-configuration.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
                             $scope.board = proceduresScope.board;
                             $scope.boardSaveButton = "保存";
                             $scope.saveBoard = function () {
@@ -76,8 +76,8 @@ kanbanApp.directive('proceduresBoard', function () {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/procedure/partials/board-delete-confirm.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $location, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $location, $uibModalInstance) {
                             $scope.board = proceduresScope.board;
                             $scope.deleteButtonText = "删除";
                             $scope.deleteBoard = function () {
@@ -103,7 +103,7 @@ kanbanApp.directive('proceduresBoard', function () {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/procedure/partials/tags-configuration.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
                         function ($scope) {
                             $scope.board = proceduresScope.board;
                         }],

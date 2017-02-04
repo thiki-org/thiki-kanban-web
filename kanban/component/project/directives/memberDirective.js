@@ -5,7 +5,7 @@
 kanbanApp.directive('member', function () {
     return {
         restrict: 'E',
-        templateUrl: 'component/team/partials/member.html',
+        templateUrl: 'component/project/partials/member.html',
         replace: true,
         transclude: true,
         scope: {

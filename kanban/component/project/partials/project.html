@@ -1,28 +1,29 @@
 <navigation-banner>
-    <dashboard-entrance><span class="back-to-myteams" ng-controller="teamController" ng-click="toMyTeams()">我的团队</span>
+    <dashboard-entrance><span class="back-to-myprojects" ng-controller="projectController" ng-click="toMyProjects()">我的项目</span>
         |
     </dashboard-entrance>
-    <team-banner></team-banner>
+    <project-banner></project-banner>
 </navigation-banner>
 
 <div class="members">
     <uib-tabset>
         <uib-tab index="0" heading="基本信息">
-            <div class="tab-team-basic-info">
-                <form name="teamForm" novalidate>
+            <div class="tab-project-basic-info">
+                <form name="projectForm" novalidate>
                     <div class="form-group">
-                        <label for="teamName">名称</label>
-                        <input id="teamName" name="teamName" type="text" class="form-control"
-                               data-ng-model="team.name"
-                               placeholder="团队名称" autocomplete="off"
+                        <label for="projectName">名称</label>
+                        <input id="projectName" name="projectName" type="text" class="form-control"
+                               data-ng-model="project.name"
+                               placeholder="项目名称" autocomplete="off"
                                required/>
                         <div class="validation-error-message"
-                             ng-show="teamForm.teamName.$error.required && teamForm.teamName.$dirty">请输入团队名称
+                             ng-show="projectForm.projectName.$error.required && projectForm.projectName.$dirty">请输入项目名称
                         </div>
                     </div>
                 </form>
                 <div class="tab-members-invitation-button">
-                    <button class="btn btn-primary" type="button" ng-click="saveTeam()" ng-disabled="!teamForm.$dirty">
+                    <button class="btn btn-primary" type="button" ng-click="saveProject()"
+                            ng-disabled="!projectForm.$dirty">
                         保存
                     </button>
                 </div>
@@ -40,11 +41,11 @@
         </uib-tab>
     </uib-tabset>
 
-    <div id="leave-team">
-        <div id="leave-team-button-wrap">
-            <button class="btn btn-primary danger-button" type="button" ng-click="openLeaveTeamDialog()"
+    <div id="leave-project">
+        <div id="leave-project-button-wrap">
+            <button class="btn btn-primary danger-button" type="button" ng-click="openLeaveProjectDialog()"
                     ng-disabled="loginForm.$invalid">
-                离开团队
+                离开项目
             </button>
         </div>
     </div>

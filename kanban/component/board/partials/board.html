@@ -1,6 +1,6 @@
 <div ng-click=toProcedures(board.id,board._links.snapshot.href)>
-    <div class="board-team" ng-if="team!=null">{{team.name}}</div>
-    <div class="board-personal" ng-if="team==null">私有</div>
+    <div class="board-project" ng-if="project!=null">{{project.name}}</div>
+    <div class="board-personal" ng-if="project==null">私有</div>
     <div></div>
     {{board.name}}
 </div>

@@ -64,7 +64,7 @@ kanbanApp.directive('cardTags', function () {
                         $uibModal.open({
                             animation: true,
                             templateUrl: 'component/procedure/partials/tags-configuration.html',
-                            controller: ['$scope', 'teamsService', 'timerMessageService', '$location', '$uibModalInstance',
+                            controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
                                 function ($scope) {
                                     $scope.board = _data;
                                     $scope.parentCallback = currentScope.loadStickTags;

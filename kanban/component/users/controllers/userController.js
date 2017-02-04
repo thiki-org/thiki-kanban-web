@@ -20,8 +20,8 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
         }
 
 
-        $scope.gotoTeams = function () {
-            $location.path(localStorageService.get('identity.userName') + "/teams");
+        $scope.gotoProjects = function () {
+            $location.path(localStorageService.get('identity.userName') + "/projects");
         };
         $scope.openNotifications = function () {
             $location.path(usersService.getCurrentUser().userName + "/notifications");

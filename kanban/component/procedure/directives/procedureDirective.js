@@ -61,8 +61,8 @@ kanbanApp.directive('procedure', function ($uibModal) {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/procedure/partials/procedure-configuration.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance', 'jsonService',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance, jsonService) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService) {
                             $scope.procedure = proceduresScope.procedure;
                             $scope.procedureSaveButton = "保存";
                             $scope.types = [{id: 0, name: "尚未开始迭代"}, {id: 1, name: "迭代中"}];
@@ -102,8 +102,8 @@ kanbanApp.directive('procedure', function ($uibModal) {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/procedure/partials/procedure-full-screen.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
                             $scope.procedure = proceduresScope.procedure;
                             $scope.finishCardsOperation = function () {
                                 $uibModalInstance.dismiss('cancel');
@@ -117,8 +117,8 @@ kanbanApp.directive('procedure', function ($uibModal) {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/procedure/partials/procedure-archive.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
                             $scope.procedure = {};
                             $scope.archiveButtonText = "归档";
                             $scope.isDisableArchiveButton = false;

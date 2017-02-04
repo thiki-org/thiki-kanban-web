@@ -78,8 +78,8 @@ kanbanApp.directive('card', function ($uibModal) {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/card/partials/card-configuration.html',
-                    controller: ['$scope', 'teamsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, teamsService, timerMessageService, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
                             $scope.card = cardScope.card;
                             $scope.cardSaveButton = "保存";
                             $scope.procedure = cardScope.procedure;

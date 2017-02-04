@@ -4,7 +4,7 @@
 kanbanApp.factory('notificationsService', ['httpServices',
     function (httpServices) {
         return {
-            teamsLink: '',
+            projectsLink: '',
             loadUnreadNotificationsTotal: function (_loadUnreadNotificationsTotalLink) {
                 return httpServices.get(_loadUnreadNotificationsTotalLink);
             },

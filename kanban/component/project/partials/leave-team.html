@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">离开项目</h3>
+</div>
+<div class="modal-body">
+    <form name="leaveForm">
+        <input name="projectName" ng-model="projectName" type="text" class="form-control"
+               ng-keydown="keyPress($event)" focus="displayForm" placeholder="输入你即将离开的项目的名称" autocomplete="off"
+               required/>
+        <div class="validation-error-message"
+             ng-show="confirmForm.projectName.$error.required && confirmForm.projectName.$dirty">
+            请输入项目名称
+        </div>
+    </form>
+</div>
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="leaveProject()"
+            ng-disabled="leaveForm.$invalid||leaveForm.projectName.$modelValue!=project.name||isDisableLeaveButton">
+        {{leaveButtonText}}
+    </button>
+</div>
+

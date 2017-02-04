@@ -44,19 +44,22 @@ kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvide
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
-            .state('teams', {
-                url: "/:userName/teams",
+            .state('projects', {
+                url: "/:userName/projects",
                 views: {
                     "register": {template: " "},
-                    "kanban": {templateUrl: "component/team/partials/teams.html", controller: 'teamsController'},
+                    "kanban": {
+                        templateUrl: "component/project/partials/projects.html",
+                        controller: 'projectsController'
+                    },
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })
-            .state('team', {
-                url: "/teams/:teamId",
+            .state('project', {
+                url: "/projects/:projectId",
                 views: {
                     "register": {template: " "},
-                    "kanban": {templateUrl: "component/team/partials/team.html", controller: 'teamController'},
+                    "kanban": {templateUrl: "component/project/partials/project.html", controller: 'projectController'},
                     "kanban-banner": {templateUrl: "component/banner/partials/banner.html"}
                 }
             })

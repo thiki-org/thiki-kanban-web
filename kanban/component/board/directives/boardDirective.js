@@ -11,11 +11,11 @@ kanbanApp.directive('board', function () {
         scope: {
             board: '='
         },
-        controller: ['$scope', 'boardsService', 'teamsService', 'localStorageService', '$location', function ($scope, boardsService, teamsService, localStorageService, $location) {
-            if ($scope.board._links.team !== undefined) {
-                var teamPromise = teamsService.loadTeamByLink($scope.board._links.team.href);
-                teamPromise.then(function (_team) {
-                    $scope.team = _team;
+        controller: ['$scope', 'boardsService', 'projectsService', 'localStorageService', '$location', function ($scope, boardsService, projectsService, localStorageService, $location) {
+            if ($scope.board._links.project !== undefined) {
+                var projectPromise = projectsService.loadProjectByLink($scope.board._links.project.href);
+                projectPromise.then(function (_project) {
+                    $scope.project = _project;
                 });
             }
             $scope.toProcedures = function (_boardId, _boardLink) {
