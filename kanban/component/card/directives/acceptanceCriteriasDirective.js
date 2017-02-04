@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             card: '=',
             procedure: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'cardsServices', function ($scope, localStorageService, acceptanceCriteriaService, cardsServices) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService) {
             $scope.acceptanceCriteriaSaveButton = "保存";
             $scope.isShowAcceptanceCriteriaForm = false;
 
@@ -53,12 +53,16 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                     connectWith: ".acceptanceCriteria",
                     placeholder: "acceptanceCriteria-drag-placeholder",
                     stop: function (e, ui) {
+                        var loadingInstance = timerMessageService.loading();
                         var acceptanceCriterias = ui.item.sortable.sourceModel;
                         for (var index in acceptanceCriterias) {
                             acceptanceCriterias[index].sortNumber = index;
                         }
                         var sortNumbersLink = currentScope.card.acceptanceCriterias._links.sortNumbers.href;
-                        acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function () {
+                        acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function (_acceptanceCriterias) {
+                            currentScope.card.acceptanceCriterias = _acceptanceCriterias;
+                            currentScope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
+                            timerMessageService.close(loadingInstance);
                         });
                     }
                 };
