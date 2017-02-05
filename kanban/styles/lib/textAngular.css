@@ -229,3 +229,21 @@ div:focus {
     outline: none !important;
     border: none;
 }
+
+.ta-toolbar .btn {
+    background: none;
+    border: none;
+    font-size: 12px;
+    display: inline-block;
+    padding: 2px 8px;
+}
+
+.ta-toolbar .btn.active, .btn:active {
+    box-shadow: none !important;
+    background: white !important;
+}
+
+.ta-toolbar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
