@@ -4,7 +4,7 @@
   position: relative;
   float: left;
   width: 95%;
-  background: url("/static/img/card-bg.png");
+  background: white;
 }
 
 div.card:hover {
@@ -32,6 +32,7 @@ div.card:hover {
   padding-right: 5px;
   padding-left: 5px;
   padding-bottom: 10px;
+  max-height: 1000px;
 }
 
 .cards:hover {
@@ -126,7 +127,7 @@ button, input, select, textarea {
 
 .tab-card-basic-info {
   width: 98%;
-  margin: 0 5px -10px;
+  margin: 10px 20px -10px;
   min-height: 135px;
   height: auto;
   display: inline-block;
@@ -285,7 +286,7 @@ button.dropdown-toggle.card-options-menu-button div {
 .procedure-full-screen .card {
   width: 220px !important;
   min-height: 150px;
-  max-height: 150px;
+  margin: 10px;
 }
 
 .procedure-full-screen .card-summary {
@@ -420,7 +421,6 @@ span.thiki-menu-ico.glyphicon.glyphicon-heart {
 }
 
 label.col-sm-2.creation-time {
-  text-align: right;
   max-width: 90px;
 }
 
@@ -433,4 +433,20 @@ label.col-sm-2.creation-time {
 
 form.create-card-form {
   height: 170px;
+}
+
+textarea#cardSummary {
+  background: none;
+}
+
+label.filed-desc {
+  text-align: center;
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 2px;
+  width: 50px;
+}
+
+.tab-card-basic-info .form-group {
+  margin-left: 0px !important;
 }

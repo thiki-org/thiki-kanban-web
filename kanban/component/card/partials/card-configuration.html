@@ -9,31 +9,32 @@
     <uib-tabset>
         <uib-tab index="0">
             <uib-tab-heading>
-                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-list-alt"></span>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-globe"></span>
                 基本信息
             </uib-tab-heading>
             <div class="tab-card-basic-info">
                 <form name="cardForm" role="form" class="form-horizontal">
                     <div class="form-group">
-                        <label for="code" class="col-sm-1">编号</label>
+                        <label for="code" class="col-sm-1 filed-desc">编号</label>
                         <div class="col-sm-2">
                             <span id="code" name="code" class="card-code">{{card.code}}</span>
                         </div>
 
-                        <label for="creationTime" class="col-sm-2 creation-time">创建时间</label>
+                        <label for="creationTime" class="col-sm-2 creation-time filed-desc">创建</label>
                         <div class="col-sm-3">
                             <span id="creationTime" name="creationTime">{{card.creationTime}}</span>
                         </div>
 
-                        <label for="author" class="col-sm-1">作者</label>
+                        <label for="author" class="col-sm-1 filed-desc">作者</label>
                         <div class="col-sm-2">
                             <span id="author" name="author">{{card.author}}</span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cardSummary" class="col-sm-1">概要描述</label>
+                        <label for="cardSummary" class="col-sm-1 filed-desc">概要</label>
                         <div class="col-sm-10">
-                        <textarea id="cardSummary" name="cardSummary" rows="3" class="form-control"
+                        <textarea id="cardSummary" name="cardSummary" rows="3"
+                                  class="form-control card-summary-textarea"
                                   data-ng-model="card.summary"
                                   focus="true" placeholder="卡片概要" autocomplete="off"
                                   required ng-disabled="procedure.archived"/>
@@ -43,7 +44,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="code" class="col-sm-1">内容</label>
+                        <label for="code" class="col-sm-1 filed-desc">内容</label>
                         <div class="col-sm-10">
                             <div class="card-content" ng-bind-html="card.content" ng-show="procedure.archived"></div>
                             <div class="card-content" ng-model="card.content" ng-hide="procedure.archived" text-angular
@@ -71,7 +72,7 @@
         </uib-tab>
         <uib-tab index="1">
             <uib-tab-heading>
-                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-list"></span>
+                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-tasks"></span>
                 验收标准<span class='badge comment-badge'
                           ng-show='acceptanceCriteriasCount>0'
                           ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
