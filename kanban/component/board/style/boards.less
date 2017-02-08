@@ -183,6 +183,18 @@ div#sprint-time-box {
   background: #09ad7e;
 }
 
+.sprint-expire {
+  background-color: @danger;
+  animation: blinker 1.5s linear infinite;
+}
+
+span.sprint-expire-message {
+  background: #fc5290;
+  padding: 1px;
+  border-radius: 2px;
+  color: white;
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;
