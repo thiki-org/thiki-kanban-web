@@ -1,5 +1,6 @@
 <div class="procedures">
-    <div class="no-active-sprint-was-found-tip alert alert-warning" ng-show="noActiveSprintWasFound===true">
+    <div class="no-active-sprint-was-found-tip alert alert-warning"
+         ng-show="noActiveSprintWasFound&&sprint==undefined">
         看板迭代信息尚未<a id="sprint-setting" ng-click="openSprintDialog()">设置</a>。<span
             class="glyphicon glyphicon-question-sign"
             aria-hidden="true"

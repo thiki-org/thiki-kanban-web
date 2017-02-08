@@ -11,6 +11,7 @@ kanbanApp.directive('procedures', function () {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
                     console.log(_sprint);
+                    $scope.sprint = _sprint;
                 }, function (_rejection) {
                     if (_rejection.status === 404) {
                         $scope.noActiveSprintWasFound = true;
@@ -41,7 +42,6 @@ kanbanApp.directive('procedures', function () {
                             if (ui.item.sortable.droptarget === undefined) {
                                 return;
                             }
-
                             var procedures = ui.item.sortable.sourceModel;
                             for (var index in procedures) {
                                 procedures[index].sortNumber = index;
@@ -66,10 +66,14 @@ kanbanApp.directive('procedures', function () {
                     controller: ['$scope', 'boardsService', 'timerMessageService',
                         function ($scope, boardsService, timerMessageService) {
                             $scope.sprint = {startTime: moment(), endTime: moment()};
+                            if (currentScope.sprint !== undefined) {
+                                $scope.sprint = currentScope.sprint;
+                            }
                             $scope.sprintSaveButtonText = "保存";
                             $scope.isDisableSprintSaveButton = false;
                             $scope.saveSprint = function () {
                                 boardsService.saveSprint($scope.sprint, currentScope.board._links.sprints.href).then(function (_sprint) {
+                                    currentScope.sprint = _sprint;
                                     timerMessageService.message("迭代信息设置成功。");
                                 });
                             };

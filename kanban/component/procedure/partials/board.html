@@ -18,4 +18,26 @@
             </li>
         </ul>
     </div>
+
+    <div id="board-sprint"
+         ng-click="openSprintDialog()"
+         ng-show="sprint!==undefined"
+         uib-tooltip="迭代周期"
+         tooltip-placement="right"
+         tooltip-trigger="mouseenter">
+        <div id="sprint-time-box">
+            {{sprint.startTime | formatTime:'YYYY年MM月DD日'}} - {{sprint.endTime | formatTime:'YYYY年MM月DD日'}}
+            迭代周期 <span class="sprint-time-box-days">{{sprint.totalDays}}</span> 天
+            剩余 <span class="sprint-time-box-days">{{sprint.remainingDays}}</span> 天
+        </div>
+        <div id="sprint-indicator-animation">
+            <div ng-repeat="n in [].constructor(sprint.totalDays) track by $index"
+                 max="index"
+                 value="$index"
+                 animate="true"
+                 class="sprint-indicator"
+                 ng-class="{'sprint-went-days':$index < sprint.wentDays,'sprint-today':$index == sprint.wentDays,'sprint-remaining-days':$index > sprint.wentDays}">
+            </div>
+        </div>
+    </div>
 </div>
