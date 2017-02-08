@@ -11,6 +11,16 @@ kanbanApp.factory('boardsService', ['$http', '$q', 'httpServices',
             loadBoardByLink: function (_boardLink) {
                 return httpServices.get(_boardLink);
             },
+            loadActiveSprint: function (_activeSprintLink) {
+                return httpServices.get(_activeSprintLink);
+            },
+            saveSprint: function (_sprint, _sprintLink) {
+                var sprint = {
+                    startTime: _sprint.startTime.format("YYYY-MM-DD HH:mm"),
+                    endTime: _sprint.endTime.format("YYYY-MM-DD HH:mm")
+                };
+                return httpServices.post(sprint, _sprintLink);
+            },
             create: function (_board) {
                 return httpServices.post(_board, this.boardsLink);
             },

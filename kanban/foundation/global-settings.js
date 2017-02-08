@@ -25,7 +25,10 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
         },
 
         'responseError': function (rejection) {
-            //2秒之内同类错误只允许弹窗一次,避免重复弹窗
+            if (rejection.status === 404) {
+                return $q.reject(rejection);
+            }
+            //Only allow open one modal within two seconds.
             var twoSecondAgo = moment().add(-3, "s");
             if (lastErrorOccurredTime !== null && lastErrorCode == rejection.status && moment(twoSecondAgo).isBefore(lastErrorOccurredTime)) {
                 return $q.reject(rejection);
@@ -59,10 +62,7 @@ kanbanApp.factory('httpInterceptor', ['$q', '$injector', 'localStorageService', 
                         $scope.title = '401-访问受限';
                         $scope.message = rejection.data.message;
                     }
-                    if (rejection.status === 404) {
-                        $scope.title = '404-资源未找到';
-                        $scope.message = "资源:" + rejection.config.url;
-                    }
+
                     if (rejection.status === 405) {
                         $scope.title = '405-方法错误';
                         $scope.message = rejection.data.message;

@@ -15,7 +15,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'ngFileUpload',
     'angular-cache',
     'duScroll',
-    'textAngular'
+    'textAngular',
+    "datePicker"
 ]);
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {

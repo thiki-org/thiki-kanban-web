@@ -1,4 +1,12 @@
 <div class="procedures">
+    <div class="no-active-sprint-was-found-tip alert alert-warning" ng-show="noActiveSprintWasFound===true">
+        看板迭代信息尚未<a id="sprint-setting" ng-click="openSprintDialog()">设置</a>。<span
+            class="glyphicon glyphicon-question-sign"
+            aria-hidden="true"
+            uib-tooltip="未设置迭代信息时，系统无法为您提供归档、统计分析等服务。"
+            tooltip-placement="right"
+            tooltip-trigger="mouseenter"></span>
+    </div>
     <div class="procedure" ui-sortable="procedureSortableOptions" data-ng-model="procedures" boardClone="{{board}}">
         <procedure ng-repeat="procedure in procedures | orderBy:'orderNumber'" procedure="procedure"
                    data-ng-model="procedure"></procedure>

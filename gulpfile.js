@@ -131,6 +131,6 @@ gulp.task('watch-html', function () {
     gulp.watch(['kanban/**/*.html'], ['release']);
 });
 
-// 注册缺省任务
+gulp.task('static', gulpSequence('minify-less', 'build-less-to-css', 'minify-css', 'release'));
 gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
 gulp.task('prod', gulpSequence('jshint', 'minify-bower-components', 'minify-js-release', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
