@@ -4,8 +4,14 @@
 <div class="modal-body">
     <form name="boardForm">
         <div class="form-group">
-            <input name="boardName" type="text" class="form-control" data-ng-model="board.name"
-                   focus="true" placeholder="看板名称" autocomplete="off"
+            <input name="boardName"
+                   type="text"
+                   class="form-control"
+                   data-ng-model="board.name"
+                   focus="true"
+                   placeholder="看板名称"
+                   autocomplete="off"
+                   ng-maxlength="40"
                    required/>
             <div class="validation-error-message"
                  ng-show="boardForm.boardName.$error.required && boardForm.invitee.$dirty">请确定看板名称

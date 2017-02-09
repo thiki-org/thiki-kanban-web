@@ -44,6 +44,7 @@
                        type="text"
                        class="form-control"
                        data-ng-model="sprint.sprintName"
+                       ng-maxlength="40"
                        required/>
                 <div class="validation-error-message"
                      ng-show="sprintForm.sprintName.$error.required && sprintForm.sprintName.$dirty">
