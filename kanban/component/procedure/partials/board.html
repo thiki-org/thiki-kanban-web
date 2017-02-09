@@ -12,6 +12,10 @@
             <li class="thiki-menu-item" ng-click="openProjectsDialog()"><a>所属项目</a></li>
             <li class="thiki-menu-item" ng-click="openBoardTags()"><a>标签</a></li>
             <li class="thiki-menu-item" ng-click="openBoardConfiguration()"><a>配置</a></li>
+            <li class="thiki-menu-item" ng-click="openSprintDialog()"><a>迭代设置</a></li>
+            <li class="thiki-menu-item" ng-click="openSprintCompetitionDialog()" ng-show="sprint!==undefined">
+                <a>完成迭代</a>
+            </li>
             <li role="separator" class="divider"></li>
             <li class="thiki-menu-item thiki-delete-item"><a
                     ng-click="openBoardDelete()">删除</a>
@@ -20,7 +24,6 @@
     </div>
 
     <div id="board-sprint"
-         ng-click="openSprintDialog()"
          ng-show="sprint!==undefined"
          uib-tooltip="迭代周期"
          tooltip-placement="right"
@@ -29,7 +32,7 @@
             {{sprint.startTime | formatTime:'YYYY年MM月DD日'}} - {{sprint.endTime | formatTime:'YYYY年MM月DD日'}}
             迭代周期 <span class="sprint-time-box-days">{{sprint.totalDays}}</span> 天
             剩余 <span class="sprint-time-box-days">{{sprint.remainingDays}}</span> 天
-            <span class="sprint-expire-message" ng-show="sprint.remainingDays<0">迭代已经超期</span>
+            <span class="sprint-expire-message" ng-show="sprint.remainingDays<0">迭代已经超期</span> {{sprint.sprintName}}
         </div>
         <div id="sprint-indicator-animation">
             <div ng-repeat="n in [].constructor(sprint.totalDays) track by $index"

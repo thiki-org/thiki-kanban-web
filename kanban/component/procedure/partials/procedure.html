@@ -27,26 +27,15 @@
                         <span class="thiki-menu-ico glyphicon glyphicon-fullscreen"></span>全屏
                     </a>
                 </li>
-                <li class="thiki-menu-item">
+                <li class="thiki-menu-item" ng-hide="procedure.archived">
                     <a ng-click="openProcedureConfiguration()">
                         <span class="thiki-menu-ico glyphicon glyphicon-cog"></span>配置
                     </a>
                 </li>
-                <li class="thiki-menu-item" ng-show="procedure._links.archive!=null">
-                    <a ng-click="openArchiveDialog()">
-                        <span class="thiki-menu-ico glyphicon glyphicon-briefcase"></span>归档
-                    </a>
-                </li>
-                <li role="separator" class="divider"></li>
+                <li role="separator" class="divider" ng-hide="procedure.archived"></li>
                 <li class="thiki-menu-item thiki-delete-item" ng-hide="procedure.archived">
                     <a ng-click="openModal(procedure.title,procedure._links.self.href)">
                         <span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除
-                    </a>
-                </li>
-
-                <li class="thiki-menu-item thiki-delete-item" ng-show="procedure.archived">
-                    <a ng-click="openModal(procedure.title,procedure._links.self.href)">
-                        <span class="thiki-menu-ico glyphicon glyphicon-repeat"></span>撤销归档
                     </a>
                 </li>
             </ul>

@@ -10,7 +10,6 @@ kanbanApp.directive('procedures', function () {
         controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService, timerMessageService) {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
-                    console.log(_sprint);
                     $scope.sprint = _sprint;
                 }, function (_rejection) {
                     if (_rejection.status === 404) {
@@ -65,7 +64,7 @@ kanbanApp.directive('procedures', function () {
                     templateUrl: 'component/board/partials/sprint-configuration.html',
                     controller: ['$scope', 'boardsService', 'timerMessageService',
                         function ($scope, boardsService, timerMessageService) {
-                            $scope.sprint = {startTime: moment(), endTime: moment()};
+                            $scope.sprint = {startTime: moment(), endTime: moment(), sprintName: ""};
                             if (currentScope.sprint !== undefined) {
                                 $scope.sprint = currentScope.sprint;
                             }
@@ -90,6 +89,32 @@ kanbanApp.directive('procedures', function () {
                                     $scope.isDisableSprintSaveButton = false;
                                 }
                             });
+                        }],
+                    size: 'sprint',
+                    backdrop: "static"
+                });
+            };
+            $scope.openSprintCompetitionDialog = function () {
+                $uibModal.open({
+                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                    controller: ['$scope', 'boardsService', 'timerMessageService', '$uibModalInstance',
+                        function ($scope, boardsService, timerMessageService, $uibModalInstance) {
+                            $scope.title = '迭代完成前确认';
+                            $scope.message = "确认本次迭代已经完成？一经操作后不可撤销，请谨慎操作。";
+                            $scope.ok = function () {
+                                $scope.loadingInstance = timerMessageService.loading();
+                                currentScope.sprint.status = 2;
+                                boardsService.saveSprint(currentScope.sprint, currentScope.board._links.sprints.href).then(function () {
+                                    currentScope.sprint = undefined;
+                                    currentScope.loadProcedures();
+                                    timerMessageService.message("本次迭代已经完成，卡片已经归档。");
+                                });
+                                $uibModalInstance.close();
+                            };
+                            $scope.cancel = function () {
+                                $uibModalInstance.dismiss('cancel');
+                                timerMessageService.close($scope.loadingInstance);
+                            };
                         }],
                     size: 'mid',
                     backdrop: "static"
