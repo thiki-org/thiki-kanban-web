@@ -8,6 +8,9 @@
             tooltip-placement="right"
             tooltip-trigger="mouseenter"></span>
     </div>
+    <div class="no-procedures-was-found-tip" ng-show="procedures===undefined||procedures.length==0">
+        当前视图没有数据，请尝试切换至其他视图查看。
+    </div>
     <div class="procedure" ui-sortable="procedureSortableOptions" data-ng-model="procedures" boardClone="{{board}}">
         <procedure ng-repeat="procedure in procedures | orderBy:'orderNumber'" procedure="procedure"
                    data-ng-model="procedure"></procedure>
