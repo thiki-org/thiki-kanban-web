@@ -71,9 +71,12 @@ kanbanApp.directive('procedures', function () {
                             $scope.sprintSaveButtonText = "保存";
                             $scope.isDisableSprintSaveButton = false;
                             $scope.saveSprint = function () {
+                                $scope.isDisableBoardSaveButton = true;
                                 boardsService.saveSprint($scope.sprint, currentScope.board._links.sprints.href).then(function (_sprint) {
                                     currentScope.sprint = _sprint;
                                     timerMessageService.message("迭代信息设置成功。");
+                                }).finally(function () {
+                                    $scope.isDisableBoardSaveButton = false;
                                 });
                             };
                             $scope.$watch('sprint', function (newValue, oldValue) {
@@ -96,24 +99,31 @@ kanbanApp.directive('procedures', function () {
             };
             $scope.openSprintCompetitionDialog = function () {
                 $uibModal.open({
-                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                    templateUrl: 'component/board/partials/sprint-competition-confirm-dialog.html',
                     controller: ['$scope', 'boardsService', 'timerMessageService', '$uibModalInstance',
                         function ($scope, boardsService, timerMessageService, $uibModalInstance) {
                             $scope.title = '迭代完成前确认';
                             $scope.message = "确认本次迭代已经完成？一经操作后不可撤销，请谨慎操作。";
+                            $scope.sprintCompetitionButtonText = "完成迭代";
+                            $scope.isDisableSprintCompetitionButton = false;
                             $scope.ok = function () {
                                 $scope.loadingInstance = timerMessageService.loading();
+                                $scope.sprintCompetitionButtonText = "归档中..";
+                                $scope.isDisableSprintCompetitionButton = true;
                                 currentScope.sprint.status = 2;
                                 boardsService.saveSprint(currentScope.sprint, currentScope.board._links.sprints.href).then(function () {
                                     currentScope.sprint = undefined;
                                     currentScope.loadProcedures();
                                     timerMessageService.message("本次迭代已经完成，卡片已经归档。");
+                                }).finally(function () {
+                                    timerMessageService.close($scope.loadingInstance);
+                                    $scope.sprintCompetitionButtonText = "完成迭代";
+                                    $scope.isDisableSprintCompetitionButton = false;
                                 });
                                 $uibModalInstance.close();
                             };
                             $scope.cancel = function () {
                                 $uibModalInstance.dismiss('cancel');
-                                timerMessageService.close($scope.loadingInstance);
                             };
                         }],
                     size: 'mid',
