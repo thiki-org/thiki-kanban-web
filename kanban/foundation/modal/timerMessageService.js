@@ -43,7 +43,7 @@ kanbanApp.provider('timerMessageService', ['$injector',
                         backdrop: "static"
                     });
                 },
-                loading: function () {
+                loading: function (_message) {
                     if (instance !== undefined) {
                         return instance;
                     }
@@ -54,10 +54,11 @@ kanbanApp.provider('timerMessageService', ['$injector',
                         controller: [
                             '$scope',
                             '$uibModalInstance', '$interval',
-                            function ($scope, $uibModalInstance, $interval) {
+                            function ($scope) {
+                                $scope.message = _message;
                             }
                         ],
-                        size: 'sm',
+                        size: 'loading',
                         backdropClass: 'loading-windows',
                         backdrop: 'static'
                     });

@@ -18,9 +18,9 @@ kanbanApp.directive('board', function () {
                     $scope.project = _project;
                 });
             }
-            $scope.toProcedures = function (_boardId, _boardLink) {
-                localStorageService.set("boardLink", _boardLink);
-                $location.path('/boards/' + _boardId);
+            $scope.toProcedures = function () {
+                localStorageService.set('currentBoard', $scope.board);
+                $location.path('/boards/' + $scope.board.id);
             };
         }]
     };

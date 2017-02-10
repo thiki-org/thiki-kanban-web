@@ -44,4 +44,23 @@
             </div>
         </div>
     </div>
+    <div class="sprint-view-type dropdown"
+         uib-tooltip="看板视图切换"
+         tooltip-placement="left"
+         tooltip-trigger="mouseenter">
+        <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="true">
+            <span class="kanban-view-type-menu glyphicon glyphicon-align-left"></span>{{typeName}}
+        </button>
+        <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
+            <li class="thiki-menu-item" ng-click="loadProcedures('sprintViewSnapshot','迭代视图')"
+                ng-class="{'active-view-type':activeViewType=='sprintViewSnapshot'}"><a>迭代视图</a></li>
+            <li class="thiki-menu-item" ng-click="loadProcedures('archiveViewSnapshot','归档视图')"
+                ng-class="{'active-view-type':activeViewType=='archiveViewSnapshot'}"><a>归档视图</a></li>
+            <li class="thiki-menu-item" ng-click="loadProcedures('roadMapViewSnapshot','产品路线图')"
+                ng-class="{'active-view-type':activeViewType=='roadMapViewSnapshot'}"><a>产品路线图</a></li>
+            <li class="thiki-menu-item" ng-click="loadProcedures('fullViewSnapshot','项目全景图')"
+                ng-class="{'active-view-type':activeViewType=='fullViewSnapshot'}"><a>项目全景图</a></li>
+        </ul>
+    </div>
 </div>

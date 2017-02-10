@@ -17,11 +17,14 @@ kanbanApp.directive('procedures', function () {
                     }
                 });
             };
-            $scope.loadProcedures = function () {
-                var boardLink = localStorageService.get("boardLink");
+            $scope.loadProcedures = function (_activeViewType, _typeName) {
+                var currentBoard = localStorageService.get("currentBoard");
+                var snapshotLink = _activeViewType === undefined ? currentBoard._links.sprintViewSnapshot.href : currentBoard._links[_activeViewType].href;
+                $scope.typeName = _typeName === undefined ? "迭代视图" : _typeName;
+                $scope.activeViewType = _activeViewType;
 
-                var boardPromise = boardsService.loadBoardByLink(boardLink);
-                $scope.loadingInstance = timerMessageService.loading();
+                var boardPromise = boardsService.loadBoardByLink(snapshotLink);
+                $scope.loadingInstance = timerMessageService.loading($scope.typeName + "加载中..");
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
                     $scope.loadSprint();
