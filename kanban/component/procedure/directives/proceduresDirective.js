@@ -133,6 +133,18 @@ kanbanApp.directive('procedures', function () {
                     backdrop: "static"
                 });
             };
+            $scope.openPagesDialog = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/page/partials/pages-dialog.html',
+                    controller: ['$scope', 'boardsService', 'timerMessageService',
+                        function ($scope) {
+                            $scope.board = currentScope.board;
+                        }],
+                    size: 'pages',
+                    backdrop: "static"
+                });
+            };
         }]
     };
 });

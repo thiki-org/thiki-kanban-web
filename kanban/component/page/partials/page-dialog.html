@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <div class="page-title">
+        <div class="page-title-input">
+            <input id="pageTitle" name="pageTitle" type="text" class="form-control"
+                   data-ng-model="page.title"
+                   focus="true" placeholder="标题" autocomplete="off" maxlength="40"
+                   required/>
+
+            <div class="validation-error-message"
+                 ng-show="page.title.$error.required && page.title.$dirty">
+                文章标题不能为空
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+
+    <div class="page-content-editor">
+         <textarea id="pageContent" name="pageContent" rows="3"
+                   class="form-control page-content-textarea"
+                   data-ng-model="page.content"
+                   focus="true"
+                   placeholder="文章内容"
+                   required/>
+    </div>
+    <div class="page-content-preview" markdown-to-html="page.content===undefined?'':page.content"></div>
+</div>
+
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="login()"
+            ng-disabled="loginForm.$invalid||isDisableLoginButton">保存
+    </button>
+</div>

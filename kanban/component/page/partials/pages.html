@@ -1,0 +1,12 @@
+<div class="pages">
+    <div class="no-pages-was-found-tip" ng-show="pages!=undefined&&pages.pages.length==0">
+        当前看板尚未上传相关的文档资料。
+    </div>
+    <div class="page-item" ng-repeat="page in pages.pages | orderBy:'orderNumber'" page="page"
+         data-ng-model="page">
+    </div>
+
+    <div class="page-creation">
+        <button class="btn btn-primary" type="button" ng-click="openPageCreationDialog()">我要编写</button>
+    </div>
+</div>

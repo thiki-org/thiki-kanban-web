@@ -29,7 +29,8 @@
     "ng-file-upload": "^12.2.12",
     "angular-cache": "^4.6.0",
     "angular-scroll": "^1.0.0",
-    "angular-datepicker": "^2.0.3"
+    "angular-datepicker": "^2.0.3",
+    "ng-showdown": "^1.1.0"
   },
   "authors": [
     "濤 <btao.cn@gmail.com>"
@@ -50,6 +51,7 @@
     "angular": ">=1.2.x"
   },
   "devDependencies": {
-    "angular-ui-router": "^0.3.1"
+    "angular-ui-router": "^0.3.1",
+    "showdown": "^1.6.4"
   }
 }

@@ -21,9 +21,11 @@
                 <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-tags"></span> 标签</a></li>
             <li class="thiki-menu-item" ng-click="openBoardConfiguration()"><a><span
                     class="thiki-menu-ico procedure-ico glyphicon glyphicon-cog"></span> 配置</a></li>
-            <li class="thiki-menu-item" ng-click="openSprintDialog()"><a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-plane"></span> 迭代设置</a></li>
+            <li class="thiki-menu-item" ng-click="openSprintDialog()"><a><span
+                    class="thiki-menu-ico procedure-ico glyphicon glyphicon-plane"></span> 迭代设置</a></li>
             <li class="thiki-menu-item" ng-click="openSprintCompetitionDialog()" ng-show="sprint!==undefined">
-                <a>完成迭代</a>
+                <a><span
+                        class="thiki-menu-ico procedure-ico glyphicon glyphicon-ok-sign"></span> 完成迭代</a>
             </li>
             <li role="separator" class="divider"></li>
             <li class="thiki-menu-item thiki-delete-item"><a
@@ -54,7 +56,14 @@
             </div>
         </div>
     </div>
-    <div class="sprint-view-type dropdown"
+    <div class="board-pages-button board-options-button"
+         uib-tooltip="看板文库"
+         tooltip-placement="left"
+         tooltip-trigger="mouseenter"
+         ng-click="openPagesDialog()">
+        <span class="kanban-view-type-menu glyphicon glyphicon-book"></span> 文库
+    </div>
+    <div class="sprint-view-type dropdown board-options-button board-options-button-gray"
          uib-tooltip="看板视图切换"
          tooltip-placement="left"
          tooltip-trigger="mouseenter">
