@@ -2,8 +2,19 @@
     <div class="no-pages-was-found-tip" ng-show="pages!=undefined&&pages.pages.length==0">
         当前看板尚未上传相关的文档资料。
     </div>
-    <div class="page-item" ng-repeat="page in pages.pages | orderBy:'orderNumber'" page="page"
-         data-ng-model="page">
+    <div class="page-item"
+         ng-repeat="page in pages.pages | orderBy:'creationTime':true"
+         page="page"
+         data-ng-model="page"
+         ng-click="displayPage(page)">
+        <div class="page-title-text"
+             uib-tooltip="{{page.content | cut:true:100}}"
+             tooltip-placement="top"
+             tooltip-trigger="mouseenter">{{page.title}}
+        </div>
+        <div class="page-title-detail">创建时间：{{page.creationTime | formatTime:'YYYY年MM月DD日'}}
+            更新时间：{{page.modificationTime | formatTime:'YYYY年MM月DD日'}} 作者：{{page.author}}
+        </div>
     </div>
 
     <div class="page-creation">
