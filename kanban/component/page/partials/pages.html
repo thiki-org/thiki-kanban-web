@@ -5,13 +5,21 @@
     <div class="page-item"
          ng-repeat="page in pages.pages | orderBy:'creationTime':true"
          page="page"
-         data-ng-model="page"
-         ng-click="displayPage(page)">
+         data-ng-model="page">
         <div class="page-title-text"
              uib-tooltip="{{page.content | cut:true:100}}"
              tooltip-placement="top"
-             tooltip-trigger="mouseenter">{{page.title}}
+             tooltip-trigger="mouseenter"
+             ng-mouseover="isShowOptions=true"
+             ng-mouseleave="isShowOptions=false"
+             ng-init="isShowOptions=false">
+            <span class="page-title-text" ng-click="displayPage(page)">{{page.title}}</span>
+            <span class="page-edit-button" ng-show="isShowOptions"
+                  ng-click="openPageCreationDialog(page)">编辑</span>
+            <span class="page-edit-button" ng-show="isShowOptions"
+                  ng-click="openPageDeleteDialog(page)">移除</span>
         </div>
+
         <div class="page-title-detail">创建时间：{{page.creationTime | formatTime:'YYYY年MM月DD日'}}
             更新时间：{{page.modificationTime | formatTime:'YYYY年MM月DD日'}} 作者：{{page.author}}
         </div>

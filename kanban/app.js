@@ -17,7 +17,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'duScroll',
     'textAngular',
     "datePicker",
-    "ng-showdown"
+    "ng-showdown",
+    "simplemde"
 ]);
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {

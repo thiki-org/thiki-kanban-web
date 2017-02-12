@@ -14,5 +14,8 @@ kanbanApp.factory('pagesService', ['$http', '$q', 'httpServices',
                 }
                 return httpServices.post(_page, _pageLink);
             },
+            removePage: function (_page) {
+                return httpServices.delete(_page._links.self.href);
+            }
         };
     }]);

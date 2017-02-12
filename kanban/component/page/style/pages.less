@@ -3,11 +3,10 @@
   float: left;
   height: 30px;
   margin-bottom: 12px;
-  margin-top: 10px;
 }
 
 .page-content-editor {
-  width: 49%;
+  width: 98%;
   min-height: 300px;
   max-height: 65vh;
   float: left;
@@ -101,4 +100,23 @@ textarea#pageContent {
 .pages-desc {
   font-size: 12px;
   cursor: default;
+}
+
+span.page-edit-button {
+  font-size: 10px;
+  cursor: pointer;
+  color: #ccc;
+  margin-left: 5px;
+}
+
+.CodeMirror.cm-s-paper.CodeMirror-wrap {
+  height: 80vh !important;
+}
+
+.modal-page .modal-body {
+  overflow: auto;
+}
+
+.editor-preview-side.editor-preview-active-side {
+  max-height: 80vh !important;
 }

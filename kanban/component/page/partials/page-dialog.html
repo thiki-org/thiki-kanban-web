@@ -1,8 +1,11 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h3 class="modal-title">文章编辑</h3>
+</div>
+<div class="modal-body">
     <div class="page-title">
         <div class="page-title-input">
-            <input id="pageTitle" name="pageTitle" type="text" class="form-control"
+            <input id="pageTitle" name="pageTitle" type="text" class="form-control page-title-input"
                    data-ng-model="page.title"
                    focus="true" placeholder="文章标题" autocomplete="off" maxlength="40"
                    required/>
@@ -13,17 +16,15 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal-body">
     <div class="page-content-editor">
          <textarea id="pageContent" name="pageContent" rows="3"
                    class="form-control page-content-textarea"
                    data-ng-model="page.content"
                    focus="true"
+                   simplemde='{spellChecker: false}'
                    placeholder="文章内容 | 支持Markdown"
-                   required/>
+                   required></textarea>
     </div>
-    <div class="page-content-preview" markdown-to-html="page.content===undefined?'':page.content"></div>
 </div>
 
 <div class="modal-footer" ng-keydown="keyPress($event)">
