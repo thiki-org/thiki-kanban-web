@@ -31,6 +31,27 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
+                        <div class="col-sm-10 input-group date-time-input">
+                            <input date-time
+                                   id="cardDeadline"
+                                   name="cardDeadline"
+                                   ng-change="isDisableCardSaveButton=false"
+                                   type="text"
+                                   class="form-control"
+                                   data-ng-model="card.deadline"
+                                   placeholder="截止日期"
+                                   min-view="date"
+                                   format="YYYY-MM-DD"
+                                   timezone="Asia/Hong_Kong"
+                                   required/>
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
+                                        class="glyphicon glyphicon-time"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="cardSummary" class="col-sm-1 filed-desc">概要</label>
                         <div class="col-sm-10">
                         <textarea id="cardSummary" name="cardSummary" rows="3"

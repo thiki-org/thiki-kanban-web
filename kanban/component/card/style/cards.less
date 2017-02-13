@@ -12,7 +12,6 @@ div.card:hover {
 }
 
 .card-summary {
-  color: #000;
   min-height: 36px;
   cursor: pointer;
   padding: 5px;
@@ -425,10 +424,9 @@ label.col-sm-2.creation-time {
 }
 
 .card-comment {
-  float: right;
-  width: 10%;
-  margin-top: 5px;
-  color: rgba(0, 0, 0, .1);
+  background: none !important;
+  color: #dfdfdf !important;
+  font-size: 16px !important;
 }
 
 form.create-card-form {
@@ -440,13 +438,67 @@ textarea#cardSummary {
 }
 
 label.filed-desc {
-  text-align: center;
   border-radius: 3px;
   font-size: 12px;
   padding: 2px;
-  width: 50px;
+  width: 53px;
+  text-align: right;
 }
 
 .tab-card-basic-info .form-group {
   margin-left: 0px !important;
 }
+
+.date-time-input {
+  width: 200px !important;
+}
+
+.input-ico {
+  border-left: none !important;
+  margin-left: -2px !important;
+}
+
+.date-time-input {
+  padding-left: 15px !important;
+}
+
+.card-ico {
+  float: right;
+  margin-top: 6px;
+  color: white;
+  margin-right: 5px;
+  font-size: 10px;
+  background: #d0d0d0;
+  border-radius: 2px;
+  height: 14px;
+  line-height: 14px;
+  padding: 0 2px;
+}
+
+.card-rest-days-warning {
+  background-color: @danger !important;
+  animation: blinker 1.5s linear infinite;
+}
+
+.card-rest-days-expired-warning {
+  background-color: @danger;
+  color: white !important;
+  animation: blinker 1s linear infinite;
+}
+
+.card-rest-days-expired-warning :hover {
+  background-color: @danger;
+  color: white !important;
+}
+
+.card-rest-days-warning-summary {
+  background-color: #fcf8e3 !important;
+  border-radius: 2px;
+}
+
+.card-rest-days-expired-warning-summary {
+  background-color: @danger;
+  border-radius: 2px;
+  color: white;
+}
+

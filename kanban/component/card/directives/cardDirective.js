@@ -89,6 +89,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                 var cardPromise = cardsServices.update($scope.card);
                                 cardPromise.then(function (_savedCard) {
                                     $scope.card.code = _savedCard.code;
+                                    $scope.card.restDays = _savedCard.restDays;
                                     timerMessageService.message("卡片已经更新。");
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
