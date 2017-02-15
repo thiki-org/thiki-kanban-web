@@ -57,7 +57,7 @@
                         <textarea id="cardSummary" name="cardSummary" rows="3"
                                   class="form-control card-summary-textarea"
                                   data-ng-model="card.summary"
-                                  focus="true" placeholder="卡片概要" autocomplete="off"
+                                  placeholder="卡片概要" autocomplete="off"
                                   required ng-disabled="procedure.archived"/>
                             <div class="validation-error-message"
                                  ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
@@ -70,18 +70,9 @@
                             <textarea id="cardContent" name="cardContent" rows="1"
                                       class="form-control "
                                       data-ng-model="card.content"
-                                      focus="true"
                                       simplemde='{spellChecker: false}'
                                       placeholder="卡片内容 | 支持Markdown"
                                       required></textarea>
-
-                            <div class="card-content-full-screen-button"
-                                 ng-click="displayContentInFullScreen()"
-                                 uib-tooltip="全屏演示卡片内容"
-                                 tooltip-placement="right"
-                                 tooltip-trigger="mouseenter">
-                                <span class="thiki-menu-ico glyphicon glyphicon-fullscreen"></span>全屏演示
-                            </div>
                         </div>
                     </div>
                     <div class="form-group">
