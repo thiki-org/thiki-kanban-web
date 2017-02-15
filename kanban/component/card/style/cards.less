@@ -516,3 +516,27 @@ label.filed-desc {
   max-height: 180px;
   overflow: auto;
 }
+
+.card-elapsed-days {
+  height: 8px;
+  background-color: white;
+  float: left;
+  width: 100%;
+}
+
+.elapsed-day {
+  width: 7px;
+  height: 7px;
+  background-color: @base;
+  float: left;
+  margin-right: 2px;
+  border-radius: 1px;
+}
+
+.elapsed-day.half-day {
+  width: 5px !important;
+}
+
+.elapsed-in-progress:last-child {
+  animation: blinker 1.5s linear infinite;
+}

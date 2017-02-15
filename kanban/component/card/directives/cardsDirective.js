@@ -20,7 +20,9 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }
                         var droptargetModelCards = ui.item.sortable.droptargetModel;
                         var targetProcedure = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("procedureClone"));
-                        if (targetProcedure.wipLimit === droptargetModelCards.length) {
+                        var sourceProcedureId = ui.item.sortable.source.parent().parent().attr("procedureId");
+
+                        if (sourceProcedureId !== targetProcedure.id && targetProcedure.wipLimit === droptargetModelCards.length) {
                             timerMessageService.message("目标工序在制品已经满额，不再接受卡片。", 'warning');
                             ui.item.sortable.cancel();
                         }

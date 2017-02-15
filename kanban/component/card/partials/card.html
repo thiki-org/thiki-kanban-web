@@ -43,4 +43,15 @@
                          ng-class="$index < card.finishedAcceptanceCriteriasCount?'':'process-unstart'">
         </uib-progressbar>
     </div>
+
+    <div class="card-elapsed-days"
+         ng-show="elapsedDays>0||isIncludHalfDay>0"
+         uib-tooltip="该卡片已经历时{{card.elapsedDays}}天"
+         tooltip-placement="top"
+         tooltip-trigger="mouseenter">
+        <div class="elapsed-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
+             ng-repeat="n in [].constructor(elapsedDays) track by $index"></div>
+        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
+             ng-show="isIncludHalfDay"></div>
+    </div>
 </div>
