@@ -16,7 +16,7 @@ kanbanApp.provider('timerMessageService', ['$injector',
         this.$get = function ($uibModal) {
             var instance;
             return {
-                message: function (_message) {
+                message: function (_message, _type) {
                     $uibModal.open({
                         animation: false,
                         templateUrl: 'foundation/modal/partials/tip-dialog.html',
@@ -26,6 +26,7 @@ kanbanApp.provider('timerMessageService', ['$injector',
                             function ($scope, $uibModalInstance, $interval) {
                                 $scope.message = _message;
                                 $scope.timerMessage = "3秒后自动关闭";
+                                $scope.type = _type === undefined ? 'ok' : _type;
                                 var count = 2;
                                 $scope.timer = $interval(function () {
                                     if (count === 0) {

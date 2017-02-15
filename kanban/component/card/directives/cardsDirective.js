@@ -14,6 +14,17 @@ kanbanApp.directive('cards', function ($uibModal) {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,
                     placeholder: "card-drag-placeholder",
+                    update: function (e, ui) {
+                        if (ui.item.sortable.received) {
+                            return;
+                        }
+                        var droptargetModelCards = ui.item.sortable.droptargetModel;
+                        var targetProcedure = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("procedureClone"));
+                        if (targetProcedure.wipLimit === droptargetModelCards.length) {
+                            timerMessageService.message("目标工序在制品已经满额，不再接受卡片。", 'warning');
+                            ui.item.sortable.cancel();
+                        }
+                    },
                     stop: function (e, ui) {
                         if (ui.item.sortable.droptarget === undefined) {
                             return;
@@ -54,6 +65,7 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var index = $scope.procedure.cards.cards.indexOf(_card);
                 $scope.procedure.cards.cards.splice(index, 1);
             };
-        }]
+        }
+        ]
     };
 });

@@ -34,7 +34,7 @@ kanbanApp.directive('pages', function () {
                                 $scope.isDisablePageSaveButton = true;
                                 pagesService.savePage($scope.page, currentScope.board._links.pages.href).then(function (_page) {
                                     currentScope.loadPages();
-                                    timerMessageService.message("文章创建成功。");
+                                    timerMessageService.message("文章保存成功。");
                                     $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
                                     $scope.pageSaveButtonText = "保存";

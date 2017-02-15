@@ -5,7 +5,19 @@
         <div class="procedure-title" data-type="text">
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-th" ng-show="procedure.type==0"></span>
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-circle-arrow-right"
-                  ng-show="procedure.type==1&&procedure.status!=9"></span>
+                  ng-show="procedure.type==1&&procedure.status!=9&&procedure.wipLimit===procedure.cards.cards.length"
+                  ng-class="{'in-process':procedure.wipLimit===procedure.cards.cards.length}"
+                  uib-tooltip="已达限额"
+                  tooltip-placement="left"
+                  tooltip-trigger="mouseenter"></span>
+
+            <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-circle-arrow-right"
+                  ng-show="procedure.type==1&&procedure.status!=9&&procedure.wipLimit>procedure.cards.cards.length"
+                  ng-class="{'in-process':procedure.wipLimit===procedure.cards.cards.length}"
+                  uib-tooltip="卡片未达到限额，尚有剩余生产力"
+                  tooltip-placement="left"
+                  tooltip-trigger="mouseenter"></span>
+
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-ok-sign"
                   ng-show="procedure.type==1&&procedure.status==9"></span>
             <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-briefcase"

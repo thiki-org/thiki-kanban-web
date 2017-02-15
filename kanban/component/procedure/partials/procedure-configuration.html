@@ -41,7 +41,6 @@
                 </ui-select>
             </div>
         </div>
-
         <div class="form-group" ng-hide="procedure.archived">
             <label for="procedureStatus" class="col-sm-1 control-label">状态</label>
             <div class="col-sm-10">
@@ -51,6 +50,20 @@
                         <span ng-bind-html="status.name | highlight: $select.search"></span>
                     </ui-select-choices>
                 </ui-select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="WIPLimit" class="col-sm-1 control-label">限额</label>
+            <div class="col-sm-10">
+                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="procedure.wipLimit"
+                       min="1" max="99" required>
+                <div class="field-tip">
+                <span
+                        class="glyphicon glyphicon-question-sign"
+                        aria-hidden="true"
+                        uib-tooltip="限制在制品数量是看板开发方法的核心机制,用于产生拉动效应和暴露瓶颈，其值可以通过不断调整达到最优。"
+                        tooltip-placement="right"
+                        tooltip-trigger="mouseenter"></span></div>
             </div>
         </div>
     </form>

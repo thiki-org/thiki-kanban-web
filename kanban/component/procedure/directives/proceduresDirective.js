@@ -34,12 +34,6 @@ kanbanApp.directive('procedures', function () {
                         connectWith: ".procedure-item",
                         opacity: 0.5,
                         placeholder: "procedure-drag-placeholder",
-                        start: function (e, ui) {
-                            console.log("staring sort.");
-                        },
-                        update: function (e, ui) {
-                            console.log("updating sort.");
-                        },
                         stop: function (e, ui) {
                             if (ui.item.sortable.droptarget === undefined) {
                                 return;
