@@ -31,6 +31,22 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="cardSummary" class="col-sm-1 filed-desc">概要</label>
+                        <div class="col-sm-10">
+                        <textarea id="cardSummary" name="cardSummary" rows="3"
+                                  class="form-control card-summary-textarea"
+                                  data-ng-model="card.summary"
+                                  placeholder="卡片概要"
+                                  autocomplete="off"
+                                  ng-change="isDisableCardSaveButton=false"
+                                  required
+                                  ng-disabled="procedure.archived"/>
+                            <div class="validation-error-message"
+                                 ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
                         <div class="col-sm-10 input-group date-time-input">
                             <input date-time
@@ -52,23 +68,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cardSummary" class="col-sm-1 filed-desc">概要</label>
-                        <div class="col-sm-10">
-                        <textarea id="cardSummary" name="cardSummary" rows="3"
-                                  class="form-control card-summary-textarea"
-                                  data-ng-model="card.summary"
-                                  placeholder="卡片概要" autocomplete="off"
-                                  required ng-disabled="procedure.archived"/>
-                            <div class="validation-error-message"
-                                 ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
-                            </div>
+                        <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
+                        <div class="col-sm-10 card-size-col">
+                            <ui-select data-ng-model="sizeList.selected" id="cardSize">
+                                <ui-select-match placeholder="选择规格">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="size in sizeList | filter: $select.search">
+                                    <span ng-bind-html="size.name | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
+                        <div class="field-tip">
+                            <span class="glyphicon glyphicon-question-sign"
+                                  aria-hidden="true"
+                                  uib-tooltip="规格对应的参考点数：{S:1,M:2,L:3,XL:5,XXL:8,∞:9999}"
+                                  tooltip-placement="right"
+                                  tooltip-trigger="mouseenter"></span></div>
                     </div>
+
+
                     <div class="form-group">
                         <label for="code" class="col-sm-1 filed-desc">内容</label>
                         <div class="col-sm-10 card-content-textarea">
                             <textarea id="cardContent" name="cardContent" rows="1"
-                                      class="form-control "
+                                      class="form-control"
                                       data-ng-model="card.content"
                                       simplemde='{spellChecker: false}'
                                       placeholder="卡片内容 | 支持Markdown"
@@ -81,7 +103,7 @@
 
                 <div class="tab-card-configuration-save" ng-hide="procedure.archived">
                     <button class="btn btn-primary" type="button" ng-click="saveCard()"
-                            ng-disabled="(!cardForm.$dirty)||cardForm.$invalid||isDisableCardSaveButton">
+                            ng-disabled="(!cardForm.$dirty&&cardForm.$invalid)||isDisableCardSaveButton">
                         {{cardSaveButton}}
                     </button>
                 </div>

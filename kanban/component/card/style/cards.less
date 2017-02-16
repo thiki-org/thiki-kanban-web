@@ -474,6 +474,7 @@ label.filed-desc {
   height: 14px;
   line-height: 14px;
   padding: 0 2px;
+  cursor: default;
 }
 
 .card-rest-days-warning {
@@ -537,6 +538,11 @@ label.filed-desc {
   width: 5px !important;
 }
 
-.elapsed-in-progress:last-child {
+.elapsed-in-progress:not([style*="display:none"]):last-child {
   animation: blinker 1.5s linear infinite;
+}
+
+.card-size-col {
+  width: 200px !important;
+  padding-right: 0px !important;
 }

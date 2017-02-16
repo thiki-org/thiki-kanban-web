@@ -5,6 +5,13 @@
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
     </div>
+    <div class="card-ico" ng-show="card.size!=undefined"
+         uib-tooltip="点数 {{card.size}}"
+         tooltip-placement="left"
+         tooltip-trigger="mouseenter">
+        {{card.sizeName}}
+    </div>
+
     <div class="card-ico card-comment" ng-show="card.comments!=undefined&&card.comments.comments.length>0">
         <span class="glyphicon glyphicon-comment"></span>
     </div>
@@ -17,7 +24,7 @@
                class="glyphicon glyphicon-time"></span></span>
         <span uib-tooltip="{{card.restDays}}天后逾期"
               tooltip-placement="left"
-              tooltip-trigger="mouseenter" ng-show="card.restDays<=3&&card.restDays>0"><span
+              tooltip-trigger="mouseenter" ng-show="card.restDays<=3&&card.restDays>=0"><span
                 class="glyphicon glyphicon-time"></span></span>
         <span uib-tooltip="逾期{{-card.restDays}}天"
               tooltip-placement="left"
@@ -46,12 +53,12 @@
 
     <div class="card-elapsed-days"
          ng-show="elapsedDays>0||isIncludHalfDay>0"
-         uib-tooltip="该卡片已经历时{{card.elapsedDays}}天"
+         uib-tooltip="该卡片历时{{card.elapsedDays}}天"
          tooltip-placement="top"
          tooltip-trigger="mouseenter">
         <div class="elapsed-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
              ng-repeat="n in [].constructor(elapsedDays) track by $index"></div>
         <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
-             ng-show="isIncludHalfDay"></div>
+             ng-if="isIncludHalfDay"></div>
     </div>
 </div>

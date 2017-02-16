@@ -79,18 +79,31 @@ kanbanApp.directive('card', function ($uibModal) {
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
-                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
-                        function ($scope, projectsService, timerMessageService, $uibModalInstance) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService) {
                             $scope.card = cardScope.card;
                             $scope.cardSaveButton = "保存";
                             $scope.procedure = cardScope.procedure;
+                            $scope.sizeList = [
+                                {id: 1, name: "S"},
+                                {id: 2, name: "M"},
+                                {id: 3, name: "L"},
+                                {id: 5, name: "XL"},
+                                {id: 8, name: "XXL"},
+                                {id: 9999, name: "∞"}
+                            ];
+                            $scope.sizeList.selected = jsonService.findById($scope.sizeList, $scope.card.size);
+
                             $scope.saveCard = function () {
+                                $scope.card.size = $scope.sizeList.selected.id;
+
                                 $scope.cardSaveButton = "保存中..";
                                 $scope.isDisableCardSaveButton = true;
                                 var cardPromise = cardsServices.update($scope.card);
                                 cardPromise.then(function (_savedCard) {
                                     $scope.card.code = _savedCard.code;
                                     $scope.card.restDays = _savedCard.restDays;
+                                    $scope.card.sizeName = _savedCard.sizeName;
                                     timerMessageService.message("卡片已经更新。");
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
