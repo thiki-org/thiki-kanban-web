@@ -1,20 +1,20 @@
 <div class="acceptanceCriteria">
     <div class="is-finished">
         <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
-               ng-model="acceptanceCriteria.finished" ng-disabled="procedure.archived"/>
+               ng-model="acceptanceCriteria.finished" ng-disabled="stage.archived"/>
         <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
     </div>
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished===true?'finished' : ''"
          data-type="text" e-rows="3" e-cols="30" e-maxlength="200" editable-textarea="acceptanceCriteria.summary"
          e-ng-click="open($event,'$data')" onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)"
-         ng-hide="procedure.archived">
+         ng-hide="stage.archived">
         {{acceptanceCriteria.summary}}
     </div>
 
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished==true?'finished' : ''"
-         data-type="text" ng-show="procedure.archived">
+         data-type="text" ng-show="stage.archived">
         {{acceptanceCriteria.summary}}
     </div>
 

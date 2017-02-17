@@ -1,0 +1,17 @@
+<div id="create-new-stage" class="stage">
+    <div id="create-new-stage-button" ng-click="showCreateStageForm()" ng-show="displayCreationButton">+</div>
+    <form id="create-new-stage-form" name="createNewStageForm" class="create-stage-form"
+          ng-show="displayForm">
+        <div class="input-group">
+            <input name="title" type="text" class="form-control" data-ng-model="title"
+                   ng-keydown="keyPress($event)" required focus="displayForm" ng-blur="blur()" autocomplete="off"/>
+        </div>
+        <div class="create-stage-form-buttons">
+            <button type="button" class="create-stage-form-button btn btn-primary" ng-click="createStage()"
+                    ng-disabled="createNewStageForm.title.$invalid">
+                创建 </span>
+            </button>
+            <div class="create-stage-form-cancel-button" ng-click="cancelCreateStage()">取消</div>
+        </div>
+    </form>
+</div>

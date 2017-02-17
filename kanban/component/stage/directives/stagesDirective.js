@@ -1,12 +1,12 @@
 /**
  * Created by xubt on 4/29/16.
  */
-kanbanApp.directive('procedures', function () {
+kanbanApp.directive('stages', function () {
     return {
         restrict: 'E',
-        templateUrl: 'component/procedure/partials/procedures.html',
+        templateUrl: 'component/stage/partials/stages.html',
         replace: true,
-        controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService, timerMessageService) {
+        controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, timerMessageService) {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
                     $scope.sprint = _sprint;
@@ -16,7 +16,7 @@ kanbanApp.directive('procedures', function () {
                     }
                 });
             };
-            $scope.loadProcedures = function (_activeViewType, _typeName) {
+            $scope.loadStages = function (_activeViewType, _typeName) {
                 var currentBoard = localStorageService.get("currentBoard");
                 var snapshotLink = _activeViewType === undefined ? currentBoard._links.sprintViewSnapshot.href : currentBoard._links[_activeViewType].href;
                 $scope.typeName = _typeName === undefined ? "迭代视图" : _typeName;
@@ -27,29 +27,29 @@ kanbanApp.directive('procedures', function () {
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
                     $scope.loadSprint();
-                    $scope.procedures = _board.procedures.procedures;
+                    $scope.stages = _board.stages.stages;
                     timerMessageService.message("最后渲染中...");
-                    $scope.procedureSortableOptions = {
-                        connectWith: ".procedure-item",
+                    $scope.stageSortableOptions = {
+                        connectWith: ".stage-item",
                         opacity: 0.5,
-                        placeholder: "procedure-drag-placeholder",
+                        placeholder: "stage-drag-placeholder",
                         stop: function (e, ui) {
                             if (ui.item.sortable.droptarget === undefined) {
                                 return;
                             }
-                            var procedures = ui.item.sortable.sourceModel;
-                            for (var index in procedures) {
-                                procedures[index].sortNumber = index;
+                            var stages = ui.item.sortable.sourceModel;
+                            for (var index in stages) {
+                                stages[index].sortNumber = index;
                             }
-                            var sortNumbersLink = JSON.parse(ui.item.sortable.source.attr("boardClone")).procedures._links.sortNumbers.href;
-                            proceduresServices.resort(procedures, sortNumbersLink);
+                            var sortNumbersLink = JSON.parse(ui.item.sortable.source.attr("boardClone")).stages._links.sortNumbers.href;
+                            stagesServices.resort(stages, sortNumbersLink);
                         }
                     };
                 }).finally(function () {
                     timerMessageService.close($scope.loadingInstance);
                 });
             };
-            $scope.loadProcedures();
+            $scope.loadStages();
             $scope.closeLoading = function () {
                 timerMessageService.close($scope.loadingInstance);
             };
@@ -109,7 +109,7 @@ kanbanApp.directive('procedures', function () {
                                 currentScope.sprint.status = 2;
                                 boardsService.saveSprint(currentScope.sprint, currentScope.board._links.sprints.href).then(function () {
                                     currentScope.sprint = undefined;
-                                    currentScope.loadProcedures();
+                                    currentScope.loadStages();
                                     timerMessageService.message("本次迭代已经完成，卡片已经归档。");
                                 }).finally(function () {
                                     timerMessageService.close($scope.loadingInstance);

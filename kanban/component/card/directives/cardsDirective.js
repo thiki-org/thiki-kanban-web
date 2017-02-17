@@ -8,8 +8,8 @@ kanbanApp.directive('cards', function ($uibModal) {
         replace: true,
         controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService) {
             $scope.loadCards = function () {
-                var procedure = $scope.procedure;
-                $scope.cards = procedure.cards === undefined ? [] : procedure.cards.cards;
+                var stage = $scope.stage;
+                $scope.cards = stage.cards === undefined ? [] : stage.cards.cards;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,
@@ -19,11 +19,11 @@ kanbanApp.directive('cards', function ($uibModal) {
                             return;
                         }
                         var droptargetModelCards = ui.item.sortable.droptargetModel;
-                        var targetProcedure = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("procedureClone"));
-                        var sourceProcedureId = ui.item.sortable.source.parent().parent().attr("procedureId");
+                        var targetStage = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("stageClone"));
+                        var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
 
-                        if (sourceProcedureId !== targetProcedure.id && targetProcedure.wipLimit === droptargetModelCards.length) {
-                            timerMessageService.message("目标工序在制品已经满额，不再接受卡片。", 'warning');
+                        if (sourceStageId !== targetStage.id && targetStage.wipLimit === droptargetModelCards.length) {
+                            timerMessageService.message("目标环节在制品已经满额，不再接受卡片。", 'warning');
                             ui.item.sortable.cancel();
                         }
                     },
@@ -33,20 +33,20 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }
                         var sourceModelCards = ui.item.sortable.sourceModel;
                         var droptargetModelCards = ui.item.sortable.droptargetModel;
-                        var sourceProcedureId = ui.item.sortable.source.parent().parent().attr("procedureId");
-                        var targetProcedureId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("procedureId");
+                        var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
+                        var targetStageId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("stageId");
                         for (var index in sourceModelCards) {
                             sourceModelCards[index].sortNumber = index;
                         }
                         var cards = sourceModelCards;
-                        if (sourceProcedureId !== targetProcedureId) {
+                        if (sourceStageId !== targetStageId) {
                             for (var cardIndex in droptargetModelCards) {
                                 droptargetModelCards[cardIndex].sortNumber = cardIndex;
-                                droptargetModelCards[cardIndex].procedureId = targetProcedureId;
+                                droptargetModelCards[cardIndex].stageId = targetStageId;
                             }
                         }
                         cards = cards.concat(droptargetModelCards);
-                        var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("procedureClone")).cards._links.sortNumbers.href;
+                        var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("stageClone")).cards._links.sortNumbers.href;
                         var loadingInstance = timerMessageService.loading();
                         cardsServices.resort(cards, sortNumbersLink).then(function () {
                         }).finally(function () {
@@ -64,14 +64,14 @@ kanbanApp.directive('cards', function ($uibModal) {
             };
 
             $scope.removeCard = function (_card) {
-                var index = $scope.procedure.cards.cards.indexOf(_card);
-                $scope.procedure.cards.cards.splice(index, 1);
+                var index = $scope.stage.cards.cards.indexOf(_card);
+                $scope.stage.cards.cards.splice(index, 1);
             };
             $scope.$watch('cards', function (newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
                 }
-                $scope.procedure.cardsCount = newValue.length;
+                $scope.stage.cardsCount = newValue.length;
             });
         }]
     };

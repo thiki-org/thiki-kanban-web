@@ -1,11 +1,11 @@
-<div id="cards-{{procedure.id}}" class="cards"
-     ng-class="{'cards-sortable':!procedure.archived}"
+<div id="cards-{{stage.id}}" class="cards"
+     ng-class="{'cards-sortable':!stage.archived}"
      ui-sortable="sortableOptions" data-ng-model="cards"
      ng-mouseover="mouseover($event)"
      ng-mouseleave="onMouseLeave($event)">
     <card ng-repeat="card in cards |orderBy:'orderNumber'|cardsFilter:board"
           card="card"
-          procedure="procedure">
+          stage="stage">
     </card>
-    <card-creation procedure="procedure"></card-creation>
+    <card-creation stage="stage"></card-creation>
 </div>

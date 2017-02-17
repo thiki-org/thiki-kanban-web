@@ -9,7 +9,7 @@ kanbanApp.directive('card', function ($uibModal) {
         transclude: true,
         scope: {
             card: '=',
-            procedure: '='
+            stage: '='
         },
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', 'timerMessageService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService, timerMessageService) {
             var acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
@@ -83,7 +83,7 @@ kanbanApp.directive('card', function ($uibModal) {
                         function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService) {
                             $scope.card = cardScope.card;
                             $scope.cardSaveButton = "保存";
-                            $scope.procedure = cardScope.procedure;
+                            $scope.stage = cardScope.stage;
                             $scope.sizeList = [
                                 {id: 1, name: "S"},
                                 {id: 2, name: "M"},
@@ -124,7 +124,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                     templateUrl: 'component/card/partials/card-content-full-screen.html',
                                     controller: function ($scope) {
                                         $scope.card = currentScope.card;
-                                        $scope.procedure = currentScope.procedure;
+                                        $scope.stage = currentScope.stage;
                                     },
                                     size: 'fs',
                                     backdrop: "static"
@@ -188,13 +188,13 @@ kanbanApp.directive('card', function ($uibModal) {
                     ['<span class="thiki-menu-ico glyphicon glyphicon-' + $scope.assignIco + '"' + '></span>' + $scope.assignTip, function ($itemScope) {
                         $itemScope.assign($itemScope.card);
                     }, function ($itemScope) {
-                        return !$itemScope.procedure.archived;
+                        return !$itemScope.stage.archived;
                     }],
                     null,
                     ['<span class="thiki-menu-ico glyphicon glyphicon-trash thiki-delete-item"></span>删除', function ($itemScope) {
                         $itemScope.openDeleteModal($itemScope.card.summary, $itemScope.card._links.self.href);
                     }, function ($itemScope) {
-                        return !$itemScope.procedure.archived;
+                        return !$itemScope.stage.archived;
                     }]
                 ];
             };

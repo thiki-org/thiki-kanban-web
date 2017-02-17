@@ -26,7 +26,7 @@
 
             <div id="acceptance-criterias" class="tab-acceptance-criterias col-sm-10">
                 <div ng-repeat="acceptanceCriteria in card.acceptanceCriterias.acceptanceCriterias |orderBy:'sortNumber'"
-                     acceptance-criteria="acceptanceCriteria" procedure="procedure" class="acceptance-criteria">
+                     acceptance-criteria="acceptanceCriteria" stage="stage" class="acceptance-criteria">
                     <div class="acceptanceCriteria-summary"
                          ng-class="acceptanceCriteria.finished==true?'finished' : ''"
                          data-type="text">

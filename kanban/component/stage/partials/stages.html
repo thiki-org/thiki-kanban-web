@@ -1,4 +1,4 @@
-<div class="procedures">
+<div class="stages">
     <div class="no-active-sprint-was-found-tip alert alert-warning"
          ng-show="noActiveSprintWasFound&&sprint==undefined">
         看板迭代信息尚未<a id="sprint-setting" ng-click="openSprintDialog()">设置</a>。<span
@@ -8,12 +8,12 @@
             tooltip-placement="right"
             tooltip-trigger="mouseenter"></span>
     </div>
-    <div class="no-procedures-was-found-tip" ng-show="procedures!=undefined&&procedures.length==0">
+    <div class="no-stages-was-found-tip" ng-show="stages!=undefined&&stages.length==0">
         当前视图没有数据，请尝试切换至其他视图查看。
     </div>
-    <div class="procedure" ui-sortable="procedureSortableOptions" data-ng-model="procedures" boardClone="board">
-        <procedure ng-repeat="procedure in procedures | orderBy:'orderNumber'" procedure="procedure" board="board"
-                   data-ng-model="procedure"></procedure>
-        <procedure-creation procedures="procedures"/>
+    <div class="stage" ui-sortable="stageSortableOptions" data-ng-model="stages" boardClone="board">
+        <stage ng-repeat="stage in stages | orderBy:'orderNumber'" stage="stage" board="board"
+               data-ng-model="stage"></stage>
+        <stage-creation stages="stages"/>
     </div>
 </div>

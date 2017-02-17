@@ -10,7 +10,7 @@ kanbanApp.directive('cardTags', function () {
         transclude: true,
         scope: {
             card: '=',
-            procedure: '='
+            stage: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', '$uibModal', function ($scope, boardsService, tagsService, cardTagsService, $uibModal) {
             var tagsLink = $scope.card._links.tags.href;
@@ -63,7 +63,7 @@ kanbanApp.directive('cardTags', function () {
                     .then(function (_data) {
                         $uibModal.open({
                             animation: true,
-                            templateUrl: 'component/procedure/partials/tags-configuration.html',
+                            templateUrl: 'component/stage/partials/tags-configuration.html',
                             controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
                                 function ($scope) {
                                     $scope.board = _data;

@@ -16,21 +16,21 @@
         </button>
         <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
             <li class="thiki-menu-item" ng-click="openProjectsDialog()">
-                <a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-th-large"></span> 所属项目</a></li>
+                <a><span class="thiki-menu-ico stage-ico glyphicon glyphicon-th-large"></span> 所属项目</a></li>
             <li class="thiki-menu-item" ng-click="openBoardTags()"><a>
-                <span class="thiki-menu-ico procedure-ico glyphicon glyphicon-tags"></span> 标签</a></li>
+                <span class="thiki-menu-ico stage-ico glyphicon glyphicon-tags"></span> 标签</a></li>
             <li class="thiki-menu-item" ng-click="openBoardConfiguration()"><a><span
-                    class="thiki-menu-ico procedure-ico glyphicon glyphicon-cog"></span> 配置</a></li>
+                    class="thiki-menu-ico stage-ico glyphicon glyphicon-cog"></span> 配置</a></li>
             <li class="thiki-menu-item" ng-click="openSprintDialog()"><a><span
-                    class="thiki-menu-ico procedure-ico glyphicon glyphicon-plane"></span> 迭代设置</a></li>
+                    class="thiki-menu-ico stage-ico glyphicon glyphicon-plane"></span> 迭代设置</a></li>
             <li class="thiki-menu-item" ng-click="openSprintCompetitionDialog()" ng-show="sprint!==undefined">
                 <a><span
-                        class="thiki-menu-ico procedure-ico glyphicon glyphicon-ok-sign"></span> 完成迭代</a>
+                        class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign"></span> 完成迭代</a>
             </li>
             <li role="separator" class="divider"></li>
             <li class="thiki-menu-item thiki-delete-item"><a
                     ng-click="openBoardDelete()"><span
-                    class="thiki-menu-ico procedure-ico glyphicon glyphicon-trash"></span> 删除</a>
+                    class="thiki-menu-ico stage-ico glyphicon glyphicon-trash"></span> 删除</a>
             </li>
         </ul>
     </div>
@@ -73,37 +73,37 @@
         </button>
         <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
             <li class="thiki-menu-item"
-                ng-click="loadProcedures('sprintViewSnapshot','迭代视图')"
+                ng-click="loadStages('sprintViewSnapshot','迭代视图')"
                 ng-class="{'active-view-type':activeViewType=='sprintViewSnapshot'}"
                 uib-tooltip="本次迭代中的卡片"
                 tooltip-placement="left"
                 tooltip-trigger="mouseenter">
-                <a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-plane"></span> 迭代视图</a>
+                <a><span class="thiki-menu-ico stage-ico glyphicon glyphicon-plane"></span> 迭代视图</a>
             </li>
             <li class="thiki-menu-item"
-                ng-click="loadProcedures('archiveViewSnapshot','归档视图')"
+                ng-click="loadStages('archiveViewSnapshot','归档视图')"
                 ng-class="{'active-view-type':activeViewType=='archiveViewSnapshot'}"
                 uib-tooltip="已经归档的卡片"
                 tooltip-placement="left"
                 tooltip-trigger="mouseenter">
-                <a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-briefcase"></span> 归档视图</a>
+                <a><span class="thiki-menu-ico stage-ico glyphicon glyphicon-briefcase"></span> 归档视图</a>
 
             </li>
             <li class="thiki-menu-item"
-                ng-click="loadProcedures('roadMapViewSnapshot','产品路线图')"
+                ng-click="loadStages('roadMapViewSnapshot','产品路线图')"
                 ng-class="{'active-view-type':activeViewType=='roadMapViewSnapshot'}"
                 uib-tooltip="未进入迭代的卡片、本次迭代中已经完成的卡片以及归档的卡片"
                 tooltip-placement="left"
                 tooltip-trigger="mouseenter">
-                <a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-road"></span> 产品路线图</a>
+                <a><span class="thiki-menu-ico stage-ico glyphicon glyphicon-road"></span> 产品路线图</a>
             </li>
             <li class="thiki-menu-item"
-                ng-click="loadProcedures('fullViewSnapshot','项目全景图')"
+                ng-click="loadStages('fullViewSnapshot','项目全景图')"
                 ng-class="{'active-view-type':activeViewType=='fullViewSnapshot'}"
                 uib-tooltip="当前看板所有卡片"
                 tooltip-placement="left"
                 tooltip-trigger="mouseenter">
-                <a><span class="thiki-menu-ico procedure-ico glyphicon glyphicon-picture"></span> 项目全景图</a>
+                <a><span class="thiki-menu-ico stage-ico glyphicon glyphicon-picture"></span> 项目全景图</a>
             </li>
         </ul>
     </div>

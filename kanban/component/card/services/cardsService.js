@@ -2,11 +2,11 @@
 
 kanbanApp.factory('cardsServices', ['$http', '$q', 'httpServices', function ($http, $q, httpServices) {
     return {
-        loadCardsByProcedureId: function (_cardsUrl) {
+        loadCardsByStageId: function (_cardsUrl) {
             return httpServices.get(_cardsUrl);
         },
-        create: function (_card, _procedureCardsUrl) {
-            return httpServices.post(_card, _procedureCardsUrl);
+        create: function (_card, _stageCardsUrl) {
+            return httpServices.post(_card, _stageCardsUrl);
         },
         update: function (_card) {
             if (_card.deadline !== undefined && _card.deadline.format !== undefined) {

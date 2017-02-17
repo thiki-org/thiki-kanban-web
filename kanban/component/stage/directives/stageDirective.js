@@ -2,27 +2,27 @@
  * Created by xubt on 4/29/16.
  */
 
-kanbanApp.directive('procedure', function ($uibModal) {
+kanbanApp.directive('stage', function ($uibModal) {
     return {
         restrict: 'E',
-        templateUrl: 'component/procedure/partials/procedure.html',
+        templateUrl: 'component/stage/partials/stage.html',
         replace: true,
         transclude: true,
         scope: {
-            procedure: '=',
+            stage: '=',
             board: '='
         },
-        controller: ['$scope', 'boardsService', 'proceduresServices', function ($scope, boardsService, proceduresServices, $document) {
-            $scope.displayProcedureMenu = false;
-            $scope.onProcedureMenuMouseOver = function ($event) {
-                $scope.displayProcedureMenu = true;
+        controller: ['$scope', 'boardsService', 'stagesServices', function ($scope, boardsService, stagesServices, $document) {
+            $scope.displayStageMenu = false;
+            $scope.onStageMenuMouseOver = function ($event) {
+                $scope.displayStageMenu = true;
             };
-            $scope.onProcedureMenuMouseLeave = function ($event) {
-                $scope.displayProcedureMenu = false;
+            $scope.onStageMenuMouseLeave = function ($event) {
+                $scope.displayStageMenu = false;
             };
 
             var currentScope = $scope;
-            $scope.cardsCount = $scope.procedure.cards.cards.length;
+            $scope.cardsCount = $scope.stage.cards.cards.length;
             $scope.openModal = function (_message, _link) {
                 $uibModal.open({
                     animation: false,
@@ -31,9 +31,9 @@ kanbanApp.directive('procedure', function ($uibModal) {
                         $scope.title = '警告';
                         $scope.message = "确定要删除" + _message + "吗?";
                         $scope.ok = function () {
-                            var _procedureDeletePromise = proceduresServices.deleteByLink(_link);
-                            _procedureDeletePromise.then(function () {
-                                currentScope.$parent.loadProcedures();
+                            var _stageDeletePromise = stagesServices.deleteByLink(_link);
+                            _stageDeletePromise.then(function () {
+                                currentScope.$parent.loadStages();
                             });
                             $uibModalInstance.close();
                         };
@@ -44,48 +44,48 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'sm'
                 });
             };
-            $scope.updateProcedure = function (_title, _procedure) {
-                var procedure = _procedure;
+            $scope.updateStage = function (_title, _stage) {
+                var stage = _stage;
                 if (_title === "") {
                     return "标题不能为空";
                 }
-                procedure.title = _title;
-                var procedurePromise = proceduresServices.update(procedure);
-                procedurePromise.then(function () {
+                stage.title = _title;
+                var stagePromise = stagesServices.update(stage);
+                stagePromise.then(function () {
                 });
             };
 
             $scope.open = function () {
-                $scope.displayProcedureMenu = false;
+                $scope.displayStageMenu = false;
             };
-            var proceduresScope = $scope;
-            $scope.openProcedureConfiguration = function () {
+            var stagesScope = $scope;
+            $scope.openStageConfiguration = function () {
                 $uibModal.open({
                     animation: true,
-                    templateUrl: 'component/procedure/partials/procedure-configuration.html',
+                    templateUrl: 'component/stage/partials/stage-configuration.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService) {
-                            $scope.procedure = proceduresScope.procedure;
-                            $scope.procedureSaveButton = "保存";
+                            $scope.stage = stagesScope.stage;
+                            $scope.stageSaveButton = "保存";
                             $scope.types = [{id: 0, name: "迭代计划"}, {id: 1, name: "迭代中"}];
                             $scope.statusList = [{id: 0, name: "默认"}, {id: 1, name: "处理中"}, {id: 9, name: "完成"}];
-                            $scope.types.selected = $scope.types[$scope.procedure.type];
-                            $scope.statusList.selected = jsonService.findById($scope.statusList, $scope.procedure.status);
-                            $scope.saveProcedure = function () {
-                                $scope.procedure.type = $scope.types.selected.id;
-                                $scope.procedure.status = $scope.statusList.selected.id;
+                            $scope.types.selected = $scope.types[$scope.stage.type];
+                            $scope.statusList.selected = jsonService.findById($scope.statusList, $scope.stage.status);
+                            $scope.saveStage = function () {
+                                $scope.stage.type = $scope.types.selected.id;
+                                $scope.stage.status = $scope.statusList.selected.id;
 
-                                $scope.procedureSaveButton = "保存中..";
-                                $scope.isDisableProcedureSaveButton = true;
-                                var procedurePromise = proceduresServices.update($scope.procedure);
-                                procedurePromise.then(function (_procedure) {
+                                $scope.stageSaveButton = "保存中..";
+                                $scope.isDisableStageSaveButton = true;
+                                var stagePromise = stagesServices.update($scope.stage);
+                                stagePromise.then(function (_stage) {
                                     timerMessageService.message("配置已经更新");
-                                    proceduresScope.procedure = _procedure;
-                                    $scope.procedure = _procedure;
+                                    stagesScope.stage = _stage;
+                                    $scope.stage = _stage;
                                     $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
-                                    $scope.procedureSaveButton = "保存";
-                                    $scope.isDisableProcedureSaveButton = false;
+                                    $scope.stageSaveButton = "保存";
+                                    $scope.isDisableStageSaveButton = false;
                                 });
                             };
                         }],
@@ -94,19 +94,19 @@ kanbanApp.directive('procedure', function ($uibModal) {
                 });
             };
             $scope.scrollToCardCreation = function () {
-                $scope.procedure.isShowCardCreation = true;
-                var cardsElement = angular.element(document.getElementById("cards-" + $scope.procedure.id));
-                var cardCreationElement = angular.element(document.getElementById("card-creation-" + $scope.procedure.id));
+                $scope.stage.isShowCardCreation = true;
+                var cardsElement = angular.element(document.getElementById("cards-" + $scope.stage.id));
+                var cardCreationElement = angular.element(document.getElementById("card-creation-" + $scope.stage.id));
                 cardsElement.scrollToElement(cardCreationElement, 20, 500).then(function () {
                 });
             };
             $scope.toFullScreen = function () {
                 $uibModal.open({
                     animation: true,
-                    templateUrl: 'component/procedure/partials/procedure-full-screen.html',
+                    templateUrl: 'component/stage/partials/stage-full-screen.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance) {
-                            $scope.procedure = proceduresScope.procedure;
+                            $scope.stage = stagesScope.stage;
                             $scope.finishCardsOperation = function () {
                                 $uibModalInstance.dismiss('cancel');
                             };
@@ -118,19 +118,19 @@ kanbanApp.directive('procedure', function ($uibModal) {
             $scope.openArchiveDialog = function () {
                 $uibModal.open({
                     animation: true,
-                    templateUrl: 'component/procedure/partials/procedure-archive.html',
+                    templateUrl: 'component/stage/partials/stage-archive.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance) {
-                            $scope.procedure = {};
+                            $scope.stage = {};
                             $scope.archiveButtonText = "归档";
                             $scope.isDisableArchiveButton = false;
                             $scope.archive = function () {
                                 $scope.archiveButtonText = "归档中..";
                                 $scope.isDisableArchiveButton = true;
-                                proceduresServices.create($scope.procedure, proceduresScope.procedure._links.archives.href)
+                                stagesServices.create($scope.stage, stagesScope.stage._links.archives.href)
                                     .then(function () {
                                         timerMessageService.message("归档成功，正在为您刷新数据..");
-                                        currentScope.$parent.loadProcedures();
+                                        currentScope.$parent.loadStages();
                                         $uibModalInstance.dismiss('cancel');
                                     }).finally(function () {
                                     $scope.isDisableArchiveButton = false;

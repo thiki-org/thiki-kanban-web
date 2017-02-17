@@ -1,5 +1,5 @@
 <div id="card-{{card.id}}" class="card"
-     ng-class="{'new-card':card.isNew,'not-sortable': procedure.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&procedure.inProcess,'card-rest-days-expired-warning-summary':card.restDays<0&&procedure.inProcess}"
+     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning-summary':card.restDays<0&&stage.inProcess}"
      context-menu="menuOptions"
      context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
@@ -17,7 +17,7 @@
     </div>
     <div class="card-ico"
          ng-class="{'card-rest-days-warning':card.restDays<=3&&card.restDays>0,'card-rest-days-expired-warning':card.restDays<0}"
-         ng-show="card.restDays!=undefined&&procedure.inProcess">
+         ng-show="card.restDays!=undefined&&stage.inProcess">
        <span uib-tooltip="距{{card.deadline}}还有{{card.restDays}}天"
              tooltip-placement="left"
              tooltip-trigger="mouseenter" ng-show="card.restDays>3"><span
@@ -56,9 +56,9 @@
          uib-tooltip="该卡片历时{{card.elapsedDays}}天"
          tooltip-placement="top"
          tooltip-trigger="mouseenter">
-        <div class="elapsed-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
+        <div class="elapsed-day" ng-class="{'elapsed-in-progress':stage.inProcess}"
              ng-repeat="n in [].constructor(elapsedDays) track by $index"></div>
-        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':procedure.inProcess}"
+        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':stage.inProcess}"
              ng-if="isIncludHalfDay"></div>
     </div>
 </div>

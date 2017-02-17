@@ -7,7 +7,7 @@ kanbanApp.directive('cardCreation', function () {
         replace: true,
         templateUrl: 'component/card/partials/card-creation.html',
         controller: ['$scope', 'cardsServices', function ($scope, cardsServices) {
-            var procedure = $scope.procedure;
+            var stage = $scope.stage;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
             $scope.cardCreationButtonText = "创建";
@@ -18,7 +18,7 @@ kanbanApp.directive('cardCreation', function () {
                 $scope.summary = "";
             };
             $scope.cancelCreateCard = function () {
-                $scope.procedure.isShowCardCreation = false;
+                $scope.stage.isShowCardCreation = false;
                 $scope.summary = "";
             };
             $scope.createCard = function () {
@@ -27,8 +27,8 @@ kanbanApp.directive('cardCreation', function () {
                 }
                 $scope.cardCreationButtonText = "稍等..";
                 $scope.isDisableCardCreationButton = true;
-                var card = {summary: $scope.summary, procedureId: procedure.id};
-                cardsServices.create(card, procedure._links.cards.href).then(function (_card) {
+                var card = {summary: $scope.summary, stageId: stage.id};
+                cardsServices.create(card, stage._links.cards.href).then(function (_card) {
                     _card.isNew = true;
                     $scope.cards.push(_card);
                     var newCardElement = angular.element(document.getElementById("card-" + _card.id));

@@ -1,11 +1,11 @@
 <div id="tags-options">
     <div class="tags">
         <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
-            <div ng-class="tag.color" ng-click="procedure.archived||stickTags(tag)">
+            <div ng-class="tag.color" ng-click="stage.archived||stickTags(tag)">
                 <span id="color.name" ng-show="tag.stick" class="glyphicon glyphicon-ok-circle"></span>{{tag.name}}
             </div>
         </div>
     </div>
-    <div class="card-tags-configuration" ng-hide="procedure.archived">
+    <div class="card-tags-configuration" ng-hide="stage.archived">
         <span ng-click="openBoardTags()"><span class="glyphicon glyphicon-tags"></span>配置标签</span></div>
 </div>

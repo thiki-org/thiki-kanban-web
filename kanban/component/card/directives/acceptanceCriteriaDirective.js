@@ -9,7 +9,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
         transclude: true,
         scope: {
             acceptanceCriteria: '=',
-            procedure: '='
+            stage: '='
         },
         controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService) {
             $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {

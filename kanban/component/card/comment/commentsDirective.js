@@ -9,7 +9,7 @@ kanbanApp.directive('comments', function ($uibModal) {
         transclude: true,
         scope: {
             card: '=',
-            procedure: '='
+            stage: '='
         },
         controller: ['$scope', 'localStorageService', 'commentService', 'cardsServices', function ($scope, localStorageService, commentService, cardsServices) {
             $scope.commentSaveButton = "保存";

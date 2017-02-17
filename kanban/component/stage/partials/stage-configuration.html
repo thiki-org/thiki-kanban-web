@@ -1,39 +1,39 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="$dismiss()">&times;</button>
-    <h3 class="modal-title">工序配置</h3>
+    <h3 class="modal-title">环节配置</h3>
 </div>
 <div class="modal-body">
-    <form name="procedureForm" role="form" class="form-horizontal">
+    <form name="stageForm" role="form" class="form-horizontal">
         <div class="form-group">
-            <label for="procedureTitle" class="col-sm-1 control-label">名称</label>
+            <label for="stageTitle" class="col-sm-1 control-label">名称</label>
 
             <div class="col-sm-10">
-                <input id="procedureTitle" name="procedureTitle" type="text" class="form-control"
-                       data-ng-model="procedure.title"
+                <input id="stageTitle" name="stageTitle" type="text" class="form-control"
+                       data-ng-model="stage.title"
                        focus="true" placeholder="名称" autocomplete="off" maxlength="30"
                        required/>
 
                 <div class="validation-error-message"
-                     ng-show="procedureForm.procedureTitle.$error.required && procedureForm.procedureTitle.$dirty">
-                    工序名称不能为空
+                     ng-show="stageForm.stageTitle.$error.required && stageForm.stageTitle.$dirty">
+                    环节名称不能为空
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="procedureDescription" class="col-sm-1 control-label">描述</label>
+            <label for="stageDescription" class="col-sm-1 control-label">描述</label>
             <div class="col-sm-10">
-            <textarea id="procedureDescription" name="procedureDescription" rows="3" ng-maxlength="100"
+            <textarea id="stageDescription" name="stageDescription" rows="3" ng-maxlength="100"
                       class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
-                      data-ng-model="procedure.description" focus="true" placeholder="相关描述说明"
+                      data-ng-model="stage.description" focus="true" placeholder="相关描述说明"
                       autocomplete="off"></textarea>
             </div>
         </div>
 
-        <div class="form-group" ng-hide="procedure.archived">
-            <label for="procedureType" class="col-sm-1 control-label">类型</label>
+        <div class="form-group" ng-hide="stage.archived">
+            <label for="stageType" class="col-sm-1 control-label">类型</label>
             <div class="col-sm-10">
-                <ui-select data-ng-model="types.selected" id="procedureType">
+                <ui-select data-ng-model="types.selected" id="stageType">
                     <ui-select-match placeholder="选择类型">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="type in types | filter: $select.search">
                         <span ng-bind-html="type.name | highlight: $select.search"></span>
@@ -41,10 +41,10 @@
                 </ui-select>
             </div>
         </div>
-        <div class="form-group" ng-hide="procedure.archived">
-            <label for="procedureStatus" class="col-sm-1 control-label">状态</label>
+        <div class="form-group" ng-hide="stage.archived">
+            <label for="stageStatus" class="col-sm-1 control-label">状态</label>
             <div class="col-sm-10">
-                <ui-select data-ng-model="statusList.selected" id="procedureStatus">
+                <ui-select data-ng-model="statusList.selected" id="stageStatus">
                     <ui-select-match placeholder="选择类型">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="status in statusList | filter: $select.search">
                         <span ng-bind-html="status.name | highlight: $select.search"></span>
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label for="WIPLimit" class="col-sm-1 control-label">限额</label>
             <div class="col-sm-10">
-                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="procedure.wipLimit"
+                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="stage.wipLimit"
                        min="1" max="99" required>
                 <div class="field-tip">
                 <span
@@ -69,9 +69,9 @@
     </form>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary" type="button" ng-click="saveProcedure()"
-            ng-disabled="(!procedureForm.$dirty)||procedureForm.$invalid||isDisableProcedureSaveButton">
-        {{procedureSaveButton}}
+    <button class="btn btn-primary" type="button" ng-click="saveStage()"
+            ng-disabled="(!stageForm.$dirty)||stageForm.$invalid||isDisableStageSaveButton">
+        {{stageSaveButton}}
     </button>
 </div>
 
