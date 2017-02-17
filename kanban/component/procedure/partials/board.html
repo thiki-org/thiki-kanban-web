@@ -107,4 +107,22 @@
             </li>
         </ul>
     </div>
+    <div class="board-options-button board-options-button-gray"
+         ng-click="disPlayFilterInput()">
+        <span class="kanban-view-type-menu glyphicon glyphicon-filter"></span>{{filterButtonText}}
+    </div>
+    <div class="board-options-button board-options-button-gray banner-filter"
+         ng-show="isShowFilterInput">
+        <div class="input-group">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">高级</button>
+      </span>
+            <input type="text" class="form-control banner-filter-input"
+                   data-ng-model="board.filter.keyword"
+                   focus="true"
+                   placeholder="关键字"
+                   autocomplete="off"
+                   maxlength="30"/>
+        </div>
+    </div>
 </div>

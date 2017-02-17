@@ -68,7 +68,7 @@ gulp.task('build-less-to-css', function () {
         .pipe(gulp.dest('kanban/static/less'));
 });
 gulp.task('clean-static', function () {
-    return gulp.src(['kanban/static/js'], {read: false})
+    return gulp.src(['kanban/static/js/thiki-kanban.min.js'], {read: false})
         .pipe(clean());
 });
 
@@ -132,5 +132,6 @@ gulp.task('watch-html', function () {
 });
 
 gulp.task('static', gulpSequence('minify-less', 'build-less-to-css', 'minify-css', 'release'));
-gulp.task('default', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
+gulp.task('default', gulpSequence('jshint', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
+gulp.task('all', gulpSequence('jshint', 'minify-bower-components', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
 gulp.task('prod', gulpSequence('jshint', 'minify-bower-components', 'minify-js-release', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));

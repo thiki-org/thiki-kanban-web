@@ -6,7 +6,6 @@ kanbanApp.directive('procedures', function () {
         restrict: 'E',
         templateUrl: 'component/procedure/partials/procedures.html',
         replace: true,
-        scope: false,
         controller: ['$scope', 'boardsService', 'proceduresServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, proceduresServices, localStorageService, $uibModal, usersService, timerMessageService) {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
@@ -138,6 +137,17 @@ kanbanApp.directive('procedures', function () {
                     size: 'pages',
                     backdrop: "static"
                 });
+            };
+            $scope.isShowFilterInput = false;
+            $scope.filterButtonText = "过滤";
+            $scope.disPlayFilterInput = function () {
+                if ($scope.isShowFilterInput === true) {
+                    $scope.isShowFilterInput = false;
+                    $scope.filterButtonText = "过滤";
+                    return;
+                }
+                $scope.isShowFilterInput = true;
+                $scope.filterButtonText = "收起";
             };
         }]
     };

@@ -67,7 +67,12 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var index = $scope.procedure.cards.cards.indexOf(_card);
                 $scope.procedure.cards.cards.splice(index, 1);
             };
-        }
-        ]
+            $scope.$watch('cards', function (newValue, oldValue) {
+                if (oldValue === newValue) {
+                    return;
+                }
+                $scope.procedure.cardsCount = newValue.length;
+            });
+        }]
     };
 });

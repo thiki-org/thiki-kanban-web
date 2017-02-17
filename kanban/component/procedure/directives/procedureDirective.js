@@ -9,7 +9,8 @@ kanbanApp.directive('procedure', function ($uibModal) {
         replace: true,
         transclude: true,
         scope: {
-            procedure: '='
+            procedure: '=',
+            board: '='
         },
         controller: ['$scope', 'boardsService', 'proceduresServices', function ($scope, boardsService, proceduresServices, $document) {
             $scope.displayProcedureMenu = false;
@@ -21,6 +22,7 @@ kanbanApp.directive('procedure', function ($uibModal) {
             };
 
             var currentScope = $scope;
+            $scope.cardsCount = $scope.procedure.cards.cards.length;
             $scope.openModal = function (_message, _link) {
                 $uibModal.open({
                     animation: false,
@@ -139,7 +141,6 @@ kanbanApp.directive('procedure', function ($uibModal) {
                     size: 'mid'
                 });
             };
-        }
-        ]
+        }]
     };
 });
