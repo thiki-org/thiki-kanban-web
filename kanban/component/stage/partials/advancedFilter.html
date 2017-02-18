@@ -1,0 +1,16 @@
+<div id="advanced-groups">
+    <div class="filter-group">
+        <div class="filter-group-name">按标签</div>
+        <div>
+            <div class="tags">
+                <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
+                    <div ng-class="tag.color" ng-click="selectTag(tag)">{{tag.name}}</div>
+                </div>
+                <div class="no-tags-tip" ng-show="tags.length==0">
+                    暂无标签。
+                </div>
+                {{board.filter}}
+            </div>
+        </div>
+    </div>
+</div>
