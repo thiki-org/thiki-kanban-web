@@ -30,7 +30,8 @@
     "angular-cache": "^4.6.0",
     "angular-scroll": "^1.0.0",
     "angular-datepicker": "^2.0.3",
-    "ng-showdown": "^1.1.0"
+    "ng-showdown": "^1.1.0",
+    "angular-pageslide-directive": "^2.1.4"
   },
   "authors": [
     "濤 <btao.cn@gmail.com>"

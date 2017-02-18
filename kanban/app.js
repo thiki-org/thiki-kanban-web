@@ -18,7 +18,8 @@ var kanbanApp = angular.module('kanbanApp', [
     'textAngular',
     "datePicker",
     "ng-showdown",
-    "simplemde"]);
+    "simplemde",
+    "pageslide-directive"]);
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {
         localStorageServiceProvider.setPrefix('thiki.kanban').setStorageType('sessionStorage');

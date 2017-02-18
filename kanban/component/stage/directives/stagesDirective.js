@@ -6,7 +6,7 @@ kanbanApp.directive('stages', function () {
         restrict: 'E',
         templateUrl: 'component/stage/partials/stages.html',
         replace: true,
-        controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, timerMessageService) {
+        controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', 'advancedFilterFactory', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, timerMessageService, advancedFilterFactory) {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
                     $scope.sprint = _sprint;
@@ -137,17 +137,6 @@ kanbanApp.directive('stages', function () {
                     size: 'pages',
                     backdrop: "static"
                 });
-            };
-            $scope.isShowFilterInput = false;
-            $scope.filterButtonText = "过滤";
-            $scope.disPlayFilterInput = function () {
-                if ($scope.isShowFilterInput === true) {
-                    $scope.isShowFilterInput = false;
-                    $scope.filterButtonText = "过滤";
-                    return;
-                }
-                $scope.isShowFilterInput = true;
-                $scope.filterButtonText = "收起";
             };
         }]
     };

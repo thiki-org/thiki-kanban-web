@@ -6,7 +6,7 @@ kanbanApp.directive('cards', function ($uibModal) {
         restrict: 'E',
         templateUrl: 'component/card/partials/cards.html',
         replace: true,
-        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService) {
+        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', 'advancedFilterFactory', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService, advancedFilterFactory) {
             $scope.loadCards = function () {
                 var stage = $scope.stage;
                 $scope.cards = stage.cards === undefined ? [] : stage.cards.cards;
@@ -73,6 +73,15 @@ kanbanApp.directive('cards', function ($uibModal) {
                 }
                 $scope.stage.cardsCount = newValue.length;
             });
+
+            $scope.$watch(function () {
+                return advancedFilterFactory.getFilter();
+            }, function (newValue, oldValue) {
+                if (newValue === oldValue) {
+                    return;
+                }
+                $scope.filter = advancedFilterFactory.getFilter();
+            }, true);
         }]
     };
 });
