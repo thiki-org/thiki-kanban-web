@@ -2,8 +2,8 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFactory', 'tagsService', 'localStorageService', '$uibModal', 'timerMessageService',
-    function($scope, advancedFilterFactory, tagsService, localStorageService, $uibModal, timerMessageService) {
+kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFactory', 'tagsService', 'localStorageService', '$uibModal', 'timerMessageService', 'projectsService',
+    function($scope, advancedFilterFactory, tagsService, localStorageService, $uibModal, timerMessageService, projectsService) {
         $scope.isOpenAdvance = false;
         $scope.$watch(function() {
             return advancedFilterFactory.getFilter();
@@ -13,6 +13,9 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
             }
             if ($scope.tags === undefined) {
                 $scope.loadTags();
+            }
+            if ($scope.members === undefined) {
+                $scope.loadMembers();
             }
             $scope.filter = advancedFilterFactory.getFilter();
             console.log(advancedFilterFactory.getFilter());
@@ -28,10 +31,21 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 $scope.tags = _data.tags;
             });
         };
+
+        $scope.loadMembers = function() {
+            if (advancedFilterFactory.getBoard()._links.members === undefined) {
+                $scope.members = [];
+                return;
+            }
+            projectsService.loadMembers(advancedFilterFactory.getBoard()._links.members.href).then(function(_data) {
+                $scope.members = _data.members;
+            });
+        };
         $scope.selectTag = function(_tag) {
             advancedFilterFactory.addTag(_tag);
             _tag.stick = !_tag.stick;
         };
+
         $scope.isShowFilterInput = false;
         $scope.filterButtonText = "过滤";
         $scope.disPlayFilterInput = function() {
@@ -46,6 +60,8 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
             $scope.filterButtonText = "收起";
         };
         $scope.tagMatchType = advancedFilterFactory.getFilter().tags.tagMatchType;
+        $scope.memberMatchType = advancedFilterFactory.getFilter().members.memberMatchType;
+
         $scope.openAdvancedFilter = function() {
             advancedFilterFactory.toggle();
         };

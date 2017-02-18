@@ -1,5 +1,5 @@
 kanbanApp.factory('advancedFilterFactory', function() {
-    var filter = { keyword: "", tags: { items: [], tagMatchType: 'or' } };
+    var filter = { keyword: "", tags: { items: [], tagMatchType: 'or' }, members: { items: [], memberMatchType: 'or' } };
     var board;
     return {
         getFilter: function() {
@@ -33,6 +33,14 @@ kanbanApp.factory('advancedFilterFactory', function() {
         },
         setTagMatchType: function(_tagMatchType) {
             filter.tags.tagMatchType = _tagMatchType;
+        },
+        addMember: function(_member) {
+            var index = filter.members.items.indexOf(_member.userName);
+            if (index > -1) {
+                filter.members.items.splice(index, 1);
+                return;
+            }
+            filter.members.items.push(_member.userName);
         }
     };
 });

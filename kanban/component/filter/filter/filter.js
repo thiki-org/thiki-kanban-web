@@ -30,6 +30,25 @@ kanbanApp.filter('cardsFilter', function() {
                     continue;
                 }
             }
+            if (_filter.members !== undefined && _filter.members.items !== undefined && _filter.members.items.length > 0) {
+                var isHaveMembers = false;
+                var matchedMembersCount = 0;
+                for (var itemIndex in _filter.members.items) {
+                    for (var assignmentIndex in card.assignments.assignments) {
+                        if (card.assignments.assignments[assignmentIndex].assignee === _filter.members.items[itemIndex]) {
+                            isHaveMembers = true;
+                            matchedMembersCount++;
+                        }
+                    }
+                }
+                if (_filter.members.memberMatchType === 'and' && _filter.members.items.length > matchedMembersCount) {
+                    continue;
+                }
+                if (!isHaveMembers) {
+                    continue;
+                }
+            }
+
             filtered.push(card);
         }
         return filtered;

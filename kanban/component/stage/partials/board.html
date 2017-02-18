@@ -105,6 +105,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="filter-group">
+                                    <div class="filter-group-name">按认领成员</div>
+                                    <div class="tags">
+                                        <filter-member ng-repeat="member in members" member="member" data-ng-model="member"></filter-member>
+                                    </div>
+                                    <div class="btn-group filter-radio-group" ng-hide="tags.length==0">
+                                        <div class="radio">
+                                            <label uib-tooltip="被所选任意成员认领" tooltip-placement="right" tooltip-trigger="mouseenter">
+                                                <input type="radio" name="memberMatchType" value="or" checked="memberMatchType==='or'" ng-model="memberMatchType">
+                                                或
+                                            </label>
+                                            <label uib-tooltip="同时被所选成员认领" tooltip-placement="right" tooltip-trigger="mouseenter">
+                                                <input type="radio" name="memberMatchType" value="and" checked="memberMatchType==='and'" ng-model="memberMatchType">
+                                                与
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

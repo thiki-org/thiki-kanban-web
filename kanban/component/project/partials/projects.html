@@ -2,26 +2,21 @@
     <dashboard-entrance>我的项目</dashboard-entrance>
 </navigation-banner>
 <div class="projects">
-    <div id="project-{{project.id}}" ng-repeat="project in projects | orderBy:'creationTime'" repeat-finish
-         class="project-item">
-        <div ng-click=toProject(project.id,project._links.self.href)> {{project.name}}</div>
+    <div id="project-{{project.id}}" ng-repeat="project in projects | orderBy:'creationTime'" repeat-finish class="project-item">
+        <div ng-click="toProject(project.id,project._links.self.href)"> {{project.name}}</div>
     </div>
     <div class="project-item project-creation" data-mode="inline" ng-show="displayProjectCreationForm">
-        <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click=showProjectCreationForm()>创建新的项目</div>
+        <div data-ng-model="tip" ng-mouseover="mouseover($event)" ng-click="showProjectCreationForm()">创建新的项目</div>
     </div>
     <div ng-show="displayForm">
         <div id="create-new-entry">
             <form name="createProjectForm" class="create-project-form">
-                <div class="input-group  creation-box"
-                     ng-class="{'has-error': createProjectForm.name.$invalid && !createProjectForm.name.$pristine}">
-                    <input name="name" type="text" class="form-control" data-ng-model="name"
-                           ng-keydown="keyPress($event)" focus="displayForm" required autocomplete="off"/>
+                <div class="input-group  creation-box" ng-class="{'has-error': createProjectForm.name.$invalid && !createProjectForm.name.$pristine}">
+                    <input name="name" type="text" class="form-control" data-ng-model="name" ng-keydown="keyPress($event)" focus="displayForm" required autocomplete="off" />
                 </div>
                 <div class="thiki-form-buttons">
-                    <button type="button" class="thiki-submit-button btn btn-primary"
-                            ng-click="createProject()"
-                            ng-disabled="createProjectForm.name.$invalid||createProjectForm.name.$modelValue.length>20">
-                        创建</span>
+                    <button type="button" class="thiki-submit-button btn btn-primary" ng-click="createProject()" ng-disabled="createProjectForm.name.$invalid||createProjectForm.name.$modelValue.length>20">
+                        创建
                     </button>
                     <div class="thiki-cancel-button" ng-click="cancelCreateProject()">取消</div>
                 </div>
