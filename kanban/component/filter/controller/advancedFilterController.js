@@ -32,7 +32,6 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 $scope.loadMembers();
             }
             $scope.filter = advancedFilterFactory.getFilter();
-            console.log(advancedFilterFactory.getFilter());
             $scope.isOpenAdvance = advancedFilterFactory.getFilter().isOpenAdvanced;
 
             if (newValue !== oldValue) $scope.firstName = newValue;
