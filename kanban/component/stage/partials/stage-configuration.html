@@ -8,13 +8,9 @@
             <label for="stageTitle" class="col-sm-1 control-label">名称</label>
 
             <div class="col-sm-10">
-                <input id="stageTitle" name="stageTitle" type="text" class="form-control"
-                       data-ng-model="stage.title"
-                       focus="true" placeholder="名称" autocomplete="off" maxlength="30"
-                       required/>
+                <input id="stageTitle" name="stageTitle" type="text" class="form-control" data-ng-model="stage.title" focus="true" placeholder="名称" autocomplete="off" maxlength="30" required/>
 
-                <div class="validation-error-message"
-                     ng-show="stageForm.stageTitle.$error.required && stageForm.stageTitle.$dirty">
+                <div class="validation-error-message" ng-show="stageForm.stageTitle.$error.required && stageForm.stageTitle.$dirty">
                     环节名称不能为空
                 </div>
             </div>
@@ -23,10 +19,7 @@
         <div class="form-group">
             <label for="stageDescription" class="col-sm-1 control-label">描述</label>
             <div class="col-sm-10">
-            <textarea id="stageDescription" name="stageDescription" rows="3" ng-maxlength="100"
-                      class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
-                      data-ng-model="stage.description" focus="true" placeholder="相关描述说明"
-                      autocomplete="off"></textarea>
+                <textarea id="stageDescription" name="stageDescription" rows="3" ng-maxlength="100" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" data-ng-model="stage.description" focus="true" placeholder="相关描述说明" autocomplete="off"></textarea>
             </div>
         </div>
 
@@ -55,23 +48,15 @@
         <div class="form-group">
             <label for="WIPLimit" class="col-sm-1 control-label">限额</label>
             <div class="col-sm-10">
-                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="stage.wipLimit"
-                       min="1" max="99" required>
+                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="stage.wipLimit" min="1" max="99" required>
                 <div class="field-tip">
-                <span
-                        class="glyphicon glyphicon-question-sign"
-                        aria-hidden="true"
-                        uib-tooltip="限制在制品数量是看板开发方法的核心机制,用于产生拉动效应和暴露瓶颈，其值可以通过不断调整达到最优。"
-                        tooltip-placement="right"
-                        tooltip-trigger="mouseenter"></span></div>
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" uib-tooltip="限制在制品数量是看板开发方法的核心机制,用于产生拉动效应和暴露瓶颈，其值可以通过不断调整达到最优。" tooltip-placement="right" tooltip-trigger="mouseenter"></span></div>
             </div>
         </div>
     </form>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
-    <button class="btn btn-primary" type="button" ng-click="saveStage()"
-            ng-disabled="(!stageForm.$dirty)||stageForm.$invalid||isDisableStageSaveButton">
+    <button class="btn btn-primary" type="button" ng-click="saveStage()" ng-disabled="(!stageForm.$dirty&&stageForm.$invalid)||isDisableStageSaveButton">
         {{stageSaveButton}}
     </button>
 </div>
-
