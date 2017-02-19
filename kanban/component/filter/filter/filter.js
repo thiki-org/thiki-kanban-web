@@ -48,7 +48,6 @@ kanbanApp.filter('cardsFilter', function() {
                     continue;
                 }
             }
-
             filtered.push(card);
         }
         return filtered;

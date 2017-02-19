@@ -75,5 +75,10 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 advancedFilterFactory.setTagMatchType($scope.tagMatchType);
             }
         }, true);
+        $scope.$watch("memberMatchType", function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                advancedFilterFactory.setMemberMatchType($scope.memberMatchType);
+            }
+        }, true);
     }
 ]);

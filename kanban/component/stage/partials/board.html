@@ -72,7 +72,7 @@
         <button class="btn btn-default" type="button"
                 ng-click="openAdvancedFilter()">高级</button>
       </span>
-                <input type="text" class="form-control banner-filter-input" ng-model="keyword" focus="true" placeholder="关键字" autocomplete="off" maxlength="30" />
+                <input type="text" class="form-control banner-filter-input" ng-model="keyword" focus="true" placeholder="卡片编号或概述" autocomplete="off" maxlength="30" />
             </div>
             <div>
                 <div pageslide ps-container="stages" ps-open="isOpenAdvance" ps-auto-close="false" ps-push="true" data-ng-model="board">
@@ -82,7 +82,7 @@
                             <div id="advanced-groups">
                                 <div class="filter-group">
                                     <div class="filter-group-name">按标签</div>
-                                    <div class="tags">
+                                    <div class="filter-group-items">
                                         <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
                                             <div ng-class="tag.color" ng-click="selectTag(tag)">
                                                 <span id="color.name" ng-show="tag.stick" class="glyphicon glyphicon-ok-circle"></span>{{tag.name}}
@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="filter-group">
                                     <div class="filter-group-name">按认领成员</div>
-                                    <div class="tags">
+                                    <div class="filter-group-items">
                                         <filter-member ng-repeat="member in members" member="member" data-ng-model="member"></filter-member>
                                     </div>
                                     <div class="btn-group filter-radio-group" ng-hide="tags.length==0">

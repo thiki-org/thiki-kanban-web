@@ -34,6 +34,9 @@ kanbanApp.factory('advancedFilterFactory', function() {
         setTagMatchType: function(_tagMatchType) {
             filter.tags.tagMatchType = _tagMatchType;
         },
+        setMemberMatchType: function(_memberMatchType) {
+            filter.members.memberMatchType = _memberMatchType;
+        },
         addMember: function(_member) {
             var index = filter.members.items.indexOf(_member.userName);
             if (index > -1) {
