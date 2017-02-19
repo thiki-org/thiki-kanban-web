@@ -9,8 +9,13 @@ kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilte
         var filtered = [];
         for (var index in _cards) {
             var card = _cards[index];
-            if (card.summary.indexOf(_filter.keyword) == -1 && (card.code !== undefined && card.code.indexOf(_filter.keyword) == -1)) {
-                continue;
+            if (_filter !== "") {
+                if (card.summary.indexOf(_filter.keyword) == -1 && (card.code === undefined || card.code === "")) {
+                    continue;
+                }
+                if (card.summary.indexOf(_filter.keyword) == -1 && (card.code !== undefined && card.code.indexOf(_filter.keyword) == -1)) {
+                    continue;
+                }
             }
             if (_filter.tags !== undefined && _filter.tags.items !== undefined && _filter.tags.items.length > 0) {
                 var isHaveTags = false;
