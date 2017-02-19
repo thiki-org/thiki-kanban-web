@@ -1,12 +1,18 @@
 kanbanApp.factory('advancedFilterFactory', function() {
-    var filter = {
+    var initialFilter = {
         keyword: "",
+        isOpenAdvanced: false,
         tags: { items: [], tagMatchType: 'or' },
         members: { items: [], memberMatchType: 'or' },
-        size: -1
+        size: -1,
+        elapsedDays: -1
     };
+    var filter = JSON.parse(JSON.stringify(initialFilter));
     var board;
     return {
+        resetFilter: function() {
+            filter = JSON.parse(JSON.stringify(initialFilter));
+        },
         getFilter: function() {
             return filter;
         },
@@ -55,6 +61,33 @@ kanbanApp.factory('advancedFilterFactory', function() {
         },
         resetSize: function() {
             filter.size = -1;
+        },
+        setElapsedDays: function(_elapsedDays) {
+            filter.elapsedDays = _elapsedDays;
+        },
+        resetElapsedDays: function() {
+            filter.elapsedDays = -1;
+        },
+        setFilterResultCount: function(_resultCount) {
+            filter.resultCount = _resultCount;
+        },
+        isSearch: function() {
+            if (filter.keyword !== "") {
+                return true;
+            }
+            if (filter.tags.items.length !== 0) {
+                return true;
+            }
+            if (filter.members.items.length !== 0) {
+                return true;
+            }
+            if (filter.size !== -1) {
+                return true;
+            }
+            if (filter.elapsedDays !== -1) {
+                return true;
+            }
+            return false;
         }
     };
 });

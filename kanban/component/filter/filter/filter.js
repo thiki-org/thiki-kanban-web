@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 16/02/2017.
  */
-kanbanApp.filter('cardsFilter', function() {
+kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilterFactory) {
     return function(_cards, _filter) {
         if (_filter === undefined || Object.keys(_filter).length === 0) {
             return _cards;
@@ -56,8 +56,13 @@ kanbanApp.filter('cardsFilter', function() {
                     continue;
                 }
             }
+            if (_filter.elapsedDays > -1) {
+                if (card.elapsedDays === 0 || card.elapsedDays > _filter.elapsedDays) {
+                    continue;
+                }
+            }
             filtered.push(card);
         }
         return filtered;
     };
-});
+}]);

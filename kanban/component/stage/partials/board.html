@@ -70,14 +70,16 @@
             <div class="input-group">
                 <span class="input-group-btn">
         <button class="btn btn-default" type="button"
-                ng-click="openAdvancedFilter()">高级</button>
+                ng-click="openAdvancedFilter()" ng-class="{'advanced-filter-closed':!isOpenAdvance}">高级</button>
       </span>
                 <input type="text" class="form-control banner-filter-input" ng-model="keyword" focus="true" placeholder="卡片编号或概述" autocomplete="off" maxlength="30" />
             </div>
             <div>
                 <div pageslide ps-container="stages" ps-open="isOpenAdvance" ps-auto-close="false" ps-push="true" data-ng-model="board">
                     <div class="panel panel-default">
-                        <div class="panel-heading">高级过滤</div>
+                        <div class="panel-heading">高级过滤
+                            <small ng-show="resultCount>0">共<span class="filter-result-count">{{resultCount}}</span>张卡片符合条件</small>
+                        </div>
                         <div class="panel-body">
                             <div id="advanced-groups">
                                 <div class="filter-group">
@@ -155,6 +157,17 @@
                                         <div class="filter-group-item-wrap">
                                             <span class="selected-item glyphicon glyphicon-ok-sign" ng-show="size.unestimate.selected"></span>
                                             <div class="filter-size-item" ng-click="selectSize(size.unestimate)" data-ng-model="size.unestimate">尚未估算</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-group">
+                                    <div class="filter-group-name">按历时时长</div>
+                                    <div class="filter-group-items">
+                                        <div class="filter-group-item-wrap" ng-repeat="elapsedDays in elapsedDaysList">
+                                            <span class="selected-item glyphicon glyphicon-ok-sign" ng-show="elapsedDays.selected"></span>
+                                            <div class="filter-size-item" ng-click="selectElapsedDays(elapsedDays)">
+                                                {{elapsedDays.name}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

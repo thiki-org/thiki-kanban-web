@@ -4,7 +4,21 @@
 
 kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFactory', 'tagsService', 'localStorageService', '$uibModal', 'timerMessageService', 'projectsService',
     function($scope, advancedFilterFactory, tagsService, localStorageService, $uibModal, timerMessageService, projectsService) {
-        $scope.isOpenAdvance = false;
+        $scope.resetFilterGroups = function() {
+            $scope.isOpenAdvance = false;
+            $scope.tags = undefined;
+            $scope.members = undefined;
+            $scope.size = { small: { point: 1, selected: false }, medium: { point: 2, selected: false }, large: { point: 3, selected: false }, Xlarge: { point: 5, selected: false }, XXlarge: { point: 8, selected: false }, unestimatable: { point: 9999, selected: false }, unestimate: { point: 0, selected: false } };
+            $scope.elapsedDaysList = [
+                { name: '1天内', days: 1, selected: false },
+                { name: '2天内', days: 2, selected: false },
+                { name: '3天内', days: 3, selected: false },
+                { name: '5天内', days: 5, selected: false },
+                { name: '15天内', days: 15, selected: false },
+                { name: '一个月内', days: 30, selected: false }
+            ];
+        };
+        $scope.resetFilterGroups();
         $scope.$watch(function() {
             return advancedFilterFactory.getFilter();
         }, function(newValue, oldValue) {
@@ -22,6 +36,10 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
             $scope.isOpenAdvance = advancedFilterFactory.getFilter().isOpenAdvanced;
 
             if (newValue !== oldValue) $scope.firstName = newValue;
+            if (advancedFilterFactory.isSearch()) {
+                var filteredCards = document.getElementsByClassName("card");
+                $scope.resultCount = filteredCards.length;
+            }
         }, true);
         $scope.loadTags = function() {
             if (advancedFilterFactory.getBoard() === undefined) {
@@ -53,6 +71,8 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 $scope.isShowFilterInput = false;
                 $scope.filterButtonText = "过滤";
                 advancedFilterFactory.closeAdvanced();
+                advancedFilterFactory.resetFilter();
+                $scope.resetFilterGroups();
                 return;
             }
             $scope.isShowFilterInput = true;
@@ -65,12 +85,12 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
         $scope.openAdvancedFilter = function() {
             advancedFilterFactory.toggle();
         };
-        $scope.size = { small: { point: 1, selected: false }, medium: { point: 2, selected: false }, large: { point: 3, selected: false }, Xlarge: { point: 5, selected: false }, XXlarge: { point: 8, selected: false }, unestimatable: { point: 9999, selected: false }, unestimate: { point: 0, selected: false } };
+
         $scope.selectSize = function(_sizeType) {
             _sizeType.selected = !_sizeType.selected;
             for (var index in $scope.size) {
                 if ($scope.size[index].point !== _sizeType.point) {
-                    $scope.size[index].selected = false
+                    $scope.size[index].selected = false;
                 }
             }
             if (!_sizeType.selected) {
@@ -78,6 +98,19 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 return;
             }
             advancedFilterFactory.setSize(_sizeType.point);
+        };
+        $scope.selectElapsedDays = function(_elapsedDays) {
+            _elapsedDays.selected = !_elapsedDays.selected;
+            for (var index in $scope.elapsedDaysList) {
+                if ($scope.elapsedDaysList[index].days !== _elapsedDays.days) {
+                    $scope.elapsedDaysList[index].selected = false;
+                }
+            }
+            if (!_elapsedDays.selected) {
+                advancedFilterFactory.resetElapsedDays();
+                return;
+            }
+            advancedFilterFactory.setElapsedDays(_elapsedDays.days);
         };
         $scope.$watch("keyword", function(newValue, oldValue) {
             if (newValue !== oldValue) {
