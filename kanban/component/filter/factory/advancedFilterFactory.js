@@ -1,5 +1,10 @@
 kanbanApp.factory('advancedFilterFactory', function() {
-    var filter = { keyword: "", tags: { items: [], tagMatchType: 'or' }, members: { items: [], memberMatchType: 'or' } };
+    var filter = {
+        keyword: "",
+        tags: { items: [], tagMatchType: 'or' },
+        members: { items: [], memberMatchType: 'or' },
+        size: -1
+    };
     var board;
     return {
         getFilter: function() {
@@ -44,6 +49,12 @@ kanbanApp.factory('advancedFilterFactory', function() {
                 return;
             }
             filter.members.items.push(_member.userName);
+        },
+        setSize: function(_size) {
+            filter.size = _size;
+        },
+        resetSize: function() {
+            filter.size = -1;
         }
     };
 });

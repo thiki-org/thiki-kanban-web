@@ -65,6 +65,20 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
         $scope.openAdvancedFilter = function() {
             advancedFilterFactory.toggle();
         };
+        $scope.size = { small: { point: 1, selected: false }, medium: { point: 2, selected: false }, large: { point: 3, selected: false }, Xlarge: { point: 5, selected: false }, XXlarge: { point: 8, selected: false }, unestimatable: { point: 9999, selected: false }, unestimate: { point: 0, selected: false } };
+        $scope.selectSize = function(_sizeType) {
+            _sizeType.selected = !_sizeType.selected;
+            for (var index in $scope.size) {
+                if ($scope.size[index].point !== _sizeType.point) {
+                    $scope.size[index].selected = false
+                }
+            }
+            if (!_sizeType.selected) {
+                advancedFilterFactory.resetSize();
+                return;
+            }
+            advancedFilterFactory.setSize(_sizeType.point);
+        };
         $scope.$watch("keyword", function(newValue, oldValue) {
             if (newValue !== oldValue) {
                 advancedFilterFactory.setKeyword($scope.keyword);

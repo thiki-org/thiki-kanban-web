@@ -48,6 +48,14 @@ kanbanApp.filter('cardsFilter', function() {
                     continue;
                 }
             }
+            if (_filter.size > -1) {
+                if (_filter.size === 0 && (card.size !== undefined)) {
+                    continue;
+                }
+                if (_filter.size > 0 && _filter.size !== card.size) {
+                    continue;
+                }
+            }
             filtered.push(card);
         }
         return filtered;
