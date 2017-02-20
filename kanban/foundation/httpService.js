@@ -1,6 +1,6 @@
 /* Services */
 
-kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', function ($http, $q, $location, $injector, localStorageService, CacheFactory) {
+kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'localStorageService', function($http, $q, $location, $injector, localStorageService, CacheFactory) {
     var token = localStorageService.get("token");
 
     function openErrorDialog(deferred, _url) {
@@ -8,11 +8,11 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
         modal.open({
             animation: true,
             templateUrl: 'foundation/modal/partials/error-dialog.html',
-            controller: function ($scope, $uibModalInstance) {
+            controller: function($scope, $uibModalInstance) {
                 $scope.title = '错误';
                 $scope.message = "URL错误:" + _url + "\n请确认本地配置或远程服务器是否运行正常。";
 
-                $scope.ok = function () {
+                $scope.ok = function() {
                     $uibModalInstance.close();
                 };
             },
@@ -26,7 +26,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
     }
 
     return {
-        send: function (_options) {
+        send: function(_options) {
             var deferred = $q.defer();
             $http({
                 method: _options.method,
@@ -40,7 +40,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        post: function (_payload, _url) {
+        post: function(_payload, _url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -57,7 +57,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        postWithNoPayLoad: function (_url) {
+        postWithNoPayLoad: function(_url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -72,7 +72,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        upload: function (_fileName, _file, _url) {
+        upload: function(_fileName, _file, _url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -82,7 +82,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             fileToSend.append(_fileName, _file);
             $http.post(_url, fileToSend, {
                 transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
+                headers: { 'Content-Type': undefined }
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
             }, function errorCallback(response) {
@@ -91,7 +91,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
 
             return deferred.promise;
         },
-        put: function (_payload, _url) {
+        put: function(_payload, _url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -108,7 +108,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        putWithNoBody: function (_url) {
+        putWithNoBody: function(_url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -124,7 +124,7 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        delete: function (_url) {
+        delete: function(_url) {
             var deferred = $q.defer();
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
@@ -140,8 +140,16 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
             });
             return deferred.promise;
         },
-        get: function (_url, _params) {
+        get: function(_url, _params) {
             var deferred = $q.defer();
+            if (kanbanApp.isCacheUrl(_url)) {
+                var cachedResponse = localStorageService.get(_url);
+                if (localStorageService.get(_url) !== null) {
+                    deferred.resolve(cachedResponse);
+                    console.log(_url + " load from cached.");
+                    return deferred.promise;
+                }
+            }
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred, _url);
             }
@@ -152,13 +160,24 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 contentType: 'application/json'
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
+                if (kanbanApp.isCacheUrl(_url)) {
+                    localStorageService.set(_url, response.data);
+                }
             }, function errorCallback(response) {
                 deferred.reject(response.data);
             });
             return deferred.promise;
         },
-        getFile: function (_url) {
+        getFile: function(_url) {
             var deferred = $q.defer();
+            if (kanbanApp.isCacheUrl(_url)) {
+                var cachedResponse = localStorageService.get(_url);
+                if (localStorageService.get(_url) !== null) {
+                    deferred.resolve(cachedResponse);
+                    console.log(_url + " load from cached.");
+                    return deferred.promise;
+                }
+            }
             if (URLIsNotValid(_url)) {
                 return openErrorDialog(deferred);
             }
@@ -167,6 +186,9 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 url: _url
             }).then(function successCallback(response) {
                 deferred.resolve(response.data);
+                if (kanbanApp.isCacheUrl(_url)) {
+                    localStorageService.set(_url, response.data);
+                }
             }, function errorCallback(response) {
                 deferred.reject(response.data);
             });

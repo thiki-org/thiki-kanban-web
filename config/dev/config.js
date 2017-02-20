@@ -3,3 +3,4 @@
  */
 kanbanApp.remote_entrance = "http://127.0.0.1:8096/kanban/entrance";
 kanbanApp.autoExitTime = 60 * 10;
+kanbanApp.cacheUrls = ["/profile", "/avatar"];

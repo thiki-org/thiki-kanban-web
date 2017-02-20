@@ -3,3 +3,4 @@
  */
 kanbanApp.remote_entrance = "http://www.thiki.org/kanban/entrance";
 kanbanApp.autoExitTime = 60 * 10;
+kanbanApp.cacheUrls = ["/profile", "/avatar"];

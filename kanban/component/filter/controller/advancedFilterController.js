@@ -126,5 +126,10 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 advancedFilterFactory.setMemberMatchType($scope.memberMatchType);
             }
         }, true);
+        var scrollElement = "#stages";
+        $scope.isLoadAdvancedFilter = false;
+        $scope.$watch(function() { return angular.element(scrollElement).is(':visible') }, function() {
+            $scope.isLoadAdvancedFilter = true;
+        });
     }
 ]);

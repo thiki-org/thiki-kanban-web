@@ -75,7 +75,7 @@
                 <input type="text" class="form-control banner-filter-input" ng-model="keyword" focus="true" placeholder="卡片编号或概述" autocomplete="off" maxlength="30" />
             </div>
             <div>
-                <div pageslide ps-container="stages" ps-open="isOpenAdvance" ps-auto-close="false" ps-push="true" data-ng-model="board">
+                <div ng-if="isLoadAdvancedFilter||isOpenAdvance" pageslide ps-container="stages" ps-click-outside="false" ps-push="true" ps-open="isOpenAdvance" ps-auto-close="false" ps-push="true" data-ng-model="board">
                     <div class="panel panel-default">
                         <div class="panel-heading">高级过滤</div>
                         <div class="panel-body">
