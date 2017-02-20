@@ -86,7 +86,7 @@ gulp.task('minify-js', ['clean-static'], function() {
 });
 
 gulp.task('minify-js-release', ['clean-static'], function() {
-    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', 'config/prod/config.js'])
+    return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', '!kanban/foundation/libs/**/*.js', '!kanban/foundation/libs/*.js', 'config/prod/config.js'])
         .pipe(concat('thiki-kanban.min.js'))
         .pipe(gulp.dest('kanban/static/js'))
         .pipe(ngmin())
@@ -137,4 +137,4 @@ gulp.task('watch-html', function() {
 gulp.task('static', gulpSequence('minify-less', 'build-less-to-css', 'minify-css', 'release'));
 gulp.task('dev', gulpSequence('jshint', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
 gulp.task('default', gulpSequence('jshint', 'minify-libs', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
-gulp.task('prod', gulpSequence('jshint', 'minify-libs', 'minify-js-release', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));
+gulp.task('prod', gulpSequence('jshint', 'minify-js-release', 'minify-less', 'build-less-to-css', 'minify-css', 'release'));

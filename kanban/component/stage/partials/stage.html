@@ -1,33 +1,19 @@
-<div id="stage-{{stage.id}}" stageId="{{stage.id}}" stageClone="{{stage}}"
-     class="stage-item"
-     ng-mouseover="onStageMenuMouseOver($event)">
+<div id="stage-{{stage.id}}" stageId="{{stage.id}}" stageClone="{{stage}}" class="stage-item" ng-mouseover="onStageMenuMouseOver($event)">
     <div class="stage-wrap">
         <div class="stage-title" data-type="text">
             <span class="thiki-menu-ico stage-ico glyphicon glyphicon-th" ng-show="stage.type==0"></span>
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right"
-                  ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cards.cards.length"
-                  ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}"
-                  uib-tooltip="已达限额"
-                  tooltip-placement="left"
-                  tooltip-trigger="mouseenter"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cards.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}" uib-tooltip="已达限额" tooltip-placement="left"
+                tooltip-trigger="mouseenter"></span>
 
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right"
-                  ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cards.cards.length"
-                  ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}"
-                  uib-tooltip="卡片未达到限额，尚有剩余生产力"
-                  tooltip-placement="left"
-                  tooltip-trigger="mouseenter"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cards.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}" uib-tooltip="卡片未达到限额，尚有剩余生产力"
+                tooltip-placement="left" tooltip-trigger="mouseenter"></span>
 
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign"
-                  ng-show="stage.type==1&&stage.status==9"></span>
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-briefcase"
-                  ng-show="stage.archived"></span>
-            {{stage.title}}
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign" ng-show="stage.type==1&&stage.status==9"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-briefcase" ng-show="stage.archived"></span><span uib-tooltip=" {{stage.description}}" tooltip-class="tooltip-default" tooltip-placement="bottom" tooltip-trigger="mouseenter"> {{stage.title}}</span>
             <span class="badge stage-cards-length">{{cardsCount}}</span>
         </div>
         <div class="dropdown stage-menu thiki-animation">
-            <span class="stage-menu-ico dropdown-toggle glyphicon glyphicon-tasks" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="true"></span>
+            <span class="stage-menu-ico dropdown-toggle glyphicon glyphicon-tasks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li class="thiki-menu-item" ng-hide="stage.archived">
                     <a ng-click="scrollToCardCreation()">
@@ -52,6 +38,6 @@
                 </li>
             </ul>
         </div>
-        <cards stage="stage" board="board"/>
+        <cards stage="stage" board="board" />
     </div>
 </div>
