@@ -15,7 +15,7 @@
         <div class="dropdown stage-menu thiki-animation">
             <span class="stage-menu-ico dropdown-toggle glyphicon glyphicon-tasks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
             <ul class="thiki-menu-items dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="thiki-menu-item" ng-hide="stage.archived">
+                <li class="thiki-menu-item" ng-hide="stage.archived||stage.inProcess">
                     <a ng-click="scrollToCardCreation()">
                         <span class="thiki-menu-ico glyphicon glyphicon-file"></span>新建卡片
                     </a>
