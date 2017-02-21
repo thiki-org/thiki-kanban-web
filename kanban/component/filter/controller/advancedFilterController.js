@@ -128,7 +128,7 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
         }, true);
         var scrollElement = "#stages";
         $scope.isLoadAdvancedFilter = false;
-        $scope.$watch(function() { return angular.element(scrollElement).is(':visible') }, function() {
+        $scope.$watch(function() { return angular.element(scrollElement).is(':visible'); }, function() {
             $scope.isLoadAdvancedFilter = true;
         });
     }

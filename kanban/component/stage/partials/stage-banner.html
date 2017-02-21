@@ -29,10 +29,12 @@
         </ul>
     </div>
 
-    <div id="board-sprint" ng-show="sprint!==undefined" uib-tooltip="迭代周期" tooltip-placement="top" tooltip-trigger="mouseenter">
+    <div id="board-sprint" ng-show="sprint!==undefined">
         <div id="sprint-time-box">
             {{sprint.startTime | formatTime:'YYYY年MM月DD日'}} - {{sprint.endTime | formatTime:'YYYY年MM月DD日'}}
             <span class="sprint-expire-message" ng-show="sprint.remainingDays<0">迭代已经超期</span> {{sprint.sprintName}}
+            <span class="sprint-badge sprint-badge-total-points" uib-tooltip="本次迭代故事点总数" tooltip-placement="top" tooltip-trigger="mouseenter" ng-if="cardsPointsCount!==undefined">{{cardsPointsCount}}</span>
+            <span class="sprint-badge sprint-badge-finished-points" uib-tooltip="本次迭代已完成故事点数" tooltip-placement="top" tooltip-trigger="mouseenter" ng-if="finishedCardsPointsCount!==undefined">{{finishedCardsPointsCount}}</span>
         </div>
         <div id="sprint-indicator-animation">
             <div ng-repeat="n in [].constructor(sprint.totalDays) track by $index" max="index" value="$index" animate="true" class="sprint-indicator" ng-class="{'sprint-went-days':$index < sprint.wentDays,'sprint-today':$index == sprint.wentDays,'sprint-remaining-days':$index > sprint.wentDays,'sprint-expire':sprint.remainingDays<0,'sprint-small':sprint.totalDays>20}">

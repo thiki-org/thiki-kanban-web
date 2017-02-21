@@ -10,6 +10,33 @@ kanbanApp.directive('stages', function() {
             $scope.loadSprint = function() {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function(_sprint) {
                     $scope.sprint = _sprint;
+                    $scope.$watch(function() {
+                        return $scope.board;
+                    }, function(newValue, oldValue) {
+                        if (oldValue === newValue) {
+                            return;
+                        }
+                        var board = currentScope.board;
+                        var cardsPointsCount = 0;
+                        var finishedCardsPointsCount = 0;
+                        for (var stageIndex in board.stages.stages) {
+                            var stage = board.stages.stages[stageIndex];
+                            if (!stage.inSprint) {
+                                continue;
+                            }
+                            for (var cardIndex in stage.cards.cards) {
+                                var card = stage.cards.cards[cardIndex];
+                                if (card.size !== undefined) {
+                                    cardsPointsCount += card.size;
+                                }
+                                if (stage.inDoneStatus && card.size !== undefined) {
+                                    finishedCardsPointsCount += card.size;
+                                }
+                            }
+                        }
+                        $scope.cardsPointsCount = cardsPointsCount;
+                        $scope.finishedCardsPointsCount = finishedCardsPointsCount;
+                    }, true);
                 }, function(_rejection) {
                     if (_rejection.status === 404) {
                         $scope.noActiveSprintWasFound = true;
@@ -88,6 +115,7 @@ kanbanApp.directive('stages', function() {
                                     $scope.isDisableSprintSaveButton = false;
                                 }
                             });
+
                         }
                     ],
                     size: 'sprint',
