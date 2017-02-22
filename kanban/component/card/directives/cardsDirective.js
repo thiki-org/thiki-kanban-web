@@ -1,20 +1,20 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('cards', function ($uibModal) {
+kanbanApp.directive('cards', function($uibModal) {
     return {
         restrict: 'E',
         templateUrl: 'component/card/partials/cards.html',
         replace: true,
-        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', 'advancedFilterFactory', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService, advancedFilterFactory) {
-            $scope.loadCards = function () {
+        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', 'advancedFilterFactory', function($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService, advancedFilterFactory) {
+            $scope.loadCards = function() {
                 var stage = $scope.stage;
-                $scope.cards = stage.cards === undefined ? [] : stage.cards.cards;
+                $scope.cards = stage.cardsNode === undefined ? [] : stage.cardsNode.cards;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,
                     placeholder: "card-drag-placeholder",
-                    update: function (e, ui) {
+                    update: function(e, ui) {
                         if (ui.item.sortable.received) {
                             return;
                         }
@@ -27,7 +27,7 @@ kanbanApp.directive('cards', function ($uibModal) {
                             ui.item.sortable.cancel();
                         }
                     },
-                    stop: function (e, ui) {
+                    stop: function(e, ui) {
                         if (ui.item.sortable.droptarget === undefined) {
                             return;
                         }
@@ -48,8 +48,7 @@ kanbanApp.directive('cards', function ($uibModal) {
                         cards = cards.concat(droptargetModelCards);
                         var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("stageClone")).cards._links.sortNumbers.href;
                         var loadingInstance = timerMessageService.loading();
-                        cardsServices.resort(cards, sortNumbersLink).then(function () {
-                        }).finally(function () {
+                        cardsServices.resort(cards, sortNumbersLink).then(function() {}).finally(function() {
                             timerMessageService.close(loadingInstance);
                         });
                     },
@@ -59,24 +58,24 @@ kanbanApp.directive('cards', function ($uibModal) {
 
             $scope.commentCount = 0;
             $scope.loadCards();
-            $scope.closeLoading = function () {
+            $scope.closeLoading = function() {
                 timerMessageService.close($scope.loadingInstance);
             };
 
-            $scope.removeCard = function (_card) {
-                var index = $scope.stage.cards.cards.indexOf(_card);
-                $scope.stage.cards.cards.splice(index, 1);
+            $scope.removeCard = function(_card) {
+                var index = $scope.stage.cardsNode.cards.indexOf(_card);
+                $scope.stage.cardsNode.cards.splice(index, 1);
             };
-            $scope.$watch('cards', function (newValue, oldValue) {
+            $scope.$watch('cards', function(newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
                 }
                 $scope.stage.cardsCount = newValue.length;
             });
 
-            $scope.$watch(function () {
+            $scope.$watch(function() {
                 return advancedFilterFactory.getFilter();
-            }, function (newValue, oldValue) {
+            }, function(newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }

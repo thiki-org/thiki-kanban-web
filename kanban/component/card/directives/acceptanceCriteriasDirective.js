@@ -32,20 +32,20 @@ kanbanApp.directive('acceptanceCriterias', function($uibModal) {
                 for (var index in $scope.acceptanceCriterias) {
                     if ($scope.acceptanceCriterias[index].id === __acceptanceCriteria.id) {
                         $scope.acceptanceCriterias[index] = __acceptanceCriteria;
-                        $scope.card.acceptanceCriterias.acceptanceCriterias = $scope.acceptanceCriterias;
+                        $scope.card.acceptanceCriteriasNode.acceptanceCriterias = $scope.acceptanceCriterias;
                         return;
                     }
                 }
             };
 
             $scope.deleteAcceptanceCriteria = function(__acceptanceCriteria) {
-                var index = $scope.card.acceptanceCriterias.acceptanceCriterias.indexOf(__acceptanceCriteria);
-                $scope.card.acceptanceCriterias.acceptanceCriterias.splice(index, 1);
+                var index = $scope.card.acceptanceCriteriasNode.acceptanceCriterias.indexOf(__acceptanceCriteria);
+                $scope.card.acceptanceCriteriasNode.acceptanceCriterias.splice(index, 1);
                 $scope.updateAcceptanceCriteriasCount();
             };
 
             $scope.loadAcceptanceCriterias = function() {
-                $scope.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? [] : $scope.card.acceptanceCriterias.acceptanceCriterias;
+                $scope.acceptanceCriterias = $scope.card.acceptanceCriteriasNode === undefined ? [] : $scope.card.acceptanceCriteriasNode.acceptanceCriterias;
                 $scope.acceptanceCriterias = $filter('orderBy')($scope.acceptanceCriterias, 'sortNumber');
                 $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.updateAcceptanceCriteriasCount();
@@ -53,13 +53,14 @@ kanbanApp.directive('acceptanceCriterias', function($uibModal) {
                 $scope.acceptanceCriteriasSortableOptions = {
                     connectWith: ".acceptanceCriteria",
                     placeholder: "acceptanceCriteria-drag-placeholder",
+                    'ui-floating': 'auto',
                     stop: function(e, ui) {
                         var loadingInstance = timerMessageService.loading();
                         var acceptanceCriterias = ui.item.sortable.sourceModel;
                         for (var index in acceptanceCriterias) {
                             acceptanceCriterias[index].sortNumber = index;
                         }
-                        var sortNumbersLink = currentScope.card.acceptanceCriterias._links.sortNumbers.href;
+                        var sortNumbersLink = currentScope.card.acceptanceCriteriasNode._links.sortNumbers.href;
                         acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function(_acceptanceCriterias) {
                             timerMessageService.close(loadingInstance);
                         });
@@ -83,8 +84,8 @@ kanbanApp.directive('acceptanceCriterias', function($uibModal) {
                 var acceptanceCriteriaPromise = acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href);
                 acceptanceCriteriaPromise.then(function(_acceptanceCriteria) {
                     $scope.acceptanceCriterias.push(_acceptanceCriteria);
-                    $scope.card.acceptanceCriterias = $scope.card.acceptanceCriterias === undefined ? { acceptanceCriterias: [] } : $scope.card.acceptanceCriterias;
-                    $scope.card.acceptanceCriterias.acceptanceCriterias = $scope.acceptanceCriterias;
+                    $scope.card.acceptanceCriteriasNode = $scope.card.acceptanceCriteriasNode === undefined ? { acceptanceCriterias: [] } : $scope.card.acceptanceCriteriasNode;
+                    $scope.card.acceptanceCriteriasNode.acceptanceCriterias = $scope.acceptanceCriterias;
                     $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                     $scope.isShowAcceptanceCriteriaForm = false;
                     $scope.isShowAcceptanceCriteriaCreationButton = true;

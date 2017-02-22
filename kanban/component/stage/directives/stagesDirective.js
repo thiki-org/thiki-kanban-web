@@ -19,13 +19,13 @@ kanbanApp.directive('stages', function() {
                         var board = currentScope.board;
                         var cardsPointsCount = 0;
                         var finishedCardsPointsCount = 0;
-                        for (var stageIndex in board.stages.stages) {
-                            var stage = board.stages.stages[stageIndex];
+                        for (var stageIndex in board.stagesNode.stages) {
+                            var stage = board.stagesNode.stages[stageIndex];
                             if (!stage.inSprint) {
                                 continue;
                             }
-                            for (var cardIndex in stage.cards.cards) {
-                                var card = stage.cards.cards[cardIndex];
+                            for (var cardIndex in stage.cardsNode.cards) {
+                                var card = stage.cardsNode.cards[cardIndex];
                                 if (card.size !== undefined) {
                                     cardsPointsCount += card.size;
                                 }
@@ -54,7 +54,7 @@ kanbanApp.directive('stages', function() {
                 boardPromise.then(function(_board) {
                     $scope.board = _board;
                     $scope.loadSprint();
-                    $scope.stages = _board.stages.stages;
+                    $scope.stages = _board.stagesNode.stages;
                     var currentScope = $scope;
                     timerMessageService.message("最后渲染中...");
                     $scope.stageSortableOptions = {

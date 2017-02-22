@@ -2,13 +2,13 @@
  * Created by xubt on 10/14/16.
  */
 
-kanbanApp.directive('cardTagsSmall', function () {
+kanbanApp.directive('cardTagsSmall', function() {
     return {
         restrict: 'E',
         templateUrl: 'component/card/tags/partials/tags-small.html',
         replace: true,
-        controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function ($scope, boardsService, tagsService, cardTagsService) {
-            $scope.tags = $scope.card.tags === undefined ? [] : $scope.card.tags.cardTags;
+        controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', function($scope, boardsService, tagsService, cardTagsService) {
+            $scope.tags = $scope.card.tags === undefined ? [] : $scope.card.tagsNode.cardTags;
         }]
     };
 });

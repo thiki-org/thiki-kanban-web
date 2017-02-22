@@ -22,7 +22,7 @@ kanbanApp.directive('stage', function($uibModal) {
             };
 
             var currentScope = $scope;
-            $scope.cardsCount = $scope.stage.cards === undefined ? 0 : $scope.stage.cards.cards.length;
+            $scope.cardsCount = $scope.stage.cardsNode === undefined ? 0 : $scope.stage.cardsNode.cards.length;
             $scope.openModal = function(_message, _link) {
                 $uibModal.open({
                     animation: false,

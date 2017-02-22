@@ -2,10 +2,10 @@
     <div class="stage-wrap">
         <div class="stage-title" data-type="text">
             <span class="thiki-menu-ico stage-ico glyphicon glyphicon-th" ng-show="stage.type==0"></span>
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cards.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}" uib-tooltip="已达限额" tooltip-placement="left"
-                tooltip-trigger="mouseenter"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cardsNode.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="已达限额"
+                tooltip-placement="left" tooltip-trigger="mouseenter"></span>
 
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cards.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cards.cards.length}" uib-tooltip="卡片未达到限额，尚有剩余生产力"
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cardsNode.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="卡片未达到限额，尚有剩余生产力"
                 tooltip-placement="left" tooltip-trigger="mouseenter"></span>
 
             <span class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign" ng-show="stage.type==1&&stage.status==9"></span>
