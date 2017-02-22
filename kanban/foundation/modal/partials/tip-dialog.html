@@ -1,8 +1,7 @@
 <div class="modal-body">
     <div id="message">
-        <span ng-show="type==='ok'" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-        <span ng-show="type==='warning'" class="tip-ban glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-        {{message}}
+        <span ng-if="type==='ok'" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+        <span ng-if="type==='warning'" class="tip-ban glyphicon glyphicon-ban-circle" aria-hidden="true"></span> {{message}}
     </div>
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
