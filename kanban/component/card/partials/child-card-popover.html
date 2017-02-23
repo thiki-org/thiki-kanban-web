@@ -1,0 +1,29 @@
+<div class="triangle"></div>
+<div id="card-{{childCard.id}}" class="card child-card-popover" ng-class="{'new-card':childCard.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning-summary':childCard.restDays<0&&stage.inProcess}"
+    context-menu="menuOptions" context-menu-class="thiki-menu-items">
+    <div class="card-code-label" ng-show="childCard.code!=undefined&&childCard.code!=''">
+        <span>{{childCard.code}}</span>
+    </div>
+    <div class="card-ico" ng-show="childCard.size!=undefined" uib-tooltip="点数 {{childCard.size}}" tooltip-placement="left" tooltip-trigger="mouseenter">
+        {{childCard.sizeName}}
+    </div>
+
+    <div class="card-ico card-comment" ng-show="childCard.comments!=undefined&&childCard.comments.comments.length>0">
+        <span class="glyphicon glyphicon-comment"></span>
+    </div>
+    <div class="card-ico" ng-class="{'card-rest-days-warning':childCard.restDays<=3&&childCard.restDays>0,'card-rest-days-expired-warning':childCard.restDays<0}" ng-show="childCard.restDays!=undefined&&stage.inProcess">
+        <span uib-tooltip="距{{childCard.deadline}}还有{{childCard.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="childCard.restDays>3"><span
+               class="glyphicon glyphicon-time"></span></span>
+        <span uib-tooltip="{{childCard.restDays}}天后逾期" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="childCard.restDays<=3&&childCard.restDays>=0"><span
+                class="glyphicon glyphicon-time"></span></span>
+        <span uib-tooltip="逾期{{-childCard.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="childCard.restDays<0"><span
+                class="glyphicon glyphicon-time"></span></span>
+    </div>
+    <div class="card-summary" ng-click="openCardConfiguration()">
+        {{childCard.summary}}{{ childCard.elapsedDays}}
+    </div>
+    <div class="card-elapsed-days" uib-tooltip="该卡片历时{{childCard.elapsedDays}}天" tooltip-placement="top" tooltip-trigger="mouseenter">
+        <div class="elapsed-day" ng-class="{'elapsed-in-progress':stage.inProcess}" ng-repeat="n in [] | range:childCard.elapsedDays"></div>
+        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':stage.inProcess}" ng-if="childCard.elapsedDays % 1 !== 0"></div>
+    </div>
+</div>

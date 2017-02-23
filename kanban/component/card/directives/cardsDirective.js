@@ -10,47 +10,38 @@ kanbanApp.directive('cards', function($uibModal) {
             $scope.loadCards = function() {
                 var stage = $scope.stage;
                 $scope.cards = stage.cardsNode === undefined ? [] : stage.cardsNode.cards;
+                $scope.isCardDragging = false;
+                var currentScope = $scope;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,
                     placeholder: "card-drag-placeholder",
+                    start: function(e, ui) {
+                        currentScope.isCardDragging = true;
+                        console.log("start1" + currentScope.isCardDragging);
+                        $('.cards-sortable').sortable('refresh');
+                    },
                     update: function(e, ui) {
-                        if (ui.item.sortable.received) {
-                            return;
-                        }
-                        var droptargetModelCards = ui.item.sortable.droptargetModel;
-                        var targetStage = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("stageClone"));
-                        var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
 
-                        if (sourceStageId !== targetStage.id && targetStage.wipLimit === droptargetModelCards.length) {
-                            timerMessageService.message("目标环节在制品已经满额，不再接受卡片。", 'warning');
-                            ui.item.sortable.cancel();
-                        }
                     },
                     stop: function(e, ui) {
-                        if (ui.item.sortable.droptarget === undefined) {
+                        var droptarget = ui.item.sortable.droptarget;
+                        if (droptarget === undefined) {
+
                             return;
                         }
-                        var sourceModelCards = ui.item.sortable.sourceModel;
-                        var droptargetModelCards = ui.item.sortable.droptargetModel;
-                        var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
-                        var targetStageId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("stageId");
-                        for (var index in sourceModelCards) {
-                            sourceModelCards[index].sortNumber = index;
+                        if (angular.element(droptarget[0]).hasClass('child-cards')) {
+                            console.log("OK");
+                            var movedCard = ui.item.sortable.model;
+                            var parentCard = ui.item.sortable.sourceModel[0];
+                            movedCard.parentId = parentCard.id;
+                            cardsServices.update(movedCard).then(function() {
+                                timerMessageService.message("已将卡片" + movedCard.code + "设置为" + parentCard.code + "的从属卡片");
+                            });
+                            currentScope.isCardDragging = false;
+                            console.log("start1" + currentScope.isCardDragging);
+                            return;
                         }
-                        var cards = sourceModelCards;
-                        if (sourceStageId !== targetStageId) {
-                            for (var cardIndex in droptargetModelCards) {
-                                droptargetModelCards[cardIndex].sortNumber = cardIndex;
-                                droptargetModelCards[cardIndex].stageId = targetStageId;
-                            }
-                        }
-                        cards = cards.concat(droptargetModelCards);
-                        var sortNumbersLink = JSON.parse(ui.item.sortable.source.parent().parent().attr("stageClone")).cards._links.sortNumbers.href;
-                        var loadingInstance = timerMessageService.loading();
-                        cardsServices.resort(cards, sortNumbersLink).then(function() {}).finally(function() {
-                            timerMessageService.close(loadingInstance);
-                        });
                     },
                     cancel: ".not-sortable"
                 };

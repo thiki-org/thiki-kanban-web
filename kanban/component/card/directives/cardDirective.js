@@ -21,6 +21,7 @@ kanbanApp.directive('card', function($uibModal) {
             }
             $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
             $scope.card.totalAcceptanceCriteriasCount = acceptanceCriterias.length;
+            $scope.childCards = $scope.card.child === undefined ? [] : $scope.card.child.cards;
             $scope.elapsedDays = parseInt($scope.card.elapsedDays);
             $scope.isIncludHalfDay = $scope.card.elapsedDays % 1 !== 0;
             $scope.assign = function(_card) {

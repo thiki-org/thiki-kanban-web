@@ -20,6 +20,7 @@ div.card:hover {
   margin: 5px;
   float: left;
   width: 95%;
+  word-wrap: break-word;
 }
 
 .cards {
@@ -28,7 +29,6 @@ div.card:hover {
   clear: both;
   float: inherit;
   width: 99%;
-  overflow: hidden;
   padding-right: 5px;
   padding-left: 5px;
   padding-bottom: 10px;
@@ -36,7 +36,6 @@ div.card:hover {
 }
 
 .cards:hover {
-  overflow: auto;
   width: 100%;
 }
 
@@ -279,9 +278,6 @@ button.dropdown-toggle.card-options-menu-button div {
 .card-menu-items {
   margin-top: -10px;
   position: absolute !important;
-}
-
-.card.ng-isolate-scope.ui-sortable-handle {
 }
 
 .stage-full-screen .card {
@@ -546,4 +542,35 @@ label.filed-desc {
 .card-creation-textarea{
     width: 100% !important;
     min-height: 150px;
+}
+
+.child-cards {
+    height: 35px;
+    float: left;
+    width: 100%;
+    border-radius: 2px;
+}
+.child-cards-movement-area{
+ background: #f9f9f9;
+    height: 5px;
+    float: left;
+    width: 100%;
+    border-radius: 2px;
+    border: 1px dashed #ccc;
+}
+
+.child-card-flag{
+    width: 30px;
+    background: #ffffff;
+    color:@base;
+    height: 30px;
+    line-height: 30px !important;
+    text-align: center;
+    margin: 2px;
+    border-radius: 2px;
+    float: left;
+}
+.child-card-popover{
+  min-width: 230px;
+  min-height: 160pxl
 }
