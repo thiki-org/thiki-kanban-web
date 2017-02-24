@@ -35,7 +35,6 @@ kanbanApp.directive('assignments', function() {
                 if ($scope.card.child === undefined) {
                     $scope.$parent.card.assignmentsNode.assignments = filteredAssignments;
                 }
-                console.log($scope.$parent);
             };
             $scope.loadAssignments();
             $scope.$watch(function() {

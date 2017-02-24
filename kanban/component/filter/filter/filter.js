@@ -49,7 +49,6 @@ kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilte
                         }
                     }
                 }
-                console.log(_filter.members.memberMatchType);
                 if (_filter.members.memberMatchType === 'and' && _filter.members.items.length > matchedAssignees.length) {
                     continue;
                 }
