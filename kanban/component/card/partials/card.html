@@ -25,7 +25,7 @@
     <div class="card-operations">
         <div class="child-cards cards-sortable" ng-class="{'child-cards-movement-area':$parent.isCardDragging}" ui-sortable="sortableOptions" data-ng-model="childCards">
             <div ng-repeat="childCard in childCards">
-                <span id="{{childCard.id}}" ns-popover ns-popover-template="component/card/partials/child-card-popover.html" ns-popover-trigger="mouseenter" ns-popover-placement="top" class="glyphicon glyphicon-flag child-card-flag"></span>
+                <span id="{{childCard.id}}" ns-popover ns-popover-theme="ns-popover-tooltip-theme" ns-popover-template="component/card/partials/child-card-popover.html" ns-popover-trigger="mouseenter" ns-popover-timeout="0" ns-popover-placement="top" class="glyphicon glyphicon-flag child-card-flag"></span>
             </div>
         </div>
         <assignments></assignments>
