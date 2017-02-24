@@ -121,15 +121,13 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 advancedFilterFactory.setTagMatchType($scope.tagMatchType);
             }
         }, true);
-        $scope.$watch("memberMatchType", function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                advancedFilterFactory.setMemberMatchType($scope.memberMatchType);
-            }
-        }, true);
         var scrollElement = "#stages";
         $scope.isLoadAdvancedFilter = false;
         $scope.$watch(function() { return angular.element(scrollElement).is(':visible'); }, function() {
             $scope.isLoadAdvancedFilter = true;
         });
+        $scope.selecteMemberMatchType = function(_memberMatchType) {
+            advancedFilterFactory.setMemberMatchType(_memberMatchType);
+        }
     }
 ]);

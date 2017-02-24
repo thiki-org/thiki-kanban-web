@@ -21,8 +21,8 @@ kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilte
                 var isHaveTags = false;
                 var matchedTagsCount = 0;
                 for (var itemIndex in _filter.tags.items) {
-                    for (var tagIndex in card.tags.cardTags) {
-                        if (card.tags.cardTags[tagIndex].tagId === _filter.tags.items[itemIndex]) {
+                    for (var tagIndex in card.tagsNode.cardTags) {
+                        if (card.tagsNode.cardTags[tagIndex].tagId === _filter.tags.items[itemIndex]) {
                             isHaveTags = true;
                             matchedTagsCount++;
                         }
@@ -37,16 +37,20 @@ kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilte
             }
             if (_filter.members !== undefined && _filter.members.items !== undefined && _filter.members.items.length > 0) {
                 var isHaveMembers = false;
-                var matchedMembersCount = 0;
+                var matchedAssignees = [];
                 for (var itemIndex in _filter.members.items) {
-                    for (var assignmentIndex in card.assignments.assignments) {
-                        if (card.assignments.assignments[assignmentIndex].assignee === _filter.members.items[itemIndex]) {
+                    for (var assignmentIndex in card.assignmentsNode.assignments) {
+                        if (matchedAssignees.indexOf(card.assignmentsNode.assignments[assignmentIndex].assignee) > -1) {
+                            continue;
+                        }
+                        if (card.assignmentsNode.assignments[assignmentIndex].assignee === _filter.members.items[itemIndex]) {
                             isHaveMembers = true;
-                            matchedMembersCount++;
+                            matchedAssignees.push(card.assignmentsNode.assignments[assignmentIndex].assignee);
                         }
                     }
                 }
-                if (_filter.members.memberMatchType === 'and' && _filter.members.items.length > matchedMembersCount) {
+                console.log(_filter.members.memberMatchType);
+                if (_filter.members.memberMatchType === 'and' && _filter.members.items.length > matchedAssignees.length) {
                     continue;
                 }
                 if (!isHaveMembers) {
