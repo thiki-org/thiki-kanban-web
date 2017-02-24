@@ -1,6 +1,5 @@
 <div class="assignments">
-    <div class="assignment" ng-repeat="assignment in assignments">
-        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"
-                profile-link="assignment._links.assigneeProfile.href"></avatar>
+    <div class="assignment" ng-repeat="assignment in assignments" uib-tooltip="{{assignment.assignee}}" tooltip-placement="top" tooltip-trigger="mouseenter">
+        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href" assignment="assignment" profile-link="assignment._links.assigneeProfile.href"></avatar>
     </div>
 </div>
