@@ -116,11 +116,6 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
                 advancedFilterFactory.setKeyword($scope.keyword);
             }
         }, true);
-        $scope.$watch("tagMatchType", function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                advancedFilterFactory.setTagMatchType($scope.tagMatchType);
-            }
-        }, true);
         var scrollElement = "#stages";
         $scope.isLoadAdvancedFilter = false;
         $scope.$watch(function() { return angular.element(scrollElement).is(':visible'); }, function() {
@@ -128,6 +123,9 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
         });
         $scope.selecteMemberMatchType = function(_memberMatchType) {
             advancedFilterFactory.setMemberMatchType(_memberMatchType);
+        }
+        $scope.selecteTagMatchType = function(_tagMatchType) {
+            advancedFilterFactory.setTagMatchType(_tagMatchType);
         }
     }
 ]);
