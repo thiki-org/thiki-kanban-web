@@ -49,14 +49,18 @@ kanbanApp.directive('cards', function ($uibModal) {
                             }
                         }
                         if (angular.element(ui.item.sortable.droptarget[0]).hasClass('child-cards')) {
-                            console.log("OK");
-                            var parentCard = ui.item.sortable.sourceModel[0];
-                            movedCard.parentId = parentCard.id;
+                            if (movedCard.child !== undefined) {
+                                timerMessageService.message("该卡片具有从属卡片，不允许挪到到其他卡片。", 'warning');
+                                ui.item.sortable.cancel();
+                                ui.item.sortable.isMoveToParent = true;
+                                return;
+                            }
+                            var parentId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("card-id");
+                            movedCard.parentId = parentId;
                             cardsServices.update(movedCard).then(function () {
-                                timerMessageService.message("已将卡片" + movedCard.code + "设置为" + parentCard.code + "的从属卡片");
+                                timerMessageService.message("已将卡片" + movedCard.code + "设置为从属卡片。");
                             });
                             ui.item.sortable.isMoveToParent = true;
-
                         }
                     },
                     stop: function (e, ui) {

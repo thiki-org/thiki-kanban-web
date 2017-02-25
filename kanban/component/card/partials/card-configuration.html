@@ -17,17 +17,17 @@
                     <div class="form-group">
                         <label for="code" class="col-sm-1 filed-desc">编号</label>
                         <div class="col-sm-2">
-                            <span id="code" name="code" class="card-code">{{card.code}}</span>
+                            <span id="code" name="code" class="card-code filed-value">{{card.code}}</span>
                         </div>
 
                         <label for="creationTime" class="col-sm-2 creation-time filed-desc">创建</label>
                         <div class="col-sm-3">
-                            <span id="creationTime" name="creationTime">{{card.creationTime}}</span>
+                            <span id="creationTime" name="creationTime" class="filed-value">{{card.creationTime}}</span>
                         </div>
 
                         <label for="author" class="col-sm-1 filed-desc">作者</label>
                         <div class="col-sm-2">
-                            <span id="author" name="author">{{card.author}}</span>
+                            <span id="author" name="author" class="filed-value">{{card.author}}</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -40,6 +40,7 @@
                                   autocomplete="off"
                                   ng-change="isDisableCardSaveButton=false"
                                   required
+                                  maxlength="60"
                                   ng-disabled="stage.archived"/>
                             <div class="validation-error-message"
                                  ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
@@ -59,15 +60,13 @@
                                    placeholder="截止日期"
                                    min-view="date"
                                    format="YYYY-MM-DD"
-                                   timezone="Asia/Hong_Kong"
-                                   required/>
+                                   timezone="Asia/Hong_Kong"/>
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
                                         class="glyphicon glyphicon-time"></span></button>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+
                         <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
                         <div id="cardSize" class="col-sm-10 card-size-col">
                             <ui-select data-ng-model="sizeList.selected" id="cardSize">
@@ -80,12 +79,31 @@
                         <div class="field-tip">
                             <span class="glyphicon glyphicon-question-sign"
                                   aria-hidden="true"
-                                  uib-tooltip="规格对应的参考点数：{S:1,M:2,L:3,XL:5,XXL:8,∞:9999}"
+                                  uib-tooltip="规格对应的参考点数：{S:1,M:2,L:3,XL:5,XXL:8,不可估算:9999}"
                                   tooltip-placement="right"
                                   tooltip-trigger="mouseenter"></span></div>
                     </div>
 
-
+                    <div class="form-group" ng-if="card.parentId!==undefined&&card.parentId!==''">
+                        <label for="childCard" class="col-sm-1 filed-desc">从属卡片</label>
+                        <div class="col-sm-10 input-group child-card-check">
+                            <input id="childCard"
+                                   name="childCard"
+                                   ng-change="isDisableCardSaveButton=false"
+                                   type="checkbox"
+                                   class="form-control"
+                                   data-ng-model="card.asChildCard"
+                                   ng-true-value="true" ng-false-value="false"
+                                   ng-checked="card.parentId!==undefined">
+                            <label for="childCard" class="checked-box-label"></label>
+                            <div class="field-tip">
+                            <span class="glyphicon glyphicon-question-sign"
+                                  aria-hidden="true"
+                                  uib-tooltip="取消勾选后，该卡片将从父卡片中移除，转为普通卡片"
+                                  tooltip-placement="right"
+                                  tooltip-trigger="mouseenter"></span></div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="code" class="col-sm-1 filed-desc">内容</label>
                         <div class="col-sm-10 card-content-textarea">
@@ -93,8 +111,7 @@
                                       class="form-control"
                                       data-ng-model="card.content"
                                       simplemde='{spellChecker: false}'
-                                      placeholder="卡片内容 | 支持Markdown"
-                                      required></textarea>
+                                      placeholder="卡片内容 | 支持Markdown"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -103,7 +120,7 @@
 
                 <div class="tab-card-configuration-save" ng-hide="stage.archived">
                     <button class="btn btn-primary" type="button" ng-click="saveCard()"
-                            ng-disabled="(!cardForm.$dirty&&cardForm.$invalid)||isDisableCardSaveButton">
+                            ng-enabled="(cardForm.$dirty&&!cardForm.$invalid)||!isDisableCardSaveButton">
                         {{cardSaveButton}}
                     </button>
                 </div>

@@ -91,13 +91,16 @@ kanbanApp.directive('card', function ($uibModal) {
                                 {id: 3, name: "L"},
                                 {id: 5, name: "XL"},
                                 {id: 8, name: "XXL"},
-                                {id: 9999, name: "∞"}
+                                {id: 9999, name: "不可估算"}
                             ];
                             $scope.sizeList.selected = jsonService.findById($scope.sizeList, $scope.card.size);
 
                             $scope.saveCard = function () {
+                                var originParentId = $scope.card.parentId;
+                                if (!$scope.card.asChildCard) {
+                                    $scope.card.parentId = "";
+                                }
                                 $scope.card.size = $scope.sizeList.selected.id;
-
                                 $scope.cardSaveButton = "保存中..";
                                 $scope.isDisableCardSaveButton = true;
                                 var cardPromise = cardsServices.update($scope.card);
@@ -105,19 +108,31 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.card.code = _savedCard.code;
                                     $scope.card.restDays = _savedCard.restDays;
                                     $scope.card.sizeName = _savedCard.sizeName;
+                                    if ($scope.card.asChildCard === false) {
+                                        for (var index in $scope.stage.cardsNode.cards) {
+                                            if ($scope.stage.cardsNode.cards[index].id === originParentId) {
+                                                var childCardIndex = $scope.stage.cardsNode.cards[index].child.cards.indexOf($scope.card);
+                                                $scope.stage.cardsNode.cards[index].child.cards.splice(childCardIndex, 1);
+                                                $scope.stage.cardsNode.cards.push($scope.card);
+                                                $scope.card.parentId = undefined;
+                                                break;
+                                            }
+                                        }
+                                    }
                                     timerMessageService.message("卡片已经更新。");
                                 }).finally(function () {
                                     $scope.cardSaveButton = "保存";
                                     $scope.isDisableCardSaveButton = false;
                                 });
                             };
-                            $scope.$watch('card', function (newValue, oldValue) {
+                            $scope.$watch(function () {
+                                return $scope.card;
+                            }, function (newValue, oldValue) {
                                 if (oldValue === newValue) {
                                     return;
                                 }
-                                console.log(newValue);
                                 $scope.isDisableCardSaveButton = false;
-                            });
+                            }, true);
                             var currentScope = $scope;
                             $scope.displayContentInFullScreen = function () {
                                 $uibModal.open({
@@ -208,6 +223,14 @@ kanbanApp.directive('card', function ($uibModal) {
             };
 
             $scope.initAssignmentStatus();
+            $scope.$watch(function () {
+                return localStorageService.get("isCardDragging");
+            }, function (newValue, oldValue) {
+                if (newValue === oldValue) {
+                    return;
+                }
+                $scope.isCardDragging = localStorageService.get("isCardDragging");
+            }, true);
         }]
     };
 });
