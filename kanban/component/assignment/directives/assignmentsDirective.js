@@ -32,7 +32,7 @@ kanbanApp.directive('assignments', function() {
                     }
                 }
                 $scope.assignments = filteredAssignments;
-                if ($scope.card.child === undefined) {
+                if ($scope.card.child === undefined && $scope.$parent.card.assignmentsNode !== undefined) {
                     $scope.$parent.card.assignmentsNode.assignments = filteredAssignments;
                 }
             };

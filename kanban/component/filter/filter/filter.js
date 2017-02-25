@@ -1,8 +1,8 @@
 /**
  * Created by xubt on 16/02/2017.
  */
-kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilterFactory) {
-    return function(_cards, _filter) {
+kanbanApp.filter('cardsFilter', ["$filter", function ($filter) {
+    return function (_cards, _filter) {
         if (_filter === undefined || Object.keys(_filter).length === 0) {
             return _cards;
         }
@@ -69,8 +69,12 @@ kanbanApp.filter('cardsFilter', ["advancedFilterFactory", function(advancedFilte
                     continue;
                 }
             }
+            if (card.parentId !== undefined) {
+                continue;
+            }
             filtered.push(card);
         }
+        filtered = $filter('orderBy')(filtered, 'sortNumber', false);;;;;;;
         return filtered;
     };
 }]);

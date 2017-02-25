@@ -27,14 +27,14 @@ var lib = require('bower-files')({
 var cleanCSS = require('gulp-clean-css');
 
 // 语法检查
-gulp.task('jshint', function() {
+gulp.task('jshint', function () {
     return gulp.src(['kanban/**/*.js', '!kanban/static/**/*.js', '!kanban/**/utils/**/*.js', '!kanban/**/libs/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
 
 // 合并压缩第三方类库
-gulp.task('minify-libs', function() {
+gulp.task('minify-libs', function () {
     var bowerFiles = lib.ext('js').files;
     bowerFiles.push('kanban/foundation/libs/**/*.js');
     bowerFiles.push('kanban/foundation/libs/*.js');
@@ -43,64 +43,60 @@ gulp.task('minify-libs', function() {
         .pipe(gulp.dest('kanban/static/js/'))
         .pipe(ngmin())
         .pipe(ngAnnotate())
-        .pipe(uglify({ mangle: false }))
+        .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('kanban/static/js/'));
 });
 
 // 合并CSS
-gulp.task('minify-css', function() {
+gulp.task('minify-css', function () {
     return gulp.src(['kanban/**/*.css', '!kanban/static/css/*.css'])
         .pipe(concat('thiki-kanban.min.css'))
-        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('kanban/static/css'));
 });
 
 // 合并LESS
-gulp.task('minify-less', function() {
+gulp.task('minify-less', function () {
     return gulp.src(['kanban/**/*.less', '!kanban/static/**/*.less'])
         .pipe(concat('thiki-kanban.min.less'))
-        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('kanban/static/less'));
 });
 
 //Less转css
-gulp.task('build-less-to-css', function() {
+gulp.task('build-less-to-css', function () {
     return gulp.src('kanban/static/less/thiki-kanban.min.less')
         .pipe(concat('thiki-kanban.min.less-css.css'))
         .pipe(less())
         .pipe(gulp.dest('kanban/static/less'));
 });
-gulp.task('clean-static', function() {
-    return gulp.src(['kanban/static/js/thiki-kanban.min.js'], { read: false })
+gulp.task('clean-static', function () {
+    return gulp.src(['kanban/static/js/thiki-kanban.min.js'], {read: false})
         .pipe(clean());
 });
 
-gulp.task('minify-js', ['clean-static'], function() {
+gulp.task('minify-js', ['clean-static'], function () {
     return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', '!kanban/foundation/libs/**/*.js', '!kanban/foundation/libs/*.js', 'config/dev/config.js'])
         .pipe(concat('thiki-kanban.min.js'))
-        .pipe(gulp.dest('kanban/static/js'))
-        .pipe(ngmin())
-        .pipe(ngAnnotate())
-        .pipe(uglify({ mangle: false }))
         .pipe(gulp.dest('kanban/static/js'));
 });
 
-gulp.task('minify-js-release', ['clean-static'], function() {
+gulp.task('minify-js-release', ['clean-static'], function () {
     return gulp.src(['kanban/*.js', 'kanban/**/*.js', '!kanban/static/**/*.js', '!kanban/foundation/libs/**/*.js', '!kanban/foundation/libs/*.js', 'config/prod/config.js'])
         .pipe(concat('thiki-kanban.min.js'))
         .pipe(gulp.dest('kanban/static/js'))
         .pipe(ngmin())
         .pipe(ngAnnotate())
-        .pipe(uglify({ mangle: false }))
+        .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('kanban/static/js'));
 });
 
-gulp.task('clean-release', function() {
-    return gulp.src(['release/*'], { read: false })
+gulp.task('clean-release', function () {
+    return gulp.src(['release/*'], {read: false})
         .pipe(clean());
 });
 
-gulp.task('release', ['clean-release'], function() {
+gulp.task('release', ['clean-release'], function () {
     gulp.src("kanban/static/js/*")
         .pipe(gulp.dest('release/static/js'));
 
@@ -126,11 +122,11 @@ gulp.task('release', ['clean-release'], function() {
         .pipe(gulp.dest('release/'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch(['kanban/*.js', 'kanban/**/*.js', 'kanban/styles/*.css', 'kanban/**/*.less', 'kanban/**/*.css', 'gulpfile.js', '!kanban/static/**/*.js', '!kanban/static/**/*.css'], ['jshint', 'minify-libs', 'minify-js', 'minify-less', 'build-less-to-css', 'minify-css', 'release']);
 });
 
-gulp.task('watch-html', function() {
+gulp.task('watch-html', function () {
     gulp.watch(['kanban/**/*.html'], ['release']);
 });
 
