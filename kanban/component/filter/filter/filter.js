@@ -38,12 +38,12 @@ kanbanApp.filter('cardsFilter', ["$filter", function ($filter) {
             if (_filter.members !== undefined && _filter.members.items !== undefined && _filter.members.items.length > 0) {
                 var isHaveMembers = false;
                 var matchedAssignees = [];
-                for (var itemIndex in _filter.members.items) {
+                for (var memberIndex in _filter.members.items) {
                     for (var assignmentIndex in card.assignmentsNode.assignments) {
                         if (matchedAssignees.indexOf(card.assignmentsNode.assignments[assignmentIndex].assignee) > -1) {
                             continue;
                         }
-                        if (card.assignmentsNode.assignments[assignmentIndex].assignee === _filter.members.items[itemIndex]) {
+                        if (card.assignmentsNode.assignments[assignmentIndex].assignee === _filter.members.items[memberIndex]) {
                             isHaveMembers = true;
                             matchedAssignees.push(card.assignmentsNode.assignments[assignmentIndex].assignee);
                         }
@@ -74,7 +74,7 @@ kanbanApp.filter('cardsFilter', ["$filter", function ($filter) {
             }
             filtered.push(card);
         }
-        filtered = $filter('orderBy')(filtered, 'sortNumber', false);;;;;;;
+        filtered = $filter('orderBy')(filtered, 'sortNumber', false);
         return filtered;
     };
 }]);

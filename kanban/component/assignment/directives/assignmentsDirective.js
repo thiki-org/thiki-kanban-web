@@ -1,13 +1,13 @@
 /**
  * Created by xubt on 6/18/16.
  */
-kanbanApp.directive('assignments', function() {
+kanbanApp.directive('assignments', function () {
     return {
         restrict: 'E',
         templateUrl: 'component/assignment/partials/assignments.html',
         replace: true,
-        controller: ['$scope', 'assignmentServices', 'timerMessageService', function($scope, assignmentServices, timerMessageService) {
-            $scope.loadAssignments = function() {
+        controller: ['$scope', 'assignmentServices', 'timerMessageService', function ($scope, assignmentServices, timerMessageService) {
+            $scope.loadAssignments = function () {
                 var thisScope = $scope;
                 var assignments = $scope.card.assignmentsNode === undefined ? [] : $scope.card.assignmentsNode.assignments;
 
@@ -20,26 +20,27 @@ kanbanApp.directive('assignments', function() {
                     }
                 }
                 var filteredAssignments = [];
-                for (var index in assignments) {
+                for (var assignmentIndex in assignments) {
                     var isFilteredAssignmentsHasAlreadyIncluded = false;
                     for (var filteredIndex in filteredAssignments) {
-                        if (filteredAssignments[filteredIndex] !== undefined && filteredAssignments[filteredIndex].assignee === assignments[index].assignee) {
+                        if (filteredAssignments[filteredIndex] !== undefined && filteredAssignments[filteredIndex].assignee === assignments[assignmentIndex].assignee) {
                             isFilteredAssignmentsHasAlreadyIncluded = true;
                         }
                     }
                     if (!isFilteredAssignmentsHasAlreadyIncluded) {
-                        filteredAssignments.push(assignments[index]);
+                        filteredAssignments.push(assignments[assignmentIndex]);
                     }
                 }
                 $scope.assignments = filteredAssignments;
+                $scope.card.assignmentsNode.assignments = filteredAssignments;
                 if ($scope.card.child === undefined && $scope.$parent.card.assignmentsNode !== undefined) {
                     $scope.$parent.card.assignmentsNode.assignments = filteredAssignments;
                 }
             };
             $scope.loadAssignments();
-            $scope.$watch(function() {
+            $scope.$watch(function () {
                 return $scope.card.child;
-            }, function(newValue, oldValue) {
+            }, function (newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }

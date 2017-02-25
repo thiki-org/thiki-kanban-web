@@ -97,11 +97,15 @@
                                     <div class="btn-group filter-radio-group" ng-hide="tags.length==0">
                                         <div class="radio">
                                             <label uib-tooltip="包含任意所选标签" tooltip-placement="right" tooltip-trigger="mouseenter">
-                                                <input type="radio" name="tagMatchType" value="or" ng-change="selecteTagMatchType('or')" checked="tagMatchType==='or'" ng-model="tagMatchType">
+                                                <input type="radio" name="tagMatchType" value="or"
+                                                       ng-change="selectTagMatchType('or')"
+                                                       checked="tagMatchType==='or'" ng-model="tagMatchType">
                                                 或
                                             </label>
                                             <label uib-tooltip="同时包含所选标签" tooltip-placement="right" tooltip-trigger="mouseenter">
-                                                <input type="radio" name="tagMatchType" value="and" ng-change="selecteTagMatchType('and')"  checked="tagMatchType==='and'" ng-model="tagMatchType">
+                                                <input type="radio" name="tagMatchType" value="and"
+                                                       ng-change="selectTagMatchType('and')"
+                                                       checked="tagMatchType==='and'" ng-model="tagMatchType">
                                                 与
                                             </label>
                                         </div>
@@ -115,11 +119,15 @@
                                     <div class="btn-group filter-radio-group" ng-hide="tags.length==0">
                                         <div class="radio">
                                             <label uib-tooltip="被所选任意成员认领" tooltip-placement="right" tooltip-trigger="mouseenter">
-                                                <input type="radio" name="memberMatchType" value="or" ng-change="selecteMemberMatchType('or')"  checked="memberMatchType==='or'" ng-model="memberMatchType">
+                                                <input type="radio" name="memberMatchType" value="or"
+                                                       ng-change="selectMemberMatchType('or')"
+                                                       checked="memberMatchType==='or'" ng-model="memberMatchType">
                                                 或
                                             </label>
                                             <label uib-tooltip="同时被所选成员认领" tooltip-placement="right" tooltip-trigger="mouseenter">
-                                                <input type="radio" name="memberMatchType" value="and" ng-change="selecteMemberMatchType('and')" checked="memberMatchType==='and'" ng-model="memberMatchType">
+                                                <input type="radio" name="memberMatchType" value="and"
+                                                       ng-change="selectMemberMatchType('and')"
+                                                       checked="memberMatchType==='and'" ng-model="memberMatchType">
                                                 与
                                             </label>
                                         </div>

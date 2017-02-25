@@ -146,7 +146,6 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 var cachedResponse = localStorageService.get(_url);
                 if (localStorageService.get(_url) !== null) {
                     deferred.resolve(cachedResponse);
-                    console.log(_url + " load from cached.");
                     return deferred.promise;
                 }
             }
@@ -174,7 +173,6 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
                 var cachedResponse = localStorageService.get(_url);
                 if (localStorageService.get(_url) !== null) {
                     deferred.resolve(cachedResponse);
-                    console.log(_url + " load from cached.");
                     return deferred.promise;
                 }
             }

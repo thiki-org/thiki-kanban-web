@@ -50,7 +50,6 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }
                         if (angular.element(ui.item.sortable.droptarget[0]).hasClass('child-cards')) {
                             console.log("OK");
-                            var movedCard = ui.item.sortable.model;
                             var parentCard = ui.item.sortable.sourceModel[0];
                             movedCard.parentId = parentCard.id;
                             cardsServices.update(movedCard).then(function () {

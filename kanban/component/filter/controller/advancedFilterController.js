@@ -121,11 +121,11 @@ kanbanApp.controller('advancedFilterController', ['$scope', 'advancedFilterFacto
         $scope.$watch(function() { return angular.element(scrollElement).is(':visible'); }, function() {
             $scope.isLoadAdvancedFilter = true;
         });
-        $scope.selecteMemberMatchType = function(_memberMatchType) {
+        $scope.selectMemberMatchType = function (_memberMatchType) {
             advancedFilterFactory.setMemberMatchType(_memberMatchType);
-        }
-        $scope.selecteTagMatchType = function(_tagMatchType) {
+        };
+        $scope.selectTagMatchType = function (_tagMatchType) {
             advancedFilterFactory.setTagMatchType(_tagMatchType);
-        }
+        };
     }
 ]);
