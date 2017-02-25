@@ -1,21 +1,28 @@
-<div id="card-{{card.id}}" class="card" ng-class="{'new-card':card.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning-summary':card.restDays<0&&stage.inProcess}"
-    context-menu="menuOptions" context-menu-class="thiki-menu-items">
+<div id="card-{{card.id}}" class="card"
+     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning-summary':card.restDays<0&&stage.inProcess}"
+     context-menu="menuOptions" context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
     </div>
-    <div class="card-ico" ng-show="card.size!=undefined" uib-tooltip="点数 {{card.size}}" tooltip-placement="left" tooltip-trigger="mouseenter">
+    <div class="card-ico" ng-show="card.size!=undefined" uib-tooltip="点数 {{card.size}}" tooltip-placement="left"
+         tooltip-trigger="mouseenter">
         {{card.sizeName}}
     </div>
 
     <div class="card-ico card-comment" ng-show="card.comments!=undefined&&card.commentsNode.comments.length>0">
         <span class="glyphicon glyphicon-comment"></span>
     </div>
-    <div class="card-ico" ng-class="{'card-rest-days-warning':card.restDays<=3&&card.restDays>0,'card-rest-days-expired-warning':card.restDays<0}" ng-show="card.restDays!=undefined&&stage.inProcess">
-        <span uib-tooltip="距{{card.deadline}}还有{{card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="card.restDays>3"><span
-               class="glyphicon glyphicon-time"></span></span>
-        <span uib-tooltip="{{card.restDays}}天后逾期" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="card.restDays<=3&&card.restDays>=0"><span
+    <div class="card-ico"
+         ng-class="{'card-rest-days-warning':card.restDays<=3&&card.restDays>0,'card-rest-days-expired-warning':card.restDays<0}"
+         ng-show="card.restDays!=undefined&&stage.inProcess">
+        <span uib-tooltip="距{{card.deadline}}还有{{card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter"
+              ng-show="card.restDays>3"><span
                 class="glyphicon glyphicon-time"></span></span>
-        <span uib-tooltip="逾期{{-card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter" ng-show="card.restDays<0"><span
+        <span uib-tooltip="{{card.restDays}}天后逾期" tooltip-placement="left" tooltip-trigger="mouseenter"
+              ng-show="card.restDays<=3&&card.restDays>=0"><span
+                class="glyphicon glyphicon-time"></span></span>
+        <span uib-tooltip="逾期{{-card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter"
+              ng-show="card.restDays<0"><span
                 class="glyphicon glyphicon-time"></span></span>
     </div>
     <div class="card-summary" ng-click="openCardConfiguration()">
@@ -23,12 +30,14 @@
     </div>
 
     <div class="card-operations">
-        <div class="child-cards cards-sortable" ng-class="{'child-cards-movement-area':$parent.isCardDragging}" ui-sortable="sortableOptions" data-ng-model="childCards">
+        <div class="child-cards cards-sortable" ng-class="{'child-cards-movement-area':$parent.isCardDragging}"
+             ui-sortable="sortableOptions" data-ng-model="childCards">
             <div ng-repeat="childCard in childCards  | orderBy: 'sortNumber'| orderBy: 'creationTime'">
                 <span id="{{childCard.id}}" ns-popover ns-popover-theme="ns-popover-tooltip-theme"
                       ns-popover-template="component/card/partials/child-card-popover.html"
                       ns-popover-trigger="mouseenter" ns-popover-timeout="0" ns-popover-placement="top"
-                      class="glyphicon glyphicon-bookmark child-card-flag"></span>
+                      class="glyphicon glyphicon-bookmark child-card-flag"
+                      ng-class="{'child-card-flag-expired':childCard.restDays<0&&!childCard.finished,'child-card-flag-finished':childCard.finished,'child-card-flag-unfinished':!childCard.finished}"></span>
             </div>
         </div>
         <assignments></assignments>
@@ -36,12 +45,18 @@
     </div>
 
     <div class="card-progress" ng-if="card.totalAcceptanceCriteriasCount>0">
-        <uib-progressbar ng-repeat="n in [].constructor(card.totalAcceptanceCriteriasCount) track by $index" max="index" value="$index" animate="true" ng-style="{'width':calculateWidth(card.totalAcceptanceCriteriasCount)}" ng-class="$index < card.finishedAcceptanceCriteriasCount?'':'process-unstart'">
+        <uib-progressbar ng-repeat="n in [].constructor(card.totalAcceptanceCriteriasCount) track by $index" max="index"
+                         value="$index" animate="true"
+                         ng-style="{'width':calculateWidth(card.totalAcceptanceCriteriasCount)}"
+                         ng-class="$index < card.finishedAcceptanceCriteriasCount?'':'process-unstart'">
         </uib-progressbar>
     </div>
 
-    <div class="card-elapsed-days" ng-show="elapsedDays>0||isIncludHalfDay>0" uib-tooltip="该卡片历时{{card.elapsedDays}}天" tooltip-placement="top" tooltip-trigger="mouseenter">
-        <div class="elapsed-day" ng-class="{'elapsed-in-progress':stage.inProcess}" ng-repeat="n in [].constructor(elapsedDays) track by $index"></div>
-        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':stage.inProcess}" ng-if="isIncludHalfDay"></div>
+    <div class="card-elapsed-days" ng-show="elapsedDays>0||isIncludHalfDay>0" uib-tooltip="该卡片历时{{card.elapsedDays}}天"
+         tooltip-placement="top" tooltip-trigger="mouseenter">
+        <div class="elapsed-day" ng-class="{'elapsed-in-progress':stage.inProcess}"
+             ng-repeat="n in [].constructor(elapsedDays) track by $index"></div>
+        <div class="elapsed-day half-day" ng-class="{'elapsed-in-progress':stage.inProcess}"
+             ng-if="isIncludHalfDay"></div>
     </div>
 </div>

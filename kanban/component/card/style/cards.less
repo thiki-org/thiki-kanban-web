@@ -536,43 +536,54 @@ label.filed-desc {
 .elapsed-in-progress:not([style*="display:none"]):last-child {
   animation: blinker 1.5s linear infinite;
 }
+
 .card-size-col {
   width: 200px !important;
   padding-right: 0px !important;
 }
 
-.card-creation-textarea{
-    width: 100% !important;
-    min-height: 150px;
+.card-creation-textarea {
+  width: 100% !important;
+  min-height: 150px;
 }
 
 .child-cards {
-    height: 35px;
-    float: left;
-    width: 100%;
-    border-radius: 2px;
-}
-.child-cards-movement-area{
- background: #f9f9f9;
-  height: 150px;
-    float: left;
-    width: 100%;
-    border-radius: 2px;
-    border: 1px dashed #ccc;
+  height: 35px;
+  float: left;
+  width: 100%;
+  border-radius: 2px;
 }
 
-.child-card-flag{
-    width: 30px;
+.child-cards-movement-area {
   background: #f9f9f9;
-    color:@base;
-    height: 30px;
-    line-height: 30px !important;
-    text-align: center;
-    margin: 2px;
-    border-radius: 2px;
-    float: left;
+  height: 150px;
+  float: left;
+  width: 100%;
+  border-radius: 2px;
+  border: 1px dashed #ccc;
 }
-.child-card-popover{
+
+.child-card-flag {
+  width: 30px;
+  background: #f9f9f9;
+  color: #d0d0d0;
+  height: 30px;
+  line-height: 30px !important;
+  text-align: center;
+  margin: 2px;
+  border-radius: 2px;
+  float: left;
+}
+
+.child-card-popover {
   min-width: 230px;
   min-height: 160px;
+}
+
+.child-card-flag-expired {
+  color: @danger !important;
+}
+
+.child-card-flag-finished {
+  color: @base !important;
 }
