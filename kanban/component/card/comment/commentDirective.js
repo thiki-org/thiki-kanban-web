@@ -12,9 +12,6 @@ kanbanApp.directive('comment', function () {
         },
         controller: ['$scope', 'localStorageService', 'commentService', 'usersService', function ($scope, localStorageService, commentService, usersService) {
             var avatarPromise = usersService.loadAvatar($scope.comment._links.avatar.href);
-            avatarPromise.then(function (_avatar) {
-                $scope.avatar = "data:image/png;base64," + _avatar.avatar.replaceAll("\"", "");
-            });
             $scope.isShowDeleteButton = false;
             $scope.onMouseOver = function () {
                 if ($scope.comment._links.self.actions.delete) {

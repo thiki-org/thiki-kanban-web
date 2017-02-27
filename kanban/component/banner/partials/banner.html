@@ -3,8 +3,8 @@
         <img src="static/img/thiki-logo.png">
     </div>
     <div id="user" class="dropdown" ng-controller="userController">
-        <div id="user-avatar" ng-show="avatar!=null" class="dropdown" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false" ng-controller="profileController"><img id="user-avatar-img" ng-src="{{avatar}}"/>
+        <div id="user-avatar" class="dropdown" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false" ng-controller="profileController"><img id="user-avatar-img" http-src="http://127.0.0.1:8096/kanban/users/xutao/avatar"/>
         </div>
         <div ng-show="avatar==undefined">加载中..</div>
 

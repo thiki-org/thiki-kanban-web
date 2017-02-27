@@ -9,7 +9,8 @@ kanbanApp.directive('card', function ($uibModal) {
         transclude: true,
         scope: {
             card: '=',
-            stage: '='
+            stage: '=',
+            board: '='
         },
         controller: ['$scope', 'localStorageService', 'assignmentServices', 'cardsServices', 'acceptanceCriteriaService', 'usersService', 'timerMessageService', function ($scope, localStorageService, assignmentServices, cardsServices, acceptanceCriteriaService, usersService, timerMessageService) {
             var acceptanceCriterias = $scope.card.acceptanceCriteriasNode === undefined ? [] : $scope.card.acceptanceCriteriasNode.acceptanceCriterias;
@@ -46,7 +47,6 @@ kanbanApp.directive('card', function ($uibModal) {
                                 assignmentPromise.then(function (_data) {
                                     var index = thisScope.assignments.indexOf(_data);
                                     thisScope.assignments.splice(index, 1);
-                                    thisScope.initAssignmentStatus();
                                 });
                                 $uibModalInstance.close();
                             };
@@ -62,7 +62,6 @@ kanbanApp.directive('card', function ($uibModal) {
                                 var assignmentPromise = assignmentServices.assign(assignment, _card._links.assignments.href);
                                 assignmentPromise.then(function (_data) {
                                     thisScope.assignments.push(_data);
-                                    thisScope.initAssignmentStatus();
                                 });
                                 $uibModalInstance.close();
                             };
@@ -80,9 +79,13 @@ kanbanApp.directive('card', function ($uibModal) {
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
-                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService',
-                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices) {
+                            if (cardScope.stage.inProcess) {
+                                $scope.isInCardConfiguration = true;
+                            }
                             $scope.card = cardScope.card;
+                            $scope.board = cardScope.board;
                             $scope.cardSaveButton = "保存";
                             $scope.stage = cardScope.stage;
                             $scope.sizeList = [
@@ -95,7 +98,20 @@ kanbanApp.directive('card', function ($uibModal) {
                             ];
                             $scope.sizeList.selected = jsonService.findById($scope.sizeList, $scope.card.size);
 
+                            $scope.selectMember = function (_selectedMember) {
+                                var newAssignment = {
+                                    assigner: usersService.getCurrentUser().userName,
+                                    assignee: _selectedMember.userName,
+                                    cardId: $scope.card.id,
+                                    _links: {assigneeAvatar: _selectedMember._links.avatar}
+                                };
+                                if (!jsonService.contains(cardScope.assignments, "assignee", _selectedMember.userName)) {
+                                    $scope.card.assignmentsNode.assignments.push(newAssignment);
+                                }
+                                console.log(_selectedMember);
+                            };
                             $scope.saveCard = function () {
+                                $scope.saveAssignments();
                                 var originParentId = $scope.card.parentId;
                                 if (!$scope.card.asChildCard) {
                                     $scope.card.parentId = "";
@@ -124,6 +140,9 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.cardSaveButton = "保存";
                                     $scope.isDisableCardSaveButton = false;
                                 });
+                            };
+                            $scope.saveAssignments = function () {
+                                assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href);
                             };
                             $scope.$watch(function () {
                                 return $scope.card;
@@ -190,30 +209,6 @@ kanbanApp.directive('card', function ($uibModal) {
                 });
             };
 
-            $scope.initAssignmentStatus = function () {
-                var userName = usersService.getCurrentUser().userName;
-                $scope.isIamAssigned = false;
-                angular.forEach($scope.assignments, function (_assignment) {
-                    if (userName === _assignment.assignee) {
-                        $scope.isIamAssigned = true;
-                    }
-                });
-                $scope.assignTip = $scope.isIamAssigned === true ? "我不做了" : "认领";
-                $scope.assignIco = $scope.isIamAssigned === true ? "heart" : "heart-empty";
-
-                $scope.menuOptions = [
-                    ['<span class="thiki-menu-ico glyphicon glyphicon-' + $scope.assignIco + '"' + '></span>' + $scope.assignTip, function ($itemScope) {
-                        $itemScope.assign($itemScope.card);
-                    }, function ($itemScope) {
-                        return !$itemScope.stage.archived;
-                    }],
-                    null, ['<span class="thiki-menu-ico glyphicon glyphicon-trash thiki-delete-item"></span>删除', function ($itemScope) {
-                        $itemScope.openDeleteModal($itemScope.card.summary, $itemScope.card._links.self.href);
-                    }, function ($itemScope) {
-                        return !$itemScope.stage.archived;
-                    }]
-                ];
-            };
             $scope.calculateWidth = function (_totalAcceptanceCriteriasCount) {
                 if (_totalAcceptanceCriteriasCount === 0) {
                     return 0;
@@ -222,7 +217,6 @@ kanbanApp.directive('card', function ($uibModal) {
                 return (width.toFixed(2) + "%");
             };
 
-            $scope.initAssignmentStatus();
             $scope.$watch(function () {
                 return localStorageService.get("isCardDragging");
             }, function (newValue, oldValue) {

@@ -5,19 +5,6 @@ kanbanApp.factory('httpServices', ['$http', '$q', '$location', '$injector', 'loc
 
     function openErrorDialog(deferred, _url) {
         var modal = $injector.get("$uibModal");
-        modal.open({
-            animation: true,
-            templateUrl: 'foundation/modal/partials/error-dialog.html',
-            controller: function($scope, $uibModalInstance) {
-                $scope.title = '错误';
-                $scope.message = "URL错误:" + _url + "\n请确认本地配置或远程服务器是否运行正常。";
-
-                $scope.ok = function() {
-                    $uibModalInstance.close();
-                };
-            },
-            size: 'sm'
-        });
         return deferred.promise;
     }
 

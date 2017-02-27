@@ -1,0 +1,17 @@
+<div class="members-select">
+    <ui-select data-ng-model="selectedMember" on-select="selectMember($item)">
+        <ui-select-match placeholder="项目成员"><span class="selected-member">
+            <img class="avatar-img"
+                 http-src="{{selectedMember._links.avatar.href}}"
+                 width="20" height="20"/>
+          <span>{{selectedMember.profile.nickName}}</span>
+            <span ng-show="selectedMember.profile.email" ng-bind-html="selectedMember.profile.email"></span>
+            </span>
+        </ui-select-match>
+        <ui-select-choices repeat="member in members | filter: $select.search">
+            <img class="avatar-img" http-src="{{member._links.avatar.href}}" width="20" height="20"/>
+            <span ng-bind-html="member.profile.nickName | highlight: $select.search"></span>
+            <span ng-show="member.profile.email" ng-bind-html="member.profile.email | highlight: $select.search"></span>
+        </ui-select-choices>
+    </ui-select>
+</div>

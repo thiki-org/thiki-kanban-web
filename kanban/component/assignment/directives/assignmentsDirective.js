@@ -10,7 +10,6 @@ kanbanApp.directive('assignments', function () {
             $scope.loadAssignments = function () {
                 var thisScope = $scope;
                 var assignments = $scope.card.assignmentsNode === undefined ? [] : $scope.card.assignmentsNode.assignments;
-
                 if ($scope.card.child !== undefined) {
                     for (var index in $scope.card.child.cards) {
                         if ($scope.card.child.cards[index] !== undefined && $scope.card.child.cards[index].assignmentsNode !== undefined) {
@@ -31,17 +30,27 @@ kanbanApp.directive('assignments', function () {
                     }
                 }
                 $scope.assignments = filteredAssignments;
-                thisScope.initAssignmentStatus();
             };
             $scope.loadAssignments();
             $scope.$watch(function () {
-                return $scope.card.child;
+                return $scope.card;
             }, function (newValue, oldValue) {
                 if (newValue === oldValue) {
                     return;
                 }
                 $scope.loadAssignments();
             }, true);
+
+            $scope.removeAssignment = function (_assignment) {
+                var reservedAssignments = [];
+                for (var index in $scope.assignments) {
+                    if ($scope.assignments[index].assignee !== _assignment.assignee) {
+                        reservedAssignments.push($scope.assignments[index]);
+                    }
+                }
+                $scope.assignments = reservedAssignments;
+                $scope.card.assignmentsNode.assignments = reservedAssignments;
+            };
         }]
     };
 });

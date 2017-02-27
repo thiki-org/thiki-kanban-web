@@ -1,5 +1,17 @@
 <div class="assignments">
-    <div class="assignment" ng-repeat="assignment in assignments" uib-tooltip="{{assignment.assignee}}" tooltip-placement="top" tooltip-trigger="mouseenter">
-        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href" assignment="assignment" profile-link="assignment._links.assigneeProfile.href"></avatar>
+    <div class="assignment"
+         ng-repeat="assignment in assignments"
+         ns-popover ns-popover-theme="ns-popover-list-theme"
+         ns-popover-template="component/assignment/partials/remove-assignment-popover.html"
+         ns-popover-trigger="mouseenter"
+         ns-popover-timeout="0"
+         ns-popover-placement="top"
+         ng-if="isInCardConfiguration">
+        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"
+                assignment="assignment" profile-link="assignment._links.assigneeProfile.href"></avatar>
+    </div>
+    <div class="assignment" ng-repeat="assignment in assignments" ng-if="!isInCardConfiguration">
+        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"
+                profile-link="assignment._links.assigneeProfile.href"></avatar>
     </div>
 </div>
