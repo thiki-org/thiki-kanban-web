@@ -38,7 +38,7 @@
                                   data-ng-model="card.summary"
                                   placeholder="卡片概要"
                                   autocomplete="off"
-                                  ng-change="isDisableCardSaveButton=false"
+                                  change-on-blur="saveCard()"
                                   required
                                   maxlength="60"
                                   ng-disabled="stage.archived"/>
@@ -53,7 +53,7 @@
                             <input date-time
                                    id="cardDeadline"
                                    name="cardDeadline"
-                                   ng-change="isDisableCardSaveButton=false"
+                                   change-on-blur="saveCard()"
                                    type="text"
                                    class="form-control"
                                    data-ng-model="card.deadline"
@@ -69,7 +69,7 @@
 
                         <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
                         <div id="cardSize" class="col-sm-10 card-size-col">
-                            <ui-select data-ng-model="sizeList.selected" id="cardSize">
+                            <ui-select data-ng-model="sizeList.selected" id="cardSize" on-select="saveCard()">
                                 <ui-select-match placeholder="选择规格">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices repeat="size in sizeList | filter: $select.search">
                                     <span ng-bind-html="size.name | highlight: $select.search"></span>
@@ -89,7 +89,7 @@
                         <div class="col-sm-10 input-group child-card-check">
                             <input id="childCard"
                                    name="childCard"
-                                   ng-change="isDisableCardSaveButton=false"
+                                   ng-change="saveCard()"
                                    type="checkbox"
                                    class="form-control"
                                    data-ng-model="card.asChildCard"
@@ -119,20 +119,15 @@
                             <textarea id="cardContent" name="cardContent" rows="1"
                                       class="form-control"
                                       data-ng-model="card.content"
+                                      ng-change="saveCard()"
+                                      ng-model-options="{ debounce: 5000 }"
                                       simplemde='{spellChecker: false}'
-                                      placeholder="卡片内容 | 支持Markdown"></textarea>
+                                      placeholder="Markdown|编辑时每5秒保存一次"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                     </div>
                 </form>
-
-                <div class="tab-card-configuration-save" ng-hide="stage.archived">
-                    <button class="btn btn-primary" type="button" ng-click="saveCard()"
-                            ng-enabled="(cardForm.$dirty&&!cardForm.$invalid)||!isDisableCardSaveButton">
-                        {{cardSaveButton}}
-                    </button>
-                </div>
             </div>
         </uib-tab>
         <uib-tab index="1">

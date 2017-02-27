@@ -50,6 +50,7 @@ kanbanApp.directive('assignments', function () {
                 }
                 $scope.assignments = reservedAssignments;
                 $scope.card.assignmentsNode.assignments = reservedAssignments;
+                $scope.saveAssignments();
             };
         }]
     };

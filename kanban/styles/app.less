@@ -101,10 +101,11 @@ button.thiki-submit-button {
   margin: 2px auto auto 30px;
   cursor: pointer;
 }
+
 .modal-header {
-    background: #f9f9f9;
-    border-top-left-radius: 2px !important;
-    border-top-right-radius: 2px !important;
+  background: #f9f9f9;
+  border-top-left-radius: 2px !important;
+  border-top-right-radius: 2px !important;
 }
 
 .modal-content {
@@ -435,12 +436,21 @@ ul.thiki-banner-menu.dropdown-menu {
   min-height: 70vh;
 }
 
+.modal-top {
+  margin-top: 20px !important;
+  width: 300px;
+}
+
 .modal-pages .modal-body {
   min-height: 120px;
 }
 
 .modal-loading .modal-content {
   background: none;
+}
+
+.backdrop-class-top {
+  background: none !important;
 }
 
 .modal-fullscreen {
@@ -625,14 +635,28 @@ div#loading {
   margin-left: 25%;
 }
 
-.panel{
+.panel {
   border-radius: 2px !important;
 }
-.tooltip-default{
+
+.tooltip-default {
   text-align: left;
   padding: 5px;
 }
-.popover{
+
+.popover {
   box-shadow: none !important;
-  border-radius:2px !important;
+  border-radius: 2px !important;
+}
+
+#toast-container > .toast-info {
+  background-image: none !important;
+}
+
+#toast-container > div {
+  box-shadow: none !important;
+}
+
+.toast-info, .toast-wait {
+  background-color: @base !important;
 }

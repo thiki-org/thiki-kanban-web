@@ -1,5 +1,5 @@
 <div id="card-{{card.id}}" class="card" card-id="{{card.id}}"
-     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning-summary':card.restDays<0&&stage.inProcess}"
+     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess}"
      context-menu="menuOptions" context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>

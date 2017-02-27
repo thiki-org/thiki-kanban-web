@@ -79,8 +79,8 @@ kanbanApp.directive('card', function ($uibModal) {
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
-                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices',
-                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster) {
                             if (cardScope.stage.inProcess) {
                                 $scope.isInCardConfiguration = true;
                             }
@@ -108,16 +108,14 @@ kanbanApp.directive('card', function ($uibModal) {
                                 if (!jsonService.contains(cardScope.assignments, "assignee", _selectedMember.userName)) {
                                     $scope.card.assignmentsNode.assignments.push(newAssignment);
                                 }
-                                console.log(_selectedMember);
+                                $scope.saveAssignments();
                             };
                             $scope.saveCard = function () {
-                                $scope.saveAssignments();
                                 var originParentId = $scope.card.parentId;
                                 if (!$scope.card.asChildCard) {
                                     $scope.card.parentId = "";
                                 }
                                 $scope.card.size = $scope.sizeList.selected.id;
-                                $scope.cardSaveButton = "保存中..";
                                 $scope.isDisableCardSaveButton = true;
                                 var cardPromise = cardsServices.update($scope.card);
                                 cardPromise.then(function (_savedCard) {
@@ -135,23 +133,14 @@ kanbanApp.directive('card', function ($uibModal) {
                                             }
                                         }
                                     }
-                                    timerMessageService.message("卡片已经更新。");
-                                }).finally(function () {
-                                    $scope.cardSaveButton = "保存";
-                                    $scope.isDisableCardSaveButton = false;
+                                    toaster.pop('info', "", "卡片已保存。");
                                 });
                             };
                             $scope.saveAssignments = function () {
-                                assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href);
+                                assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href).then(function () {
+                                    toaster.pop('info', "", "分配已经保存。");
+                                });
                             };
-                            $scope.$watch(function () {
-                                return $scope.card;
-                            }, function (newValue, oldValue) {
-                                if (oldValue === newValue) {
-                                    return;
-                                }
-                                $scope.isDisableCardSaveButton = false;
-                            }, true);
                             var currentScope = $scope;
                             $scope.displayContentInFullScreen = function () {
                                 $uibModal.open({
@@ -172,17 +161,6 @@ kanbanApp.directive('card', function ($uibModal) {
                     ],
                     size: 'card',
                     backdrop: "static"
-                });
-            };
-            $scope.updateCard = function (_summary, _card) {
-                if (_summary === "") {
-                    return "卡片描述不能为空";
-                }
-                var card = _card;
-                card.summary = _summary;
-                var cardPromise = cardsServices.update(card);
-                cardPromise.then(function (_savedCard) {
-
                 });
             };
             $scope.openDeleteModal = function (_message, _link) {
