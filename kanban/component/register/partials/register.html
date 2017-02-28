@@ -17,19 +17,19 @@
             </div>
         </div>
         <div class="form-group">
-            <input name="name" type="text" class="form-control" data-ng-model="name"
+            <input name="userName" type="text" class="form-control" data-ng-model="userName"
                    ng-enter="register()" placeholder="你的用户名" maxlength="20" minlength="4" required
                    autocomplete="off"
                    ng-pattern="/^\w+$/"/>
             <div class="validation-error-message"
-                 ng-show="registerForm.name.$error.required&& registerForm.name.$dirty">用户名不能为空
+                 ng-show="registerForm.userName.$error.required&& registerForm.userName.$dirty">用户名不能为空
             </div>
             <div class="validation-error-message"
-                 ng-show="registerForm.name.$error.minlength && registerForm.name.$dirty">
+                 ng-show="registerForm.userName.$error.minlength && registerForm.userName.$dirty">
                 用户名至少包含4个字符
             </div>
             <div class="validation-error-message"
-                 ng-show="registerForm.name.$error.pattern && registerForm.name.$dirty">用户名只能包含数字、字母以及下划线
+                 ng-show="registerForm.userName.$error.pattern && registerForm.userName.$dirty">用户名只能包含数字、字母以及下划线
             </div>
 
         </div>

@@ -17,7 +17,7 @@ kanbanApp.controller('registerController', ['$scope', '$location', '$q', 'public
                 encrypt.setPublicKey(_data.publicKey);
                 var encryptedPassword = encrypt.encrypt($scope.password);
                 var registration = {
-                    name: $scope.name,
+                    userName: $scope.userName,
                     email: $scope.email,
                     password: encryptedPassword
                 };
