@@ -56,7 +56,7 @@ kanbanApp.directive('changeOnBlur', function () {
                     oldValue = elm.val();
                     console.log(oldValue);
                 });
-            });;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            });
             elm.bind('blur', function () {
                 scope.$apply(function () {
                     var newValue = elm.val();
@@ -69,4 +69,23 @@ kanbanApp.directive('changeOnBlur', function () {
             });
         }
     };
+});
+
+kanbanApp.directive('fallbackSrc', function () {
+    var fallbackSrc = {
+        link: function postLink(scope, iElement, iAttrs) {
+            var loadElement = angular.element(document.createElement('img'));
+
+            loadElement.bind('error', function () {
+                scope.$apply(function () {
+                    scope.imageFailed(loadElement.attr('src'));
+                });
+            });
+
+            loadElement.bind('load', function () {
+                element.attr('src', loadElement.attr('src'));
+            });
+        }
+    };;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    return fallbackSrc;
 });

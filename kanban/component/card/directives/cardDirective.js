@@ -81,7 +81,7 @@ kanbanApp.directive('card', function ($uibModal) {
                     templateUrl: 'component/card/partials/card-configuration.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster) {
-                            if (cardScope.stage.inProcess) {
+                            if (cardScope.stage.inSprint && !cardScope.stage.inDoneStatus) {
                                 $scope.isInCardConfiguration = true;
                             }
                             $scope.card = cardScope.card;

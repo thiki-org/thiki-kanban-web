@@ -4,11 +4,9 @@
     </div>
     <div id="user" class="dropdown" ng-controller="userController">
         <div id="user-avatar" class="dropdown" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false" ng-controller="profileController"><img id="user-avatar-img" http-src="http://127.0.0.1:8096/kanban/users/xutao/avatar"/>
+             aria-expanded="false" ng-controller="profileController">
+            <img id="user-avatar-img" http-src="{{user._links.avatar.href}}" fallback-src="static/img/fallback.gif"/>
         </div>
-        <div ng-show="avatar==undefined">加载中..</div>
-
-
         <div id="unreadNotificationsTotal">
             <span class="badge notification-badge" ng-show="isShowNotification">{{unreadNotificationsTotal}}</span>
         </div>

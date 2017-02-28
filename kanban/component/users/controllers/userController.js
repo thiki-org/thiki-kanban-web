@@ -7,6 +7,7 @@ kanbanApp.controller('userController', ['$scope', '$location', '$q', 'publicKeyS
         $scope.userName = localStorageService.get("identity.userName");
 
         var unreadNotificationsTotalLink = usersService.getCurrentUser()._links.unreadNotificationsTotal.href;
+        $scope.user = usersService.getCurrentUser();
 
         loadUnreadNotificationTotal();
 
