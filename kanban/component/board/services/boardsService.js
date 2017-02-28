@@ -4,7 +4,6 @@
 kanbanApp.factory('boardsService', ['$http', '$q', 'httpServices',
     function ($http, $q, httpServices) {
         return {
-            boardsLink: '',
             load: function (_boardsLink) {
                 return httpServices.get(_boardsLink);
             },

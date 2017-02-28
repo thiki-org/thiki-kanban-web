@@ -2,19 +2,25 @@
  * Created by xubt on 4/20/16.
  */
 
-kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'boardsService', 'localStorageService', '$uibModal', 'timerMessageService',
-    function ($scope, $location, $q, boardsService, localStorageService, $uibModal, timerMessageService) {
-        var boardsLink = localStorageService.get("user.links").boards.href;
-        boardsService.boardsLink = boardsLink;
+kanbanApp.controller('boardController', ['$scope', '$location', '$q', 'projectsService', 'boardsService', 'localStorageService', '$uibModal', 'timerMessageService', 'usersService',
+    function ($scope, $location, $q, projectsService, boardsService, localStorageService, $uibModal, timerMessageService, usersService) {
+
+        var currentUser = usersService.getCurrentUser();
+
         var uploadWorkTileTasksLink;
 
         $scope.loadBoards = function () {
             var loadingInstance = timerMessageService.loading();
-            var boardsPromise = boardsService.load(boardsLink);
-            boardsPromise.then(function (_data) {
-                $scope.boards = _data.boards;
-                uploadWorkTileTasksLink = _data._links.worktileTasks.href;
-            }).finally(function () {
+            projectsService.load(currentUser._links.projects.href)
+                .then(function (_projects) {
+                    $scope.boards = [];
+                    for (var index in _projects.projects) {
+                        boardsService.load(_projects.projects[index]._links.boards.href)
+                            .then(function (_boards) {
+                                $scope.boards = $scope.boards.concat(_boards.boards);
+                            });
+                    }
+                }).finally(function () {
                 timerMessageService.close(loadingInstance);
             });
         };
