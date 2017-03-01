@@ -107,8 +107,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                 };
                                 if (!jsonService.contains(cardScope.assignments, "assignee", _selectedMember.userName)) {
                                     $scope.card.assignmentsNode.assignments.push(newAssignment);
+                                    $scope.saveAssignments();
                                 }
-                                $scope.saveAssignments();
                             };
                             $scope.saveCard = function () {
                                 var originParentId = $scope.card.parentId;
@@ -116,9 +116,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.card.parentId = "";
                                 }
                                 $scope.card.size = $scope.sizeList.selected.id;
-                                $scope.isDisableCardSaveButton = true;
-                                var cardPromise = cardsServices.update($scope.card);
-                                cardPromise.then(function (_savedCard) {
+                                $scope.loadingInstance = timerMessageService.loading();
+                                cardsServices.update($scope.card).then(function (_savedCard) {
                                     $scope.card.code = _savedCard.code;
                                     $scope.card.restDays = _savedCard.restDays;
                                     $scope.card.sizeName = _savedCard.sizeName;
@@ -134,11 +133,16 @@ kanbanApp.directive('card', function ($uibModal) {
                                         }
                                     }
                                     toaster.pop('info', "", "卡片已保存。");
+                                }).finally(function () {
+                                    timerMessageService.close($scope.loadingInstance);
                                 });
                             };
                             $scope.saveAssignments = function () {
+                                $scope.loadingInstance = timerMessageService.loading();
                                 assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href).then(function () {
-                                    toaster.pop('info', "", "分配已经保存。");
+                                    toaster.pop('info', "", "分配已经保存，并通知相关成员。");
+                                }).finally(function () {
+                                    timerMessageService.close($scope.loadingInstance);
                                 });
                             };
                             var currentScope = $scope;

@@ -1,7 +1,8 @@
 <div id="member-{{member.userName}}" class="project-member-item member-filter-item" data-mode="inline">
     <div class="project-member-avatar member-filter-avatar" ng-click="selectMember(member)">
         <span class="selected-item glyphicon glyphicon-ok-sign" ng-show="member.selected"></span>
-        <img class="project-member-avatar-img filter-avatar-img" height="30" width="30" http-src="{{avatarLink}}"/>
+        <img class="project-member-avatar-img filter-avatar-img" height="30" width="30"
+             http-src="{{member._links.avatar.href}}"/>
     </div>
-    <div class="project-member-userName filter-member-nickname"> {{nickName}}</div>
+    <div class="project-member-userName filter-member-nickname"> {{member.profile.nickName}}</div>
 </div>
