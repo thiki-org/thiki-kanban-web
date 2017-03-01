@@ -30,7 +30,7 @@ kanbanApp.directive('notification', function () {
                                         $scope.acceptInvitation = function () {
                                             var invitationPromise = invitationService.acceptInvitation(notificationScope.notification.link);
                                             invitationPromise.then(function (_data) {
-                                                timerMessageService.message("祝贺,你已成功加入项目。");
+                                                timerMessageService.message("你已成功加入项目。");
                                             });
                                             $uibModalInstance.close();
                                         };
@@ -38,9 +38,24 @@ kanbanApp.directive('notification', function () {
                                             $uibModalInstance.dismiss('cancel');
                                         };
                                     },
-                                    size: 'sm'
+                                    size: 'sm', backdrop: "static"
                                 });
                             });
+                        });
+                    }
+                    if ($scope.notification.type === "assignment" || ($scope.notification.type === "cancel-assignment")) {
+                        var currentScope = $scope;
+                        $uibModal.open({
+                            animation: false,
+                            templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                            controller: function ($scope, $uibModalInstance) {
+                                $scope.title = "提示";
+                                $scope.message = currentScope.content;
+                                $scope.ok = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: 'notification', backdrop: "static"
                         });
                     }
                 });
