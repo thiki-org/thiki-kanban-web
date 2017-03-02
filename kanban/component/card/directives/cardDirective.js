@@ -26,54 +26,6 @@ kanbanApp.directive('card', function ($uibModal) {
             $scope.childCards = $scope.card.child === undefined ? [] : $scope.card.child.cards;
             $scope.elapsedDays = parseInt($scope.card.elapsedDays);
             $scope.isIncludHalfDay = $scope.card.elapsedDays % 1 !== 0;
-            $scope.assign = function (_card) {
-                var thisScope = $scope;
-                $uibModal.open({
-                    animation: false,
-                    templateUrl: 'component/card/partials/assignment-confirm.html',
-                    controller: function ($scope, $uibModalInstance) {
-                        $scope.title = '确认信息';
-                        if (thisScope.isIamAssigned) {
-                            $scope.message = "你确定不再做该卡片吗?";
-                            $scope.ok = function () {
-                                var userName = usersService.getCurrentUser().userName;
-                                var myAssignmentLink;
-                                angular.forEach(thisScope.assignments, function (_assignment) {
-                                    if (userName === _assignment.assignee) {
-                                        myAssignmentLink = _assignment._links.self.href;
-                                    }
-                                });
-                                var assignmentPromise = assignmentServices.giveUp(myAssignmentLink);
-                                assignmentPromise.then(function (_data) {
-                                    var index = thisScope.assignments.indexOf(_data);
-                                    thisScope.assignments.splice(index, 1);
-                                });
-                                $uibModalInstance.close();
-                            };
-                        } else {
-                            $scope.message = "你确定要认领该卡片吗?";
-                            $scope.ok = function () {
-                                var assignment = {
-                                    cardId: _card.id,
-                                    assignee: usersService.getCurrentUser().userName,
-                                    assigner: usersService.getCurrentUser().userName
-                                };
-
-                                var assignmentPromise = assignmentServices.assign(assignment, _card._links.assignments.href);
-                                assignmentPromise.then(function (_data) {
-                                    thisScope.assignments.push(_data);
-                                });
-                                $uibModalInstance.close();
-                            };
-                        }
-                        $scope.cancel = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-                    },
-                    size: 'sm'
-                });
-            };
-
             var cardScope = $scope;
             $scope.openCardConfiguration = function () {
                 $uibModal.open({
@@ -158,8 +110,37 @@ kanbanApp.directive('card', function ($uibModal) {
                                     backdrop: "static"
                                 });
                             };
+
                             $scope.cancel = function () {
                                 $uibModalInstance.dismiss('cancel');
+                            };
+                            $scope.removeCard = function (_card) {
+                                var index = cardScope.stage.cardsNode.cards.indexOf(_card);
+                                cardScope.stage.cardsNode.cards.splice(index, 1);
+                            };
+                            $scope.openDeleteModal = function () {
+                                $uibModal.open({
+                                    animation: true,
+                                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                                    controller: function ($scope, $uibModalInstance) {
+                                        $scope.title = '警告';
+                                        $scope.buttonText = "确认";
+                                        $scope.message = "你是否确定要删除本张卡片?";
+                                        $scope.ok = function () {
+                                            cardsServices.deleteByLink(currentScope.card._links.self.href).then(function () {
+                                                currentScope.removeCard(currentScope.card);
+                                                timerMessageService.message("卡片已经删除。");
+                                                currentScope.cancel();
+                                            });
+                                            $uibModalInstance.close();
+                                        };
+                                        $scope.cancel = function () {
+                                            $uibModalInstance.dismiss('cancel');
+                                        };
+                                    },
+                                    size: 'sm',
+                                    backdrop: "static"
+                                });
                             };
                         }
                     ],
@@ -167,30 +148,6 @@ kanbanApp.directive('card', function ($uibModal) {
                     backdrop: "static"
                 });
             };
-            $scope.openDeleteModal = function (_message, _link) {
-                var currentScope = $scope;
-                $uibModal.open({
-                    animation: false,
-                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
-                    controller: function ($scope, $uibModalInstance) {
-                        $scope.title = '警告';
-                        $scope.message = "确定要删除" + _message + "吗?";
-                        $scope.ok = function () {
-                            cardsServices.deleteByLink(_link).then(function () {
-                                currentScope.$parent.removeCard(currentScope.card);
-                                timerMessageService.message("卡片已经删除。");
-                            });
-                            $uibModalInstance.close();
-                        };
-                        $scope.cancel = function () {
-                            $uibModalInstance.dismiss('cancel');
-                        };
-                    },
-                    size: 'sm',
-                    backdrop: "static"
-                });
-            };
-
             $scope.calculateWidth = function (_totalAcceptanceCriteriasCount) {
                 if (_totalAcceptanceCriteriasCount === 0) {
                     return 0;

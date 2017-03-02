@@ -1,9 +1,25 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="$dismiss()">&times;</button>
-    <h3 class="modal-title">
-        <span class="glyphicon glyphicon-cog"></span>
-        卡片配置
-    </h3>
+    <div class="card-configuration-header">
+        <div class="card-configuration-header-info">
+            <div class="card-configuration-header-code">#{{card.code}}</div>
+            <div class="card-configuration-header-creation-time-author">
+                创建 {{card.creationTime}} 作者 {{card.author}}
+            </div>
+        </div>
+        <div class="card-configuration-header-options">
+            <div class="card-configuration-header-options-button dropdown thiki-button-gray">
+                <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-cog"></span> 更多
+                </button>
+                <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
+                    <li class="thiki-menu-item">
+                        <a ng-click="openDeleteModal()"><span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal-body">
     <uib-tabset>
@@ -14,22 +30,6 @@
             </uib-tab-heading>
             <div class="tab-card-basic-info">
                 <form name="cardForm" role="form" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="code" class="col-sm-1 filed-desc">编号</label>
-                        <div class="col-sm-2">
-                            <span id="code" name="code" class="card-code filed-value">{{card.code}}</span>
-                        </div>
-
-                        <label for="creationTime" class="col-sm-2 creation-time filed-desc">创建</label>
-                        <div class="col-sm-3">
-                            <span id="creationTime" name="creationTime" class="filed-value">{{card.creationTime}}</span>
-                        </div>
-
-                        <label for="author" class="col-sm-1 filed-desc">作者</label>
-                        <div class="col-sm-2">
-                            <span id="author" name="author" class="filed-value">{{card.author}}</span>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="cardSummary" class="col-sm-1 filed-desc">概要</label>
                         <div class="col-sm-10">

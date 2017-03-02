@@ -100,11 +100,6 @@ kanbanApp.directive('cards', function ($uibModal) {
             $scope.closeLoading = function () {
                 timerMessageService.close($scope.loadingInstance);
             };
-
-            $scope.removeCard = function (_card) {
-                var index = $scope.stage.cardsNode.cards.indexOf(_card);
-                $scope.stage.cardsNode.cards.splice(index, 1);
-            };
             $scope.$watch('cards', function (newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
