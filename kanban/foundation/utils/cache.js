@@ -1,5 +1,5 @@
 kanbanApp.isCacheUrl = function(_url) {
-    if (_url === undefined || _url === "") {
+    if (_url === undefined || _url === "" || _url === null) {
         return false;
     }
     for (var index in kanbanApp.cacheUrls) {

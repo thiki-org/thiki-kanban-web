@@ -50,7 +50,8 @@ kanbanApp.directive('notification', function () {
                             templateUrl: 'foundation/modal/partials/confirm-dialog.html',
                             controller: function ($scope, $uibModalInstance) {
                                 $scope.title = "提示";
-                                $scope.message = currentScope.content;
+                                $scope.message = currentScope.notification.content;
+                                $scope.buttonText = "知道了";
                                 $scope.ok = function () {
                                     $uibModalInstance.dismiss('cancel');
                                 };
