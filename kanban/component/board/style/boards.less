@@ -213,7 +213,6 @@ span.sprint-expire-message {
 }
 
 .board-options-button {
-  background: #2fbacd;
   color: white;
   height: 30px;
   font-size: 12px;
@@ -243,21 +242,31 @@ span.sprint-expire-message {
   height: 5px !important;
   width: 5px !important;
 }
+
 .sprint-badge {
-  padding: 2px!important;
-    border-radius: 2px;
-    font-weight: 700;
-    line-height: 1;
-    color: #fff;
-    display: inline-block;
-    min-width: 24px;
-    text-align: center;
+  padding: 2px !important;
+  border-radius: 2px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
 }
 
 .sprint-badge-total-points {
-    background-color: #2fbacd !important;
+  background-color: @base !important;
 }
 
 .sprint-badge-finished-points {
-    background-color: #09ad7e !important;
+  background-color: #09ad7e !important;
+}
+
+.board-options-button-highlight {
+  background-color: @base;
+  color: white;
+}
+
+.board-options-button .dropdown-toggle.dropdown {
+  line-height: 27px;
 }

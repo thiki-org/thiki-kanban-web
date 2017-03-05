@@ -74,7 +74,7 @@ kanbanApp.filter('cardsFilter', ["$filter", function ($filter) {
             }
             filtered.push(card);
         }
-        filtered = $filter('orderBy')(filtered, 'sortNumber', false);
+        filtered = $filter('orderBy')(filtered, ['sortNumber', 'creationTime'], false);
         return filtered;
     };
 }]);

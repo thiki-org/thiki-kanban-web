@@ -6,12 +6,11 @@ kanbanApp.directive('cards', function ($uibModal) {
         restrict: 'E',
         templateUrl: 'component/card/partials/cards.html',
         replace: true,
-        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', 'advancedFilterFactory', '$rootScope', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService, advancedFilterFactory, $rootScope) {
+        controller: ['$scope', '$routeParams', 'cardsServices', 'localStorageService', 'assignmentServices', 'timerMessageService', 'advancedFilterFactory', '$filter', function ($scope, $routeParams, cardsServices, localStorageService, assignmentServices, timerMessageService, advancedFilterFactory, $filter) {
             $scope.loadCards = function () {
                 var stage = $scope.stage;
                 $scope.cards = stage.cardsNode === undefined ? [] : stage.cardsNode.cards;
                 $scope.isCardDragging = false;
-                var currentScope = $scope;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,

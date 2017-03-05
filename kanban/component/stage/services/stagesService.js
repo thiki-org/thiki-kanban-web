@@ -17,6 +17,15 @@ kanbanApp.factory('stagesServices', ['httpServices', function (httpServices) {
         },
         resort: function (_stages, _resortLink) {
             return httpServices.put(_stages, _resortLink);
+        },
+        filterInSprintStages: function (_stagesArray) {
+            var filtered = [];
+            for (var index in _stagesArray) {
+                if (_stagesArray[index].type !== 9 && _stagesArray[index].status === 0) {
+                    filtered.push(_stagesArray[index]);
+                }
+            }
+            return filtered;
         }
     };
 }]);

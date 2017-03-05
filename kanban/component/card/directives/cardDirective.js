@@ -115,7 +115,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $uibModalInstance.dismiss('cancel');
                             };
                             $scope.removeCard = function (_card) {
-                                var index = cardScope.stage.cardsNode.cards.indexOf(_card);
+                                var index = jsonService.indexOf(cardScope.stage.cardsNode.cards, "id", _card.id);
                                 cardScope.stage.cardsNode.cards.splice(index, 1);
                             };
                             $scope.openDeleteModal = function () {

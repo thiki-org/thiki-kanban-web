@@ -26,6 +26,14 @@ kanbanApp.factory('jsonService', function () {
                 }
             }
             return false;
+        },
+        indexOf: function (_jsonArray, _key, _value) {
+            for (var index in _jsonArray) {
+                if (_jsonArray[index][_key] === _value) {
+                    return index;
+                }
+            }
+            return -1;
         }
     };
 });
@@ -86,6 +94,22 @@ kanbanApp.directive('fallbackSrc', function () {
                 element.attr('src', loadElement.attr('src'));
             });
         }
-    };;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    };
     return fallbackSrc;
+});
+kanbanApp.directive('characterCount', function () {
+    return {
+        restrict: 'A',
+        compile: function compile() {
+            return {
+                post: function postLink(scope, iElement, iAttrs) {
+                    iElement.bind('keydown', function () {
+                        scope.$apply(function () {
+                            scope.numberOfCharacters = iElement.val().length;
+                        });
+                    });
+                }
+            }
+        }
+    }
 });

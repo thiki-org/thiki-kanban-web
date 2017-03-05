@@ -1,14 +1,102 @@
-<div class="card-creation thiki-animation" data-type="text" id="card-creation-{{stage.id}}">
-    <form name="createNewCardForm" class="create-card-form" ng-show="stage.isShowCardCreation">
-        <div class="input-group card-create-card-div">
-            <textarea name="summary" rows="3" placeholder="作为一个[角色], 我想要[功能], 以便于[商业价值]  30~50个字" class="form-control card-creation-textarea" data-ng-model="summary" required ng-keydown="keyPress($event)" focus="stage.isShowCardCreation" />
-        </div>
-        <div class="create-card-form-buttons">
-            <button type="button" class="create-card-form-button btn btn-primary" ng-click="createCard()" ng-disabled="createNewCardForm.summary.$invalid || createNewCardForm.summary.$modelValue.length>50|| createNewCardForm.summary.$modelValue.length<30||isDisableCardCreationButton">
-                {{cardCreationButtonText}}
-            </button>
-            <div class="create-card-form-cancel-button" ng-click="cancelCreateCard()">取消
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h3 class="modal-title">
+        <span class="glyphicon glyphicon-file"></span>
+        创建卡片
+    </h3>
+</div>
+<div class="modal-body">
+    <div class="tab-card-basic-info">
+        <form name="cardCreationForm" role="form" class="form-horizontal">
+            <div class="form-group">
+                <label for="cardSummary" class="col-sm-1 filed-desc">概要<span
+                        class="thiki-form-required">*</span></label>
+                <div class="col-sm-10">
+                        <textarea id="cardSummary" name="cardSummary" rows="3"
+                                  class="form-control card-summary-textarea"
+                                  data-ng-model="card.summary"
+                                  placeholder="卡片概要"
+                                  autocomplete="off"
+                                  required
+                                  minlength="30"
+                                  maxlength="60"
+                                  data-character-count/>
+                    <div class="words-count">
+                        最少30字，最多60字。当前字数：{{numberOfCharacters}}
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+            <div class="form-group">
+                <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
+                <div class="col-sm-10 input-group date-time-input">
+                    <input date-time
+                           id="cardDeadline"
+                           name="cardDeadline"
+                           type="text"
+                           class="form-control"
+                           data-ng-model="card.deadline"
+                           placeholder="截止日期"
+                           min-view="date"
+                           format="YYYY-MM-DD"
+                           timezone="Asia/Hong_Kong"/>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
+                                class="glyphicon glyphicon-time"></span></button>
+                    </div>
+                </div>
+
+                <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
+                <div id="cardSize" class="col-sm-10 card-size-col">
+                    <ui-select data-ng-model="sizeList.selected" id="cardSize">
+                        <ui-select-match placeholder="选择规格">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="size in sizeList | filter: $select.search">
+                            <span ng-bind-html="size.name | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="field-tip">
+                            <span class="glyphicon glyphicon-question-sign"
+                                  aria-hidden="true"
+                                  uib-tooltip="规格对应的参考点数：{S:1,M:2,L:3,XL:5,XXL:8,不可估算:9999}"
+                                  tooltip-placement="right"
+                                  tooltip-trigger="mouseenter"></span></div>
+            </div>
+            <div class="form-group">
+                <label for="stageId" class="col-sm-1 filed-desc">所属环节<span class="thiki-form-required">*</span></label>
+                <div id="stageId" class="col-sm-10 card-size-col">
+                    <ui-select data-ng-model="stages.selected" id="cardSize">
+                        <ui-select-match placeholder="选择环节">{{$select.selected.title}}</ui-select-match>
+                        <ui-select-choices repeat="stage in stages | filter: $select.search">
+                            <span ng-bind-html="stage.title | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="field-tip">
+                            <span class="glyphicon glyphicon-question-sign"
+                                  aria-hidden="true"
+                                  uib-tooltip="进行中的环节、完成环节以及归档环节不可选"
+                                  tooltip-placement="right"
+                                  tooltip-trigger="mouseenter"></span></div>
+            </div>
+            <div class="form-group">
+                <label for="cardContent" class="col-sm-1 filed-desc">内容</label>
+                <div class="col-sm-10 card-content-textarea">
+                            <textarea id="cardContent" name="cardContent" rows="1"
+                                      class="form-control"
+                                      data-ng-model="card.content"
+                                      simplemde='{spellChecker: false}'
+                                      placeholder="Markdown|支持全屏"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer" ng-keydown="keyPress($event)">
+    <button class="btn btn-primary" type="button" ng-click="saveCard()"
+            ng-disabled="cardCreationForm.cardSummary.$invalid||stages.selected===undefined||isDisableCardSaveButton">
+        {{cardSaveButton}}
+    </button>
 </div>

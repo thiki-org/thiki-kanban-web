@@ -555,6 +555,9 @@ button.btn.danger-button {
 .dropdown-menu > li > a {
   font-weight: 100 !important;
   font-size: 12px !important;
+  padding: 0px 20px !important;
+  line-height: 30px !important;;
+  height: 30px !important;;
 }
 
 .modal-title {
@@ -566,10 +569,10 @@ label {
 }
 
 input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
-  border-color: @base;
-  box-shadow: 0 0 5px @base !important;
-  -webkit-box-shadow: 0 0 5px @base !important;
-  -moz-box-shadow: 0 0 5px r @base !important;
+  border-color: @danger !important;
+  box-shadow: 0 0 5px @danger !important;
+  -webkit-box-shadow: 0 0 5px @danger !important;
+  -moz-box-shadow: 0 0 5px r @danger !important;
 }
 
 .alert {
@@ -667,4 +670,9 @@ div#loading {
 
 .thiki-button-gray {
   background-color: #f3f3f3;
+}
+
+span.thiki-form-required {
+  color: @danger;
+  margin-left: 2px;
 }

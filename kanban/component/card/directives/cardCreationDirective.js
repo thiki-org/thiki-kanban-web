@@ -6,12 +6,21 @@ kanbanApp.directive('cardCreation', function () {
         restrict: 'E',
         replace: true,
         templateUrl: 'component/card/partials/card-creation.html',
-        controller: ['$scope', 'cardsServices', function ($scope, cardsServices) {
+        controller: ['$scope', 'cardsServices', 'jsonService', function ($scope, cardsServices, jsonService) {
             var stage = $scope.stage;
             $scope.displayCreationButton = true;
             $scope.displayForm = false;
             $scope.cardCreationButtonText = "创建";
             $scope.isDisableCardCreationButton = false;
+            $scope.sizeList = [
+                {id: 1, name: "S"},
+                {id: 2, name: "M"},
+                {id: 3, name: "L"},
+                {id: 5, name: "XL"},
+                {id: 8, name: "XXL"},
+                {id: 9999, name: "不可估算"}
+            ];
+            $scope.sizeList.selected = jsonService.findById($scope.sizeList, $scope.card.size);
             $scope.showCreateCardForm = function () {
                 $scope.displayCreationButton = false;
                 $scope.displayForm = true;
