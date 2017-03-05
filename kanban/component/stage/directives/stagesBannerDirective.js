@@ -161,6 +161,39 @@ kanbanApp.directive('stagesBanner', function () {
                     backdrop: "static"
                 });
             };
+            $scope.openStageCreationDialog = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/stage/partials/stage-creation.html',
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'stagesServices',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, stagesServices) {
+                            $scope.board = stagesScope.board;
+                            $scope.stageSaveButton = "创建";
+                            $scope.types = [{id: 0, name: "迭代计划"}, {id: 1, name: "迭代中"}];
+                            $scope.statusList = [{id: 0, name: "默认"}, {id: 1, name: "处理中"}, {id: 9, name: "完成"}];
+                            $scope.stage = {};
+                            $scope.saveStage = function () {
+                                $scope.stage.type = $scope.types.selected.id;
+                                $scope.stage.status = $scope.statusList.selected.id;
+
+                                $scope.stageSaveButton = "创建中..";
+                                $scope.isDisableStageSaveButton = true;
+                                stagesServices.create($scope.stage, $scope.board._links.stages.href).then(function (_stage) {
+                                    _stage.cardsNode = {cards: []};
+                                    timerMessageService.message("环节已经创建");
+                                    stagesScope.board.stagesNode.stages.push(_stage);
+                                    $uibModalInstance.dismiss('cancel');
+                                }).finally(function () {
+                                    $scope.stageSaveButton = "创建";
+                                    $scope.isDisableStageSaveButton = false;
+                                });
+                            };
+                        }
+                    ],
+                    size: 'mid',
+                    backdrop: "static"
+                });
+            };
         }]
     };
 });

@@ -1,12 +1,14 @@
 <div id="stages" class="stages">
     <div class="no-active-sprint-was-found-tip alert alert-warning" ng-show="noActiveSprintWasFound&&sprint==undefined">
-        看板迭代信息尚未<a id="sprint-setting" ng-click="openSprintDialog()">设置</a>。<span class="glyphicon glyphicon-question-sign" aria-hidden="true" uib-tooltip="未设置迭代信息时，系统无法为您提供归档、统计分析等服务。" tooltip-placement="right" tooltip-trigger="mouseenter"></span>
+        看板迭代信息尚未<a id="sprint-setting" ng-click="openSprintDialog()">设置</a>。<span
+            class="glyphicon glyphicon-question-sign" aria-hidden="true" uib-tooltip="未设置迭代信息时，系统无法为您提供归档、统计分析等服务。"
+            tooltip-placement="right" tooltip-trigger="mouseenter"></span>
     </div>
     <div class="no-stages-was-found-tip" ng-show="stages!=undefined&&stages.length==0">
         当前视图没有数据，请尝试切换至其他视图查看。
     </div>
     <div class="stage" ui-sortable="stageSortableOptions" data-ng-model="stages">
-        <stage ng-repeat="stage in stages | orderBy:'orderNumber'" stage="stage" board="board" data-ng-model="stage"></stage>
-        <stage-creation stages="stages" />
+        <stage ng-repeat="stage in stages | orderBy:'orderNumber'" stage="stage" board="board"
+               data-ng-model="stage"></stage>
     </div>
 </div>

@@ -4,7 +4,7 @@
 kanbanApp.directive('stageCreation', function () {
     return {
         restrict: 'E',
-        templateUrl: 'component/stage/partials/stages-creation.html',
+        templateUrl: 'component/stage/partials/stage-creation.html',
         replace: true,
         scope: {
             stages: '='
