@@ -7,6 +7,28 @@ kanbanApp.directive('stages', function () {
         templateUrl: 'component/stage/partials/stages.html',
         replace: true,
         controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', 'advancedFilterFactory', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, timerMessageService, advancedFilterFactory) {
+            $scope.statisticsStoryPoints = function () {
+                var board = currentScope.board;
+                var cardsPointsCount = 0;
+                var finishedCardsPointsCount = 0;
+                for (var stageIndex in board.stagesNode.stages) {
+                    var stage = board.stagesNode.stages[stageIndex];
+                    if (!stage.inSprint) {
+                        continue;
+                    }
+                    for (var cardIndex in stage.cardsNode.cards) {
+                        var card = stage.cardsNode.cards[cardIndex];
+                        if (card.size !== undefined) {
+                            cardsPointsCount += card.size;
+                        }
+                        if (stage.inDoneStatus && card.size !== undefined) {
+                            finishedCardsPointsCount += card.size;
+                        }
+                    }
+                }
+                $scope.cardsPointsCount = cardsPointsCount;
+                $scope.finishedCardsPointsCount = finishedCardsPointsCount;
+            };
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
                     $scope.sprint = _sprint;
@@ -16,26 +38,7 @@ kanbanApp.directive('stages', function () {
                         if (oldValue === newValue) {
                             return;
                         }
-                        var board = currentScope.board;
-                        var cardsPointsCount = 0;
-                        var finishedCardsPointsCount = 0;
-                        for (var stageIndex in board.stagesNode.stages) {
-                            var stage = board.stagesNode.stages[stageIndex];
-                            if (!stage.inSprint) {
-                                continue;
-                            }
-                            for (var cardIndex in stage.cardsNode.cards) {
-                                var card = stage.cardsNode.cards[cardIndex];
-                                if (card.size !== undefined) {
-                                    cardsPointsCount += card.size;
-                                }
-                                if (stage.inDoneStatus && card.size !== undefined) {
-                                    finishedCardsPointsCount += card.size;
-                                }
-                            }
-                        }
-                        $scope.cardsPointsCount = cardsPointsCount;
-                        $scope.finishedCardsPointsCount = finishedCardsPointsCount;
+                        $scope.statisticsStoryPoints();
                     }, true);
                 }, function (_rejection) {
                     if (_rejection.status === 404) {
@@ -54,6 +57,7 @@ kanbanApp.directive('stages', function () {
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
                     $scope.loadSprint();
+                    $scope.statisticsStoryPoints();
                     $scope.stages = _board.stagesNode.stages;
                     var currentScope = $scope;
                     timerMessageService.message("最后渲染中...");

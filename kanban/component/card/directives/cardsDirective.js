@@ -35,6 +35,12 @@ kanbanApp.directive('cards', function ($uibModal) {
                             ui.item.sortable.cancel();
                         }
                         var movedCard = ui.item.sortable.sourceModel[ui.item.sortable.index];
+                        //Moving to inProcess stage
+                        if (targetStage !== null && targetStage.inProcess && movedCard.deadline === undefined) {
+                            timerMessageService.message("卡片未设置截止日期，不允许进入处理环节。", 'warning');
+                            ui.item.sortable.cancel();
+                            return;
+                        }
                         //Moving to doneStage
                         if (targetStage !== null && targetStage.inDoneStatus) {
                             if (movedCard.acceptanceCriteriasNode !== undefined) {

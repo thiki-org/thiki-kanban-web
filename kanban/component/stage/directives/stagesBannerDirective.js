@@ -144,6 +144,7 @@ kanbanApp.directive('stagesBanner', function () {
                                 $scope.card.stageId = $scope.stages.selected.id;
                                 cardsServices.create($scope.card, $scope.board._links.cards.href).then(function (_card) {
                                     _card.isNew = true;
+                                    _card.assignmentsNode = {assignments: []};
                                     var indexOf = jsonService.indexOf(stagesScope.board.stagesNode.stages, "id", $scope.stages.selected.id);
                                     stagesScope.board.stagesNode.stages[indexOf].cardsNode.cards.push(_card);
                                     var newCardElement = angular.element(document.getElementById("card-" + _card.id));

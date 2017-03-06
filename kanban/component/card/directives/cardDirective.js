@@ -92,7 +92,7 @@ kanbanApp.directive('card', function ($uibModal) {
                             $scope.saveAssignments = function () {
                                 $scope.loadingInstance = timerMessageService.loading();
                                 assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href).then(function () {
-                                    toaster.pop('info', "", "分配已经保存，并通知相关成员。");
+                                    toaster.pop('info', "", "保存成功。");
                                 }).finally(function () {
                                     timerMessageService.close($scope.loadingInstance);
                                 });
