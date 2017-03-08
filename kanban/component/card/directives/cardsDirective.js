@@ -10,6 +10,7 @@ kanbanApp.directive('cards', function ($uibModal) {
             $scope.loadCards = function () {
                 var stage = $scope.stage;
                 $scope.cards = stage.cardsNode === undefined ? [] : stage.cardsNode.cards;
+                $scope.cards = $filter('orderBy')($scope.cards, 'sortNumber');
                 $scope.isCardDragging = false;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
