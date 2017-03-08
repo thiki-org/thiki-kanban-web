@@ -52,10 +52,10 @@ kanbanApp.directive('stages', function () {
                 $scope.typeName = _typeName === undefined ? "迭代视图" : _typeName;
                 $scope.activeViewType = _activeViewType;
 
-                var boardPromise = boardsService.loadBoardByLink(snapshotLink);
                 $scope.loadingInstance = timerMessageService.loading();
-                boardPromise.then(function (_board) {
+                boardsService.loadBoardByLink(snapshotLink).then(function (_board) {
                     $scope.board = _board;
+                    $scope.board.viewType = _activeViewType === undefined ? "sprintViewSnapshot" : _activeViewType;
                     $scope.loadSprint();
                     $scope.statisticsStoryPoints();
                     $scope.stages = _board.stagesNode.stages;
