@@ -2,7 +2,7 @@
      ng-class="{'new-card':card.isNew,'not-sortable': stage.archived||stage.inDoneStatus,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess}"
      context-menu="menuOptions" context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-show="card.code!=undefined&&card.code!=''">
-        <span>{{card.code}}{{stage.inDoneStatus}}</span>
+        <span>{{card.code}}</span>
     </div>
     <div class="card-ico" ng-show="card.size!=undefined" uib-tooltip="点数 {{card.size}}" tooltip-placement="left"
          tooltip-trigger="mouseenter">

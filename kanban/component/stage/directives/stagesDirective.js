@@ -53,14 +53,13 @@ kanbanApp.directive('stages', function () {
                 $scope.activeViewType = _activeViewType;
 
                 var boardPromise = boardsService.loadBoardByLink(snapshotLink);
-                $scope.loadingInstance = timerMessageService.loading($scope.typeName + "加载中..");
+                $scope.loadingInstance = timerMessageService.loading();
                 boardPromise.then(function (_board) {
                     $scope.board = _board;
                     $scope.loadSprint();
                     $scope.statisticsStoryPoints();
                     $scope.stages = _board.stagesNode.stages;
                     var currentScope = $scope;
-                    timerMessageService.message("最后渲染中...");
                     $scope.stageSortableOptions = {
                         connectWith: ".stage-item",
                         opacity: 0.5,

@@ -18,8 +18,8 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                 var encryptedPassword = encrypt.encrypt($scope.password);
 
                 var login = _data._links.login.href;
-                var loginPromise = loginService.login(login, identity, encryptedPassword);
-                loginPromise.then(function (_identity) {
+                var loadingInstance = timerMessageService.loading();
+                loginService.login(login, identity, encryptedPassword).then(function (_identity) {
                     $uibModalInstance.dismiss('cancel');
                     localStorageService.clearAll();
                     localStorageService.set("identity.token", _identity.token);
@@ -36,6 +36,7 @@ kanbanApp.controller('loginController', ['$scope', '$location', '$q', 'publicKey
                 }).finally(function () {
                     $scope.isDisableLoginButton = false;
                     $scope.loginButtonText = "登录";
+                    timerMessageService.close(loadingInstance);
                 });
             });
         };

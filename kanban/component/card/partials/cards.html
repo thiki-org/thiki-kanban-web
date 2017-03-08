@@ -1,4 +1,5 @@
 <div id="cards-{{stage.id}}" class="cards" ng-class="{'cards-sortable':!stage.archived}" ui-sortable="sortableOptions"
      data-ng-model="cards" ng-mouseover="mouseover($event)" ng-mouseleave="onMouseLeave($event)">
-    <card ng-repeat="card in cards |cardsFilter:filter" card="card" stage="stage" board="board"></card>
+    <card ng-repeat="card in cards | cardsFilter:filter" post-repeat-directive card="card" stage="stage"
+          board="board"></card>
 </div>
