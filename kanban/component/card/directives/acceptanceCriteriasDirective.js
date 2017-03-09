@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             card: '=',
             stage: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', '$filter', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, $filter) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', '$filter', 'jsonService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, $filter, jsonService) {
             $scope.acceptanceCriteriaSaveButton = "保存";
             $scope.isShowAcceptanceCriteriaForm = false;
 
@@ -40,8 +40,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             };
 
             $scope.deleteAcceptanceCriteria = function (__acceptanceCriteria) {
-                var index = $scope.card.acceptanceCriteriasNode.acceptanceCriterias.indexOf(__acceptanceCriteria);
+                var index = jsonService.indexOf($scope.card.acceptanceCriteriasNode.acceptanceCriterias, "id", __acceptanceCriteria.id);
                 $scope.card.acceptanceCriteriasNode.acceptanceCriterias.splice(index, 1);
+                $scope.acceptanceCriterias.splice(index, 1);
                 $scope.updateAcceptanceCriteriasCount();
             };
 

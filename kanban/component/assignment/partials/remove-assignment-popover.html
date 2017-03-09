@@ -1,8 +1,11 @@
 <div class="triangle"></div>
-<div class="remove-assignment">
-    <div class="remove-assignment-text">移除{{assignment.assignee}}？</div>
-    <div class="remove-assignment-button-area">
-        <button class="btn btn-primary remove-assignment-button" type="button" ng-click="removeAssignment(assignment)">移除
-        </button>
+<div class="ns-popover-tooltip">
+    <div class="remove-confirm-button-area">
+        <div class="remove-confirm-text">不再需要{{assignment.assignee}}的处理？</div>
+        <div class="remove-confirm-button-area">
+            <button class="btn btn-primary remove-confirm-button" type="button" ng-click="removeAssignment(assignment)">
+                移除
+            </button>
+        </div>
     </div>
 </div>

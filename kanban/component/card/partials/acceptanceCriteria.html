@@ -1,27 +1,34 @@
 <div class="acceptanceCriteria">
-    <div class="is-finished">
-        <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
-               ng-model="acceptanceCriteria.finished" ng-disabled="stage.archived"/>
-        <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
-    </div>
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished===true?'finished' : ''"
-         data-type="text" e-rows="3" e-cols="30" e-maxlength="200" editable-textarea="acceptanceCriteria.summary"
-         e-ng-click="open($event,'$data')" onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)"
-         ng-hide="stage.archived">
-        {{acceptanceCriteria.summary}}
+         data-type="text" ng-hide="stage.archived" ng-mouseover="isShowDeleteButton=true"
+         ng-mouseleave="isShowDeleteButton=false">
+        <div class="is-finished">
+            <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
+                   ng-model="acceptanceCriteria.finished" ng-disabled="stage.archived"/>
+            <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
+        </div>
+        <div class="acceptanceCriteria-summary-text" e-rows="3" e-cols="30" e-maxlength="200"
+             editable-textarea="acceptanceCriteria.summary"
+             e-ng-click="open($event,'$data')" onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)">
+            {{acceptanceCriteria.summary}}
+        </div>
+        <div class="creation-info acceptance-criteria-creation-info">创建: {{acceptanceCriteria.creationTime}} 更新:
+            {{acceptanceCriteria.modificationTime}}
+            作者: {{acceptanceCriteria.author}} <span ng-show="isShowDeleteButton"
+                                                    ns-popover
+                                                    ns-popover-theme="ns-popover-tooltip-theme"
+                                                    ns-popover-template="component/card/partials/remove-acceptance-criteria-popover.html"
+                                                    ns-popover-trigger="click"
+                                                    ns-popover-timeout="0"
+                                                    ns-popover-placement="top"> 删除</span>
+        </div>
     </div>
 
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished==true?'finished' : ''"
          data-type="text" ng-show="stage.archived">
         {{acceptanceCriteria.summary}}
-    </div>
-
-    <div class="acceptanceCriteria-delete" ng-mouseover="onMouseOver($event)"
-         ng-mouseleave="onMouseLeave($event)">
-        <span class="glyphicon glyphicon-remove-sign" ng-show="isShowDeleteButton"
-              ng-click="deleteAcceptanceCriteria()"></span>
     </div>
 </div>
 

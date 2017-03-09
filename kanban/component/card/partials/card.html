@@ -40,7 +40,7 @@
             <div ng-repeat="childCard in childCards  | orderBy: 'sortNumber'| orderBy: 'creationTime'">
                 <span id="{{childCard.id}}" ns-popover ns-popover-theme="ns-popover-tooltip-theme"
                       ns-popover-template="component/card/partials/child-card-popover.html"
-                      ns-popover-trigger="mouseenter" ns-popover-timeout="0" ns-popover-placement="top"
+                      ns-popover-trigger="mouseenter" ns-popover-timeout="0" ns-popover-placement="right"
                       class="glyphicon glyphicon-bookmark child-card-flag"
                       ng-class="{'child-card-flag-expired':childCard.restDays<0&&!childCard.finished,'child-card-flag-finished':childCard.finished,'child-card-flag-unfinished':!childCard.finished}"></span>
             </div>
