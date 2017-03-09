@@ -13,7 +13,7 @@ kanbanApp.provider('timerMessageService', ['$injector',
             }
         }
 
-        this.$get = function ($uibModal) {
+        this.$get = function ($uibModal, $timeout) {
             var instance;
             return {
                 message: function (_message, _type) {
@@ -68,6 +68,12 @@ kanbanApp.provider('timerMessageService', ['$injector',
                 close: function (_modalInstance) {
                     _modalInstance.dismiss('cancel');
                     instance = undefined;
+                },
+                delayClose: function (_modalInstance) {
+                    $timeout(function () {
+                        _modalInstance.dismiss('cancel');
+                        instance = undefined;
+                    }, 1000);
                 }
             };
         };

@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
             acceptanceCriteria: '=',
             stage: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', 'toaster', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, toaster) {
             $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
@@ -36,10 +36,12 @@ kanbanApp.directive('acceptanceCriteria', function () {
                 $scope.isShowDeleteButton = false;
             };
             $scope.deleteAcceptanceCriteria = function () {
-                var acceptanceCriteriaPromise = acceptanceCriteriaService.delete($scope.acceptanceCriteria);
-                acceptanceCriteriaPromise.then(function () {
+                var loadingInstance = timerMessageService.loading();
+                acceptanceCriteriaService.delete($scope.acceptanceCriteria).then(function () {
                     $scope.$parent.deleteAcceptanceCriteria($scope.acceptanceCriteria);
-                    timerMessageService.message("验收标准已经删除。");
+                    toaster.pop('info', "", "验收标准已经删除。");
+                }).finally(function () {
+                    timerMessageService.delayClose(loadingInstance);
                 });
             };
         }]
