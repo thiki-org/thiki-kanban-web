@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
             card: '=',
             stage: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', '$filter', 'jsonService', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, $filter, jsonService) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', '$filter', 'jsonService', 'toaster', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, $filter, jsonService, toaster) {
             $scope.acceptanceCriteriaSaveButton = "保存";
             $scope.isShowAcceptanceCriteriaForm = false;
 
@@ -83,19 +83,22 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.acceptanceCriteriaSaveButton = "保存中..";
 
                 var acceptanceCriteria = {summary: $scope.acceptanceCriteriaSummary};
-                var acceptanceCriteriaPromise = acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href);
-                acceptanceCriteriaPromise.then(function (_acceptanceCriteria) {
-                    $scope.acceptanceCriterias.push(_acceptanceCriteria);
-                    $scope.card.acceptanceCriteriasNode = $scope.card.acceptanceCriteriasNode === undefined ? {acceptanceCriterias: []} : $scope.card.acceptanceCriteriasNode;
-                    $scope.card.acceptanceCriteriasNode.acceptanceCriterias = $scope.acceptanceCriterias;
-                    $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
-                    $scope.isShowAcceptanceCriteriaForm = false;
-                    $scope.isShowAcceptanceCriteriaCreationButton = true;
-                    $scope.acceptanceCriteriaSummary = "";
-                    $scope.updateAcceptanceCriteriasCount();
-                }).finally(function () {
+                var loadingInstance = timerMessageService.loading();
+                acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href)
+                    .then(function (_acceptanceCriteria) {
+                        $scope.acceptanceCriterias.push(_acceptanceCriteria);
+                        $scope.card.acceptanceCriteriasNode = $scope.card.acceptanceCriteriasNode === undefined ? {acceptanceCriterias: []} : $scope.card.acceptanceCriteriasNode;
+                        $scope.card.acceptanceCriteriasNode.acceptanceCriterias = $scope.acceptanceCriterias;
+                        $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
+                        $scope.isShowAcceptanceCriteriaForm = false;
+                        $scope.isShowAcceptanceCriteriaCreationButton = true;
+                        $scope.acceptanceCriteriaSummary = "";
+                        $scope.updateAcceptanceCriteriasCount();
+                        toaster.pop('info', "", "新的验收标准创建成功。");
+                    }).finally(function () {
                     $scope.acceptanceCriteriaSaveButton = "保存";
                     $scope.isDisableAcceptanceCriteriaSaveButton = false;
+                    timerMessageService.delayClose(loadingInstance);
                 });
             };
 

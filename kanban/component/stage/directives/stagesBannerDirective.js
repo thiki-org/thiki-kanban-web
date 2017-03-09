@@ -7,7 +7,7 @@ kanbanApp.directive('stagesBanner', function () {
         templateUrl: 'component/stage/partials/stage-banner.html',
         replace: true,
         scope: false,
-        controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService) {
+        controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'toaster', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, toaster) {
             var stagesScope = $scope;
             var projectsUrl = usersService.getCurrentUser()._links.projects.href;
             $scope.openProjectsDialog = function () {
@@ -142,6 +142,7 @@ kanbanApp.directive('stagesBanner', function () {
                                     $scope.card.size = $scope.sizeList.selected.id;
                                 }
                                 $scope.card.stageId = $scope.stages.selected.id;
+                                var loadingInstance = timerMessageService.loading();
                                 cardsServices.create($scope.card, $scope.board._links.cards.href).then(function (_card) {
                                     _card.isNew = true;
                                     _card.assignmentsNode = {assignments: []};
@@ -149,11 +150,12 @@ kanbanApp.directive('stagesBanner', function () {
                                     stagesScope.board.stagesNode.stages[indexOf].cardsNode.cards.push(_card);
                                     var newCardElement = angular.element(document.getElementById("card-" + _card.id));
                                     newCardElement.removeClass('new-card');
-                                    timerMessageService.message("卡片已经创建。");
+                                    toaster.pop('info', "", "卡片已经创建。");
                                     $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
                                     $scope.cardSaveButton = "创建";
                                     $scope.isDisableCardSaveButton = false;
+                                    timerMessageService.delayClose(loadingInstance);
                                 });
                             };
                         }
@@ -176,17 +178,18 @@ kanbanApp.directive('stagesBanner', function () {
                             $scope.saveStage = function () {
                                 $scope.stage.type = $scope.types.selected.id;
                                 $scope.stage.status = $scope.statusList.selected.id;
-
                                 $scope.stageSaveButton = "创建中..";
                                 $scope.isDisableStageSaveButton = true;
+                                var loadingInstance = timerMessageService.loading();
                                 stagesServices.create($scope.stage, $scope.board._links.stages.href).then(function (_stage) {
                                     _stage.cardsNode = {cards: []};
-                                    timerMessageService.message("环节已经创建");
+                                    toaster.pop('info', "", "环节已经创建。");
                                     stagesScope.board.stagesNode.stages.push(_stage);
                                     $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
                                     $scope.stageSaveButton = "创建";
                                     $scope.isDisableStageSaveButton = false;
+                                    timerMessageService.delayClose(loadingInstance);
                                 });
                             };
                         }

@@ -15,13 +15,20 @@
         </div>
         <div class="creation-info acceptance-criteria-creation-info">创建: {{acceptanceCriteria.creationTime}} 更新:
             {{acceptanceCriteria.modificationTime}}
-            作者: {{acceptanceCriteria.author}} <span ng-show="isShowDeleteButton"
+            作者: {{acceptanceCriteria.author}} <span class="small-text-button" ng-show="isShowDeleteButton"
                                                     ns-popover
                                                     ns-popover-theme="ns-popover-tooltip-theme"
                                                     ns-popover-template="component/card/partials/remove-acceptance-criteria-popover.html"
                                                     ns-popover-trigger="click"
                                                     ns-popover-timeout="0"
-                                                    ns-popover-placement="top"> 删除</span>
+                                                    ns-popover-placement="top">删除</span>
+            <span class="small-text-button" ng-show="isShowDeleteButton"
+                  ns-popover
+                  ns-popover-theme="ns-popover-tooltip-theme"
+                  ns-popover-template="component/card/partials/remove-acceptance-criteria-popover.html"
+                  ns-popover-trigger="click"
+                  ns-popover-timeout="0"
+                  ns-popover-placement="top">核验</span>
         </div>
     </div>
 

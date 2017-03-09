@@ -21,9 +21,13 @@ kanbanApp.directive('acceptanceCriteria', function () {
             });
             $scope.updateAcceptanceCriteria = function (_summary) {
                 $scope.acceptanceCriteria.summary = _summary;
+                var loadingInstance = timerMessageService.loading();
                 acceptanceCriteriaService.update($scope.acceptanceCriteria).then(function (_acceptanceCriteria) {
                     $scope.acceptanceCriteria = _acceptanceCriteria;
                     $scope.$parent.updateAcceptanceCriteria(_acceptanceCriteria);
+                    toaster.pop('info', "", "已经保存。");
+                }).finally(function () {
+                    timerMessageService.delayClose(loadingInstance);
                 });
             };
 

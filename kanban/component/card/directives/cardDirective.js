@@ -86,7 +86,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                     }
                                     toaster.pop('info', "", "卡片已保存。");
                                 }).finally(function () {
-                                    timerMessageService.close($scope.loadingInstance);
+                                    timerMessageService.delayClose($scope.loadingInstance);
                                 });
                             };
                             $scope.saveAssignments = function () {
