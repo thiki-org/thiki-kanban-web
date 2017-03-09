@@ -4,7 +4,7 @@
 kanbanApp.directive('acceptanceCriteria', function () {
     return {
         restrict: 'E',
-        templateUrl: 'component/card/partials/acceptanceCriteria.html',
+        templateUrl: 'component/card/acceptanceCriteria/partials/acceptanceCriteria.html',
         replace: true,
         transclude: true,
         scope: {
