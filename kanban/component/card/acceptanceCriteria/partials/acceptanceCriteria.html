@@ -1,8 +1,8 @@
 <div class="acceptanceCriteria">
     <div class="acceptanceCriteria-summary" ng-class="
          acceptanceCriteria.finished===true?'finished' : ''"
-         data-type="text" ng-hide="stage.archived" ng-mouseover="isShowDeleteButton=true"
-         ng-mouseleave="isShowDeleteButton=false">
+         data-type="text" ng-hide="stage.archived" ng-mouseover="isShowOptionButtons=true"
+         ng-mouseleave="isShowOptionButtons=false">
         <div class="is-finished">
             <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
                    ng-model="acceptanceCriteria.finished" ng-disabled="stage.archived"/>
@@ -15,20 +15,35 @@
         </div>
         <div class="creation-info acceptance-criteria-creation-info">创建: {{acceptanceCriteria.creationTime}} 更新:
             {{acceptanceCriteria.modificationTime}}
-            作者: {{acceptanceCriteria.author}} <span class="small-text-button" ng-show="isShowDeleteButton"
+            作者: {{acceptanceCriteria.author}} <span class="small-text-button"
+                                                    ng-show="isShowOptionButtons&&!stage.archived&&!stage.inDoneStatus"
                                                     ns-popover
                                                     ns-popover-theme="ns-popover-tooltip-theme"
                                                     ns-popover-template="component/card/acceptanceCriteria/partials/remove-acceptance-criteria-popover.html"
                                                     ns-popover-trigger="click"
-                                                    ns-popover-timeout="0"
+                                                    ns-popover-timeout="10000000"
                                                     ns-popover-placement="top">删除</span>
-            <span class="small-text-button" ng-show="isShowDeleteButton"
+            <span class="small-text-button"
+                  ng-show="isShowOptionButtons&&acceptanceCriteria.finished&&!stage.archived&&!stage.inDoneStatus"
                   ns-popover
                   ns-popover-theme="ns-popover-tooltip-theme"
                   ns-popover-template="component/card/acceptanceCriteria/partials/verification-acceptance-criteria-popover.html"
                   ns-popover-trigger="click"
                   ns-popover-timeout="0"
-                  ns-popover-placement="top">核验</span>
+                  ns-popover-placement="top">验收</span>
+            <span class="small-text-button" ng-show="verifications.length>1"
+                  ng-click="isShowAllVerifications=!isShowAllVerifications"><span
+                    class="glyphicon"
+                    ng-class="{'glyphicon-circle-arrow-up':isShowAllVerifications,'glyphicon-circle-arrow-down':!isShowAllVerifications}"
+            ></span>{{isShowAllVerifications?"收起":"显示全部验收记录"}}</span>
+        </div>
+        <div class="verification-item" ng-repeat="verification in verifications track by $index"
+             ng-show="$index===0||isShowAllVerifications">
+            <span class="verification-result glyphicon"
+                  ng-class="{'glyphicon-ok-sign verification-passed':verification.isPassed===1,'glyphicon-remove-sign verification-not-passed':verification.isPassed===-1}"></span>
+            <span class="verification-remark">意见：{{verification.remark}}</span>
+            <span>验收人：<nick-name profile-link="verification._links.authorProfile.href"/></span>
+            <span>验收时间：{{verification.creationTime}}</span>
         </div>
     </div>
 

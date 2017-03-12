@@ -115,7 +115,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 if (newValue > 0 && $scope.acceptanceCriterias.length === newValue) {
                     $uibModal.open({
                         animation: false,
-                        templateUrl: 'component/card/partials/acceptance-criterias-finished-dialog.html',
+                        templateUrl: 'component/card/acceptanceCriteria/partials/acceptance-criterias-finished-dialog.html',
                         controller: [
                             '$scope',
                             '$uibModalInstance', '$interval',

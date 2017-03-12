@@ -16,6 +16,12 @@ kanbanApp.factory('acceptanceCriteriaService', ['$http', '$q', 'httpServices', f
         },
         resort: function (_acceptanceCriterias, _resortLink) {
             return httpServices.put(_acceptanceCriterias, _resortLink);
+        },
+        submitVerification: function (_verifications, _verificationsLink) {
+            return httpServices.post(_verifications, _verificationsLink);
+        },
+        loadVerifications: function (_verificationsLink) {
+            return httpServices.get(_verificationsLink);
         }
     };
 }]);

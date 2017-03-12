@@ -113,11 +113,6 @@
   cursor: pointer;
 }
 
-.acceptanceCriteria-summary.ng-scope.ng-binding.editable:hover {
-  cursor: default !important;
-  color: white !important;
-}
-
 .acceptanceCriterias label {
   display: inherit !important;
 }
@@ -140,10 +135,77 @@ span.badge.acceptance-criteria-un-finished-badge.ng-binding {
 
 span.small-text-button {
   margin-left: 5px;
-  background: #dddddd;
   border-radius: 2px;
   color: #0c0c0c;
   font-size: 12px;
   padding: 2px 5px;
   cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.modal-verification {
+  top: 80px !important;
+  width: 600px;
+  height: 400px;
+}
+
+.col-sm-1 {
+  width: auto !important;
+}
+
+.verification-item {
+  float: left;
+  width: 100%;
+  margin-left: 5px;
+  color: #000 !important;
+  line-height: 20px;
+}
+
+.verification-passed {
+  color: #09ad7e;
+}
+
+.verification-not-passed {
+  color: @danger;
+}
+
+.verification-remark {
+  min-width: 300px;
+}
+
+.verification-result {
+  margin-left: 5px;
+  float: left;
+  line-height: 17px !important;
+  margin-right: 5px;
+}
+
+blockquote {
+  border: none;
+  margin-bottom: -30px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote {
+  font-size: 14px;
+}
+
+blockquote:before {
+  content: open-quote;
+  font-weight: bold;
+  font-size: 40px;
+  color: @base;
+}
+
+blockquote:after {
+  content: close-quote;
+  font-weight: bold;
+  font-size: 40px;
+  color: @base;
+  padding-top: 20px;
+}
+
+.acceptance-criteria-blockquote {
+  float: left;
+  width: 100%;
 }

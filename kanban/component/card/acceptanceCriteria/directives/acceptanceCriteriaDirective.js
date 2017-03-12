@@ -11,7 +11,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
             acceptanceCriteria: '=',
             stage: '='
         },
-        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', 'toaster', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, toaster) {
+        controller: ['$scope', 'localStorageService', 'acceptanceCriteriaService', 'timerMessageService', 'toaster', '$uibModal', function ($scope, localStorageService, acceptanceCriteriaService, timerMessageService, toaster, $uibModal) {
             $scope.$watch('acceptanceCriteria.finished', function (newValue, oldValue) {
                 if (oldValue === newValue) {
                     return;
@@ -46,6 +46,51 @@ kanbanApp.directive('acceptanceCriteria', function () {
                     toaster.pop('info', "", "验收标准已经删除。");
                 }).finally(function () {
                     timerMessageService.delayClose(loadingInstance);
+                });
+            };
+            var acceptanceCriteriaScope = $scope;
+
+            $scope.loadVerifications = function () {
+                acceptanceCriteriaService.loadVerifications($scope.acceptanceCriteria._links.verifications.href)
+                    .then(function (_verificationsNode) {
+                        $scope.isShowAllVerifications = false;
+                        $scope.verifications = _verificationsNode.verifications;
+                    });
+            };
+            $scope.loadVerifications();
+            $scope.openVerificationModal = function () {
+                $uibModal.open({
+                    animation: false,
+                    templateUrl: 'component/card/acceptanceCriteria/partials/verification-creation.html',
+                    controller: ['$scope', 'timerMessageService', '$uibModalInstance', 'jsonService', 'acceptanceCriteriaService', 'toaster',
+                        function ($scope, timerMessageService, $uibModalInstance, jsonService, acceptanceCriteriaService, toaster) {
+                            $scope.verificationResultTypes = [
+                                {id: 1, name: "通过"},
+                                {id: -1, name: "未通过"}
+                            ];
+                            $scope.isDisableVerificationSaveButton = false;
+                            $scope.verificationSaveButton = "提交";
+                            $scope.acceptanceCriteria = acceptanceCriteriaScope.acceptanceCriteria;
+                            $scope.submitVerification = function () {
+                                var loadingInstance = timerMessageService.loading();
+                                $scope.verification.isPassed = $scope.verificationResultTypes.selected.id;
+                                $scope.verification.acceptanceCriteriaId = acceptanceCriteriaScope.acceptanceCriteria.id;
+                                acceptanceCriteriaService.submitVerification($scope.verification, acceptanceCriteriaScope.acceptanceCriteria._links.verifications.href)
+                                    .then(function (_verifications) {
+                                        var verificationsNode = {verifications: _verifications};
+                                        acceptanceCriteriaScope.acceptanceCriteria.verificationsNode = verificationsNode;
+                                        acceptanceCriteriaScope.verifications = _verifications.verifications;
+                                        acceptanceCriteriaScope.loadVerifications();
+                                        $uibModalInstance.dismiss('cancel');
+                                        toaster.pop('info', "", "验收记录已成功提交。");
+                                    }).finally(function () {
+                                    timerMessageService.delayClose(loadingInstance);
+                                });
+                            };
+                        }
+                    ],
+                    size: 'verification',
+                    backdrop: "static"
                 });
             };
         }]
