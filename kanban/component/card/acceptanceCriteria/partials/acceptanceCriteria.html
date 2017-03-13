@@ -3,14 +3,17 @@
          acceptanceCriteria.finished===true?'finished' : ''"
          data-type="text" ng-hide="stage.archived" ng-mouseover="isShowOptionButtons=true"
          ng-mouseleave="isShowOptionButtons=false">
-        <div class="is-finished">
+        <div class="is-finished" ng-hide="stage.archived||stage.inDoneStatus">
             <input type="checkbox" id="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"
-                   ng-model="acceptanceCriteria.finished" ng-disabled="stage.archived"/>
+                   ng-model="acceptanceCriteria.finished"/>
             <label for="acceptanceCriteria-checkbox-{{acceptanceCriteria.id}}"></label>
         </div>
         <div class="acceptanceCriteria-summary-text" e-rows="3" e-cols="30" e-maxlength="200"
-             editable-textarea="acceptanceCriteria.summary"
+             editable-textarea="acceptanceCriteria.summary" ng-if="!stage.archived&&!stage.inDoneStatus"
              e-ng-click="open($event,'$data')" onbeforesave="updateAcceptanceCriteria($data,acceptanceCriteria)">
+            {{acceptanceCriteria.summary}}
+        </div>
+        <div class="acceptanceCriteria-summary-text" ng-if="stage.archived||stage.inDoneStatus">
             {{acceptanceCriteria.summary}}
         </div>
         <div class="creation-info acceptance-criteria-creation-info">创建: {{acceptanceCriteria.creationTime}} 更新:

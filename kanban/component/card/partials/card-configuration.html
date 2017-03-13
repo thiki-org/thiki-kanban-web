@@ -13,7 +13,7 @@
                     <span class="glyphicon glyphicon-cog card-setting"></span>
                 </button>
                 <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
-                    <li class="thiki-menu-item">
+                    <li class="thiki-menu-item" ng-if="!stage.archived&&!stage.inDoneStatus">
                         <a ng-click="openDeleteModal()"><span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除</a>
                     </li>
                 </ul>

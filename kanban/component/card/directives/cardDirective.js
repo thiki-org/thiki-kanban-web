@@ -28,6 +28,7 @@ kanbanApp.directive('card', function ($uibModal) {
             $scope.isIncludHalfDay = $scope.card.elapsedDays % 1 !== 0;
             var cardScope = $scope;
             $scope.openCardConfiguration = function () {
+                var cardConfigurationLoadingInstance = timerMessageService.loading();
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
@@ -142,6 +143,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                     backdrop: "static"
                                 });
                             };
+                            timerMessageService.delayClose(cardConfigurationLoadingInstance);
                         }
                     ],
                     size: 'card',

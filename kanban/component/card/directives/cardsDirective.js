@@ -42,12 +42,27 @@ kanbanApp.directive('cards', function ($uibModal) {
                             ui.item.sortable.cancel();
                             return;
                         }
+                        if (targetStage !== null && targetStage.inDoneStatus && (movedCard.acceptanceCriteriasNode === undefined || movedCard.acceptanceCriteriasNode.acceptanceCriterias.length === 0)) {
+                            timerMessageService.message("卡片尚未设置验收标准，不允许进入完成环节。", 'warning');
+                            ui.item.sortable.cancel();
+                            return;
+                        }
                         //Moving to doneStage
                         if (targetStage !== null && targetStage.inDoneStatus) {
                             if (movedCard.acceptanceCriteriasNode !== undefined) {
                                 for (var index in movedCard.acceptanceCriteriasNode.acceptanceCriterias) {
                                     if (!movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].finished) {
                                         timerMessageService.message("当前卡片有验收标准尚未完成，不允许进入完成环节。", 'warning');
+                                        ui.item.sortable.cancel();
+                                        return;
+                                    }
+                                    if (movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].isPassed === 0) {
+                                        timerMessageService.message("当前卡片尚有验收标准未验收，不允许进入完成环节。", 'warning');
+                                        ui.item.sortable.cancel();
+                                        return;
+                                    }
+                                    if (movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].isPassed === -1) {
+                                        timerMessageService.message("当前卡片尚有验收标准未通过验收，不允许进入完成环节。", 'warning');
                                         ui.item.sortable.cancel();
                                         return;
                                     }
