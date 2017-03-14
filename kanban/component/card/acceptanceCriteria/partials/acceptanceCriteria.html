@@ -19,7 +19,7 @@
         <div class="creation-info acceptance-criteria-creation-info">创建: {{acceptanceCriteria.creationTime}} 更新:
             {{acceptanceCriteria.modificationTime}}
             作者: {{acceptanceCriteria.author}} <span class="small-text-button"
-                                                    ng-show="isShowOptionButtons&&!stage.archived&&!stage.inDoneStatus"
+                                                    ng-show="!stage.archived&&!stage.inDoneStatus"
                                                     ns-popover
                                                     ns-popover-theme="ns-popover-tooltip-theme"
                                                     ns-popover-template="component/card/acceptanceCriteria/partials/remove-acceptance-criteria-popover.html"
@@ -27,7 +27,7 @@
                                                     ns-popover-timeout="10000000"
                                                     ns-popover-placement="top">删除</span>
             <span class="small-text-button"
-                  ng-show="isShowOptionButtons&&acceptanceCriteria.finished&&!stage.archived&&!stage.inDoneStatus"
+                  ng-show="acceptanceCriteria.finished&&!stage.archived&&!stage.inDoneStatus"
                   ns-popover
                   ns-popover-theme="ns-popover-tooltip-theme"
                   ns-popover-template="component/card/acceptanceCriteria/partials/verification-acceptance-criteria-popover.html"

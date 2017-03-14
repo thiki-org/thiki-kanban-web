@@ -76,14 +76,14 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.isShowAcceptanceCriteriaForm = true;
                 $scope.isShowAcceptanceCriteriaCreationButton = false;
             };
-
+            $scope.acceptanceCriteria = {summary: ""};
             $scope.addAcceptanceCriteriaCreation = function () {
+                var loadingInstance = timerMessageService.loading();
                 $scope.isShowAcceptanceCriteriaCreationButton = false;
                 $scope.isDisableAcceptanceCriteriaSaveButton = true;
-                $scope.acceptanceCriteriaSaveButton = "保存中..";
 
-                var acceptanceCriteria = {summary: $scope.acceptanceCriteriaSummary};
-                var loadingInstance = timerMessageService.loading();
+                $scope.acceptanceCriteriaSaveButton = "保存中..";
+                var acceptanceCriteria = {summary: $scope.acceptanceCriteria.summary};
                 acceptanceCriteriaService.create(acceptanceCriteria, $scope.card._links.acceptanceCriterias.href)
                     .then(function (_acceptanceCriteria) {
                         $scope.acceptanceCriterias.push(_acceptanceCriteria);
@@ -92,7 +92,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                         $scope.card.totalAcceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                         $scope.isShowAcceptanceCriteriaForm = false;
                         $scope.isShowAcceptanceCriteriaCreationButton = true;
-                        $scope.acceptanceCriteriaSummary = "";
+                        $scope.acceptanceCriteria.summary = "";
                         $scope.updateAcceptanceCriteriasCount();
                         toaster.pop('info', "", "新的验收标准创建成功。");
                     }).finally(function () {
