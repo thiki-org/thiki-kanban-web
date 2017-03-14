@@ -3,7 +3,8 @@
     <h3 class="modal-title">{{title}}</h3>
 </div>
 <div class="modal-body">
-    {{message}}
+    <span ng-if="type==='ok'" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+    <span ng-if="type==='warning'" class="tip-ban glyphicon glyphicon-ban-circle" aria-hidden="true"></span> {{message}}
 </div>
 <div class="modal-footer" ng-keydown="keyPress($event)">
     <button class="btn btn-primary thiki-delete-button" type="button" ng-click="ok()">{{!buttonText?"好的":buttonText}}

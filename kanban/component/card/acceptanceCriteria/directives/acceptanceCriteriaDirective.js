@@ -81,6 +81,7 @@ kanbanApp.directive('acceptanceCriteria', function () {
                                         acceptanceCriteriaScope.acceptanceCriteria.verificationsNode = verificationsNode;
                                         acceptanceCriteriaScope.verifications = _verifications.verifications;
                                         acceptanceCriteriaScope.loadVerifications();
+                                        acceptanceCriteriaScope.acceptanceCriteria.isPassed = $scope.verification.isPassed;
                                         $uibModalInstance.dismiss('cancel');
                                         toaster.pop('info', "", "验收记录已成功提交。");
                                     }).finally(function () {

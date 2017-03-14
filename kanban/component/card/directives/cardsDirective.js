@@ -32,18 +32,18 @@ kanbanApp.directive('cards', function ($uibModal) {
                         var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
 
                         if (targetStage !== null && sourceStageId !== targetStage.id && targetStage.wipLimit === droptargetModelCards.length) {
-                            timerMessageService.message("目标环节在制品已经满额，不再接受卡片。", 'warning');
+                            timerMessageService.confirmMessage("目标环节在制品已经满额，不再接受卡片。", 'warning');
                             ui.item.sortable.cancel();
                         }
                         var movedCard = ui.item.sortable.sourceModel[ui.item.sortable.index];
                         //Moving to inProcess stage
                         if (targetStage !== null && targetStage.inProcess && movedCard.deadline === undefined) {
-                            timerMessageService.message("卡片未设置截止日期，不允许进入处理环节。", 'warning');
+                            timerMessageService.confirmMessage("卡片未设置截止日期，不允许进入处理环节。", 'warning');
                             ui.item.sortable.cancel();
                             return;
                         }
                         if (targetStage !== null && targetStage.inDoneStatus && (movedCard.acceptanceCriteriasNode === undefined || movedCard.acceptanceCriteriasNode.acceptanceCriterias.length === 0)) {
-                            timerMessageService.message("卡片尚未设置验收标准，不允许进入完成环节。", 'warning');
+                            timerMessageService.confirmMessage("卡片尚未设置验收标准，不允许进入完成环节。", 'warning');
                             ui.item.sortable.cancel();
                             return;
                         }
@@ -52,17 +52,17 @@ kanbanApp.directive('cards', function ($uibModal) {
                             if (movedCard.acceptanceCriteriasNode !== undefined) {
                                 for (var index in movedCard.acceptanceCriteriasNode.acceptanceCriterias) {
                                     if (!movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].finished) {
-                                        timerMessageService.message("当前卡片有验收标准尚未完成，不允许进入完成环节。", 'warning');
+                                        timerMessageService.confirmMessage("当前卡片有验收标准尚未完成，不允许进入完成环节。", 'warning');
                                         ui.item.sortable.cancel();
                                         return;
                                     }
                                     if (movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].isPassed === 0) {
-                                        timerMessageService.message("当前卡片尚有验收标准未验收，不允许进入完成环节。", 'warning');
+                                        timerMessageService.confirmMessage("当前卡片尚有验收标准未验收，不允许进入完成环节。", 'warning');
                                         ui.item.sortable.cancel();
                                         return;
                                     }
                                     if (movedCard.acceptanceCriteriasNode.acceptanceCriterias[index].isPassed === -1) {
-                                        timerMessageService.message("当前卡片尚有验收标准未通过验收，不允许进入完成环节。", 'warning');
+                                        timerMessageService.confirmMessage("当前卡片尚有验收标准未通过验收，不允许进入完成环节。", 'warning');
                                         ui.item.sortable.cancel();
                                         return;
                                     }
@@ -71,7 +71,7 @@ kanbanApp.directive('cards', function ($uibModal) {
                         }
                         if (angular.element(ui.item.sortable.droptarget[0]).hasClass('child-cards')) {
                             if (movedCard.child !== undefined) {
-                                timerMessageService.message("该卡片具有从属卡片，不允许挪到到其他卡片。", 'warning');
+                                timerMessageService.confirmMessage("该卡片具有从属卡片，不允许挪到到其他卡片。", 'warning');
                                 ui.item.sortable.cancel();
                                 ui.item.sortable.isMoveToParent = true;
                                 return;

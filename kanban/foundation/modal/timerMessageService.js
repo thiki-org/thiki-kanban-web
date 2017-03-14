@@ -44,6 +44,26 @@ kanbanApp.provider('timerMessageService', ['$injector',
                         backdrop: "static"
                     });
                 },
+                confirmMessage: function (_message, _type) {
+                    $uibModal.open({
+                        animation: false,
+                        templateUrl: 'foundation/modal/partials/confirm-dialog.html',
+                        controller: [
+                            '$scope',
+                            '$uibModalInstance',
+                            function ($scope, $uibModalInstance) {
+                                $scope.title = "确认信息";
+                                $scope.message = _message;
+                                $scope.type = _type === undefined ? 'ok' : _type;
+                                $scope.ok = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            }
+                        ],
+                        size: 'sm',
+                        backdrop: "static"
+                    });
+                },
                 loading: function (_message) {
                     if (instance !== undefined) {
                         return instance;
