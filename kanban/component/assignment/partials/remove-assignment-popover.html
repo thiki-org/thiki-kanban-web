@@ -1,7 +1,9 @@
 <div class="triangle"></div>
 <div class="ns-popover-tooltip">
     <div class="remove-confirm-button-area">
-        <div class="remove-confirm-text">不再需要{{assignment.assignee}}的处理？</div>
+        <div class="remove-confirm-text" profile-plain
+             profile-link="assignment._links.assigneeProfile.href">不再需要 {{profile.nickName}} 的处理？
+        </div>
         <div class="remove-confirm-button-area">
             <button class="btn btn-primary remove-confirm-button" type="button" ng-click="removeAssignment(assignment)">
                 移除
