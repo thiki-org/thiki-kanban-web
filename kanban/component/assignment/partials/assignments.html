@@ -11,10 +11,11 @@
                 assignment="assignment" profile-link="assignment._links.assigneeProfile.href"></avatar>
     </div>
     <div class="assignment" ng-repeat="assignment in assignments" ng-if="!isInCardConfiguration"
-         uib-tooltip="{{assignment.assignee}}"
+         profile-plain
+         profile-link="assignment._links.assigneeProfile.href"
+         uib-tooltip="{{profile.nickName}}"
          tooltip-placement="top"
          tooltip-trigger="mouseenter">
-        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"
-                profile-link="assignment._links.assigneeProfile.href"></avatar>
+        <avatar custom-style="assignment-avatar" avatar-link="assignment._links.assigneeAvatar.href"></avatar>
     </div>
 </div>
