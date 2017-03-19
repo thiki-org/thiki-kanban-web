@@ -10,7 +10,8 @@ kanbanApp.directive('cardTags', function () {
         transclude: true,
         scope: {
             card: '=',
-            stage: '='
+            stage: '=',
+            board: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', '$uibModal', function ($scope, boardsService, tagsService, cardTagsService, $uibModal) {
             var tagsLink = $scope.card._links.tags.href;
@@ -57,22 +58,19 @@ kanbanApp.directive('cardTags', function () {
 
             $scope.openBoardTags = function () {
                 var currentScope = $scope;
-                boardsService.loadBoardByLink(boardlink)
-                    .then(function (_data) {
-                        $uibModal.open({
-                            animation: true,
-                            templateUrl: 'component/stage/partials/tags-configuration.html',
-                            controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
-                                function ($scope) {
-                                    $scope.board = _data;
-                                    $scope.parentCallback = currentScope.loadStickTags;
-                                }
-                            ],
-                            size: 'mid',
-                            backdrop: "static"
-                        });
-                    });
-            };
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/stage/partials/tags-configuration.html',
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$location', '$uibModalInstance',
+                        function ($scope) {
+                            $scope.board = currentScope.board;
+                            $scope.parentCallback = currentScope.loadStickTags;
+                        }
+                    ],
+                    size: 'mid',
+                    backdrop: "static"
+                });
+            }
         }]
     };
 });

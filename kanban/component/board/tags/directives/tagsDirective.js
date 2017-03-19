@@ -137,8 +137,7 @@ kanbanApp.directive('tags', function () {
                 $scope.isShowTagImportForm = true;
                 $scope.isShowTagCreationButton = false;
                 $scope.selectedBoard = {};
-                var boardsUrl = usersService.getCurrentUser()._links.boards.href;
-                boardsService.load(boardsUrl).then(function (_data) {
+                boardsService.load($scope.board._links.all.href).then(function (_data) {
                     $scope.boards = _data.boards;
                     $scope.isDisableTagsImportButton = false;
                 });

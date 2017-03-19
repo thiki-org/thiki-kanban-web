@@ -59,6 +59,9 @@ kanbanApp.directive('card', function ($uibModal) {
                                     _links: {assigneeAvatar: _selectedMember._links.avatar}
                                 };
                                 if (!jsonService.contains(cardScope.assignments, "assignee", _selectedMember.userName)) {
+                                    if (!$scope.card.assignmentsNode) {
+                                        $scope.card.assignmentsNode = {assignments: []};
+                                    }
                                     $scope.card.assignmentsNode.assignments.push(newAssignment);
                                     $scope.saveAssignments();
                                 }
@@ -92,7 +95,7 @@ kanbanApp.directive('card', function ($uibModal) {
                             };
                             $scope.saveAssignments = function () {
                                 $scope.loadingInstance = timerMessageService.loading();
-                                assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card.assignmentsNode._links.self.href).then(function () {
+                                assignmentServices.assign($scope.card.assignmentsNode.assignments, $scope.card._links.assignments.href).then(function () {
                                     toaster.pop('info', "", "保存成功。");
                                 }).finally(function () {
                                     timerMessageService.close($scope.loadingInstance);

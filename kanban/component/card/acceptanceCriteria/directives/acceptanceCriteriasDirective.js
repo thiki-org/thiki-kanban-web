@@ -46,8 +46,7 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 $scope.updateAcceptanceCriteriasCount();
             };
 
-            $scope.loadAcceptanceCriterias = function () {
-                $scope.acceptanceCriterias = $scope.card.acceptanceCriteriasNode === undefined ? [] : $scope.card.acceptanceCriteriasNode.acceptanceCriterias;
+            $scope.initAcceptanceCriterias = function () {
                 $scope.acceptanceCriterias = $filter('orderBy')($scope.acceptanceCriterias, 'sortNumber');
                 $scope.$parent.acceptanceCriteriasCount = $scope.acceptanceCriterias.length;
                 $scope.updateAcceptanceCriteriasCount();
@@ -68,6 +67,17 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                         });
                     }
                 };
+            };
+            $scope.loadAcceptanceCriterias = function () {
+                if ($scope.card.acceptanceCriteriasNode !== undefined) {
+                    $scope.acceptanceCriterias = $scope.card.acceptanceCriteriasNode === undefined ? [] : $scope.card.acceptanceCriteriasNode.acceptanceCriterias;
+                    $scope.initAcceptanceCriterias();
+                    return;
+                }
+                acceptanceCriteriaService.loadAcceptanceCriterias($scope.card._links.acceptanceCriterias.href).then(function (_acceptanceCriterias) {
+                    $scope.acceptanceCriterias = _acceptanceCriterias.acceptanceCriterias;
+                    $scope.initAcceptanceCriterias();
+                });
             };
             $scope.loadAcceptanceCriterias();
             $scope.isShowAcceptanceCriteriaCreationButton = true;
