@@ -28,12 +28,12 @@ kanbanApp.directive('card', function ($uibModal) {
             $scope.isIncludHalfDay = $scope.card.elapsedDays % 1 !== 0;
             var cardScope = $scope;
             $scope.openCardConfiguration = function () {
-                var cardConfigurationLoadingInstance = timerMessageService.loading();
                 $uibModal.open({
                     animation: false,
                     templateUrl: 'component/card/partials/card-configuration.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster) {
+                            var cardConfigurationLoadingInstance = timerMessageService.loading();
                             if (cardScope.stage.inSprint && !cardScope.stage.inDoneStatus) {
                                 $scope.isInCardConfiguration = true;
                             }
@@ -41,6 +41,8 @@ kanbanApp.directive('card', function ($uibModal) {
                             $scope.board = cardScope.board;
                             $scope.cardSaveButton = "保存";
                             $scope.stage = cardScope.stage;
+
+                            $scope.isDisableModification = $scope.stage.archived || $scope.stage.inDoneStatus;
                             $scope.sizeList = [
                                 {id: 1, name: "S"},
                                 {id: 2, name: "M"},

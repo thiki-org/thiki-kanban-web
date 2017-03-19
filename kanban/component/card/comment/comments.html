@@ -3,7 +3,7 @@
         <comment ng-repeat="comment in comments |orderBy:'creationTime'"
                  comment="comment"></comment>
 
-        <div class="comment-creation thiki-animation" data-type="text" ng-hide="stage.archived">
+        <div class="comment-creation thiki-animation" data-type="text" ng-if="!$parent.isDisableModification">
             <div class="card-create-button" ng-click="openCommentCreationForm()"
                  ng-show="isShowCommentCreationButton">
                 +

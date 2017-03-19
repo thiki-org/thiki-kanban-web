@@ -415,6 +415,7 @@ ul.thiki-banner-menu.dropdown-menu {
 
 .modal-loading {
   top: 80px !important;
+  z-index: 9999 !important;
 }
 
 .modal-pages {
@@ -683,5 +684,14 @@ span.thiki-form-required {
 
 .ns-popover-tooltip {
   float: left;
-]
+}
+
+textarea[disabled=disabled] {
+  border: none !important;
+}
+
+span.field-text.ng-binding.ng-scope {
+  height: 35px;
+  line-height: 35px;
+  cursor: default;
 }

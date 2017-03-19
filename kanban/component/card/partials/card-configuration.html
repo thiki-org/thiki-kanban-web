@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="modal-body">
-    <uib-tabset>
+    <uib-tabset class="card-configuration-tabs">
         <uib-tab index="0">
             <uib-tab-heading>
                 <span class="thiki-menu-ico stage-ico glyphicon glyphicon-globe"></span>
@@ -41,7 +41,7 @@
                                   change-on-blur="saveCard()"
                                   required
                                   maxlength="60"
-                                  ng-disabled="stage.archived"/>
+                                  ng-disabled="isDisableModification"/>
                             <div class="validation-error-message"
                                  ng-show="cardForm.cardSummary.$error.required && cardForm.invitee.$dirty">请填写卡片概述
                             </div>
@@ -50,6 +50,7 @@
                     <div class="form-group">
                         <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
                         <div class="col-sm-10 input-group date-time-input">
+                            <span ng-if="isDisableModification" class="field-text">{{card.deadline}}</span>
                             <input date-time
                                    id="cardDeadline"
                                    name="cardDeadline"
@@ -60,8 +61,9 @@
                                    placeholder="截止日期"
                                    min-view="date"
                                    format="YYYY-MM-DD"
-                                   timezone="Asia/Hong_Kong"/>
-                            <div class="input-group-btn">
+                                   timezone="Asia/Hong_Kong"
+                                   ng-if="!isDisableModification"/>
+                            <div class="input-group-btn" ng-if="!isDisableModification">
                                 <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
                                         class="glyphicon glyphicon-time"></span></button>
                             </div>
@@ -69,7 +71,9 @@
 
                         <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
                         <div id="cardSize" class="col-sm-10 card-size-col">
-                            <ui-select data-ng-model="sizeList.selected" id="cardSize" on-select="saveCard()">
+                            <span ng-if="isDisableModification" class="field-text">{{card.sizeName}}</span>
+                            <ui-select data-ng-model="sizeList.selected" id="cardSize" on-select="saveCard()"
+                                       ng-if="!isDisableModification">
                                 <ui-select-match placeholder="选择规格">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices repeat="size in sizeList | filter: $select.search">
                                     <span ng-bind-html="size.name | highlight: $select.search"></span>
@@ -107,7 +111,7 @@
                     <div class="form-group ">
                         <label for="assignments" class="col-sm-1 filed-desc">分配</label>
                         <div id="assignments" class="col-sm-10 members-ui-select">
-                            <members-select board="board"/>
+                            <members-select board="board" ng-hide="isDisableModification"/>
                             <div class="assignments-list">
                                 <assignments></assignments>
                             </div>
@@ -116,10 +120,14 @@
                     <div class="form-group">
                         <label for="cardContent" class="col-sm-1 filed-desc">内容</label>
                         <div id="cardContent" class="col-sm-10 card-content-textarea">
+                            <div markdown-to-html="card.content===undefined?'':card.content"
+                                 ng-if="isDisableModification"></div>
                             <textarea name="cardContent" rows="1"
                                       class="form-control"
                                       data-ng-model="card.content"
                                       ng-change="saveCard()"
+                                      ng-disabled="isDisableModification"
+                                      ng-if="!isDisableModification"
                                       ng-model-options="{ debounce: 5000 }"
                                       simplemde='{spellChecker: false}'
                                       placeholder="Markdown|编辑时每5秒保存一次"></textarea>
@@ -130,7 +138,7 @@
                 </form>
             </div>
         </uib-tab>
-        <uib-tab index="1">
+        <uib-tab index="1" class="acceptance-criteria-tab">
             <uib-tab-heading>
                 <span class="thiki-menu-ico stage-ico glyphicon glyphicon-tasks"></span>
                 验收标准<span class='badge comment-badge'
@@ -147,7 +155,7 @@
                 标签<span class='badge comment-badge' ng-show='tagsCount>0'>{{tagsCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
-                <card-tags card="card" stage="stage" board="board"/>
+                <card-tags card="card" stage="stage" board="board" isDisableModification="isDisableModification"/>
             </div>
         </uib-tab>
         <uib-tab index="3">
