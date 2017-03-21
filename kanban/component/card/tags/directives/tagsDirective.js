@@ -11,7 +11,8 @@ kanbanApp.directive('cardTags', function () {
         scope: {
             card: '=',
             stage: '=',
-            board: '='
+            board: '=',
+            isDisableModification: '='
         },
         controller: ['$scope', 'boardsService', 'tagsService', 'cardTagsService', '$uibModal', function ($scope, boardsService, tagsService, cardTagsService, $uibModal) {
             var tagsLink = $scope.card._links.tags.href;

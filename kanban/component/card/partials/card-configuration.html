@@ -142,7 +142,7 @@
             <uib-tab-heading>
                 <span class="thiki-menu-ico stage-ico glyphicon glyphicon-tasks"></span>
                 验收标准<span class='badge comment-badge'
-                          ng-show='acceptanceCriteriasCount>0'
+                          ng-if='acceptanceCriteriasCount>0'
                           ng-class="finishedAcceptanceCriteriasCount==acceptanceCriteriasCount?'acceptance-criteria-all-finished-badge':'acceptance-criteria-un-finished-badge'">{{finishedAcceptanceCriteriasCount}}/{{acceptanceCriteriasCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
@@ -152,16 +152,16 @@
         <uib-tab index="2">
             <uib-tab-heading>
                 <span class="thiki-menu-ico stage-ico glyphicon glyphicon-tags"></span>
-                标签<span class='badge comment-badge' ng-show='tagsCount>0'>{{tagsCount}}</span>
+                标签<span class='badge comment-badge' ng-if='tagsCount>0'>{{tagsCount}}</span>
             </uib-tab-heading>
             <div class="tab-acceptance-criterias">
-                <card-tags card="card" stage="stage" board="board" isDisableModification="isDisableModification"/>
+                <card-tags card="card" stage="stage" board="board" is-disable-modification="isDisableModification"/>
             </div>
         </uib-tab>
         <uib-tab index="3">
             <uib-tab-heading>
                 <span class="thiki-menu-ico stage-ico glyphicon glyphicon-comment"></span>
-                评论<span class='badge comment-badge' ng-show='commentCount>0'>{{commentCount}}</span>
+                评论<span class='badge comment-badge' ng-if='commentCount>0'>{{commentCount}}</span>
             </uib-tab-heading>
             <div class="tab-comments">
                 <comments card="card" stage="stage"/>

@@ -1,7 +1,7 @@
 <div id="tags-options">
     <div class="tags">
         <div class="tag" ng-repeat="tag in tags" ng-class="tag.color">
-            <div ng-class="tag.color" ng-click="!$parent.isDisableModification||stickTags(tag)">
+            <div ng-class="tag.color" ng-click="!isDisableModification&&stickTags(tag)">
                 <span id="color.name" ng-show="tag.stick" class="glyphicon glyphicon-ok-circle"></span>{{tag.name}}
             </div>
         </div>
