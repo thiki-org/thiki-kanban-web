@@ -2,15 +2,22 @@
     <div class="stage-wrap">
         <div class="stage-title" data-type="text">
             <span class="thiki-menu-ico stage-ico glyphicon glyphicon-th"
-                  ng-show="stage.type===0||stage.status===0"></span>
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cardsNode.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="已达限额"
+                  ng-if="stage.type===0||stage.status===0"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right"
+                  ng-if="stage.type==1&&stage.status!=9&&stage.wipLimit===stage.cardsNode.cards.length"
+                  ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="已达限额"
                 tooltip-placement="left" tooltip-trigger="mouseenter"></span>
 
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right" ng-show="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cardsNode.cards.length" ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="卡片未达到限额，尚有剩余生产力"
-                tooltip-placement="left" tooltip-trigger="mouseenter"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-circle-arrow-right"
+                  ng-if="stage.type==1&&stage.status!=9&&stage.wipLimit>stage.cardsNode.cards.length"
+                  ng-class="{'in-process':stage.wipLimit===stage.cardsNode.cards.length}" uib-tooltip="卡片未达到限额，尚有剩余生产力"
+                  tooltip-placement="left" tooltip-trigger="mouseenter"></span>
 
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign" ng-show="stage.type==1&&stage.status==9"></span>
-            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-briefcase" ng-show="stage.archived"></span><span uib-tooltip=" {{stage.description}}" tooltip-class="tooltip-default" tooltip-placement="bottom" tooltip-trigger="mouseenter"> {{stage.title}}</span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-ok-sign"
+                  ng-if="stage.type==1&&stage.status==9"></span>
+            <span class="thiki-menu-ico stage-ico glyphicon glyphicon-briefcase" ng-if="stage.archived"></span><span
+                uib-tooltip=" {{stage.description}}" tooltip-class="tooltip-default" tooltip-placement="bottom"
+                tooltip-trigger="mouseenter"> {{stage.title}}</span>
             <span class="badge stage-cards-length">{{cardsCount}}</span>
         </div>
         <div class="dropdown stage-menu thiki-animation">
