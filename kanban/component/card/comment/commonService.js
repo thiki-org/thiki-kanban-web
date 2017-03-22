@@ -14,7 +14,7 @@ kanbanApp.factory('commentService', ['$http', '$q', 'httpServices', function ($h
         delete: function (_comment) {
             return httpServices.delete(_comment._links.self.href);
         },
-        resort: function (_comments, _resortLink) {
+        move: function (_comments, _resortLink) {
             return httpServices.put(_comments, _resortLink);
         }
     };

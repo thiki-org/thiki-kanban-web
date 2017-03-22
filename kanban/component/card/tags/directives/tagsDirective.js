@@ -71,7 +71,7 @@ kanbanApp.directive('cardTags', function () {
                     size: 'mid',
                     backdrop: "static"
                 });
-            }
+            };
         }]
     };
 });

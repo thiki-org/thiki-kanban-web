@@ -72,8 +72,8 @@ kanbanApp.directive('stages', function () {
                             for (var index in stages) {
                                 stages[index].sortNumber = index;
                             }
-                            var sortNumbersLink = currentScope.board.stagesNode._links.sortNumbers.href;
-                            stagesServices.resort(stages, sortNumbersLink);
+                            var movementLink = currentScope.board.stagesNode._links.movement.href;
+                            stagesServices.move(stages, movementLink);
                         }
                     };
                 }).finally(function () {

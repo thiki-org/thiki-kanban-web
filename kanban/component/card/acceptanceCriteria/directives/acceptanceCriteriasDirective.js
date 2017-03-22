@@ -61,8 +61,8 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                         for (var index in acceptanceCriterias) {
                             acceptanceCriterias[index].sortNumber = index;
                         }
-                        var sortNumbersLink = currentScope.card.acceptanceCriteriasNode._links.sortNumbers.href;
-                        acceptanceCriteriaService.resort(acceptanceCriterias, sortNumbersLink).then(function (_acceptanceCriterias) {
+                        var movementLink = currentScope.card.acceptanceCriteriasNode._links.movement.href;
+                        acceptanceCriteriaService.move(acceptanceCriterias, movementLink).then(function (_acceptanceCriterias) {
                             timerMessageService.close(loadingInstance);
                         });
                     }

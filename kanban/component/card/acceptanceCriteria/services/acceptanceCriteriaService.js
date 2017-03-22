@@ -14,7 +14,7 @@ kanbanApp.factory('acceptanceCriteriaService', ['$http', '$q', 'httpServices', f
         delete: function (_acceptanceCriteria) {
             return httpServices.delete(_acceptanceCriteria._links.self.href);
         },
-        resort: function (_acceptanceCriterias, _resortLink) {
+        move: function (_acceptanceCriterias, _resortLink) {
             return httpServices.put(_acceptanceCriterias, _resortLink);
         },
         submitVerification: function (_verifications, _verificationsLink) {

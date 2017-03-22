@@ -104,9 +104,9 @@ kanbanApp.directive('cards', function ($uibModal) {
                             }
                             var cards = sourceModelCards;
                             cards = cards.concat(droptargetModelCards);
-                            var sortNumbersLink = JSON.parse(ui.item.sortable.droptarget.parent().parent().attr("stageClone")).cardsNode._links.sortNumbers.href;
+                            var movementLink = JSON.parse(ui.item.sortable.droptarget.parent().parent().attr("stageClone")).cardsNode._links.movement.href;
                             var loadingInstance = timerMessageService.loading();
-                            cardsServices.resort(cards, sortNumbersLink).then(function () {
+                            cardsServices.move(cards, movementLink).then(function () {
                             }).finally(function () {
                                 timerMessageService.close(loadingInstance);
                             });

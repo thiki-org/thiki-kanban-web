@@ -15,7 +15,7 @@ kanbanApp.factory('stagesServices', ['httpServices', function (httpServices) {
         deleteByLink: function (_link) {
             return httpServices.delete(_link);
         },
-        resort: function (_stages, _resortLink) {
+        move: function (_stages, _resortLink) {
             return httpServices.put(_stages, _resortLink);
         },
         filterInSprintStages: function (_stagesArray) {
