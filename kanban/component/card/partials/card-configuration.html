@@ -48,27 +48,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
-                        <div class="col-sm-10 input-group date-time-input">
-                            <span ng-if="isDisableModification" class="field-text">{{card.deadline}}</span>
-                            <input date-time
-                                   id="cardDeadline"
-                                   name="cardDeadline"
-                                   change-on-blur="saveCard()"
-                                   type="text"
-                                   class="form-control"
-                                   data-ng-model="card.deadline"
-                                   placeholder="截止日期"
-                                   min-view="date"
-                                   format="YYYY-MM-DD"
-                                   timezone="Asia/Hong_Kong"
-                                   ng-if="!isDisableModification"/>
-                            <div class="input-group-btn" ng-if="!isDisableModification">
-                                <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
-                                        class="glyphicon glyphicon-time"></span></button>
-                            </div>
-                        </div>
-
                         <label for="cardSize" class="col-sm-1 filed-desc">规格</label>
                         <div id="cardSize" class="col-sm-10 card-size-col">
                             <span ng-if="isDisableModification" class="field-text">{{card.sizeName}}</span>
@@ -86,6 +65,26 @@
                                   uib-tooltip="规格对应的参考点数：{S:1,M:2,L:3,XL:5,XXL:8,不可估算:9999}"
                                   tooltip-placement="right"
                                   tooltip-trigger="mouseenter"></span></div>
+                        <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
+                        <div class="col-sm-10 input-group date-time-input">
+                            <span ng-if="isDisableModification" class="field-text">{{card.deadline}}</span>
+                            <input date-time
+                                   id="cardDeadline"
+                                   name="cardDeadline"
+                                   change-on-blur="saveCard()"
+                                   type="text"
+                                   class="form-control"
+                                   data-ng-model="card.deadline"
+                                   placeholder=" 截止日期"
+                                   min-view="date"
+                                   format="YYYY-MM-DD"
+                                   timezone="Asia/Hong_Kong"
+                                   ng-if="!isDisableModification"/>
+                            <div class="input-group-btn" ng-if="!isDisableModification">
+                                <button type="button" class="btn btn-default input-ico" aria-label="Help"><span
+                                        class="glyphicon glyphicon-time"></span></button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group" ng-if="card.parentId!==undefined&&card.parentId!==''">
@@ -107,6 +106,7 @@
                                   tooltip-placement="right"
                                   tooltip-trigger="mouseenter"></span></div>
                         </div>
+
                     </div>
                     <div class="form-group ">
                         <label for="assignments" class="col-sm-1 filed-desc">分配</label>
