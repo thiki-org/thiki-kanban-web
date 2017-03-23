@@ -34,9 +34,9 @@
     </div>
 
     <div class="card-operations" ng-if="board.viewType==='sprintViewSnapshot'">
-        <div class="child-cards cards-sortable"
+        <div class="child-cards"
              ng-class="{'child-cards-movement-area':$parent.isCardDragging&&stage.inSprint&&!stage.inDoneStatus}"
-             ui-sortable="sortableOptions" data-ng-model="childCards" ng-if="childCards.length>0||isCardDragging">
+             data-ng-model="childCards" ng-if="childCards.length>0||isCardDragging">
             <div ng-repeat="childCard in childCards  | orderBy: 'sortNumber'| orderBy: 'creationTime'">
                 <span id="{{childCard.id}}" ns-popover ns-popover-theme="ns-popover-tooltip-theme"
                       ns-popover-template="component/card/partials/child-card-popover.html"
