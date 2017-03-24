@@ -124,11 +124,9 @@ button, input, select, textarea {
 }
 
 .tab-card-basic-info {
-  width: 98%;
-  margin: 10px 20px -10px;
-  min-height: 135px;
-  height: auto;
-  display: inline-block;
+  width: 95%;
+  margin-left: 20px;
+  min-height: 350px;
 }
 
 .tab-card-configuration-save {
@@ -426,7 +424,8 @@ form.create-card-form {
 }
 
 textarea#cardSummary {
-  background: none;
+  background: #f9f9f9;
+  border: 1px solid #eee
 }
 
 label.filed-desc {
@@ -662,8 +661,63 @@ label.filed-desc {
 
 .card-configuration-tabs .tab-pane {
   min-height: 120px !important;
+  max-height: 68vh;
 }
 
-.acceptance-criteria-tab {
-  width: 175px;
+.more-options-button {
+  cursor: default;
+  margin-left: 38px;
+  font-size: 12px;
+}
+
+.filter-tip.ng-binding {
+  float: left;
+  height: 34px;
+  min-width: 43px;
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.filtered-cards {
+  float: left;
+  font-size: 12px;
+  margin-left: 57px;
+  cursor: default;
+  margin-top: -10px;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  width: 80%;
+  padding: 5px 5px 5px 10px;
+}
+
+.filtered-card {
+  float: left;
+  background: #f9f9f9;
+  width: 30%;
+  font-size: 12px;
+  padding: 3px;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  cursor: default;
+  margin-right: 15px;
+}
+
+.filter-card-code {
+  float: left;
+  background-color: @base;
+  color: white;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 1px;
+  margin-left: -10px;
+}
+
+.filter-card-summary {
+  float: left;
+  word-wrap: break-word;
+  width: 100%;
+  margin-top: 2px;
+  font-size: 10px;
 }

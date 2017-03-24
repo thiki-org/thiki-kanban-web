@@ -30,17 +30,15 @@ kanbanApp.directive('card', function ($uibModal) {
             $scope.openCardConfiguration = function () {
                 $uibModal.open({
                     animation: false,
+                    scope: $scope,
                     templateUrl: 'component/card/partials/card-configuration.html',
                     controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster',
                         function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster) {
                             var cardConfigurationLoadingInstance = timerMessageService.loading();
-                            if (cardScope.stage.inSprint && !cardScope.stage.inDoneStatus) {
+                            if ($scope.stage.inSprint && !$scope.stage.inDoneStatus) {
                                 $scope.isInCardConfiguration = true;
                             }
-                            $scope.card = cardScope.card;
-                            $scope.board = cardScope.board;
                             $scope.cardSaveButton = "保存";
-                            $scope.stage = cardScope.stage;
 
                             $scope.isDisableModification = $scope.stage.archived || $scope.stage.inDoneStatus;
                             $scope.sizeList = [
@@ -60,7 +58,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                     cardId: $scope.card.id,
                                     _links: {assigneeAvatar: _selectedMember._links.avatar}
                                 };
-                                if (!jsonService.contains(cardScope.assignments, "assignee", _selectedMember.userName)) {
+                                if (!jsonService.contains($scope.assignments, "assignee", _selectedMember.userName)) {
                                     if (!$scope.card.assignmentsNode) {
                                         $scope.card.assignmentsNode = {assignments: []};
                                     }
@@ -121,8 +119,8 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $uibModalInstance.dismiss('cancel');
                             };
                             $scope.removeCard = function (_card) {
-                                var index = jsonService.indexOf(cardScope.stage.cardsNode.cards, "id", _card.id);
-                                cardScope.stage.cardsNode.cards.splice(index, 1);
+                                var index = jsonService.indexOf($scope.stage.cardsNode.cards, "id", _card.id);
+                                $scope.stage.cardsNode.cards.splice(index, 1);
                             };
                             $scope.openDeleteModal = function () {
                                 $uibModal.open({
@@ -149,6 +147,23 @@ kanbanApp.directive('card', function ($uibModal) {
                                 });
                             };
                             timerMessageService.delayClose(cardConfigurationLoadingInstance);
+                            $scope.findParentCard = function (_findParentCard) {
+                                $scope.filterTip = "";
+                                $scope.filteredCards = [];
+                                $scope.isResultValid = false;
+                                var filteredCards = cardsServices.filter($scope.board, _findParentCard, $scope.card.code);
+                                if (filteredCards.length === 0) {
+                                    return;
+                                }
+                                if (filteredCards.length > 3) {
+                                    $scope.filterTip = "搜索结果大于3，请补全关键字以缩小搜索范围。";
+                                    return;
+                                }
+                                $scope.filteredCards = filteredCards;
+                                $scope.isResultValid = true;
+                                $scope.filterTip = "请点击下列卡片，将其设置为当前卡片的父级卡片";
+                                console.log(filteredCards);
+                            };
                         }
                     ],
                     size: 'card',
