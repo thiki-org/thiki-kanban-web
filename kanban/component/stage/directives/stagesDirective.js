@@ -6,6 +6,11 @@ kanbanApp.directive('stages', function () {
         restrict: 'E',
         templateUrl: 'component/stage/partials/stages.html',
         replace: true,
+        link: function (scope, element, attrs) {
+            scope.$on('reloadStages', function (event, data) {
+                scope.loadStages();
+            })
+        },
         controller: ['$scope', 'boardsService', 'stagesServices', 'localStorageService', '$uibModal', 'usersService', 'timerMessageService', 'advancedFilterFactory', function ($scope, boardsService, stagesServices, localStorageService, $uibModal, usersService, timerMessageService, advancedFilterFactory) {
             $scope.statisticsStoryPoints = function () {
                 var board = currentScope.board;

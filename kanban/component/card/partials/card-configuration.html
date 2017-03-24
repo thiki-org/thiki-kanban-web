@@ -150,7 +150,12 @@
                     </div>
                     <div class="form-group" ng-if="isShowMoreOptions&&!isDisableModification">
                         <div class="filtered-cards" ng-if="filteredCards&&filteredCards.length>0">
-                            <div ng-repeat="filteredCard in filteredCards" class="filtered-card">
+                            <div ng-repeat="filteredCard in filteredCards" class="filtered-card"
+                                 ns-popover ns-popover-theme="ns-popover-tooltip-theme"
+                                 ns-popover-template="component/card/partials/select-parent-card-popover.html"
+                                 ns-popover-trigger="click"
+                                 ns-popover-timeout="0"
+                                 ns-popover-placement="top">
                                 <div class="filter-card-code">{{filteredCard.code}}</div>
                                 <div class="filter-card-summary">{{filteredCard.summary}}</div>
                             </div>

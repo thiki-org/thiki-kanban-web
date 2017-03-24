@@ -32,8 +32,8 @@ kanbanApp.directive('card', function ($uibModal) {
                     animation: false,
                     scope: $scope,
                     templateUrl: 'component/card/partials/card-configuration.html',
-                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster',
-                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'usersService', 'assignmentServices', 'toaster', '$rootScope',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, usersService, assignmentServices, toaster, $rootScope) {
                             var cardConfigurationLoadingInstance = timerMessageService.loading();
                             if ($scope.stage.inSprint && !$scope.stage.inDoneStatus) {
                                 $scope.isInCardConfiguration = true;
@@ -66,29 +66,17 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.saveAssignments();
                                 }
                             };
-                            $scope.saveCard = function () {
-                                var originParentId = $scope.card.parentId;
-                                if (!$scope.card.asChildCard) {
-                                    $scope.card.parentId = "";
-                                }
+                            $scope.saveCard = function (_reloadStages) {
                                 $scope.card.size = $scope.sizeList.selected.id;
                                 $scope.loadingInstance = timerMessageService.loading();
                                 cardsServices.update($scope.card).then(function (_savedCard) {
                                     $scope.card.code = _savedCard.code;
                                     $scope.card.restDays = _savedCard.restDays;
                                     $scope.card.sizeName = _savedCard.sizeName;
-                                    if ($scope.card.asChildCard === false) {
-                                        for (var index in $scope.stage.cardsNode.cards) {
-                                            if ($scope.stage.cardsNode.cards[index].id === originParentId) {
-                                                var childCardIndex = $scope.stage.cardsNode.cards[index].child.cards.indexOf($scope.card);
-                                                $scope.stage.cardsNode.cards[index].child.cards.splice(childCardIndex, 1);
-                                                $scope.stage.cardsNode.cards.push($scope.card);
-                                                $scope.card.parentId = undefined;
-                                                break;
-                                            }
-                                        }
-                                    }
                                     toaster.pop('info', "", "卡片已保存。");
+                                    if (_reloadStages) {
+                                        $rootScope.$broadcast('reloadStages')
+                                    }
                                 }).finally(function () {
                                     timerMessageService.delayClose($scope.loadingInstance);
                                 });
@@ -164,6 +152,11 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $scope.filterTip = "请点击下列卡片，将其设置为当前卡片的父级卡片";
                                 console.log(filteredCards);
                             };
+
+                            $scope.selectParentCard = function (_filteredCard) {
+                                $scope.card.parentId = _filteredCard.id;
+                                $scope.saveCard(true);
+                            }
                         }
                     ],
                     size: 'card',

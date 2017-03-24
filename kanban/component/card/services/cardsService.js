@@ -24,7 +24,7 @@ kanbanApp.factory('cardsServices', ['$http', '$q', 'httpServices', function ($ht
         getAllCards: function (_board) {
             for (var stageIndex in _board.stagesNode.stages) {
                 var stage = _board.stagesNode.stages[stageIndex];
-                if (stage.archived || stage.inDoneStage) {
+                if (stage.archived || stage.inDoneStatus) {
                     continue;
                 }
                 for (var cardIndex in stage.cardsNode.cards) {
