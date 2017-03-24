@@ -75,7 +75,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                     $scope.card.sizeName = _savedCard.sizeName;
                                     toaster.pop('info', "", "卡片已保存。");
                                     if (_reloadStages) {
-                                        $rootScope.$broadcast('reloadStages')
+                                        $rootScope.$broadcast('reloadStages');
                                     }
                                 }).finally(function () {
                                     timerMessageService.delayClose($scope.loadingInstance);
@@ -110,28 +110,16 @@ kanbanApp.directive('card', function ($uibModal) {
                                 var index = jsonService.indexOf($scope.stage.cardsNode.cards, "id", _card.id);
                                 $scope.stage.cardsNode.cards.splice(index, 1);
                             };
-                            $scope.openDeleteModal = function () {
-                                $uibModal.open({
-                                    animation: true,
-                                    templateUrl: 'foundation/modal/partials/confirm-dialog.html',
-                                    controller: function ($scope, $uibModalInstance) {
-                                        $scope.title = '警告';
-                                        $scope.buttonText = "确认";
-                                        $scope.message = "你是否确定要删除本张卡片?";
-                                        $scope.ok = function () {
-                                            cardsServices.deleteByLink(currentScope.card._links.self.href).then(function () {
-                                                currentScope.removeCard(currentScope.card);
-                                                timerMessageService.message("卡片已经删除。");
-                                                currentScope.cancel();
-                                            });
-                                            $uibModalInstance.close();
-                                        };
-                                        $scope.cancel = function () {
-                                            $uibModalInstance.dismiss('cancel');
-                                        };
-                                    },
-                                    size: 'sm',
-                                    backdrop: "static"
+                            $scope.deleteCard = function () {
+                                var loadingInstance = timerMessageService.loading();
+
+                                cardsServices.deleteByLink(currentScope.card._links.self.href).then(function () {
+                                    currentScope.removeCard(currentScope.card);
+                                    currentScope.cancel();
+                                    toaster.pop('info', "", "卡片已经删除。");
+                                    $rootScope.$broadcast('reloadStages');
+                                }).finally(function () {
+                                    timerMessageService.delayClose(loadingInstance);
                                 });
                             };
                             timerMessageService.delayClose(cardConfigurationLoadingInstance);
@@ -156,7 +144,11 @@ kanbanApp.directive('card', function ($uibModal) {
                             $scope.selectParentCard = function (_filteredCard) {
                                 $scope.card.parentId = _filteredCard.id;
                                 $scope.saveCard(true);
-                            }
+                            };
+                            $scope.moveOutOfParent = function () {
+                                $scope.card.parentId = "";
+                                $scope.saveCard(true);
+                            };
                         }
                     ],
                     size: 'card',

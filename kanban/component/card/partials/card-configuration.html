@@ -7,18 +7,6 @@
                 创建 {{card.creationTime}} 作者 {{card.author}}
             </div>
         </div>
-        <div class="card-configuration-header-options">
-            <div class="card-configuration-header-options-button dropdown">
-                <button class="dropdown-toggle dropdown" type="button" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-cog card-setting"></span>
-                </button>
-                <ul class="thiki-banner-menu thiki-menu-items dropdown-menu">
-                    <li class="thiki-menu-item" ng-if="!stage.archived&&!stage.inDoneStatus">
-                        <a ng-click="openDeleteModal()"><span class="thiki-menu-ico glyphicon glyphicon-trash"></span>删除</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 <div class="modal-body">
@@ -85,28 +73,6 @@
                                         class="glyphicon glyphicon-time"></span></button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group" ng-if="card.parentId!==undefined&&card.parentId!==''">
-                        <label for="childCard" class="col-sm-1 filed-desc">从属卡片</label>
-                        <div class="col-sm-10 input-group child-card-check">
-                            <input id="childCard"
-                                   name="childCard"
-                                   ng-change="saveCard()"
-                                   type="checkbox"
-                                   class="form-control"
-                                   data-ng-model="card.asChildCard"
-                                   ng-true-value="true" ng-false-value="false"
-                                   ng-checked="card.parentId!==undefined">
-                            <label for="childCard" class="checked-box-label"></label>
-                            <div class="field-tip">
-                            <span class="glyphicon glyphicon-question-sign"
-                                  aria-hidden="true"
-                                  uib-tooltip="取消勾选后，该卡片将从父卡片中移除，转为普通卡片"
-                                  tooltip-placement="right"
-                                  tooltip-trigger="mouseenter"></span></div>
-                        </div>
-
                     </div>
                     <div class="form-group ">
                         <label for="assignments" class="col-sm-1 filed-desc">分配</label>
@@ -175,6 +141,36 @@
                                       ng-model-options="{ debounce: 5000 }"
                                       simplemde='{spellChecker: false}'
                                       placeholder="Markdown|编辑时每5秒保存一次"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group"
+                         ng-if="isShowMoreOptions&&!isDisableModification&&card.parentId&&card.parentId!==''">
+                        <label for="move-out-of-parent-card" class="col-sm-1 filed-desc filed-desc-empty"></label>
+                        <div class="col-sm-10 input-group no-desc-filed" id="move-out-of-parent-card">
+                            <button class="btn thiki-warning-button" type="button"
+                                    ns-popover ns-popover-theme="ns-popover-tooltip-theme"
+                                    ns-popover-template="component/card/partials/move-out-of-parent-card-popover.html"
+                                    ns-popover-trigger="click"
+                                    ns-popover-timeout="0"
+                                    ns-popover-placement="top">
+                                从父级卡片中移出
+                            </button>
+                            <span class="filed-desc-tip">移出后将作为独立卡片存在。</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="isShowMoreOptions&&!isDisableModification">
+                        <label for="delete-card" class="col-sm-1 filed-desc filed-desc-empty"></label>
+                        <div class="col-sm-10 input-group no-desc-filed" id="delete-card">
+                            <button class="btn thiki-delete-button" type="button"
+                                    ns-popover ns-popover-theme="ns-popover-tooltip-theme"
+                                    ns-popover-template="component/card/partials/delete-card-popover.html"
+                                    ns-popover-trigger="click"
+                                    ns-popover-timeout="0"
+                                    ns-popover-placement="top">
+                                删除卡片
+                            </button>
+                            <span class="filed-desc-tip">删除后不可恢复，请谨慎操作。存在从属卡片时，将一并全部删除。</span>
                         </div>
                     </div>
                 </form>

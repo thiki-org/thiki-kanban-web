@@ -53,8 +53,9 @@ kanbanApp.directive('acceptanceCriterias', function ($uibModal) {
                 var currentScope = $scope;
                 $scope.acceptanceCriteriasSortableOptions = {
                     connectWith: ".acceptanceCriteria",
+                    opacity: 0.5,
                     placeholder: "acceptanceCriteria-drag-placeholder",
-                    'ui-floating': 'auto',
+                    containerPositioning: 'relative',
                     stop: function (e, ui) {
                         var loadingInstance = timerMessageService.loading();
                         var acceptanceCriterias = ui.item.sortable.sourceModel;

@@ -3,6 +3,7 @@
 @base: #2fbacd;
 @error: rgb(253, 3, 96);
 @danger: rgb(253, 3, 96);
+@warning: #fc8a51;
 
 body {
   width: 100%;
@@ -134,15 +135,25 @@ button.thiki-submit-button {
 
 .thiki-delete-button {
   background-color: @error !important;
-  color: white;
+  color: white !important;
+}
+
+.thiki-delete-button:hover {
+  color: white !important;
 }
 
 .thiki-warning-button {
-  background-color: @error !important;
+  background-color: @warning !important;
+  color: white !important;
+}
+
+.thiki-warning-button:hover {
+  color: white !important;
 }
 
 .thiki-delete-item :hover {
-  background-color: @error !important;
+  background-color: @warning !important;
+  color: white !important;
 }
 
 .thiki-warning-button :hover {

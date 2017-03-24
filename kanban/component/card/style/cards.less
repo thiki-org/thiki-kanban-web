@@ -124,7 +124,7 @@ button, input, select, textarea {
 }
 
 .tab-card-basic-info {
-  width: 95%;
+  width: 94%;
   margin-left: 20px;
   min-height: 350px;
 }
@@ -362,9 +362,11 @@ span.thiki-menu-ico.glyphicon.glyphicon-heart {
 }
 
 .modal-card {
-  width: 880px !important;
-  height: 700px !important;
-  top: 5vh !important;
+  position: fixed;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  margin-top: 5vh !important;
+  width: 60vw !important;
 }
 
 .modal-fs {
@@ -665,7 +667,7 @@ label.filed-desc {
 }
 
 .more-options-button {
-  cursor: default;
+  cursor: pointer;
   margin-left: 38px;
   font-size: 12px;
 }
@@ -720,4 +722,25 @@ label.filed-desc {
   width: 100%;
   margin-top: 2px;
   font-size: 10px;
+}
+
+.filed-desc-empty {
+  min-width: 27px;
+}
+
+.filed-desc-tip {
+  font-size: 12px;
+  margin-left: 15px;
+  height: 34px;
+  color: #bbb;
+}
+
+.no-desc-filed {
+  float: left !important;
+  margin-left: 15px;
+}
+
+.modal-card input {
+  background: #f9f9f9;
+  border: 1px solid #eee;
 }
