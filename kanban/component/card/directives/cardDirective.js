@@ -138,9 +138,7 @@ kanbanApp.directive('card', function ($uibModal) {
                                 $scope.filteredCards = filteredCards;
                                 $scope.isResultValid = true;
                                 $scope.filterTip = "请点击下列卡片，将其设置为当前卡片的父级卡片";
-                                console.log(filteredCards);
                             };
-
                             $scope.selectParentCard = function (_filteredCard) {
                                 $scope.card.parentId = _filteredCard.id;
                                 $scope.saveCard(true);

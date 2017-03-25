@@ -125,8 +125,10 @@ button, input, select, textarea {
 
 .tab-card-basic-info {
   width: 94%;
-  margin-left: 20px;
+  margin-left: 5px;
   min-height: 350px;
+  max-height: 68vh;
+  overflow: auto;
 }
 
 .tab-card-configuration-save {
@@ -138,7 +140,6 @@ button, input, select, textarea {
 }
 
 .tab-card-basic-info form {
-  margin-left: 5px;
   padding-top: 10px;
 }
 
@@ -433,12 +434,11 @@ textarea#cardSummary {
 label.filed-desc {
   border-radius: 3px;
   font-size: 12px;
-  width: 60px;
+  width: 60px !important;
   text-align: right;
   height: 35px;
   line-height: 35px;
   padding: 0 2px;
-  margin-left: 15px;
 }
 
 .tab-card-basic-info .form-group {
@@ -668,7 +668,7 @@ label.filed-desc {
 
 .more-options-button {
   cursor: pointer;
-  margin-left: 38px;
+  margin-left: 15px;
   font-size: 12px;
 }
 
@@ -743,4 +743,8 @@ label.filed-desc {
 .modal-card input {
   background: #f9f9f9;
   border: 1px solid #eee;
+}
+
+.modal-card form {
+  width: 95%;
 }

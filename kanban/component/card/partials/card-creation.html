@@ -27,6 +27,29 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="stageId" class="col-sm-1 filed-desc">所属环节<span class="thiki-form-required">*</span></label>
+                <div id="stageId" class="col-sm-10 card-size-col">
+                    <ui-select data-ng-model="stages.selected" id="cardSize">
+                        <ui-select-match placeholder="选择环节">{{$select.selected.title}}</ui-select-match>
+                        <ui-select-choices repeat="stage in stages | filter: $select.search">
+                            <span ng-bind-html="stage.title | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="field-tip">
+                            <span class="glyphicon glyphicon-question-sign"
+                                  aria-hidden="true"
+                                  uib-tooltip="进行中的环节、完成环节以及归档环节不可选"
+                                  tooltip-placement="right"
+                                  tooltip-trigger="mouseenter"></span></div>
+            </div>
+            <div class="form-group ">
+                <label class="col-sm-1 filed-desc"></label>
+                <div id="more-options" class="col-sm-10 input-group">
+                    <span class="more-options-button" ng-click="isShowMoreOptions=!isShowMoreOptions">{{isShowMoreOptions?"隐藏更多配置":"显示更多配置.."}}</span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="isShowMoreOptions">
                 <label for="cardDeadline" class="col-sm-1 filed-desc">截止日期</label>
                 <div class="col-sm-10 input-group date-time-input">
                     <input date-time
@@ -61,24 +84,42 @@
                                   tooltip-placement="right"
                                   tooltip-trigger="mouseenter"></span></div>
             </div>
-            <div class="form-group">
-                <label for="stageId" class="col-sm-1 filed-desc">所属环节<span class="thiki-form-required">*</span></label>
-                <div id="stageId" class="col-sm-10 card-size-col">
-                    <ui-select data-ng-model="stages.selected" id="cardSize">
-                        <ui-select-match placeholder="选择环节">{{$select.selected.title}}</ui-select-match>
-                        <ui-select-choices repeat="stage in stages | filter: $select.search">
-                            <span ng-bind-html="stage.title | highlight: $select.search"></span>
-                        </ui-select-choices>
-                    </ui-select>
+            <div class="form-group" ng-show="isShowMoreOptions">
+                <label for="parentCard" class="col-sm-1 filed-desc">父级卡片</label>
+                <div class="col-sm-10">
+                    <input id="parentCard"
+                           name="parentCard"
+                           type="text"
+                           class="form-control thiki-input"
+                           ng-model="parentCardKeyword"
+                           ng-change="findParentCard(parentCardKeyword)"
+                           placeholder="输入编号或概述选择父卡片"/>
+                    <div class="field-tip">
+                                <span class="glyphicon glyphicon-question-sign"
+                                      aria-hidden="true"
+                                      uib-tooltip="选择所属卡片后，该卡片将作为从属卡片存在"
+                                      tooltip-placement="right"
+                                      tooltip-trigger="mouseenter"></span>
+                    </div>
+                    <div class="filter-tip"
+                         ng-class="{'alert alert-success':isResultValid,'alert alert-warning':!isResultValid}"
+                         ng-show="filterTip&&filterTip.length>0&&parentCardKeyword&&parentCardKeyword.length>0">
+                        {{filterTip}}
+                    </div>
                 </div>
-                <div class="field-tip">
-                            <span class="glyphicon glyphicon-question-sign"
-                                  aria-hidden="true"
-                                  uib-tooltip="进行中的环节、完成环节以及归档环节不可选"
-                                  tooltip-placement="right"
-                                  tooltip-trigger="mouseenter"></span></div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-if="isShowMoreOptions">
+                <div class="filtered-cards" ng-if="filteredCards&&filteredCards.length>0">
+                    <div ng-repeat="filteredCard in filteredCards" class="filtered-card"
+                         ng-click="selectParentCard(filteredCard)">
+                        <span class="selected-item glyphicon glyphicon-ok-sign"
+                              ng-show="card.parentId===filteredCard.id"></span>
+                        <div class="filter-card-code">{{filteredCard.code}}</div>
+                        <div class="filter-card-summary">{{filteredCard.summary}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-show="isShowMoreOptions">
                 <label for="cardContent" class="col-sm-1 filed-desc">内容</label>
                 <div class="col-sm-10 card-content-textarea">
                             <textarea id="cardContent" name="cardContent" rows="1"
