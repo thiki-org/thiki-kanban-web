@@ -118,8 +118,8 @@ kanbanApp.directive('stagesBanner', function () {
                 $uibModal.open({
                     animation: true,
                     templateUrl: 'component/card/partials/card-creation.html',
-                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'stagesServices', 'cardsServices', '$filter',
-                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, stagesServices, cardsServices, $filter) {
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'stagesServices', 'cardsServices', '$rootScope',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, stagesServices, cardsServices, $rootScope) {
                             $scope.board = stagesScope.board;
                             $scope.cardSaveButton = "创建";
                             $scope.sizeList = [
@@ -132,6 +132,29 @@ kanbanApp.directive('stagesBanner', function () {
                             ];
                             $scope.stages = stagesServices.filterInSprintStages(stagesScope.board.stagesNode.stages);
                             $scope.card = {summary: ""};
+                            $scope.findParentCard = function (_findParentCard) {
+                                $scope.filterTip = "";
+                                $scope.filteredCards = [];
+                                $scope.isResultValid = false;
+                                var filteredCards = cardsServices.filter($scope.board, _findParentCard, $scope.card.code);
+                                if (filteredCards.length === 0) {
+                                    return;
+                                }
+                                if (filteredCards.length > 3) {
+                                    $scope.filterTip = "搜索结果大于3，请补全关键字以缩小搜索范围。";
+                                    return;
+                                }
+                                $scope.filteredCards = filteredCards;
+                                $scope.isResultValid = true;
+                                $scope.filterTip = "请点击下列卡片，将其设置为当前卡片的父级卡片";
+                            };
+                            $scope.selectParentCard = function (_filteredCard) {
+                                if ($scope.card.parentId === _filteredCard.id) {
+                                    $scope.card.parentId = "";
+                                    return;
+                                }
+                                $scope.card.parentId = _filteredCard.id;
+                            };
                             $scope.saveCard = function () {
                                 $scope.cardSaveButton = "稍等..";
                                 $scope.isDisableCardSaveButton = true;
@@ -151,7 +174,7 @@ kanbanApp.directive('stagesBanner', function () {
                                     var newCardElement = angular.element(document.getElementById("card-" + _card.id));
                                     newCardElement.removeClass('new-card');
                                     toaster.pop('info', "", "卡片已经创建。");
-                                    $uibModalInstance.dismiss('cancel');
+                                    $rootScope.$broadcast('reloadStages');
                                 }).finally(function () {
                                     $scope.cardSaveButton = "创建";
                                     $scope.isDisableCardSaveButton = false;
@@ -160,7 +183,7 @@ kanbanApp.directive('stagesBanner', function () {
                             };
                         }
                     ],
-                    size: 'lg',
+                    size: 'card',
                     backdrop: "static"
                 });
             };
