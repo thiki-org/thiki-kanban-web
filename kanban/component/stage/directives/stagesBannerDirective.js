@@ -175,6 +175,7 @@ kanbanApp.directive('stagesBanner', function () {
                                     newCardElement.removeClass('new-card');
                                     toaster.pop('info', "", "卡片已经创建。");
                                     $rootScope.$broadcast('reloadStages');
+                                    $uibModalInstance.dismiss('cancel');
                                 }).finally(function () {
                                     $scope.cardSaveButton = "创建";
                                     $scope.isDisableCardSaveButton = false;

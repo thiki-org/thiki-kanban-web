@@ -5,9 +5,10 @@
 <div class="modal-body">
     <form name="stageForm" role="form" class="form-horizontal">
         <div class="form-group">
-            <label for="stageTitle" class="col-sm-1 control-label">名称</label>
+            <label for="stageTitle" class="col-sm-1 field-desc">名称<span
+                    class="thiki-form-required">*</span></label>
 
-            <div class="col-sm-10">
+            <div class="col-sm-10 simple-input">
                 <input id="stageTitle" name="stageTitle" type="text" class="form-control" data-ng-model="stage.title"
                        focus="true" placeholder="名称" autocomplete="off" maxlength="30" required/>
 
@@ -19,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            <label for="stageDescription" class="col-sm-1 control-label">描述</label>
+            <label for="stageDescription" class="col-sm-1 field-desc">描述</label>
             <div class="col-sm-10">
                 <textarea id="stageDescription" name="stageDescription" rows="3" ng-maxlength="100"
                           class="form-control ng-pristine ng-valid ng-valid-required ng-touched"
@@ -29,18 +30,19 @@
         </div>
 
         <div class="form-group" ng-hide="stage.archived">
-            <label for="stageType" class="col-sm-1 control-label">类型</label>
-            <div class="col-sm-4">
-                <ui-select data-ng-model="types.selected" id="stageType" name="stageType">
+            <label for="stageType" class="col-sm-1 field-desc">类型<span
+                    class="thiki-form-required">*</span></label>
+            <div class="col-sm-4 simple-input" id="stageType">
+                <ui-select data-ng-model="types.selected" name="stageType">
                     <ui-select-match placeholder="选择类型">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="type in types | filter: $select.search">
                         <span ng-bind-html="type.name | highlight: $select.search"></span>
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <label for="stageStatus" class="col-sm-1 control-label">状态</label>
-            <div class="col-sm-4">
-                <ui-select data-ng-model="statusList.selected" id="stageStatus" name="stageStatus">
+            <label for="stageStatus" class="col-sm-1 field-desc">状态</label>
+            <div class="col-sm-4 simple-input" id="stageStatus">
+                <ui-select data-ng-model="statusList.selected" name="stageStatus">
                     <ui-select-match placeholder="选择类型">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="status in statusList | filter: $select.search">
                         <span ng-bind-html="status.name | highlight: $select.search"></span>
@@ -49,9 +51,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="WIPLimit" class="col-sm-1 control-label">限额</label>
+            <label for="WIPLimit" class="col-sm-1 field-desc">限额</label>
             <div class="col-sm-10">
-                <input id="WIPLimit" class="form-control" type="number" name="WIPLimit" ng-model="stage.wipLimit"
+                <input id="WIPLimit" class="form-control simple-input" type="number" name="WIPLimit"
+                       ng-model="stage.wipLimit"
                        min="1" max="99" required>
                 <div class="field-tip">
                     <span class="glyphicon glyphicon-question-sign" aria-hidden="true"

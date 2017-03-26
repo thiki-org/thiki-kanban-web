@@ -1,5 +1,5 @@
 <div id="card-{{card.id}}" class="card" card-id="{{card.id}}"
-     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived||stage.inDoneStatus,'card-rest-days-warning-summary':card.restDays<=3&&card.restDays>0&&stage.inProcess}"
+     ng-class="{'new-card':card.isNew,'not-sortable': stage.archived||stage.inDoneStatus,'card-rest-days-warning-summary':card.restDays<=1&&card.restDays>0&&stage.inProcess}"
      context-menu="menuOptions" context-menu-class="thiki-menu-items">
     <div class="card-code-label" ng-if="card.code!=undefined&&card.code!=''">
         <span>{{card.code}}</span>
@@ -14,13 +14,13 @@
         <span class="glyphicon glyphicon-comment"></span>
     </div>
     <div class="card-ico"
-         ng-class="{'card-rest-days-warning':card.restDays<=3&&card.restDays>0,'card-rest-days-expired-warning':card.restDays<0}"
+         ng-class="{'card-rest-days-warning':card.restDays<=1&&card.restDays>0&&stage.inProcess,'card-rest-days-expired-warning':card.restDays<0&&stage.inProcess}"
          ng-if="card.restDays!=undefined&&board.viewType==='sprintViewSnapshot'">
         <span uib-tooltip="距{{card.deadline}}还有{{card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter"
-              ng-if="card.restDays>3&&stage.inProcess"><span
+              ng-if="card.restDays>1&&stage.inProcess"><span
                 class="glyphicon glyphicon-time"></span></span>
         <span uib-tooltip="{{card.restDays}}天后逾期" tooltip-placement="left" tooltip-trigger="mouseenter"
-              ng-if="card.restDays<=3&&card.restDays>=0&&stage.inProcess"><span
+              ng-if="card.restDays<=1&&card.restDays>=0&&stage.inProcess"><span
                 class="glyphicon glyphicon-time"></span></span>
         <span uib-tooltip="逾期{{-card.restDays}}天" tooltip-placement="left" tooltip-trigger="mouseenter"
               ng-if="card.restDays<0&&stage.inProcess"><span
@@ -35,8 +35,7 @@
 
     <div class="card-operations" ng-if="board.viewType==='sprintViewSnapshot'">
         <div class="child-cards"
-             ng-class="{'child-cards-movement-area':$parent.isCardDragging&&stage.inSprint&&!stage.inDoneStatus}"
-             data-ng-model="childCards" ng-if="childCards.length>0||isCardDragging">
+             data-ng-model="childCards" ng-if="childCards.length>0">
             <div ng-repeat="childCard in childCards  | orderBy: 'sortNumber'| orderBy: 'creationTime'">
                 <span id="{{childCard.id}}" ns-popover ns-popover-theme="ns-popover-tooltip-theme"
                       ns-popover-template="component/card/partials/child-card-popover.html"
