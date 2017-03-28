@@ -43,7 +43,7 @@ kanbanApp.factory('cardsServices', ['$http', '$q', 'httpServices', function ($ht
                 if (card.code === _cardCode) {
                     continue;
                 }
-                if (card.code.indexOf(_parentCardKeyword) > -1 || card.summary.indexOf(_parentCardKeyword) > -1) {
+                if (card.code && card.code.indexOf(_parentCardKeyword) > -1 || card.summary.indexOf(_parentCardKeyword) > -1) {
                     filteredCards.push(allCardsInBoard[index]);
                 }
             }

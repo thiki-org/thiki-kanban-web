@@ -1,7 +1,6 @@
 <div id="stage-{{stage.id}}" stageId="{{stage.id}}" stageClone="{{stage}}" class="stage-item"
      ng-mouseover="onStageMenuMouseOver($event)">
-    <div class="stage-wrap" ng-class="{'unreach-wip':stage.wipLimit>stage.cardsNode.cards.length&&stage.inProcess}"
-         uib-tooltip="当前环节卡片未达到限额，尚有剩余生产力" tooltip-placement="right" tooltip-trigger="mouseenter">
+    <div class="stage-wrap" ng-class="{'unreach-wip':stage.wipLimit>stage.cardsNode.cards.length&&stage.inProcess}">
         <div class="stage-title" data-type="text">
             <span class="thiki-menu-ico stage-ico glyphicon glyphicon-th"
                   ng-if="stage.type===0||stage.status===0"></span>
