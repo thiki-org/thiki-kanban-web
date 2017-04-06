@@ -413,9 +413,11 @@ ul.thiki-banner-menu.dropdown-menu {
 }
 
 .modal-mid {
-  width: 880px !important;
-  height: 500px !important;
-  top: 80px !important;
+  position: fixed;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  margin-top: 5vh !important;
+  width: 60vw !important;
 }
 
 .modal-sm {
@@ -467,12 +469,6 @@ ul.thiki-banner-menu.dropdown-menu {
   width: 100% !important;
   height: 100% !important;
   top: 10px !important;
-}
-
-@media (min-width: 768px) {
-  .modal-dialog {
-    margin-top: 0 !important;
-  }
 }
 
 .modal-backdrop.in {
@@ -747,4 +743,9 @@ form textarea {
 .field-desc {
   min-width: 66px;
   text-align: left !important;
+}
+
+.form-group {
+  max-width: 100%;
+  margin-left: 0px !important;
 }
