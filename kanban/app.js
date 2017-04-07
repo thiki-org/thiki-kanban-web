@@ -22,7 +22,8 @@ var kanbanApp = angular.module('kanbanApp', [
     "pageslide-directive",
     "nsPopover",
     "toaster",
-    "dcbImgFallback"
+    "dcbImgFallback",
+    "chart.js"
 ]);
 kanbanApp.config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider', '$stateProvider', '$urlRouterProvider',
     function ($routeProvider, $httpProvider, localStorageServiceProvider, $stateProvider, $urlRouterProvider) {

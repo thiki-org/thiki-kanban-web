@@ -20,6 +20,13 @@ kanbanApp.directive('card', function ($uibModal) {
                     finishedAcceptanceCriteriasCount++;
                 }
             }
+            var stage = {
+                id: $scope.stage.id,
+                title: $scope.stage.title,
+                limitationOnEntry: $scope.stage.limitationOnEntry,
+                definitionOfDone: $scope.stage.definitionOfDone
+            };
+            $scope.card.stage = stage;
             $scope.card.finishedAcceptanceCriteriasCount = finishedAcceptanceCriteriasCount;
             $scope.card.totalAcceptanceCriteriasCount = acceptanceCriterias.length;
             $scope.card.finished = $scope.card.finishedAcceptanceCriteriasCount === $scope.card.totalAcceptanceCriteriasCount && $scope.card.totalAcceptanceCriteriasCount > 0;

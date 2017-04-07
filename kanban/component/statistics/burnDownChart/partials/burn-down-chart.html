@@ -1,0 +1,10 @@
+<div class="burn-down-chart">
+    <canvas burn-down-hart class="chart chart-line" chart-data="data" chart-labels="labels"
+            chart-series="series"></canvas>
+    <div class="chart-bottom">
+        <div class="data-last-update-time"><i class="fa fa-refresh " ng-click="refreshBurnDownChart()"
+                                              uib-tooltip="点击刷新实时数据" tooltip-placement="top"
+                                              tooltip-trigger="mouseenter"></i> 最后更新：{{statisticsDataLastUpdateTime}}
+        </div>
+    </div>
+</div>

@@ -37,6 +37,7 @@ kanbanApp.directive('stages', function () {
             $scope.loadSprint = function () {
                 boardsService.loadActiveSprint($scope.board._links.activeSprint.href).then(function (_sprint) {
                     $scope.sprint = _sprint;
+                    $scope.board.sprint = _sprint;
                     $scope.$watch(function () {
                         return $scope.board;
                     }, function (newValue, oldValue) {
@@ -123,7 +124,6 @@ kanbanApp.directive('stages', function () {
                                     $scope.isDisableSprintSaveButton = false;
                                 }
                             });
-
                         }
                     ],
                     size: 'sprint',

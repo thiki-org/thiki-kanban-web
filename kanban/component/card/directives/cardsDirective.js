@@ -1,7 +1,7 @@
 /**
  * Created by xubt on 5/26/16.
  */
-kanbanApp.directive('cards', function ($uibModal) {
+kanbanApp.directive('cards', function () {
     return {
         restrict: 'E',
         templateUrl: 'component/card/partials/cards.html',
@@ -11,17 +11,11 @@ kanbanApp.directive('cards', function ($uibModal) {
                 var stage = $scope.stage;
                 $scope.cards = stage.cardsNode === undefined ? [] : stage.cardsNode.cards;
                 $scope.cards = $filter('orderBy')($scope.cards, 'sortNumber');
-                $scope.isCardDragging = false;
+                $scope.disableSortable = false;
                 $scope.sortableOptions = {
                     connectWith: ".cards-sortable",
                     opacity: 0.5,
                     placeholder: "card-drag-placeholder",
-                    start: function (e, ui) {
-                        if (ui.item.sortable.model.child === undefined) {
-                            localStorageService.set("isCardDragging", true);
-                        }
-                        $('.cards-sortable').sortable('refresh');
-                    },
                     update: function (e, ui) {
                         if (ui.item.sortable.received) {
                             return;
@@ -29,9 +23,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                         var targetStage = JSON.parse(ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("stageClone"));
 
                         var droptargetModelCards = ui.item.sortable.droptargetModel;
-                        var sourceStageId = ui.item.sortable.source.parent().parent().attr("stageId");
-
-                        if (targetStage !== null && sourceStageId !== targetStage.id && targetStage.wipLimit === droptargetModelCards.length) {
+                        var sourceStage = ui.item.sortable.model.stage;
+                        if (targetStage !== null && sourceStage.id !== targetStage.id && targetStage.wipLimit === droptargetModelCards.length) {
                             timerMessageService.confirmMessage("目标环节在制品已经满额，不再接受卡片。", 'warning');
                             ui.item.sortable.cancel();
                         }
@@ -69,23 +62,8 @@ kanbanApp.directive('cards', function ($uibModal) {
                                 }
                             }
                         }
-                        if (angular.element(ui.item.sortable.droptarget[0]).hasClass('child-cards')) {
-                            if (movedCard.child !== undefined) {
-                                timerMessageService.confirmMessage("该卡片具有从属卡片，不允许挪到到其他卡片。", 'warning');
-                                ui.item.sortable.cancel();
-                                ui.item.sortable.isMoveToParent = true;
-                                return;
-                            }
-                            var parentId = ui.item.sortable.droptarget[0].parentNode.parentNode.getAttribute("card-id");
-                            movedCard.parentId = parentId;
-                            cardsServices.update(movedCard).then(function () {
-                                timerMessageService.message("已将卡片" + movedCard.code + "设置为从属卡片。");
-                            });
-                            ui.item.sortable.isMoveToParent = true;
-                        }
                     },
                     stop: function (e, ui) {
-                        localStorageService.set("isCardDragging", false);
                         $('.cards-sortable').sortable('refresh');
                         var droptarget = ui.item.sortable.droptarget;
                         if (droptarget !== undefined && !ui.item.sortable.isMoveToParent) {

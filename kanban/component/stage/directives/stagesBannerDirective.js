@@ -222,6 +222,19 @@ kanbanApp.directive('stagesBanner', function () {
                     backdrop: "static"
                 });
             };
+            $scope.openBurnDownChartDialog = function () {
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'component/stage/partials/burn-down-chart-dialog.html',
+                    controller: ['$scope', 'projectsService', 'timerMessageService', '$uibModalInstance', 'jsonService', 'stagesServices',
+                        function ($scope, projectsService, timerMessageService, $uibModalInstance, jsonService, stagesServices) {
+                            $scope.board = stagesScope.board;
+                        }
+                    ],
+                    size: 'lg',
+                    backdrop: "static"
+                });
+            };
         }]
     };
 });
